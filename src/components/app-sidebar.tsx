@@ -58,6 +58,19 @@ type KitMenu = {
   sections: KitSection[]
 }
 
+const KIT_DISPLAY_ORDER = [
+  "html-interview-kit",
+  "css-interview-kit",
+  "tailwind-interview-kit",
+  "javascript-interview-kit",
+  "react-interview-kit",
+  "next-js-interview-kit",
+  "node-js-interview-kit",
+  "mongo-db-interview-kit",
+  "git-interview-kit",
+  "hr-interview-kit",
+]
+
 const KIT_ICON_BY_ID: Record<string, string> = {
   "javascript-interview-kit": javascriptKitIcon,
   "react-interview-kit": reactKitIcon,
@@ -81,7 +94,15 @@ function toSectionLabel(value: string) {
 }
 
 function buildKitMenus(groups: TopicGroup[]): KitMenu[] {
-  return groups.map((group) => {
+  const orderedGroups = [...groups].sort((a, b) => {
+    const indexA = KIT_DISPLAY_ORDER.indexOf(a.id)
+    const indexB = KIT_DISPLAY_ORDER.indexOf(b.id)
+    const orderA = indexA === -1 ? Number.MAX_SAFE_INTEGER : indexA
+    const orderB = indexB === -1 ? Number.MAX_SAFE_INTEGER : indexB
+    return orderA - orderB || a.label.localeCompare(b.label)
+  })
+
+  return orderedGroups.map((group) => {
     const rootTopics: TopicGroup["topics"] = []
     const sectionsByKey = new Map<string, KitSection>()
 
