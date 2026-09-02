@@ -1,5 +1,11 @@
 # 🌐 HTML Interview Questions
 
+## How to use this kit
+
+1. Work through the questions in this README in order.
+2. Open [`TOPICS.md`](./TOPICS.md) and write your answers in the matching topic file.
+3. To add or improve content, follow [CONTRIBUTING.md](../CONTRIBUTING.md).
+
 ---
 
 # 📚 PART 1 — THEORY QUESTIONS

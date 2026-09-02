@@ -54,6 +54,12 @@
 3. Open `TOPICS.md` inside that kit and fill in the matching topic file.
 4. Practice out loud. Write answers in the topic file, then compare them with the notes in the kit README.
 
+## Contributing
+
+Questions, fixes, and new topics are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+
+This project is governed by the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
