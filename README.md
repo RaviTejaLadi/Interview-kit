@@ -1,8 +1,11 @@
-# 🎯 Full-Stack Engineering "Must-Know" Interview Questions Compendium
+
+<p align="center">
+  <img src="./assets/interview-kit.png" alt="Full-Stack Engineering Must-Know Interview Questions Compendium" width="100%" style="border-radius: 6px;" />
+</p>
 
 ---
 
-# 📊 Global Rating System
+## 📊 Global Rating System
 
 | Rating | Importance |
 | ------ | ---------- |
@@ -12,23 +15,24 @@
 
 ---
 
-# 📚 Technology Guide Index
+## 📚 Technology Guide Index
 
 | Technology | Guide File | Key Theory Sections | Key Coding / Practical Sections |
 | :--- | :--- | :--- | :--- |
-| **🟨 JavaScript** | [`JAVASCRIPT_INTERVIEW_GUIDE.md`](./JAVASCRIPT_INTERVIEW_GUIDE.md) | Fundamentals, Scope, Hoisting/TDZ, Closures, `this`, Prototypes, Event Loop, Promises | Array/String problems, Polyfills (`map`, `filter`, `reduce`), `call/apply/bind`, `debounce/throttle` |
-| **⚛️ React** | [`REACT_INTERVIEW_GUIDE.md`](./REACT_INTERVIEW_GUIDE.md) | Virtual DOM, Hooks & Linked Lists, Fiber Reconciliation, React 18 Batching, Context Pitfalls | Custom hooks (`useFetch`, `useDebounce`), Compound Components (`<Tabs>`), Modals with Portals |
-| **🌐 HTML5** | [`HTML_INTERVIEW_GUIDE.md`](./HTML_INTERVIEW_GUIDE.md) | Semantic HTML, Accessibility & ARIA, Script loading (`async`/`defer`), Web Storage, Media | Accessible forms with live regions, Responsive `<picture>`, Native `<dialog>` modal API |
-| **🎨 CSS3** | [`CSS_INTERVIEW_GUIDE.md`](./CSS_INTERVIEW_GUIDE.md) | Box Model, Specificity `(A,B,C,D)`, Stacking Context & BFC, Flexbox vs Grid, Reflow/Repaint | 3 centering methods, Responsive Holy Grail grid, Text truncation & multi-line clamping |
-| **💨 Tailwind CSS** | [`TAILWIND_CSS_INTERVIEW_GUIDE.md`](./TAILWIND_CSS_INTERVIEW_GUIDE.md) | Utility-first paradigm, JIT engine regex scanning, Theme tokens, Class merging, Breakpoints | `cn(...)` utility, Reusable CVA Button variants, Responsive Cards with dark mode |
-| **🚀 Next.js** | [`NEXTJS_INTERVIEW_GUIDE.md`](./NEXTJS_INTERVIEW_GUIDE.md) | App Router vs Pages Router, Server vs Client Components, SSR/SSG/ISR/PPR, 4 Caching Tiers | ISR Dynamic Routes, Authenticated Zod Route Handler, Server Actions with `useOptimistic` |
-| **🟢 Node.js** | [`NODEJS_INTERVIEW_GUIDE.md`](./NODEJS_INTERVIEW_GUIDE.md) | V8 vs Libuv, 6 Event Loop Phases, Streams & Backpressure, Cluster vs Workers, Graceful Shutdown | Large file Transform streams, In-memory rate limiter, Production server shutdown handling |
-| **🍃 MongoDB** | [`MONGODB_INTERVIEW_GUIDE.md`](./MONGODB_INTERVIEW_GUIDE.md) | BSON vs JSON, Embedding vs Referencing, ESR Indexing Rule, Aggregation Stages, Replication | Complex analytics aggregation, Mongoose pre-save hooks & schemas, Multi-doc ACID transactions |
-| **🐙 Git** | [`GIT_INTERVIEW_GUIDE.md`](./GIT_INTERVIEW_GUIDE.md) | Object Store (Blobs, Trees, Commits), Merge vs Rebase, Reset (`--soft/mixed/hard`) vs Revert | Interactive Rebase (`-i`), Merge conflict resolution, Disaster recovery with `git reflog` |
+| **🟨 JavaScript** | [`javascript-interview-kit/README.md`](./javascript-interview-kit/README.md) | Fundamentals, Scope, Hoisting/TDZ, Closures, `this`, Prototypes, Event Loop, Promises | Array/String problems, Polyfills (`map`, `filter`, `reduce`), `call/apply/bind`, `debounce/throttle` |
+| **⚛️ React** | [`react-interview-kit/README.md`](./react-interview-kit/README.md) | Virtual DOM, Hooks & Linked Lists, Fiber Reconciliation, React 18 Batching, Context Pitfalls | Custom hooks (`useFetch`, `useDebounce`), Compound Components (`<Tabs>`), Modals with Portals |
+| **🌐 HTML5** | [`html-interview-kit/README.md`](./html-interview-kit/README.md) | Semantic HTML, Accessibility & ARIA, Script loading (`async`/`defer`), Web Storage, Media | Accessible forms with live regions, Responsive `<picture>`, Native `<dialog>` modal API |
+| **🎨 CSS3** | [`css-interview-kit/README.md`](./css-interview-kit/README.md) | Box Model, Specificity `(A,B,C,D)`, Stacking Context & BFC, Flexbox vs Grid, Reflow/Repaint | 3 centering methods, Responsive Holy Grail grid, Text truncation & multi-line clamping |
+| **💨 Tailwind CSS** | [`tailwind-interview-kit/README.md`](./tailwind-interview-kit/README.md) | Utility-first paradigm, JIT engine regex scanning, Theme tokens, Class merging, Breakpoints | `cn(...)` utility, Reusable CVA Button variants, Responsive Cards with dark mode |
+| **🚀 Next.js** | [`next-js-interview-kit/README.md`](./next-js-interview-kit/README.md) | App Router vs Pages Router, Server vs Client Components, SSR/SSG/ISR/PPR, 4 Caching Tiers | ISR Dynamic Routes, Authenticated Zod Route Handler, Server Actions with `useOptimistic` |
+| **🟢 Node.js** | [`node-js-interview-kit/README.md`](./node-js-interview-kit/README.md) | V8 vs Libuv, 6 Event Loop Phases, Streams & Backpressure, Cluster vs Workers, Graceful Shutdown | Large file Transform streams, In-memory rate limiter, Production server shutdown handling |
+| **🍃 MongoDB** | [`mongo-db-interview-kit/README.md`](./mongo-db-interview-kit/README.md) | BSON vs JSON, Embedding vs Referencing, ESR Indexing Rule, Aggregation Stages, Replication | Complex analytics aggregation, Mongoose pre-save hooks & schemas, Multi-doc ACID transactions |
+| **🐙 Git** | [`git-interview-kit/README.md`](./git-interview-kit/README.md) | Object Store (Blobs, Trees, Commits), Merge vs Rebase, Reset (`--soft/mixed/hard`) vs Revert | Interactive Rebase (`-i`), Merge conflict resolution, Disaster recovery with `git reflog` |
+| **🤝 HR Round** | [`hr-interview-kit/README.md`](./hr-interview-kit/README.md) | Tell me about yourself, Company fit, Strengths/weaknesses, STAR behavioral scenarios, Conflict resolution | 90-second intro script, Salary negotiation, Notice period, Questions to ask HR |
 
 ---
 
-# 🏆 Master 30-Day Preparation Blueprint
+## 🏆 Master 30-Day Preparation Blueprint
 
 ```text
 Week 1: Foundations
@@ -44,10 +48,11 @@ Week 3: Frontend Frameworks
   Days 15–18: React (Fiber, Hooks, Reconciliation & Performance)
   Days 19–21: Next.js (App Router, Server Components, ISR & Caching)
 
-Week 4: Backend, Database & Version Control
+Week 4: Backend, Database, Version Control & HR
   Days 22–24: Node.js (Libuv, Event Loop Phases & Streams)
   Days 25–27: MongoDB (Schema Design, ESR Indexing & Aggregations)
-  Days 28–30: Git (Internals, Merge vs Rebase, Disaster Recovery)
+  Days 28–29: Git (Internals, Merge vs Rebase, Disaster Recovery)
+  Day 30:     HR Round (STAR stories, salary negotiation, closing questions)
 ```
 ## How to use
 
