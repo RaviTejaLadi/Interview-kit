@@ -36,6 +36,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { cn } from "@/lib/utils"
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
   groups: TopicGroup[]
@@ -144,6 +145,7 @@ export function AppSidebar({
   selectedTopicId,
   onSearchChange,
   onSelectTopic,
+  className,
   ...props
 }: AppSidebarProps) {
   const totalTopics = groups.reduce((count, group) => count + group.topics.length, 0)
@@ -151,36 +153,45 @@ export function AppSidebar({
   const hasSearchQuery = searchValue.trim().length > 0
 
   return (
-    <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader className="gap-3 border-b border-sidebar-border">
-        <div className="flex items-center gap-2 px-2 py-1">
-          <BookOpenTextIcon className="size-4 shrink-0" />
+    <Sidebar
+      collapsible="icon"
+      className={cn(
+        "border-r border-sidebar-border/70 bg-sidebar/94 backdrop-blur supports-backdrop-filter:bg-sidebar/84 dark:border-sidebar-border/35",
+        className,
+      )}
+      {...props}
+    >
+      <SidebarHeader className="gap-3 border-b border-sidebar-border/70 bg-sidebar/92 px-2 pb-3 pt-2 backdrop-blur dark:border-sidebar-border/35">
+        <div className="flex items-center gap-2 rounded-xl border border-sidebar-border/65 bg-sidebar-accent/24 px-2.5 py-2 dark:border-sidebar-border/30">
+          <BookOpenTextIcon className="size-4 shrink-0 text-sidebar-primary" />
           <div className="grid min-w-0 flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
             <span className="truncate font-semibold">Interview Kit Portal</span>
-            <span className="truncate text-xs text-sidebar-foreground/70">Browse all kits</span>
+            <span className="truncate text-xs text-sidebar-foreground/82">Browse all kits</span>
           </div>
         </div>
         <div className="px-2 group-data-[collapsible=icon]:hidden">
           <div className="relative">
-            <SearchIcon className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 text-sidebar-foreground/70" />
+            <SearchIcon className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 text-sidebar-foreground/75" />
             <SidebarInput
               value={searchValue}
               onChange={(event) => onSearchChange(event.target.value)}
               aria-label="Search topics"
               placeholder="Search topics..."
-              className="pl-8"
+              className="h-9 rounded-lg border-sidebar-border/70 bg-sidebar-accent/22 pl-8 shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring dark:border-sidebar-border/35 dark:bg-sidebar-accent/40"
             />
           </div>
         </div>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-linear-to-b from-sidebar via-sidebar to-sidebar-accent/10">
         {groups.length === 0 ? (
           <div className="p-4 text-sm text-sidebar-foreground/70 group-data-[collapsible=icon]:hidden">
             No topics found.
           </div>
         ) : (
-          <SidebarGroup className="py-1">
-            <SidebarGroupLabel>Interview Kits</SidebarGroupLabel>
+          <SidebarGroup className="py-1.5">
+            <SidebarGroupLabel className="px-2 text-[11px] tracking-[0.08em] uppercase text-sidebar-foreground/78">
+              Interview Kits
+            </SidebarGroupLabel>
             <SidebarMenu>
               {kitMenus.map((kit) => {
                 const kitHasSelectedTopic =
@@ -195,18 +206,24 @@ export function AppSidebar({
                   <Collapsible
                     key={`${kit.id}-${hasSearchQuery ? "search" : "browse"}`}
                     defaultOpen={kitHasSelectedTopic || hasSearchQuery}
-                    className="group/collapsible"
+                    className="group/collapsible mb-1.5"
                     render={<SidebarMenuItem />}
                   >
                     <CollapsibleTrigger
-                      render={<SidebarMenuButton tooltip={kit.label} className="font-medium" />}
+                      render={
+                        <SidebarMenuButton
+                          tooltip={kit.label}
+                          isActive={kitHasSelectedTopic}
+                          className="h-9 rounded-lg border border-sidebar-border/65 bg-sidebar-accent/24 font-semibold text-sidebar-foreground data-[active=true]:border-sidebar-primary/40 data-[active=true]:bg-sidebar-primary/16 data-[active=true]:text-sidebar-primary dark:border-sidebar-border/30 dark:bg-sidebar-accent/35 dark:data-[active=true]:border-sidebar-primary/45 dark:data-[active=true]:bg-sidebar-primary/25"
+                        />
+                      }
                     >
                       {kitIcon ? (
                         <img
                           src={kitIcon}
                           alt=""
                           aria-hidden="true"
-                          className="size-4 shrink-0 object-contain"
+                          className="size-4 shrink-0 rounded-sm bg-white/75 p-0.5 object-contain dark:bg-white/15"
                         />
                       ) : (
                         <FolderIcon />
@@ -216,7 +233,7 @@ export function AppSidebar({
                     </CollapsibleTrigger>
 
                     <CollapsibleContent>
-                      <div className="space-y-2 pl-4 pr-2 pb-2 group-data-[collapsible=icon]:hidden">
+                      <div className="space-y-2 border-l border-sidebar-border/55 pl-4 pr-2 pb-2 pt-1 group-data-[collapsible=icon]:hidden dark:border-sidebar-border/28">
                         {kit.rootTopics.length > 0 && (
                           <div className="space-y-1">
                             {kit.rootTopics.map((topic) => (
@@ -225,7 +242,7 @@ export function AppSidebar({
                                 size="sm"
                                 isActive={selectedTopicId === topic.id}
                                 onClick={() => onSelectTopic(topic.id)}
-                                className="h-auto items-start py-1.5"
+                                className="h-auto rounded-lg py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
                               >
                                 <FileTextIcon className="mt-0.5 shrink-0" />
                                 <span className="line-clamp-2 leading-tight">{topic.title}</span>
@@ -250,7 +267,8 @@ export function AppSidebar({
                                   <SidebarMenuButton
                                     size="sm"
                                     tooltip={section.label}
-                                    className="h-7 text-sidebar-foreground/80"
+                                    isActive={sectionHasSelectedTopic}
+                                    className="h-7 rounded-lg text-[11px] font-semibold tracking-[0.06em] uppercase text-sidebar-foreground/80 data-[active=true]:bg-sidebar-primary/12 data-[active=true]:text-sidebar-primary dark:data-[active=true]:bg-sidebar-primary/20"
                                   />
                                 }
                               >
@@ -265,7 +283,7 @@ export function AppSidebar({
                                       size="sm"
                                       isActive={selectedTopicId === topic.id}
                                       onClick={() => onSelectTopic(topic.id)}
-                                      className="h-auto items-start py-1.5"
+                                      className="h-auto rounded-lg py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
                                     >
                                       <FileTextIcon className="mt-0.5 shrink-0" />
                                       <span className="line-clamp-2 leading-tight">{topic.title}</span>
@@ -285,8 +303,8 @@ export function AppSidebar({
           </SidebarGroup>
         )}
       </SidebarContent>
-      <SidebarFooter className="border-t border-sidebar-border px-4 py-3 group-data-[collapsible=icon]:hidden">
-        <p className="text-xs text-sidebar-foreground/70">{totalTopics} topics loaded</p>
+      <SidebarFooter className="border-t border-sidebar-border/70 bg-sidebar/92 px-4 py-3 group-data-[collapsible=icon]:hidden dark:border-sidebar-border/35">
+        <p className="text-xs font-medium text-sidebar-foreground/80">{totalTopics} topics loaded</p>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
