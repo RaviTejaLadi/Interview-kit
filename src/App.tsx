@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from "react"
+import { MoonIcon, SunIcon } from "lucide-react"
 import rehypeRaw from "rehype-raw"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 
 import { AppSidebar } from "@/components/app-sidebar"
+import { Button } from "@/components/ui/button"
 import {
   SidebarInset,
   SidebarProvider,
@@ -28,12 +30,30 @@ function hasOwn(obj: Record<string, string>, key: string) {
 
 const topicsById = new Map(allTopics.map((topic) => [topic.id, topic] as const));
 
+type Theme = "light" | "dark"
+
+const THEME_STORAGE_KEY = "interview-kit-theme"
+
+function getInitialTheme(): Theme {
+  if (typeof window === "undefined") {
+    return "light"
+  }
+
+  const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY)
+  if (savedTheme === "light" || savedTheme === "dark") {
+    return savedTheme
+  }
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+}
+
 function App() {
   const [searchValue, setSearchValue] = useState("");
   const [selectedTopicId, setSelectedTopicId] = useState(allTopics[0]?.id ?? null);
   const [topicContentById, setTopicContentById] = useState<Record<string, string>>({});
   const [isLoadingTopic, setIsLoadingTopic] = useState(false);
   const [topicLoadError, setTopicLoadError] = useState("");
+  const [theme, setTheme] = useState<Theme>(() => getInitialTheme())
 
   const filteredGroups = useMemo<TopicGroup[]>(() => {
     const query = searchValue.trim().toLowerCase()
@@ -119,6 +139,13 @@ function App() {
     }
   }, [selectedTopic, topicContentById])
 
+  useEffect(() => {
+    const root = document.documentElement
+    root.classList.toggle("dark", theme === "dark")
+    root.style.colorScheme = theme
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme)
+  }, [theme])
+
   return (
     <SidebarProvider>
       <AppSidebar
@@ -140,6 +167,20 @@ function App() {
               {selectedTopic?.title ?? "Select a topic"}
             </h1>
           </div>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            className="ml-auto"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+          >
+            {theme === "dark" ? <SunIcon /> : <MoonIcon />}
+            <span className="sr-only">
+              Switch to {theme === "dark" ? "light" : "dark"} mode
+            </span>
+          </Button>
         </header>
         <div className="flex-1 overflow-y-auto">
         {!selectedTopic ? (
@@ -164,7 +205,7 @@ function App() {
                   Could not load this file. {topicLoadError}
                 </p>
               ) : (
-                <div className="markdown-body prose prose-slate max-w-none">
+                <div className="markdown-body prose prose-slate max-w-none dark:prose-invert">
                   <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkGfm]}>
                     {selectedTopicContent}
                   </ReactMarkdown>
