@@ -1,7 +1,5 @@
 # 8. CSS Architecture & Modern Features
 
-
-
 ### Must Know
 
 1. What are CSS Custom Properties (CSS Variables) and how do they cascade?

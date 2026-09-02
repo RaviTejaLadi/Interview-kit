@@ -1,7 +1,5 @@
 # 3. Indexing & The ESR (Equality, Sort, Range) Rule
 
-
-
 ### Must Know
 
 1. What is an Index and why is it essential for query performance?

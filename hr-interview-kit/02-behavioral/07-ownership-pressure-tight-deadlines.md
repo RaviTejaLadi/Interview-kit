@@ -1,7 +1,5 @@
 # 7. Ownership, Pressure & Tight Deadlines
 
-
-
 ### Must Know
 
 1. Tell me about a time a project was at risk of missing a strict deadline. What actions did you take?

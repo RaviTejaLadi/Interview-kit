@@ -1,7 +1,5 @@
 # 6. Routing, Navigation & Optimization APIs
 
-
-
 ### Must Know
 
 1. How does `<Link>` differ from standard `<a>` tag (client-side prefetching)?

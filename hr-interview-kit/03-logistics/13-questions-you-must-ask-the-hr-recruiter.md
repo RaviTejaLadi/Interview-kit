@@ -1,7 +1,5 @@
 # 13. Questions YOU Must Ask the HR / Recruiter
 
-
-
 ### Must Know
 
 1. "What does success look like for this role in the first 90 days?"

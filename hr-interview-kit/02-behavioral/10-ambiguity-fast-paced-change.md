@@ -1,7 +1,5 @@
 # 10. Ambiguity & Fast-Paced Change
 
-
-
 ### Must Know
 
 1. Tell me about a time requirements changed halfway through a project. How did you adapt?

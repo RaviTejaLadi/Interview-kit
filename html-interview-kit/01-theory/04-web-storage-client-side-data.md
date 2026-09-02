@@ -1,7 +1,5 @@
 # 4. Web Storage & Client-Side Data
 
-
-
 ### Must Know
 
 1. What is `localStorage`?

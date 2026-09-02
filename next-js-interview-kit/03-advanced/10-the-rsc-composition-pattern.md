@@ -1,7 +1,5 @@
 # 10. The RSC Composition Pattern
 
-
-
 ```tsx
 // ✅ Correct Pattern: Pass Server Component as children to Client Component
 // app/page.tsx (Server Component)

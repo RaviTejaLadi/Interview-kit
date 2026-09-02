@@ -1,7 +1,5 @@
 # 1. Utility-First Architecture & Core Concepts
 
-
-
 ### Must Know
 
 1. What is Tailwind CSS?

@@ -1,7 +1,5 @@
 # 9. Layout Coding Challenges
 
-
-
 ### Must Implement
 
 1. Center a `div` vertically and horizontally in 3 different ways (Flexbox, Grid, Absolute + Transform).

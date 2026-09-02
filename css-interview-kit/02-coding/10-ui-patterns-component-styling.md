@@ -1,7 +1,5 @@
 # 10. UI Patterns & Component Styling
 
-
-
 ### Must Build
 
 1. Implement single-line text truncation with ellipsis (`text-overflow: ellipsis`).

@@ -166,6 +166,7 @@ Query: db.orders.find({ status: "active", total: { $gte: 100 } }).sort({ orderDa
 # 🏆 TOP 25 — If You Have Very Little Time
 
 ### 🔥 Theory
+
 1. BSON vs JSON
 2. Embedding vs Referencing
 3. 16MB document size limit
@@ -183,6 +184,7 @@ Query: db.orders.find({ status: "active", total: { $gte: 100 } }).sort({ orderDa
 15. TTL (Time-To-Live) indexes for session expiry
 
 ### 💻 Coding
+
 16. Multi-stage analytics aggregation pipeline
 17. Left outer join with `$lookup` and `$unwind`
 18. Multi-document ACID transaction with session rollback

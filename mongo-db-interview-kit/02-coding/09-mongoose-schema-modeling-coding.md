@@ -1,7 +1,5 @@
 # 9. Mongoose & Schema Modeling Coding
 
-
-
 ### Must Implement
 
 1. Build a production Mongoose schema with type validation, required fields, and unique indexes.

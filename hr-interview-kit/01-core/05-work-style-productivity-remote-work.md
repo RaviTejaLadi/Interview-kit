@@ -1,7 +1,5 @@
 # 5. Work Style, Productivity & Remote Work
 
-
-
 ### Must Know
 
 1. How do you prioritize tasks when everything seems urgent?

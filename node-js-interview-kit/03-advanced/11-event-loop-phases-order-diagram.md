@@ -1,7 +1,5 @@
 # 11. Event Loop Phases Order Diagram
 
-
-
 ```text
    ┌───────────────────────┐
 ┌─>│        Timers         │ setTimeout, setInterval

@@ -1,7 +1,5 @@
 # 25. Memory & Garbage Collection
 
-
-
 ### Must Know
 
 1. How does JavaScript manage memory?

@@ -1,7 +1,5 @@
 # 4. Data Fetching & Multi-Tier Caching Engine
 
-
-
 ### Must Know
 
 1. How do you fetch data inside an async Server Component?

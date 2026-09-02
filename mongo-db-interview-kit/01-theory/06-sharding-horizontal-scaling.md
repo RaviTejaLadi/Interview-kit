@@ -1,7 +1,5 @@
 # 6. Sharding & Horizontal Scaling
 
-
-
 ### Must Know
 
 1. Vertical scaling vs Horizontal scaling (Sharding).

@@ -1,7 +1,5 @@
 # 12. Notice Period & Availability
 
-
-
 ### Must Know
 
 1. What is your official notice period?

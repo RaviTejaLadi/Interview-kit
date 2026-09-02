@@ -1,7 +1,5 @@
 # 6. Conflict Resolution & Team Dynamics
 
-
-
 ### Must Know
 
 1. Tell me about a time you had a technical disagreement with a teammate or senior engineer. How was it resolved?

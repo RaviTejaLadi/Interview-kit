@@ -169,6 +169,7 @@ Script defer:        [Fetch................] [Execute after DOM ready]
 # 🏆 TOP 20 — If You Have Very Little Time
 
 ### 🔥 Theory
+
 1. Semantic HTML & SEO/a11y advantages
 2. `<article>` vs `<section>` vs `<div>`
 3. `async` vs `defer` in script loading
@@ -186,6 +187,7 @@ Script defer:        [Fetch................] [Execute after DOM ready]
 15. Canvas vs SVG
 
 ### 💻 Coding
+
 16. Build an accessible form with validation and ARIA live regions
 17. Write a `<picture>` element with AVIF/WebP formats and `sizes`
 18. Implement `<dialog>` modal with open/close listeners
@@ -196,11 +198,11 @@ Script defer:        [Fetch................] [Execute after DOM ready]
 
 # 🎯 WHAT YOU DO NOT NEED TO PRIORITIZE
 
-* ❌ Obsolete HTML4 tags (`<font>`, `<center>`, `<frame>`, `<frameset>`)
-* ❌ Complex native Drag-and-Drop edge cases (most projects use libraries)
-* ❌ Native WebSQL (deprecated and removed)
-* ❌ Obscure MathML or SVG filter syntax
-* ❌ HTML Microdata syntax (JSON-LD is the modern standard for structured data)
+- ❌ Obsolete HTML4 tags (`<font>`, `<center>`, `<frame>`, `<frameset>`)
+- ❌ Complex native Drag-and-Drop edge cases (most projects use libraries)
+- ❌ Native WebSQL (deprecated and removed)
+- ❌ Obscure MathML or SVG filter syntax
+- ❌ HTML Microdata syntax (JSON-LD is the modern standard for structured data)
 
 ---
 
@@ -229,19 +231,21 @@ Script defer:        [Fetch................] [Execute after DOM ready]
 # ✅ FINAL CHECKLIST
 
 ## Theory
-* Semantic tags & landmarks
-* Doctype & Quirks Mode
-* ARIA rules & attributes
-* `async` vs `defer`
-* Critical rendering path
-* Storage: local vs session vs cookie vs IndexedDB
-* Forms & `<label>` binding
-* `<picture>` vs `<img>`
-* Viewport & SEO meta tags
-* Native `<dialog>` API
+
+- Semantic tags & landmarks
+- Doctype & Quirks Mode
+- ARIA rules & attributes
+- `async` vs `defer`
+- Critical rendering path
+- Storage: local vs session vs cookie vs IndexedDB
+- Forms & `<label>` binding
+- `<picture>` vs `<img>`
+- Viewport & SEO meta tags
+- Native `<dialog>` API
 
 ## Coding
-* Semantic form with a11y
-* Responsive `<picture>`
-* Native `<dialog>` modal
-* Responsive `<head>` metadata
+
+- Semantic form with a11y
+- Responsive `<picture>`
+- Native `<dialog>` modal
+- Responsive `<head>` metadata

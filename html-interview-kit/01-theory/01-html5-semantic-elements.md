@@ -1,7 +1,5 @@
 # 1. HTML5 & Semantic Elements
 
-
-
 ### Must Know
 
 1. What is HTML5 and what did it introduce?

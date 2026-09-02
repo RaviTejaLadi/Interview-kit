@@ -1,7 +1,5 @@
 # 9. Context API & State Management
 
-
-
 ### Must Know
 
 1. What is the Context API?

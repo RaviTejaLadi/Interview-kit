@@ -186,15 +186,15 @@ Use the **Present → Past → Future** formula:
 
 ```text
 1. Present (30s):
-   "Currently, I am a [Your Title] at [Company], where I specialize in [Core Stack/Tech]. 
+   "Currently, I am a [Your Title] at [Company], where I specialize in [Core Stack/Tech].
     Most recently, I led [Key Achievement or Feature], which helped [Metric/Impact]."
 
 2. Past (30s):
-   "Before this, I worked at [Previous Company/Experience], where I built [Core Project], 
+   "Before this, I worked at [Previous Company/Experience], where I built [Core Project],
     honing my skills in [Key Skills, e.g., performance optimization, scalable systems]."
 
 3. Future (30s):
-   "I've reached a point where I'm looking to take on larger challenges, particularly in 
+   "I've reached a point where I'm looking to take on larger challenges, particularly in
     [Domain/Scale], which is why I was excited to see this role at [Target Company] because [Specific Reason]."
 ```
 
@@ -213,15 +213,16 @@ R - Result:    The quantified outcome and what you learned (15-20 seconds).
 
 ## 16. The Salary Question Script ⭐⭐⭐⭐⭐
 
-When asked *"What are your salary expectations?"* early in the process:
+When asked _"What are your salary expectations?"_ early in the process:
 
-> *"Right now, my main priority is finding the right team fit and understanding the full scope of responsibilities for this role. Based on my research for this role and market standards, I'm targeting a range between **$X and $Y** [or ₹A to ₹B], but I'm flexible and open to looking at the entire compensation package, including bonuses, equity, and growth opportunities."*
+> _"Right now, my main priority is finding the right team fit and understanding the full scope of responsibilities for this role. Based on my research for this role and market standards, I'm targeting a range between **$X and $Y** [or ₹A to ₹B], but I'm flexible and open to looking at the entire compensation package, including bonuses, equity, and growth opportunities."_
 
 ---
 
 # 🏆 TOP 25 — If You Have Very Little Time
 
 ### 🔥 Core HR & Motivation
+
 1. Tell me about yourself.
 2. Why do you want to join our company?
 3. Why are you leaving your current role?
@@ -232,6 +233,7 @@ When asked *"What are your salary expectations?"* early in the process:
 8. Describe your ideal company culture.
 
 ### 💼 STAR Behavioral Scenarios
+
 9. A time you resolved a conflict with a teammate.
 10. A time you disagreed with your manager.
 11. A time you faced a tight deadline or high pressure.
@@ -244,6 +246,7 @@ When asked *"What are your salary expectations?"* early in the process:
 18. A time you had to learn a new technology quickly.
 
 ### 💰 Logistics & Closing
+
 19. What are your salary expectations?
 20. What is your notice period and can it be shortened?
 21. Do you have any other active offers?
@@ -256,12 +259,12 @@ When asked *"What are your salary expectations?"* early in the process:
 
 # 🎯 WHAT YOU DO NOT NEED TO DO (RED FLAGS TO AVOID)
 
-* ❌ **Never badmouth your previous employer, manager, or colleagues.** (Frame past experiences around seeking new challenges and growth).
-* ❌ **Never say "I have no weaknesses" or use fake cliches.** (e.g., "I'm too perfectionist", "I work too hard". Pick a genuine minor weakness and show how you actively manage it).
-* ❌ **Never give generic, unquantified results in STAR stories.** (Always mention numbers: latency reduced by 30%, shipped 2 weeks early, 99.9% uptime).
-* ❌ **Never answer "No, I don't have any questions" at the end.** (Signals lack of interest or curiosity).
-* ❌ **Never anchor on a single low salary number prematurely.** (Always provide a researched range and emphasize total compensation).
-* ❌ **Never blame others for project failures.** (Take personal ownership of your part and highlight the learning outcome).
+- ❌ **Never badmouth your previous employer, manager, or colleagues.** (Frame past experiences around seeking new challenges and growth).
+- ❌ **Never say "I have no weaknesses" or use fake cliches.** (e.g., "I'm too perfectionist", "I work too hard". Pick a genuine minor weakness and show how you actively manage it).
+- ❌ **Never give generic, unquantified results in STAR stories.** (Always mention numbers: latency reduced by 30%, shipped 2 weeks early, 99.9% uptime).
+- ❌ **Never answer "No, I don't have any questions" at the end.** (Signals lack of interest or curiosity).
+- ❌ **Never anchor on a single low salary number prematurely.** (Always provide a researched range and emphasize total compensation).
+- ❌ **Never blame others for project failures.** (Take personal ownership of your part and highlight the learning outcome).
 
 ---
 
@@ -290,22 +293,24 @@ When asked *"What are your salary expectations?"* early in the process:
 # ✅ FINAL CHECKLIST
 
 ## Self-Presentation
-* Crisp 90-second "Tell me about yourself"
-* Clean explanation of why you're leaving your current job
-* Compelling answer for "Why this company?"
-* 2 clear strengths with examples
-* 1 genuine weakness with active improvement steps
+
+- Crisp 90-second "Tell me about yourself"
+- Clean explanation of why you're leaving your current job
+- Compelling answer for "Why this company?"
+- 2 clear strengths with examples
+- 1 genuine weakness with active improvement steps
 
 ## STAR Behavioral Stories
-* Conflict resolution story
-* Overcoming tight deadline story
-* Production bug / mistake story
-* Leadership / mentorship story
-* Handling ambiguity / requirement change story
+
+- Conflict resolution story
+- Overcoming tight deadline story
+- Production bug / mistake story
+- Leadership / mentorship story
+- Handling ambiguity / requirement change story
 
 ## Logistics & Negotiation
-* Researched market salary range
-* Exact notice period & early release policy
-* Competing offers status
-* 3 thoughtful questions prepared for the interviewer
 
+- Researched market salary range
+- Exact notice period & early release policy
+- Competing offers status
+- 3 thoughtful questions prepared for the interviewer

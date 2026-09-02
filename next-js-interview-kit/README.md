@@ -158,6 +158,7 @@ export default function Page() {
 # 🏆 TOP 25 — If You Have Very Little Time
 
 ### 🔥 Theory
+
 1. App Router vs Pages Router
 2. Server Components vs Client Components
 3. What `'use client'` actually does
@@ -175,6 +176,7 @@ export default function Page() {
 15. Dynamic Route Segments (`[slug]`)
 
 ### 💻 Coding
+
 16. Dynamic ISR page with `generateStaticParams`
 17. Route Handler with Zod validation
 18. Form mutation via Server Action

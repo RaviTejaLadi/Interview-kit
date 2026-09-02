@@ -1,7 +1,5 @@
 # 7. Middleware & Authentication
 
-
-
 ### Must Know
 
 1. What is Next.js Middleware (`middleware.ts`)?

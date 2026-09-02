@@ -1,7 +1,5 @@
 # 1. MongoDB Fundamentals & Document Model
 
-
-
 ### Must Know
 
 1. What is MongoDB and what kind of database is it (NoSQL, Document-oriented)?

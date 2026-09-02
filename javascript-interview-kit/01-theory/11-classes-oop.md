@@ -1,7 +1,5 @@
 # 11. Classes & OOP
 
-
-
 ### Must Know
 
 1. What are classes in JavaScript?

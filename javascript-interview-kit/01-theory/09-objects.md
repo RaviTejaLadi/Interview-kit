@@ -1,7 +1,5 @@
 # 9. Objects
 
-
-
 ### Must Know
 
 1. What is an object?

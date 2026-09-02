@@ -1,7 +1,5 @@
 # 3. Strengths, Weaknesses & Self-Awareness
 
-
-
 ### Must Know
 
 1. What are your greatest technical and non-technical strengths?

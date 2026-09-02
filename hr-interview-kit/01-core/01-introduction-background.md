@@ -1,7 +1,5 @@
 # 1. Introduction & Background
 
-
-
 ### Must Know
 
 1. "Tell me about yourself." (The 90-second elevator pitch).

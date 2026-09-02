@@ -1,7 +1,5 @@
 # 4. Career Aspirations & Trajectory
 
-
-
 ### Must Know
 
 1. Where do you see yourself in 3 to 5 years?

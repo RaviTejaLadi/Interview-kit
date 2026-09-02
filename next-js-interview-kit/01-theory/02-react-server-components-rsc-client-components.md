@@ -1,7 +1,5 @@
 # 2. React Server Components (RSC) & Client Components
 
-
-
 ### Must Know
 
 1. What are React Server Components (RSC)?

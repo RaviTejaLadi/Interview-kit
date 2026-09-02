@@ -1,7 +1,5 @@
 # 2. The Three Trees & Working States
 
-
-
 ### Must Know
 
 1. What are the Three Trees / Areas of Git?

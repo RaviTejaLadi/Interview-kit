@@ -1,7 +1,5 @@
 # 7. Security & Best Practices
 
-
-
 ### Must Know
 
 1. What is ReDoS (Regular Expression Denial of Service)?

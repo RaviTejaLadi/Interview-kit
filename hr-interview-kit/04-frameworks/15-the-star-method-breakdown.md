@@ -1,7 +1,5 @@
 # 15. The STAR Method Breakdown
 
-
-
 ```text
 S - Situation: Set the scene briefly (15-20 seconds).
 T - Task:      Define the exact problem/goal you had to solve (10-15 seconds).

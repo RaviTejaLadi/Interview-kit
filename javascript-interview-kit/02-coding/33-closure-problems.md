@@ -1,7 +1,5 @@
 # 33. Closure Problems
 
-
-
 ### Must Solve
 
 1. Create a counter using closure.

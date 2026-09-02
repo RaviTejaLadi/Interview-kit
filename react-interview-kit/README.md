@@ -259,8 +259,8 @@ Know how batching behaves across React versions:
 ```javascript
 // Inside a Promise or setTimeout:
 setTimeout(() => {
-  setCount(c => c + 1);
-  setFlag(f => !f);
+  setCount((c) => c + 1);
+  setFlag((f) => !f);
   // React 17: Triggers 2 separate re-renders
   // React 18: Automatically batched into exactly 1 re-render
 }, 100);
@@ -305,12 +305,12 @@ setTimeout(() => {
 
 # 🎯 WHAT YOU DO NOT NEED TO PRIORITIZE
 
-* ❌ Class component lifecycle methods (`componentWillReceiveProps`, `getSnapshotBeforeUpdate`)
-* ❌ Legacy Context API (`contextTypes`)
-* ❌ Redux boilerplate without Redux Toolkit (old `switch/case` reducers)
-* ❌ Writing custom reconcilers or AST transformers
-* ❌ Relay / complex GraphQL client architectures (unless role-specific)
-* ❌ Obscure hooks (`useDebugValue`, `useInsertionEffect`)
+- ❌ Class component lifecycle methods (`componentWillReceiveProps`, `getSnapshotBeforeUpdate`)
+- ❌ Legacy Context API (`contextTypes`)
+- ❌ Redux boilerplate without Redux Toolkit (old `switch/case` reducers)
+- ❌ Writing custom reconcilers or AST transformers
+- ❌ Relay / complex GraphQL client architectures (unless role-specific)
+- ❌ Obscure hooks (`useDebugValue`, `useInsertionEffect`)
 
 ---
 
@@ -345,26 +345,28 @@ setTimeout(() => {
 # ✅ FINAL CHECKLIST
 
 ## Theory
-* JSX & Virtual DOM
-* State vs Props
-* Immutability
-* `useState` & `useEffect`
-* Rules of Hooks & Linked List model
-* `useRef`
-* `useMemo` & `useCallback`
-* `React.memo`
-* Context API & re-render pitfalls
-* Fiber Reconciler & lanes
-* React 18 Automatic Batching
-* Concurrent React (`useTransition`)
-* Error Boundaries & Portals
+
+- JSX & Virtual DOM
+- State vs Props
+- Immutability
+- `useState` & `useEffect`
+- Rules of Hooks & Linked List model
+- `useRef`
+- `useMemo` & `useCallback`
+- `React.memo`
+- Context API & re-render pitfalls
+- Fiber Reconciler & lanes
+- React 18 Automatic Batching
+- Concurrent React (`useTransition`)
+- Error Boundaries & Portals
 
 ## Coding
-* `useDebounce`
-* `useFetch` with abort signal
-* `useLocalStorage`
-* Modal dialog
-* Tabs compound component
-* Accordion
-* Autocomplete / Typeahead
-* Infinite scroll list
+
+- `useDebounce`
+- `useFetch` with abort signal
+- `useLocalStorage`
+- Modal dialog
+- Tabs compound component
+- Accordion
+- Autocomplete / Typeahead
+- Infinite scroll list

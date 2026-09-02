@@ -1,7 +1,5 @@
 # 6. Media & Responsive Images
 
-
-
 ### Must Know
 
 1. How does the `<img>` tag work with `srcset` and `sizes`?

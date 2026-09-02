@@ -1,7 +1,5 @@
 # 4. Rules of Hooks & Hook Internals
 
-
-
 ### Must Know
 
 1. What are the two core Rules of Hooks?

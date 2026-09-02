@@ -1,7 +1,5 @@
 # 14. Destructuring, Spread & Rest
 
-
-
 ### Must Know
 
 1. What is destructuring?

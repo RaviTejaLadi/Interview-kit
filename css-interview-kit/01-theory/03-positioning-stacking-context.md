@@ -1,7 +1,5 @@
 # 3. Positioning & Stacking Context
 
-
-
 ### Must Know
 
 1. What is `position: static`?

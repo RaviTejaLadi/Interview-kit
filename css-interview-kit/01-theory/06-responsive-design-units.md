@@ -1,7 +1,5 @@
 # 6. Responsive Design & Units
 
-
-
 ### Must Know
 
 1. Absolute units (`px`) vs Relative units (`rem`, `em`, `%`, `vw`, `vh`, `ch`).

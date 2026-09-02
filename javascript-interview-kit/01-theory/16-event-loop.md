@@ -1,7 +1,5 @@
 # 16. Event Loop
 
-
-
 ### Must Know
 
 1. What is the event loop?
@@ -19,13 +17,13 @@
 
 ```javascript
 // Tests microtask vs macrotask execution order
-console.log("1");
+console.log('1');
 
-setTimeout(() => console.log("2"), 0);
+setTimeout(() => console.log('2'), 0);
 
-Promise.resolve().then(() => console.log("3"));
+Promise.resolve().then(() => console.log('3'));
 
-console.log("4");
+console.log('4');
 ```
 
 Expected output:

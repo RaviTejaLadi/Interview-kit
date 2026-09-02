@@ -1,7 +1,5 @@
 # 22. Modules
 
-
-
 ### Must Know
 
 1. What are JavaScript modules?

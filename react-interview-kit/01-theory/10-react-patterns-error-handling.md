@@ -1,7 +1,5 @@
 # 10. React Patterns & Error Handling
 
-
-
 ### Must Know
 
 1. What is the Compound Component pattern?

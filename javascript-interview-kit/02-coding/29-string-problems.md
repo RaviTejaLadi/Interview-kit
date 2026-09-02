@@ -1,7 +1,5 @@
 # 29. String Problems
 
-
-
 ### Must Solve
 
 1. Reverse a string.

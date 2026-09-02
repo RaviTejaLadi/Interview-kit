@@ -1,7 +1,5 @@
 # 35. Async JavaScript Problems
 
-
-
 ### Must Solve
 
 1. Fetch data using `async/await`.

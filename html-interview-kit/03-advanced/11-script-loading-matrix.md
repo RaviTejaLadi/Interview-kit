@@ -1,7 +1,5 @@
 # 11. Script Loading Matrix
 
-
-
 ```text
 HTML Parsing:    ====================[BLOCKED]=============>
 Normal Script:                 [Fetch][Execute]

@@ -1,7 +1,5 @@
 # 20. Events
 
-
-
 ### Must Know
 
 1. What is event bubbling?

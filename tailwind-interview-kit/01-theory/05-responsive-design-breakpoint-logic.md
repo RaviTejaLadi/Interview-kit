@@ -1,7 +1,5 @@
 # 5. Responsive Design & Breakpoint Logic
 
-
-
 ### Must Know
 
 1. What are Tailwind's default responsive breakpoints (`sm`, `md`, `lg`, `xl`, `2xl`)?

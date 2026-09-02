@@ -1,7 +1,5 @@
 # 8. Dynamic Routing & Data Fetching Coding
 
-
-
 ### Must Implement
 
 1. Build a dynamic product page (`app/products/[slug]/page.tsx`) with `generateStaticParams` and ISR revalidation.

@@ -1,7 +1,5 @@
 # 1. Next.js Fundamentals & App Router vs Pages Router
 
-
-
 ### Must Know
 
 1. What is Next.js and why use it over pure React (Vite / CRA)?

@@ -1,7 +1,5 @@
 # 3. Scope
 
-
-
 ### Must Know
 
 1. What is scope?

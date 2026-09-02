@@ -1,7 +1,5 @@
 # 6. Disaster Recovery: Reflog, Detached HEAD & Cherry-Pick
 
-
-
 ### Must Know
 
 1. What is the Git Reference Log (`git reflog`)?

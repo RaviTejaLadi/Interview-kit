@@ -1,7 +1,5 @@
 # 13. UI Components & Machine Coding
 
-
-
 ### Must Build
 
 1. Build an accessible **Modal / Dialog** with backdrop click and `Escape` key handler using Portals.

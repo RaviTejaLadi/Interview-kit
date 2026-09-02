@@ -1,7 +1,5 @@
 # 42. Event Loop Execution Order
 
-
-
 You should be able to reason about:
 
 ```text
@@ -20,8 +18,8 @@ Next task
 
 Especially understand:
 
-* `Promise.then()`
-* `queueMicrotask()`
-* `setTimeout()`
-* `setInterval()`
-* `async/await`
+- `Promise.then()`
+- `queueMicrotask()`
+- `setTimeout()`
+- `setInterval()`
+- `async/await`

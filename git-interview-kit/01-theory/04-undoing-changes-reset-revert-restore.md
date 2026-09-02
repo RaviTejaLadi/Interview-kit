@@ -1,7 +1,5 @@
 # 4. Undoing Changes: Reset, Revert & Restore
 
-
-
 ### Must Know
 
 1. What does `git reset` do?

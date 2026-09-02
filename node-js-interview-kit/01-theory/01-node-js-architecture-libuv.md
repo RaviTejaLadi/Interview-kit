@@ -1,7 +1,5 @@
 # 1. Node.js Architecture & Libuv
 
-
-
 ### Must Know
 
 1. What is Node.js?

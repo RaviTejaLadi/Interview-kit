@@ -1,7 +1,5 @@
 # 10. The `cn` Utility Architecture
 
-
-
 You must know why this is required in modern React + Tailwind codebases:
 
 ```typescript

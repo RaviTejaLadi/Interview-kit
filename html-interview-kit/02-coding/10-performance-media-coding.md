@@ -1,7 +1,5 @@
 # 10. Performance & Media Coding
 
-
-
 ### Must Implement
 
 1. Write a responsive `<picture>` element serving modern AVIF, WebP, and JPEG fallback with lazy loading.

@@ -1,7 +1,5 @@
 # 2. Accessibility (a11y) & ARIA
 
-
-
 ### Must Know
 
 1. What is web accessibility (a11y)?

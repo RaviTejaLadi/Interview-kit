@@ -1,7 +1,5 @@
 # 5. React Fiber & Reconciliation Algorithm
 
-
-
 ### Must Know
 
 1. What is React Fiber?

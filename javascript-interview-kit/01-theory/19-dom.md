@@ -1,7 +1,5 @@
 # 19. DOM
 
-
-
 ### Must Know
 
 1. What is the DOM?

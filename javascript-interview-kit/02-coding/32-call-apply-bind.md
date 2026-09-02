@@ -1,7 +1,5 @@
 # 32. `call`, `apply` & `bind`
 
-
-
 ### Must Implement
 
 1. Implement `call()`.
@@ -10,6 +8,6 @@
 
 Also understand:
 
-* How `this` is passed.
-* Why `bind()` returns a new function.
-* Difference between the three methods.
+- How `this` is passed.
+- Why `bind()` returns a new function.
+- Difference between the three methods.

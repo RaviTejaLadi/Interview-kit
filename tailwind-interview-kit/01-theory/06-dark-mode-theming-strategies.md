@@ -1,7 +1,5 @@
 # 6. Dark Mode & Theming Strategies
 
-
-
 ### Must Know
 
 1. How does Dark Mode work in Tailwind (`dark:` prefix)?

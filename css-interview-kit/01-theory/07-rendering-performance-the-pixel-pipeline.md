@@ -1,7 +1,5 @@
 # 7. Rendering Performance & The Pixel Pipeline
 
-
-
 ### Must Know
 
 1. What is the Critical Rendering Pipeline in CSS (CSSOM + DOM = Render Tree)?

@@ -1,7 +1,5 @@
 # 5. Server Actions & Mutations
 
-
-
 ### Must Know
 
 1. What are Server Actions (`'use server'`)?

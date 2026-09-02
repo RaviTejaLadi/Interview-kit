@@ -1,7 +1,5 @@
 # 24. Error Handling
 
-
-
 ### Must Know
 
 1. What is `try...catch`?

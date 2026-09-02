@@ -1,7 +1,5 @@
 # 11. Salary Expectations & Compensation
 
-
-
 ### Must Know
 
 1. "What are your salary expectations?" (How to answer without anchoring too low or pricing yourself out).

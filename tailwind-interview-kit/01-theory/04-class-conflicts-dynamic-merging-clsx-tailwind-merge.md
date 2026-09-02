@@ -1,7 +1,5 @@
 # 4. Class Conflicts & Dynamic Merging (`clsx` + `tailwind-merge`)
 
-
-
 ### Must Know
 
 1. What happens when two conflicting Tailwind classes are applied to the same element (e.g. `p-2 p-4`)?

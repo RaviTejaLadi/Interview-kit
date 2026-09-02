@@ -1,7 +1,5 @@
 # 11. Specificity Tuple Calculation
 
-
-
 Specificity is calculated as a 4-part vector `(A, B, C, D)`:
 
 ```text

@@ -1,7 +1,5 @@
 # 4. Hoisting & Temporal Dead Zone
 
-
-
 ### Must Know
 
 1. What is hoisting?

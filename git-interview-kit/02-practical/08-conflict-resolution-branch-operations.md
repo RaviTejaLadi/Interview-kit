@@ -1,7 +1,5 @@
 # 8. Conflict Resolution & Branch Operations
 
-
-
 ### Must Execute / Master
 
 1. Resolve merge conflicts manually by reading conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`), staging, and completing merge/rebase.

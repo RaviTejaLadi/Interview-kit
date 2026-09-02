@@ -1,7 +1,5 @@
 # 12. Arrays
 
-
-
 ### Must Know
 
 1. What is an array?

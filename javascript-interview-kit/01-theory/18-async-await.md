@@ -1,7 +1,5 @@
 # 18. Async/Await
 
-
-
 ### Must Know
 
 1. What is `async/await`?

@@ -1,7 +1,5 @@
 # 4. Aggregation Pipeline Framework
 
-
-
 ### Must Know
 
 1. What is the Aggregation Pipeline in MongoDB?

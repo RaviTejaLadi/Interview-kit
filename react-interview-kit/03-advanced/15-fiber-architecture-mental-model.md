@@ -1,7 +1,5 @@
 # 15. Fiber Architecture Mental Model
 
-
-
 You must be able to explain:
 
 ```text

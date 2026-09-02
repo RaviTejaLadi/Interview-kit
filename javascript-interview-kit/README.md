@@ -278,13 +278,13 @@
 
 ```javascript
 // Tests microtask vs macrotask execution order
-console.log("1");
+console.log('1');
 
-setTimeout(() => console.log("2"), 0);
+setTimeout(() => console.log('2'), 0);
 
-Promise.resolve().then(() => console.log("3"));
+Promise.resolve().then(() => console.log('3'));
 
-console.log("4");
+console.log('4');
 ```
 
 Expected output:
@@ -456,9 +456,9 @@ Expected output:
 
 Typical examples:
 
-* 🔎 Search input → Debounce
-* 📜 Scroll event → Throttle
-* 🖱️ Rapid button clicks → Debounce/throttle depending on behavior
+- 🔎 Search input → Debounce
+- 📜 Scroll event → Throttle
+- 🖱️ Rapid button clicks → Debounce/throttle depending on behavior
 
 ---
 
@@ -570,9 +570,9 @@ You should understand how these methods work internally.
 
 Also understand:
 
-* How `this` is passed.
-* Why `bind()` returns a new function.
-* Difference between the three methods.
+- How `this` is passed.
+- Why `bind()` returns a new function.
+- Difference between the three methods.
 
 ---
 
@@ -631,11 +631,11 @@ Also understand:
 
 ### Understand
 
-* Leading execution.
-* Trailing execution.
-* Canceling a pending debounce.
-* Real-world search input example.
-* Real-world scroll example.
+- Leading execution.
+- Trailing execution.
+- Canceling a pending debounce.
+- Real-world search input example.
+- Real-world scroll example.
 
 ---
 
@@ -663,39 +663,39 @@ You should practice predicting output involving:
 
 ### Scope & Hoisting
 
-* `var` vs `let`
-* Function hoisting
-* TDZ
-* Shadowing
+- `var` vs `let`
+- Function hoisting
+- TDZ
+- Shadowing
 
 ### Closures
 
-* Nested functions
-* Loops
-* Delayed callbacks
+- Nested functions
+- Loops
+- Delayed callbacks
 
 ### `this`
 
-* Regular functions
-* Arrow functions
-* Object methods
-* `call/apply/bind`
+- Regular functions
+- Arrow functions
+- Object methods
+- `call/apply/bind`
 
 ### Async JavaScript
 
-* Promises
-* `setTimeout`
-* `async/await`
-* Microtasks
-* Macrotasks
+- Promises
+- `setTimeout`
+- `async/await`
+- Microtasks
+- Macrotasks
 
 ### Type Coercion
 
-* `==`
-* `===`
-* `+`
-* `-`
-* Boolean conversion
+- `==`
+- `===`
+- `+`
+- `-`
+- Boolean conversion
 
 ---
 
@@ -709,16 +709,16 @@ These aren't separate huge question banks. They are concepts you should be able 
 
 Know:
 
-* `==` vs `===`
-* String conversion
-* Number conversion
-* Boolean conversion
-* `+` operator
-* `-` operator
-* Truthy/falsy values
-* `null`
-* `undefined`
-* `NaN`
+- `==` vs `===`
+- String conversion
+- Number conversion
+- Boolean conversion
+- `+` operator
+- `-` operator
+- Truthy/falsy values
+- `null`
+- `undefined`
+- `NaN`
 
 ---
 
@@ -726,12 +726,12 @@ Know:
 
 Know:
 
-* Reference assignment.
-* Spread operator.
-* `Object.assign()`.
-* `structuredClone()`.
-* Nested object references.
-* Why spread does not perform a deep clone.
+- Reference assignment.
+- Spread operator.
+- `Object.assign()`.
+- `structuredClone()`.
+- Nested object references.
+- Why spread does not perform a deep clone.
 
 ---
 
@@ -739,11 +739,11 @@ Know:
 
 Know:
 
-* What immutability means.
-* Mutation vs non-mutation.
-* Why immutable updates matter in frontend development.
-* How to immutably update objects.
-* How to immutably update arrays.
+- What immutability means.
+- Mutation vs non-mutation.
+- Why immutable updates matter in frontend development.
+- How to immutably update objects.
+- How to immutably update arrays.
 
 ---
 
@@ -767,11 +767,11 @@ Next task
 
 Especially understand:
 
-* `Promise.then()`
-* `queueMicrotask()`
-* `setTimeout()`
-* `setInterval()`
-* `async/await`
+- `Promise.then()`
+- `queueMicrotask()`
+- `setTimeout()`
+- `setInterval()`
+- `async/await`
 
 ---
 
@@ -855,20 +855,20 @@ If you want the highest-value coding practice:
 
 The following are intentionally **not part of the core preparation list**:
 
-* ❌ Design a Pub/Sub system
-* ❌ Design a Promise queue
-* ❌ Design a task scheduler
-* ❌ Design a rate limiter
-* ❌ Design a request manager
-* ❌ Design a middleware framework
-* ❌ Design a state-management library
-* ❌ Design a custom event system
-* ❌ Build an entire caching architecture
-* ❌ Build an autocomplete system from scratch
-* ❌ Complex generator problems
-* ❌ Advanced regex puzzles
-* ❌ Rare JavaScript engine internals
-* ❌ Obscure browser APIs
+- ❌ Design a Pub/Sub system
+- ❌ Design a Promise queue
+- ❌ Design a task scheduler
+- ❌ Design a rate limiter
+- ❌ Design a request manager
+- ❌ Design a middleware framework
+- ❌ Design a state-management library
+- ❌ Design a custom event system
+- ❌ Build an entire caching architecture
+- ❌ Build an autocomplete system from scratch
+- ❌ Complex generator problems
+- ❌ Advanced regex puzzles
+- ❌ Rare JavaScript engine internals
+- ❌ Obscure browser APIs
 
 These can be useful in **specialized senior/system-design interviews**, but they are not part of the **core JavaScript interview preparation** most developers need.
 
@@ -920,63 +920,63 @@ Follow this order instead of trying to memorize everything at once:
 
 ## Theory
 
-* JavaScript fundamentals
-* Variables
-* Primitive/reference types
-* Type coercion
-* Scope
-* Hoisting
-* TDZ
-* Execution context
-* Functions
-* Closures
-* `this`
-* `call/apply/bind`
-* Objects
-* Prototypes
-* Prototype chain
-* Classes
-* Arrays
-* Strings
-* Destructuring
-* Spread/rest
-* Shallow/deep copy
-* Immutability
-* Call stack
-* Event loop
-* Microtasks/macrotasks
-* Promises
-* Async/await
-* DOM
-* Events
-* Event delegation
-* ES6+
-* Modules
-* Map/Set
-* Error handling
-* Memory management
-* Debounce/throttle
+- JavaScript fundamentals
+- Variables
+- Primitive/reference types
+- Type coercion
+- Scope
+- Hoisting
+- TDZ
+- Execution context
+- Functions
+- Closures
+- `this`
+- `call/apply/bind`
+- Objects
+- Prototypes
+- Prototype chain
+- Classes
+- Arrays
+- Strings
+- Destructuring
+- Spread/rest
+- Shallow/deep copy
+- Immutability
+- Call stack
+- Event loop
+- Microtasks/macrotasks
+- Promises
+- Async/await
+- DOM
+- Events
+- Event delegation
+- ES6+
+- Modules
+- Map/Set
+- Error handling
+- Memory management
+- Debounce/throttle
 
 ## Coding
 
-* String problems
-* Array problems
-* Object problems
-* Two Sum
-* Sliding window
-* Frequency counting
-* Recursion basics
-* `map` polyfill
-* `filter` polyfill
-* `reduce` polyfill
-* `call` polyfill
-* `apply` polyfill
-* `bind` polyfill
-* Closure problems
-* Memoization
-* `Promise.all`
-* Async/await problems
-* Debounce
-* Throttle
-* DOM/event problems
-* Output-based questions
+- String problems
+- Array problems
+- Object problems
+- Two Sum
+- Sliding window
+- Frequency counting
+- Recursion basics
+- `map` polyfill
+- `filter` polyfill
+- `reduce` polyfill
+- `call` polyfill
+- `apply` polyfill
+- `bind` polyfill
+- Closure problems
+- Memoization
+- `Promise.all`
+- Async/await problems
+- Debounce
+- Throttle
+- DOM/event problems
+- Output-based questions

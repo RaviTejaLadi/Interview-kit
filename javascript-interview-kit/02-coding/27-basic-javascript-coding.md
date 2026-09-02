@@ -1,7 +1,5 @@
 # 27. Basic JavaScript Coding
 
-
-
 ### Must Solve
 
 1. Reverse a string.

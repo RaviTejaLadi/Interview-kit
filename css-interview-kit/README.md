@@ -174,14 +174,15 @@ Universal (*) & combinators (+, >, ~)         (0, 0, 0, 0)
 
 ## 12. Flexbox vs CSS Grid Cheatsheet ⭐⭐⭐⭐⭐
 
-* **Use Flexbox for:** 1D layouts (content flows in a line, toolbar, clusters, dynamic items).
-* **Use Grid for:** 2D layouts (rows and columns simultaneously, page scaffolding, card grids).
+- **Use Flexbox for:** 1D layouts (content flows in a line, toolbar, clusters, dynamic items).
+- **Use Grid for:** 2D layouts (rows and columns simultaneously, page scaffolding, card grids).
 
 ---
 
 # 🏆 TOP 25 — If You Have Very Little Time
 
 ### 🔥 Theory
+
 1. CSS Box Model (`content-box` vs `border-box`)
 2. Margin collapsing rules
 3. Specificity hierarchy calculation
@@ -199,6 +200,7 @@ Universal (*) & combinators (+, >, ~)         (0, 0, 0, 0)
 15. GPU-accelerated animation properties (`transform`, `opacity`)
 
 ### 💻 Coding
+
 16. 3 ways to center a `div`
 17. Holy grail layout with CSS Grid
 18. Responsive auto-fit card grid

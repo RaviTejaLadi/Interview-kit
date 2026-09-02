@@ -1,7 +1,5 @@
 # 5. Concurrency & Scaling: Processes vs Threads
 
-
-
 ### Must Know
 
 1. Why does Node.js only use 1 CPU core by default?

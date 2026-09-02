@@ -1,7 +1,5 @@
 # 9. Mentorship, Cross-Functional Collaboration & Leadership
 
-
-
 ### Must Know
 
 1. Tell me about a time you mentored or onboarded a junior engineer or intern.

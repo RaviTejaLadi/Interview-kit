@@ -1,7 +1,5 @@
 # 2. Motivation & Company Fit
 
-
-
 ### Must Know
 
 1. Why do you want to work at our company?

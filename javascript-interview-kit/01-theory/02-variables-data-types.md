@@ -1,7 +1,5 @@
 # 2. Variables & Data Types
 
-
-
 ### Must Know
 
 1. Difference between `var`, `let`, and `const`.

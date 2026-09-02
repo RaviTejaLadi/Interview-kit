@@ -1,7 +1,5 @@
 # 5. CSS Grid (2-Dimensional Layout)
 
-
-
 ### Must Know
 
 1. Flexbox vs CSS Grid: Architectural differences and when to use which.

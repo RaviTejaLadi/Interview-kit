@@ -1,7 +1,5 @@
 # 26. Debouncing & Throttling
 
-
-
 ### Must Know
 
 1. What is debouncing?
@@ -12,6 +10,6 @@
 
 Typical examples:
 
-* 🔎 Search input → Debounce
-* 📜 Scroll event → Throttle
-* 🖱️ Rapid button clicks → Debounce/throttle depending on behavior
+- 🔎 Search input → Debounce
+- 📜 Scroll event → Throttle
+- 🖱️ Rapid button clicks → Debounce/throttle depending on behavior

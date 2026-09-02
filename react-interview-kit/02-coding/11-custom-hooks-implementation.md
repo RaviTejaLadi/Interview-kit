@@ -1,7 +1,5 @@
 # 11. Custom Hooks Implementation
 
-
-
 ### Must Implement
 
 1. Implement `useDebounce(value, delay)`.

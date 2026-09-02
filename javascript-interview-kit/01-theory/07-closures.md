@@ -1,7 +1,5 @@
 # 7. Closures
 
-
-
 ### Must Know
 
 1. What is a closure?

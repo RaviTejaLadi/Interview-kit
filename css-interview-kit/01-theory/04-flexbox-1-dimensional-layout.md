@@ -1,7 +1,5 @@
 # 4. Flexbox (1-Dimensional Layout)
 
-
-
 ### Must Know
 
 1. What is Flexbox and what problem does it solve?

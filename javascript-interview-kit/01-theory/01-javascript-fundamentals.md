@@ -1,7 +1,5 @@
 # 1. JavaScript Fundamentals
 
-
-
 ### Must Know
 
 1. What is JavaScript?

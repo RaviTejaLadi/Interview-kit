@@ -1,7 +1,5 @@
 # 5. Replication, Consensus & High Availability
 
-
-
 ### Must Know
 
 1. What is a Replica Set in MongoDB?

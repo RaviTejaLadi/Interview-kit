@@ -1,7 +1,5 @@
 # 7. Advanced Hooks
 
-
-
 ### Must Know
 
 1. What is `useRef()`?

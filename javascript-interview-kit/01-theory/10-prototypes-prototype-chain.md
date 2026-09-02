@@ -1,7 +1,5 @@
 # 10. Prototypes & Prototype Chain
 
-
-
 ### Must Know
 
 1. What is a prototype?

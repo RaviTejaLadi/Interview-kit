@@ -1,7 +1,5 @@
 # 23. Map, Set, WeakMap & WeakSet
 
-
-
 ### Must Know
 
 1. What is `Map`?

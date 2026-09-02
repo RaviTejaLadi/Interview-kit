@@ -49,7 +49,7 @@
 4. Merge vs Rebase: Pros, cons, and trade-offs.
 5. When should you use Merge vs Rebase?
 6. What is **The Golden Rule of Rebasing**?
-   - *Never rebase commits that have been pushed to a public/shared branch!*
+   - _Never rebase commits that have been pushed to a public/shared branch!_
 7. What is commit squashing?
 8. What is `git push --force-with-lease` vs `git push --force`?
 
@@ -153,6 +153,7 @@ git reset --hard         ✅ YES         ✅ YES             ✅ YES (Destructiv
 # 🏆 TOP 25 — If You Have Very Little Time
 
 ### 🔥 Theory
+
 1. 4 Git object types (Blob, Tree, Commit, Tag)
 2. What a Git branch really is
 3. Three trees (Working Directory, Staging, HEAD)
@@ -170,6 +171,7 @@ git reset --hard         ✅ YES         ✅ YES             ✅ YES (Destructiv
 15. `git push --force-with-lease` vs `--force`
 
 ### 💻 Practical CLI
+
 16. Interactive rebase to squash commits (`git rebase -i`)
 17. Resolving merge conflicts step-by-step
 18. Recovering lost commits using `git reflog`

@@ -1,7 +1,5 @@
 # 3. Buffers, Streams & Backpressure
 
-
-
 ### Must Know
 
 1. What is a Buffer in Node.js?

@@ -1,7 +1,5 @@
 # 34. Promise Coding
 
-
-
 ### Must Implement
 
 1. Create a Promise from scratch at a basic level.

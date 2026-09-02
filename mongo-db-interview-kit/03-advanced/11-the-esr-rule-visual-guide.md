@@ -1,7 +1,5 @@
 # 11. The ESR Rule Visual Guide
 
-
-
 ```text
 Query: db.orders.find({ status: "active", total: { $gte: 100 } }).sort({ orderDate: -1 })
 

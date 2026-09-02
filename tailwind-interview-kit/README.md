@@ -149,6 +149,7 @@ export function cn(...inputs: ClassValue[]) {
 # 🏆 TOP 20 — If You Have Very Little Time
 
 ### 🔥 Theory
+
 1. Utility-first paradigm benefits & trade-offs
 2. JIT compiler & content array scanning
 3. Why dynamic interpolated classes fail (`text-${color}-500`)
@@ -166,6 +167,7 @@ export function cn(...inputs: ClassValue[]) {
 15. `aria-expanded:` and state variants
 
 ### 💻 Coding
+
 16. Implement the `cn` helper function
 17. Build a reusable Button component with `cva`
 18. Responsive Card with dark mode support
@@ -176,10 +178,10 @@ export function cn(...inputs: ClassValue[]) {
 
 # 🎯 WHAT YOU DO NOT NEED TO PRIORITIZE
 
-* ❌ Memorizing every single spacing and color hex code
-* ❌ Legacy PurgeCSS configs from Tailwind v1/v2
-* ❌ Building custom PostCSS plugins from scratch
-* ❌ Obscure CSS grid sub-properties rarely used in utility classes
+- ❌ Memorizing every single spacing and color hex code
+- ❌ Legacy PurgeCSS configs from Tailwind v1/v2
+- ❌ Building custom PostCSS plugins from scratch
+- ❌ Obscure CSS grid sub-properties rarely used in utility classes
 
 ---
 
@@ -208,16 +210,18 @@ export function cn(...inputs: ClassValue[]) {
 # ✅ FINAL CHECKLIST
 
 ## Theory
-* Utility-first principles
-* JIT compiler scanning
-* `tailwind.config.js` (`extend`)
-* Breakpoint logic (`sm`, `md`, `lg`)
-* Dark mode configuration
-* `group` and `peer`
-* `tailwind-merge` rationale
+
+- Utility-first principles
+- JIT compiler scanning
+- `tailwind.config.js` (`extend`)
+- Breakpoint logic (`sm`, `md`, `lg`)
+- Dark mode configuration
+- `group` and `peer`
+- `tailwind-merge` rationale
 
 ## Coding
-* `cn` utility function
-* Reusable Button with `cva`
-* Responsive Product Card
-* Responsive Navbar
+
+- `cn` utility function
+- Reusable Button with `cva`
+- Responsive Product Card
+- Responsive Navbar

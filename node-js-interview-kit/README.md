@@ -174,6 +174,7 @@
 # 🏆 TOP 25 — If You Have Very Little Time
 
 ### 🔥 Theory
+
 1. V8 Engine vs Libuv
 2. Single-threaded model vs Libuv thread pool
 3. 6 phases of Libuv event loop
@@ -191,6 +192,7 @@
 15. Rate limiting algorithms
 
 ### 💻 Coding
+
 16. Large file streaming with `Transform` stream
 17. Rate limiter middleware from scratch
 18. Graceful shutdown with connection draining

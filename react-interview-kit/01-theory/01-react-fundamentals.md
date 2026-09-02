@@ -1,7 +1,5 @@
 # 1. React Fundamentals
 
-
-
 ### Must Know
 
 1. What is React?

@@ -1,7 +1,5 @@
 # 3. Component Lifecycle & Hooks Basics
 
-
-
 ### Must Know
 
 1. What are the phases of component lifecycle (Mount, Update, Unmount)?

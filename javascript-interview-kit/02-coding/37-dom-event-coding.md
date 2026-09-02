@@ -1,7 +1,5 @@
 # 37. DOM & Event Coding
 
-
-
 ### Must Build / Implement
 
 1. Event delegation.

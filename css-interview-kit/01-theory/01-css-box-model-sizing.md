@@ -1,7 +1,5 @@
 # 1. CSS Box Model & Sizing
 
-
-
 ### Must Know
 
 1. What is the CSS Box Model?

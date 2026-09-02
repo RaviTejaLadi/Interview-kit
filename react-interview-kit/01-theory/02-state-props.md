@@ -1,7 +1,5 @@
 # 2. State & Props
 
-
-
 ### Must Know
 
 1. What is state in React?

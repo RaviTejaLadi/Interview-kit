@@ -1,7 +1,5 @@
 # 30. Object Problems
 
-
-
 ### Must Solve
 
 1. Clone an object.

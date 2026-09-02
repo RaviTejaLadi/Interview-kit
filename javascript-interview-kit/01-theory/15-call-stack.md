@@ -1,7 +1,5 @@
 # 15. Call Stack
 
-
-
 ### Must Know
 
 1. What is the call stack?

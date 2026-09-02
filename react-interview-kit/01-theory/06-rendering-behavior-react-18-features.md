@@ -1,7 +1,5 @@
 # 6. Rendering Behavior & React 18 Features
 
-
-
 ### Must Know
 
 1. What triggers a re-render in a React component?

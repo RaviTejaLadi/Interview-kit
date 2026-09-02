@@ -1,7 +1,5 @@
 # 21. ES6+ Features
 
-
-
 ### Must Know
 
 1. `let` and `const`.

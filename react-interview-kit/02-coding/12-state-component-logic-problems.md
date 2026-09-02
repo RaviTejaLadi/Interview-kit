@@ -1,7 +1,5 @@
 # 12. State & Component Logic Problems
 
-
-
 ### Must Solve
 
 1. Build a counter with step, increment, decrement, and reset.

@@ -1,7 +1,5 @@
 # 31. Array Method Polyfills
 
-
-
 You should understand how these methods work internally.
 
 ### Must Implement

@@ -1,7 +1,5 @@
 # 9. Disaster Recovery Scenarios
 
-
-
 ### Must Execute / Master
 
 1. **Accidental Hard Reset Recovery:** Recover from an accidental `git reset --hard HEAD~3` using `git reflog` and restoring branch pointers.

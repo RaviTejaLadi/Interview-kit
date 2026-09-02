@@ -1,7 +1,5 @@
 # 4. Modules & Module Resolution
 
-
-
 ### Must Know
 
 1. CommonJS (`require`, `module.exports`) vs ES Modules (`import`, `export`).

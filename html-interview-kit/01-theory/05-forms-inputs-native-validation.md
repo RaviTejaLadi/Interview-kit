@@ -1,7 +1,5 @@
 # 5. Forms, Inputs & Native Validation
 
-
-
 ### Must Know
 
 1. What is the `<form>` element and how does it submit data?

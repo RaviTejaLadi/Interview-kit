@@ -1,7 +1,5 @@
 # 2. JIT (Just-In-Time) Engine & Compilation
 
-
-
 ### Must Know
 
 1. What is the Tailwind JIT (Just-In-Time) compiler?

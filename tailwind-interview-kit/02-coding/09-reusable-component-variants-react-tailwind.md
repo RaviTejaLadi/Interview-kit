@@ -1,7 +1,5 @@
 # 9. Reusable Component Variants (React + Tailwind)
 
-
-
 ### Must Implement
 
 1. Implement the `cn(...)` utility using `clsx` and `tailwind-merge`.

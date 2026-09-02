@@ -1,7 +1,5 @@
 # 28. Array Problems
 
-
-
 ### Must Solve
 
 1. Remove duplicates from an array.

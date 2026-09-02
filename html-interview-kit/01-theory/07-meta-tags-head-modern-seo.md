@@ -1,7 +1,5 @@
 # 7. Meta Tags, Head & Modern SEO
 
-
-
 ### Must Know
 
 1. What is the purpose of `<head>`?

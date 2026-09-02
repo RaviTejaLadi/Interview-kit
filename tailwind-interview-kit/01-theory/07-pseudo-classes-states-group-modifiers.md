@@ -1,7 +1,5 @@
 # 7. Pseudo-classes, States & Group Modifiers
 
-
-
 ### Must Know
 
 1. How do you style pseudo-classes (`hover:`, `focus:`, `active:`, `focus-visible:`, `disabled:`)?

@@ -1,7 +1,5 @@
 # 9. Middleware & Server Coding
 
-
-
 ### Must Implement
 
 1. Build an in-memory sliding window rate limiter middleware from scratch.

@@ -1,7 +1,5 @@
 # 6. Functions
 
-
-
 ### Must Know
 
 1. Function declaration vs function expression.

@@ -1,7 +1,5 @@
 # 8. React Performance Optimization
 
-
-
 ### Must Know
 
 1. How do you identify unnecessary re-renders (React DevTools Profiler)?

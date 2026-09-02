@@ -1,7 +1,5 @@
 # 6. Error Handling & Process Lifecycle
 
-
-
 ### Must Know
 
 1. Operational errors vs Programmer errors.

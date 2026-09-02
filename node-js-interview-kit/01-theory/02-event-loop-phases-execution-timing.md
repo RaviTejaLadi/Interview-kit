@@ -1,7 +1,5 @@
 # 2. Event Loop Phases & Execution Timing
 
-
-
 ### Must Know
 
 1. What are the 6 phases of the Libuv Event Loop?

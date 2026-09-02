@@ -1,7 +1,5 @@
 # 10. Transactions & CRUD Operations Coding
 
-
-
 ### Must Implement
 
 1. Implement a bank transfer function executing an atomic multi-document transaction with session rollback.

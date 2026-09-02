@@ -1,7 +1,5 @@
 # 13. Strings
 
-
-
 ### Must Know
 
 1. Are JavaScript strings mutable?

@@ -1,7 +1,5 @@
 # 5. Execution Context
 
-
-
 ### Must Know
 
 1. What is an execution context?

@@ -1,7 +1,5 @@
 # 2. Schema Design: Embedding vs Referencing
 
-
-
 ### Must Know
 
 1. What is Embedding (Denormalization)?

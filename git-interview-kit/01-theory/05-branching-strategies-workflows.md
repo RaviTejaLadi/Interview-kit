@@ -1,7 +1,5 @@
 # 5. Branching Strategies & Workflows
 
-
-
 ### Must Know
 
 1. What is **GitFlow** and what are its branches (`main`, `develop`, `feature/*`, `release/*`, `hotfix/*`)?

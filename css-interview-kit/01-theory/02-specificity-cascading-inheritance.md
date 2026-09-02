@@ -1,7 +1,5 @@
 # 2. Specificity, Cascading & Inheritance
 
-
-
 ### Must Know
 
 1. What is the Cascade in CSS?

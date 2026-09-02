@@ -1,7 +1,5 @@
 # 17. Promises
 
-
-
 ### Must Know
 
 1. What is a Promise?

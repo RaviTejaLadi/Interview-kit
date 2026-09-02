@@ -1,7 +1,5 @@
 # 8. `this` Keyword
 
-
-
 ### Must Know
 
 1. What is `this`?

@@ -1,7 +1,5 @@
 # 8. Modern HTML5 APIs
 
-
-
 ### Must Know
 
 1. What is the native `<dialog>` element and `showModal()` API?

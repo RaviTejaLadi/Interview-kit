@@ -1,7 +1,5 @@
 # 3. Rendering Strategies: SSR, SSG, ISR & CSR
 
-
-
 ### Must Know
 
 1. What is Static Site Generation (SSG)?

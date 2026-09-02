@@ -1,7 +1,5 @@
 # 3. Merge vs Rebase & The Golden Rule
 
-
-
 ### Must Know
 
 1. What is `git merge` and what is a 3-way merge commit?
@@ -10,7 +8,7 @@
 4. Merge vs Rebase: Pros, cons, and trade-offs.
 5. When should you use Merge vs Rebase?
 6. What is **The Golden Rule of Rebasing**?
-   - *Never rebase commits that have been pushed to a public/shared branch!*
+   - _Never rebase commits that have been pushed to a public/shared branch!_
 7. What is commit squashing?
 8. What is `git push --force-with-lease` vs `git push --force`?
 

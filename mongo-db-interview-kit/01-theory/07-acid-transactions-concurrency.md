@@ -1,7 +1,5 @@
 # 7. ACID Transactions & Concurrency
 
-
-
 ### Must Know
 
 1. Are single-document operations in MongoDB atomic?

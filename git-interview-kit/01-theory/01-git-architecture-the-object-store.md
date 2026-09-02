@@ -1,7 +1,5 @@
 # 1. Git Architecture & The Object Store
 
-
-
 ### Must Know
 
 1. What is Git and how does it differ from centralized VCS (like SVN)?

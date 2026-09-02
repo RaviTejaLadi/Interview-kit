@@ -1,7 +1,5 @@
 # 3. Configuration & Design Tokens (`tailwind.config.js`)
 
-
-
 ### Must Know
 
 1. What is `tailwind.config.js` and what is its role?

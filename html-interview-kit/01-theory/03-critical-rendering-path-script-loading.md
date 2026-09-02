@@ -1,7 +1,5 @@
 # 3. Critical Rendering Path & Script Loading
 
-
-
 ### Must Know
 
 1. How does the browser parse HTML into the DOM tree?
