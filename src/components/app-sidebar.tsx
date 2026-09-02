@@ -1,9 +1,12 @@
 import * as React from "react"
 import {
+  BookIcon,
   BookOpenTextIcon,
   ChevronRightIcon,
-  FileTextIcon,
+  Code2Icon,
   FolderIcon,
+  ListTreeIcon,
+  SparklesIcon,
   SearchIcon,
 } from "lucide-react"
 import cssKitIcon from "../../assets/kits-svgs/css.svg"
@@ -139,6 +142,38 @@ function buildKitMenus(groups: TopicGroup[]): KitMenu[] {
   })
 }
 
+function getRootTopicIcon(title: string) {
+  const normalizedTitle = title.trim().toLowerCase()
+
+  if (normalizedTitle === "overview") {
+    return BookIcon
+  }
+
+  if (normalizedTitle === "topics") {
+    return ListTreeIcon
+  }
+
+  return null
+}
+
+function getSectionIcon(section: KitSection) {
+  const normalizedKey = `${section.id} ${section.label}`.toLowerCase()
+
+  if (normalizedKey.includes("theory")) {
+    return BookOpenTextIcon
+  }
+
+  if (normalizedKey.includes("coding") || normalizedKey.includes("code")) {
+    return Code2Icon
+  }
+
+  if (normalizedKey.includes("advanced")) {
+    return SparklesIcon
+  }
+
+  return FolderIcon
+}
+
 export function AppSidebar({
   groups,
   searchValue,
@@ -236,18 +271,22 @@ export function AppSidebar({
                       <div className="space-y-2 border-l border-sidebar-border/55 pl-4 pr-2 pb-2 pt-1 group-data-[collapsible=icon]:hidden dark:border-sidebar-border/28">
                         {kit.rootTopics.length > 0 && (
                           <div className="space-y-1">
-                            {kit.rootTopics.map((topic) => (
-                              <SidebarMenuButton
-                                key={topic.id}
-                                size="sm"
-                                isActive={selectedTopicId === topic.id}
-                                onClick={() => onSelectTopic(topic.id)}
-                                className="h-auto rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
-                              >
-                                <FileTextIcon className="mt-0.5 shrink-0" />
-                                <span className="line-clamp-2 leading-tight">{topic.title}</span>
-                              </SidebarMenuButton>
-                            ))}
+                            {kit.rootTopics.map((topic) => {
+                              const RootTopicIcon = getRootTopicIcon(topic.title)
+
+                              return (
+                                <SidebarMenuButton
+                                  key={topic.id}
+                                  size="sm"
+                                  isActive={selectedTopicId === topic.id}
+                                  onClick={() => onSelectTopic(topic.id)}
+                                  className="h-auto rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
+                                >
+                                  {RootTopicIcon ? <RootTopicIcon className="mt-0.5 shrink-0" /> : null}
+                                  <span className="line-clamp-2 leading-tight">{topic.title}</span>
+                                </SidebarMenuButton>
+                              )
+                            })}
                           </div>
                         )}
 
@@ -255,6 +294,7 @@ export function AppSidebar({
                           const sectionHasSelectedTopic =
                             selectedTopicId !== null &&
                             section.topics.some((topic) => topic.id === selectedTopicId)
+                          const SectionIcon = getSectionIcon(section)
 
                           return (
                             <Collapsible
@@ -272,6 +312,7 @@ export function AppSidebar({
                                   />
                                 }
                               >
+                                <SectionIcon className="size-3.5 shrink-0" />
                                 <span>{section.label}</span>
                                 <ChevronRightIcon className="ml-auto size-3.5 transition-transform duration-200 group-data-open/section-collapsible:rotate-90" />
                               </CollapsibleTrigger>
@@ -285,7 +326,6 @@ export function AppSidebar({
                                       onClick={() => onSelectTopic(topic.id)}
                                       className="h-auto rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
                                     >
-                                      <FileTextIcon className="mt-0.5 shrink-0" />
                                       <span className="line-clamp-2 leading-tight">{topic.title}</span>
                                     </SidebarMenuButton>
                                   ))}
