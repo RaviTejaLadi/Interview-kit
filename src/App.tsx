@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ChangeEvent } from 'react';
 import { BookOpenText, Search } from 'lucide-react';
 import rehypeRaw from 'rehype-raw';
 import ReactMarkdown from 'react-markdown';
@@ -7,10 +7,10 @@ import remarkGfm from 'remark-gfm';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import { buildTopicIndex } from '@/lib/content-index';
+import { buildTopicIndex, type Topic, type TopicGroup } from '@/lib/content-index';
 
-let allTopics = [];
-let groups = [];
+let allTopics: Topic[] = [];
+let groups: TopicGroup[] = [];
 
 try {
   const topicIndex = buildTopicIndex();
@@ -20,18 +20,18 @@ try {
   console.error('Failed to build topic index:', error);
 }
 
-function hasOwn(obj, key) {
+function hasOwn(obj: Record<string, string>, key: string) {
   return Object.prototype.hasOwnProperty.call(obj, key);
 }
 
 function App() {
   const [searchValue, setSearchValue] = useState('');
   const [selectedTopicId, setSelectedTopicId] = useState(allTopics[0]?.id ?? null);
-  const [topicContentById, setTopicContentById] = useState({});
+  const [topicContentById, setTopicContentById] = useState<Record<string, string>>({});
   const [isLoadingTopic, setIsLoadingTopic] = useState(false);
   const [topicLoadError, setTopicLoadError] = useState('');
 
-  const filteredGroups = useMemo(() => {
+  const filteredGroups = useMemo<TopicGroup[]>(() => {
     const query = searchValue.trim().toLowerCase();
 
     if (!query) {
@@ -120,7 +120,7 @@ function App() {
               className="pl-8"
               placeholder="Search topics..."
               value={searchValue}
-              onChange={(event) => setSearchValue(event.target.value)}
+              onChange={(event: ChangeEvent<HTMLInputElement>) => setSearchValue(event.target.value)}
             />
           </div>
         </div>

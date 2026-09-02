@@ -1,7 +1,26 @@
-const markdownModules = import.meta.glob('../interview-kits/*-interview-kit/**/*.md', {
+const markdownModules = import.meta.glob<string>(
+  '../interview-kits/*-interview-kit/**/*.md',
+  {
   import: 'default',
   query: '?raw',
-});
+  },
+);
+
+export type Topic = {
+  id: string;
+  title: string;
+  section: string;
+  path: string;
+  kitKey: string;
+  kitLabel: string;
+  loadContent: () => Promise<string>;
+};
+
+export type TopicGroup = {
+  id: string;
+  label: string;
+  topics: Topic[];
+};
 
 const KIT_ORDER = [
   'javascript-interview-kit',
@@ -16,7 +35,7 @@ const KIT_ORDER = [
   'hr-interview-kit',
 ];
 
-const KIT_LABELS = {
+const KIT_LABELS: Record<string, string> = {
   'javascript-interview-kit': 'JavaScript',
   'react-interview-kit': 'React',
   'html-interview-kit': 'HTML',
@@ -29,7 +48,7 @@ const KIT_LABELS = {
   'hr-interview-kit': 'HR Round',
 };
 
-function toTitleCase(value) {
+function toTitleCase(value: string) {
   return value
     .replace(/^\d+[-_]?/, '')
     .replace(/[-_]/g, ' ')
@@ -38,11 +57,11 @@ function toTitleCase(value) {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-function parseTopic(importPath, loadContent) {
+function parseTopic(importPath: string, loadContent: () => Promise<string>): Topic {
   const relativePath = importPath.replace('../interview-kits/', '');
   const parts = relativePath.split('/');
   const lastPart = parts[parts.length - 1];
-  const fileName = (lastPart ? lastPart.replace('.md', '') : 'Untitled');
+  const fileName = lastPart ? lastPart.replace('.md', '') : 'Untitled';
   const kitKey = parts[0] ?? 'unknown-kit';
   const section = parts[1] ? toTitleCase(parts[1]) : 'General';
   const title = fileName.toLowerCase() === 'readme' ? 'Overview' : toTitleCase(fileName);
@@ -72,9 +91,12 @@ export function buildTopicIndex() {
       });
     }
 
-    acc.get(topic.kitKey).topics.push(topic);
+    const group = acc.get(topic.kitKey);
+    if (group) {
+      group.topics.push(topic);
+    }
     return acc;
-  }, new Map());
+  }, new Map<string, TopicGroup>());
 
   const groups = Array.from(grouped.values()).sort((a, b) => {
     const indexA = KIT_ORDER.indexOf(a.id);
