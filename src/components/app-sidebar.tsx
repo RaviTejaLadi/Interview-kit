@@ -6,6 +6,16 @@ import {
   FolderIcon,
   SearchIcon,
 } from "lucide-react"
+import cssKitIcon from "../../assets/kits-svgs/css.svg"
+import gitKitIcon from "../../assets/kits-svgs/git.svg"
+import htmlKitIcon from "../../assets/kits-svgs/html.svg"
+import javascriptKitIcon from "../../assets/kits-svgs/javascript.svg"
+import mongodbKitIcon from "../../assets/kits-svgs/mongodb.svg"
+import nextjsKitIcon from "../../assets/kits-svgs/nextjs.svg"
+import nodejsKitIcon from "../../assets/kits-svgs/nodejs.svg"
+import reactKitIcon from "../../assets/kits-svgs/react.svg"
+import tailwindKitIcon from "../../assets/kits-svgs/tailwind.svg"
+import hrKitIcon from "../../assets/kits-svgs/hr.svg"
 
 import type { TopicGroup } from "@/lib/content-index"
 import {
@@ -46,6 +56,19 @@ type KitMenu = {
   label: string
   rootTopics: TopicGroup["topics"]
   sections: KitSection[]
+}
+
+const KIT_ICON_BY_ID: Record<string, string> = {
+  "javascript-interview-kit": javascriptKitIcon,
+  "react-interview-kit": reactKitIcon,
+  "html-interview-kit": htmlKitIcon,
+  "css-interview-kit": cssKitIcon,
+  "tailwind-interview-kit": tailwindKitIcon,
+  "next-js-interview-kit": nextjsKitIcon,
+  "node-js-interview-kit": nodejsKitIcon,
+  "mongo-db-interview-kit": mongodbKitIcon,
+  "git-interview-kit": gitKitIcon,
+  "hr-interview-kit": hrKitIcon,
 }
 
 function toSectionLabel(value: string) {
@@ -145,6 +168,7 @@ export function AppSidebar({
                     kit.sections.some((section) =>
                       section.topics.some((topic) => topic.id === selectedTopicId),
                     ))
+                const kitIcon = KIT_ICON_BY_ID[kit.id]
 
                 return (
                   <Collapsible
@@ -156,7 +180,16 @@ export function AppSidebar({
                     <CollapsibleTrigger
                       render={<SidebarMenuButton tooltip={kit.label} className="font-medium" />}
                     >
-                      <FolderIcon />
+                      {kitIcon ? (
+                        <img
+                          src={kitIcon}
+                          alt=""
+                          aria-hidden="true"
+                          className="size-4 shrink-0 object-contain"
+                        />
+                      ) : (
+                        <FolderIcon />
+                      )}
                       <span>{kit.label}</span>
                       <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-open/collapsible:rotate-90" />
                     </CollapsibleTrigger>
