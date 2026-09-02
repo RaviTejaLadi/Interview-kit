@@ -1,4 +1,4 @@
-const markdownModules = import.meta.glob('../../*-interview-kit/**/*.md', {
+const markdownModules = import.meta.glob('../interview-kits/*-interview-kit/**/*.md', {
   import: 'default',
   query: '?raw',
 });
@@ -39,7 +39,7 @@ function toTitleCase(value) {
 }
 
 function parseTopic(importPath, loadContent) {
-  const relativePath = importPath.replace('../../', '');
+  const relativePath = importPath.replace('../interview-kits/', '');
   const parts = relativePath.split('/');
   const lastPart = parts[parts.length - 1];
   const fileName = (lastPart ? lastPart.replace('.md', '') : 'Untitled');
