@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react"
 import { MoonIcon, SunIcon } from "lucide-react"
 import rehypeRaw from "rehype-raw"
-import ReactMarkdown from "react-markdown"
+import ReactMarkdown, { type Components } from "react-markdown"
 import remarkGfm from "remark-gfm"
 import cssKitIcon from "../assets/kits-svgs/css.svg"
 import gitKitIcon from "../assets/kits-svgs/git.svg"
@@ -22,6 +22,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { buildTopicIndex, type Topic, type TopicGroup } from "@/lib/content-index"
+import { cn } from "@/lib/utils"
 
 let allTopics: Topic[] = [];
 let groups: TopicGroup[] = [];
@@ -55,6 +56,132 @@ const KIT_ICON_BY_KEY: Record<string, string> = {
   "mongo-db-interview-kit": mongodbKitIcon,
   "git-interview-kit": gitKitIcon,
   "hr-interview-kit": hrKitIcon,
+}
+
+const markdownComponents: Components = {
+  h1: ({ className, ...props }) => (
+    <h1
+      className={cn(
+        "mt-2 scroll-m-20 text-3xl font-bold tracking-tight text-foreground md:text-4xl",
+        className,
+      )}
+      {...props}
+    />
+  ),
+  h2: ({ className, ...props }) => (
+    <h2
+      className={cn(
+        "mt-10 scroll-m-20 border-b border-border/70 pb-2 text-2xl font-semibold tracking-tight text-foreground first:mt-0",
+        className,
+      )}
+      {...props}
+    />
+  ),
+  h3: ({ className, ...props }) => (
+    <h3
+      className={cn("mt-8 scroll-m-20 text-xl font-semibold tracking-tight text-foreground", className)}
+      {...props}
+    />
+  ),
+  h4: ({ className, ...props }) => (
+    <h4 className={cn("mt-6 scroll-m-20 text-lg font-semibold text-foreground", className)} {...props} />
+  ),
+  p: ({ className, ...props }) => (
+    <p className={cn("leading-7 text-foreground/90 not-first:mt-5", className)} {...props} />
+  ),
+  ul: ({ className, ...props }) => (
+    <ul className={cn("my-5 ml-6 list-disc space-y-2 marker:text-primary", className)} {...props} />
+  ),
+  ol: ({ className, ...props }) => (
+    <ol className={cn("my-5 ml-6 list-decimal space-y-2 marker:text-primary", className)} {...props} />
+  ),
+  li: ({ className, ...props }) => (
+    <li className={cn("pl-1 text-foreground/90", className)} {...props} />
+  ),
+  blockquote: ({ className, ...props }) => (
+    <blockquote
+      className={cn(
+        "my-6 rounded-r-xl border-l-4 border-primary/65 bg-muted/35 px-4 py-3 text-foreground/85 italic",
+        className,
+      )}
+      {...props}
+    />
+  ),
+  hr: ({ className, ...props }) => (
+    <hr className={cn("my-8 border-border/70", className)} {...props} />
+  ),
+  a: ({ className, href, rel, target, ...props }) => {
+    const isAnchorLink = href?.startsWith("#")
+
+    return (
+      <a
+        href={href}
+        target={isAnchorLink ? target : target ?? "_blank"}
+        rel={isAnchorLink ? rel : rel ?? "noreferrer noopener"}
+        className={cn(
+          "font-medium text-primary underline decoration-primary/45 underline-offset-4 transition-colors hover:text-primary/80",
+          className,
+        )}
+        {...props}
+      />
+    )
+  },
+  table: ({ className, ...props }) => (
+    <div className="my-6 overflow-x-auto rounded-xl border border-border/70 bg-card/70">
+      <table className={cn("w-full min-w-xl border-collapse text-sm", className)} {...props} />
+    </div>
+  ),
+  thead: ({ className, ...props }) => <thead className={cn("bg-muted/60", className)} {...props} />,
+  tbody: ({ className, ...props }) => <tbody className={cn("divide-y divide-border/60", className)} {...props} />,
+  th: ({ className, ...props }) => (
+    <th
+      className={cn("border-b border-border/75 px-4 py-2.5 text-left font-semibold text-foreground", className)}
+      {...props}
+    />
+  ),
+  td: ({ className, ...props }) => (
+    <td className={cn("px-4 py-2.5 align-top text-foreground/88", className)} {...props} />
+  ),
+  img: ({ className, alt, ...props }) => (
+    <img
+      className={cn("my-6 rounded-xl border border-border/70 shadow-sm", className)}
+      alt={alt ?? "Markdown image"}
+      loading="lazy"
+      {...props}
+    />
+  ),
+  pre: ({ className, ...props }) => (
+    <pre
+      className={cn(
+        "my-6 overflow-x-auto rounded-xl border border-primary/25 bg-slate-950 p-4 text-[13px] leading-relaxed text-slate-100 shadow-inner dark:border-primary/35",
+        className,
+      )}
+      {...props}
+    />
+  ),
+  code: ({ className, children, ...props }) => {
+    const isBlock = Boolean(className?.includes("language-"))
+
+    if (isBlock) {
+      return (
+        <code className={cn("font-mono text-[13px] leading-relaxed", className)} {...props}>
+          {children}
+        </code>
+      )
+    }
+
+    return (
+      <code
+        className={cn(
+          "rounded-md border border-border/60 bg-muted/65 px-1.5 py-0.5 font-mono text-[0.85em] text-foreground",
+          className,
+        )}
+        {...props}
+      >
+        {children}
+      </code>
+    )
+  },
 }
 
 function getInitialTheme(): Theme {
@@ -228,8 +355,12 @@ function App() {
                   Could not load this file. {topicLoadError}
                 </p>
               ) : (
-                <div className="markdown-body prose prose-slate max-w-none prose-headings:tracking-tight prose-a:text-primary dark:prose-invert">
-                  <ReactMarkdown rehypePlugins={[rehypeRaw]} remarkPlugins={[remarkGfm]}>
+                <div className="markdown-body markdown-preview max-w-none">
+                  <ReactMarkdown
+                    rehypePlugins={[rehypeRaw]}
+                    remarkPlugins={[remarkGfm]}
+                    components={markdownComponents}
+                  >
                     {selectedTopicContent}
                   </ReactMarkdown>
                 </div>
