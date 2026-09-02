@@ -162,7 +162,7 @@ export function AppSidebar({
       {...props}
     >
       <SidebarHeader className="gap-3 border-b border-sidebar-border/70 bg-sidebar/92 px-2 pb-3 pt-2 backdrop-blur dark:border-sidebar-border/35">
-        <div className="flex items-center gap-2 rounded-xl border border-sidebar-border/65 bg-sidebar-accent/24 px-2.5 py-2 dark:border-sidebar-border/30">
+        <div className="flex items-center gap-2 rounded-md border border-sidebar-border/65 bg-sidebar-accent/24 px-2.5 py-2 dark:border-sidebar-border/30">
           <BookOpenTextIcon className="size-4 shrink-0 text-sidebar-primary" />
           <div className="grid min-w-0 flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
             <span className="truncate font-semibold">Interview Kit Portal</span>
@@ -177,7 +177,7 @@ export function AppSidebar({
               onChange={(event) => onSearchChange(event.target.value)}
               aria-label="Search topics"
               placeholder="Search topics..."
-              className="h-9 rounded-lg border-sidebar-border/70 bg-sidebar-accent/22 pl-8 shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring dark:border-sidebar-border/35 dark:bg-sidebar-accent/40"
+              className="h-9 rounded-md border-sidebar-border/70 bg-sidebar-accent/22 pl-8 shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring dark:border-sidebar-border/35 dark:bg-sidebar-accent/40"
             />
           </div>
         </div>
@@ -214,7 +214,7 @@ export function AppSidebar({
                         <SidebarMenuButton
                           tooltip={kit.label}
                           isActive={kitHasSelectedTopic}
-                          className="h-9 rounded-lg border border-sidebar-border/65 bg-sidebar-accent/24 font-semibold text-sidebar-foreground data-[active=true]:border-sidebar-primary/40 data-[active=true]:bg-sidebar-primary/16 data-[active=true]:text-sidebar-primary dark:border-sidebar-border/30 dark:bg-sidebar-accent/35 dark:data-[active=true]:border-sidebar-primary/45 dark:data-[active=true]:bg-sidebar-primary/25"
+                          className="h-9 rounded-md border border-sidebar-border/65 bg-sidebar-accent/24 font-semibold text-sidebar-foreground data-[active=true]:border-sidebar-primary/40 data-[active=true]:bg-sidebar-primary/16 data-[active=true]:text-sidebar-primary dark:border-sidebar-border/30 dark:bg-sidebar-accent/35 dark:data-[active=true]:border-sidebar-primary/45 dark:data-[active=true]:bg-sidebar-primary/25"
                         />
                       }
                     >
@@ -242,7 +242,7 @@ export function AppSidebar({
                                 size="sm"
                                 isActive={selectedTopicId === topic.id}
                                 onClick={() => onSelectTopic(topic.id)}
-                                className="h-auto rounded-lg py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
+                                className="h-auto rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
                               >
                                 <FileTextIcon className="mt-0.5 shrink-0" />
                                 <span className="line-clamp-2 leading-tight">{topic.title}</span>
@@ -268,7 +268,7 @@ export function AppSidebar({
                                     size="sm"
                                     tooltip={section.label}
                                     isActive={sectionHasSelectedTopic}
-                                    className="h-7 rounded-lg text-[11px] font-semibold tracking-[0.06em] uppercase text-sidebar-foreground/80 data-[active=true]:bg-sidebar-primary/12 data-[active=true]:text-sidebar-primary dark:data-[active=true]:bg-sidebar-primary/20"
+                                    className="h-7 rounded-md text-[11px] font-semibold tracking-[0.06em] uppercase text-sidebar-foreground/80 data-[active=true]:bg-sidebar-primary/12 data-[active=true]:text-sidebar-primary dark:data-[active=true]:bg-sidebar-primary/20"
                                   />
                                 }
                               >
@@ -283,7 +283,7 @@ export function AppSidebar({
                                       size="sm"
                                       isActive={selectedTopicId === topic.id}
                                       onClick={() => onSelectTopic(topic.id)}
-                                      className="h-auto rounded-lg py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
+                                      className="h-auto rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
                                     >
                                       <FileTextIcon className="mt-0.5 shrink-0" />
                                       <span className="line-clamp-2 leading-tight">{topic.title}</span>
