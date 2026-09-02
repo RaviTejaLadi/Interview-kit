@@ -34,26 +34,20 @@
 
 ## 🏆 Master 30-Day Preparation Blueprint
 
-```text
-Week 1: Foundations
-  Days 1–3:   HTML & Accessibility Landmarks
-  Days 4–7:   CSS (Box Model, Specificity, Flexbox & Grid) + Tailwind CSS
+| Week | Days | Focus | Topics |
+| :--- | :--- | :--- | :--- |
+| **Week 1** | 1–3 | Foundations | HTML & Accessibility Landmarks |
+| | 4–7 | | CSS (Box Model, Specificity, Flexbox & Grid) + Tailwind CSS |
+| **Week 2** | 8–10 | Core JavaScript Mastery | JS Scope, Closures, Execution Context & `this` |
+| | 11–12 | | Event Loop, Microtasks & Promises |
+| | 13–14 | | JS Coding: Array/String Algorithms & Polyfills |
+| **Week 3** | 15–18 | Frontend Frameworks | React (Fiber, Hooks, Reconciliation & Performance) |
+| | 19–21 | | Next.js (App Router, Server Components, ISR & Caching) |
+| **Week 4** | 22–24 | Backend, Database, Version Control & HR | Node.js (Libuv, Event Loop Phases & Streams) |
+| | 25–27 | | MongoDB (Schema Design, ESR Indexing & Aggregations) |
+| | 28–29 | | Git (Internals, Merge vs Rebase, Disaster Recovery) |
+| | 30 | | HR Round (STAR stories, salary negotiation, closing questions) |
 
-Week 2: Core JavaScript Mastery
-  Days 8–10:  JS Scope, Closures, Execution Context & 'this'
-  Days 11–12: Event Loop, Microtasks & Promises
-  Days 13–14: JS Coding: Array/String Algorithms & Polyfills
-
-Week 3: Frontend Frameworks
-  Days 15–18: React (Fiber, Hooks, Reconciliation & Performance)
-  Days 19–21: Next.js (App Router, Server Components, ISR & Caching)
-
-Week 4: Backend, Database, Version Control & HR
-  Days 22–24: Node.js (Libuv, Event Loop Phases & Streams)
-  Days 25–27: MongoDB (Schema Design, ESR Indexing & Aggregations)
-  Days 28–29: Git (Internals, Merge vs Rebase, Disaster Recovery)
-  Day 30:     HR Round (STAR stories, salary negotiation, closing questions)
-```
 ## How to use
 
 1. Open the kit that matches the round you are preparing for.
