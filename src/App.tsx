@@ -1,10 +1,17 @@
-import { useEffect, useMemo, useState } from "react"
+import { Fragment, useEffect, useMemo, useState } from "react"
 import { MoonIcon, SunIcon } from "lucide-react"
 import rehypeRaw from "rehype-raw"
 import ReactMarkdown from "react-markdown"
 import remarkGfm from "remark-gfm"
 
 import { AppSidebar } from "@/components/app-sidebar"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import {
   SidebarInset,
@@ -45,6 +52,16 @@ function getInitialTheme(): Theme {
   }
 
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+}
+
+function toBreadcrumbLabel(segment: string) {
+  return segment
+    .replace(/\.md$/i, "")
+    .replace(/^\d+[-_]?/, "")
+    .replace(/[-_]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .replace(/\b\w/g, (char) => char.toUpperCase())
 }
 
 function App() {
@@ -191,13 +208,28 @@ function App() {
           </div>
         ) : (
             <article className="mx-auto w-full max-w-5xl space-y-4 p-6 md:p-8">
-            <header className="rounded-md border bg-card p-4">
-              <p className="text-sm text-muted-foreground">{selectedTopic.kitLabel}</p>
-              <h2 className="text-2xl font-semibold">{selectedTopic.title}</h2>
-              <p className="mt-1 text-sm text-muted-foreground">{selectedTopic.path}</p>
-            </header>
-
             <div className="rounded-md border bg-background p-4 shadow-sm md:p-6">
+              <Breadcrumb className="mb-4 overflow-x-auto">
+                <BreadcrumbList className="flex-nowrap text-xs md:text-sm">
+                  {selectedTopic.path.split("/").map((segment, index, parts) => {
+                    const isLast = index === parts.length - 1
+                    const label = toBreadcrumbLabel(segment)
+
+                    return (
+                      <Fragment key={`${segment}-${index}`}>
+                        <BreadcrumbItem>
+                          {isLast ? (
+                            <BreadcrumbPage>{label}</BreadcrumbPage>
+                          ) : (
+                            <span>{label}</span>
+                          )}
+                        </BreadcrumbItem>
+                        {!isLast && <BreadcrumbSeparator />}
+                      </Fragment>
+                    )
+                  })}
+                </BreadcrumbList>
+              </Breadcrumb>
               {isLoadingTopic && !hasSelectedTopicContent ? (
                 <p className="text-sm text-muted-foreground">Loading markdown...</p>
               ) : topicLoadError ? (
