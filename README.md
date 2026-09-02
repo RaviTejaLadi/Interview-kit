@@ -52,7 +52,8 @@
 
 1. Open the kit that matches the round you are preparing for.
 2. Read that folder’s README for the topic map and suggested study order.
-3. Practice out loud. Write answers, then compare them with the notes in the kit.
+3. Open `TOPICS.md` inside that kit and fill in the matching topic file.
+4. Practice out loud. Write answers in the topic file, then compare them with the notes in the kit README.
 
 ## License
 
