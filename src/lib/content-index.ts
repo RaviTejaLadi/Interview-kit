@@ -1,8 +1,17 @@
 const markdownModules = import.meta.glob<string>(
   '../interview-kits/*-interview-kit/**/*.md',
   {
-  import: 'default',
-  query: '?raw',
+    import: 'default',
+    query: '?raw',
+  },
+);
+
+const kitReadmeModules = import.meta.glob<string>(
+  '../interview-kits/*-interview-kit/README.md',
+  {
+    eager: true,
+    import: 'default',
+    query: '?raw',
   },
 );
 
@@ -13,6 +22,7 @@ export type Topic = {
   path: string;
   kitKey: string;
   kitLabel: string;
+  starRating: number | null;
   loadContent: () => Promise<string>;
 };
 
@@ -57,7 +67,86 @@ function toTitleCase(value: string) {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-function parseTopic(importPath: string, loadContent: () => Promise<string>): Topic {
+type KitStarRatings = {
+  byNumber: Map<number, number>;
+  bySlug: Map<string, number>;
+};
+
+function toRatingSlug(value: string) {
+  return value
+    .toLowerCase()
+    .replace(/⭐/g, '')
+    .replace(/`/g, '')
+    .replace(/&/g, ' ')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function parseLeadingNumber(fileName: string) {
+  const match = fileName.match(/^(\d+)/);
+  return match ? Number(match[1]) : null;
+}
+
+function parseReadmeStarRatings(markdown: string): KitStarRatings {
+  const byNumber = new Map<number, number>();
+  const bySlug = new Map<string, number>();
+  const headingRe = /^##\s+(\d+)\.\s+(.+)$/gm;
+
+  for (const match of markdown.matchAll(headingRe)) {
+    const sectionNumber = Number(match[1]);
+    const heading = match[2].trim();
+    const starCount = (heading.match(/⭐/g) ?? []).length;
+
+    if (!sectionNumber || starCount === 0) {
+      continue;
+    }
+
+    const titleSlug = toRatingSlug(heading);
+    byNumber.set(sectionNumber, starCount);
+    bySlug.set(titleSlug, starCount);
+  }
+
+  return { byNumber, bySlug };
+}
+
+function getReadmeRatingsByKit() {
+  const ratingsByKit = new Map<string, KitStarRatings>();
+
+  for (const [importPath, markdown] of Object.entries(kitReadmeModules)) {
+    const kitKey = importPath.replace('../interview-kits/', '').split('/')[0];
+    if (!kitKey) {
+      continue;
+    }
+
+    ratingsByKit.set(kitKey, parseReadmeStarRatings(markdown));
+  }
+
+  return ratingsByKit;
+}
+
+function getStarRatingForFile(kitKey: string, fileName: string, ratingsByKit: Map<string, KitStarRatings>) {
+  const kitRatings = ratingsByKit.get(kitKey);
+  if (!kitRatings) {
+    return null;
+  }
+
+  const topicNumber = parseLeadingNumber(fileName);
+  if (topicNumber !== null) {
+    const ratingByNumber = kitRatings.byNumber.get(topicNumber);
+    if (ratingByNumber != null) {
+      return ratingByNumber;
+    }
+  }
+
+  const fileSlug = toRatingSlug(fileName.replace(/^\d+[-_]?/, ''));
+  return kitRatings.bySlug.get(fileSlug) ?? null;
+}
+
+function parseTopic(
+  importPath: string,
+  loadContent: () => Promise<string>,
+  ratingsByKit: Map<string, KitStarRatings>,
+): Topic {
   const relativePath = importPath.replace('../interview-kits/', '');
   const parts = relativePath.split('/');
   const lastPart = parts[parts.length - 1];
@@ -73,13 +162,15 @@ function parseTopic(importPath: string, loadContent: () => Promise<string>): Top
     path: relativePath,
     kitKey,
     kitLabel: KIT_LABELS[kitKey] ?? toTitleCase(kitKey),
+    starRating: getStarRatingForFile(kitKey, fileName, ratingsByKit),
     loadContent,
   };
 }
 
 export function buildTopicIndex() {
+  const ratingsByKit = getReadmeRatingsByKit();
   const allTopics = Object.entries(markdownModules)
-    .map(([path, loadContent]) => parseTopic(path, loadContent))
+    .map(([path, loadContent]) => parseTopic(path, loadContent, ratingsByKit))
     .sort((a, b) => a.path.localeCompare(b.path));
 
   const grouped = allTopics.reduce((acc, topic) => {

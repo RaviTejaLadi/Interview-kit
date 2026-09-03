@@ -20,7 +20,7 @@ import reactKitIcon from "../../assets/kits-svgs/react.svg"
 import tailwindKitIcon from "../../assets/kits-svgs/tailwind.svg"
 import hrKitIcon from "../../assets/kits-svgs/hr.svg"
 
-import type { TopicGroup } from "@/lib/content-index"
+import type { Topic, TopicGroup } from "@/lib/content-index"
 import {
   Collapsible,
   CollapsibleContent,
@@ -174,6 +174,70 @@ function getSectionIcon(section: KitSection) {
   return FolderIcon
 }
 
+function getStarRatingAppearance(rating: number) {
+  if (rating >= 5) {
+    return {
+      label: "Must know",
+      className: "bg-emerald-500",
+    }
+  }
+
+  if (rating === 4) {
+    return {
+      label: "Important",
+      className: "bg-amber-400",
+    }
+  }
+
+  return {
+    label: "Good to know",
+    className: "bg-rose-500",
+  }
+}
+
+function StarRatingDot({ rating }: { rating: number }) {
+  const appearance = getStarRatingAppearance(rating)
+
+  return (
+    <span
+      className={cn(
+        "mt-0.5 size-2 shrink-0 rounded-full shadow-[0_0_0_1px_rgb(15_23_42/12%)] dark:shadow-[0_0_0_1px_rgb(255_255_255/18%)]",
+        appearance.className,
+      )}
+      title={`${appearance.label} (${rating} star${rating === 1 ? "" : "s"})`}
+      aria-label={`${appearance.label}, ${rating} star rating`}
+    />
+  )
+}
+
+function TopicNavButton({
+  topic,
+  isActive,
+  onSelect,
+}: {
+  topic: Topic
+  isActive: boolean
+  onSelect: (topicId: string) => void
+}) {
+  const RootTopicIcon = getRootTopicIcon(topic.title)
+
+  return (
+    <SidebarMenuButton
+      size="sm"
+      isActive={isActive}
+      onClick={() => onSelect(topic.id)}
+      className="h-auto rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
+    >
+      {topic.starRating ? (
+        <StarRatingDot rating={topic.starRating} />
+      ) : RootTopicIcon ? (
+        <RootTopicIcon className="mt-0.5 shrink-0" />
+      ) : null}
+      <span className="line-clamp-2 leading-tight">{topic.title}</span>
+    </SidebarMenuButton>
+  )
+}
+
 export function AppSidebar({
   groups,
   searchValue,
@@ -271,22 +335,14 @@ export function AppSidebar({
                       <div className="space-y-2 border-l border-sidebar-border/55 pl-4 pr-2 pb-2 pt-1 group-data-[collapsible=icon]:hidden dark:border-sidebar-border/28">
                         {kit.rootTopics.length > 0 && (
                           <div className="space-y-1">
-                            {kit.rootTopics.map((topic) => {
-                              const RootTopicIcon = getRootTopicIcon(topic.title)
-
-                              return (
-                                <SidebarMenuButton
-                                  key={topic.id}
-                                  size="sm"
-                                  isActive={selectedTopicId === topic.id}
-                                  onClick={() => onSelectTopic(topic.id)}
-                                  className="h-auto rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
-                                >
-                                  {RootTopicIcon ? <RootTopicIcon className="mt-0.5 shrink-0" /> : null}
-                                  <span className="line-clamp-2 leading-tight">{topic.title}</span>
-                                </SidebarMenuButton>
-                              )
-                            })}
+                            {kit.rootTopics.map((topic) => (
+                              <TopicNavButton
+                                key={topic.id}
+                                topic={topic}
+                                isActive={selectedTopicId === topic.id}
+                                onSelect={onSelectTopic}
+                              />
+                            ))}
                           </div>
                         )}
 
@@ -319,15 +375,12 @@ export function AppSidebar({
                               <CollapsibleContent>
                                 <div className="space-y-1 pl-3">
                                   {section.topics.map((topic) => (
-                                    <SidebarMenuButton
+                                    <TopicNavButton
                                       key={topic.id}
-                                      size="sm"
+                                      topic={topic}
                                       isActive={selectedTopicId === topic.id}
-                                      onClick={() => onSelectTopic(topic.id)}
-                                      className="h-auto rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
-                                    >
-                                      <span className="line-clamp-2 leading-tight">{topic.title}</span>
-                                    </SidebarMenuButton>
+                                      onSelect={onSelectTopic}
+                                    />
                                   ))}
                                 </div>
                               </CollapsibleContent>
@@ -345,6 +398,20 @@ export function AppSidebar({
       </SidebarContent>
       <SidebarFooter className="border-t border-sidebar-border/70 bg-sidebar/92 px-4 py-3 group-data-[collapsible=icon]:hidden dark:border-sidebar-border/35">
         <p className="text-xs font-medium text-sidebar-foreground/80">{totalTopics} topics loaded</p>
+        <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-sidebar-foreground/72">
+          <span className="inline-flex items-center gap-1.5">
+            <span className="size-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
+            Must know
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="size-1.5 rounded-full bg-amber-400" aria-hidden="true" />
+            Important
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <span className="size-1.5 rounded-full bg-rose-500" aria-hidden="true" />
+            Good to know
+          </span>
+        </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
