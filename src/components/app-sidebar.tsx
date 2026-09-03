@@ -170,36 +170,80 @@ function buildKitMenus(groups: TopicGroup[]): KitMenu[] {
   })
 }
 
-function getRootTopicIcon(title: string) {
+type SidebarGlyph = {
+  Icon: React.ComponentType<{ className?: string }>
+  className: string
+}
+
+function getRootTopicIcon(title: string): SidebarGlyph | null {
   const normalizedTitle = title.trim().toLowerCase()
 
   if (normalizedTitle === "overview") {
-    return BookIcon
+    return {
+      Icon: BookIcon,
+      className: "text-sky-500 dark:text-sky-400",
+    }
   }
 
   if (normalizedTitle === "topics") {
-    return ListTreeIcon
+    return {
+      Icon: ListTreeIcon,
+      className: "text-violet-500 dark:text-violet-400",
+    }
   }
 
   return null
 }
 
-function getSectionIcon(section: KitSection) {
+function getSectionIcon(section: KitSection): SidebarGlyph {
   const normalizedKey = `${section.id} ${section.label}`.toLowerCase()
 
   if (normalizedKey.includes("theory")) {
-    return BookOpenTextIcon
+    return {
+      Icon: BookOpenTextIcon,
+      className: "text-emerald-500 dark:text-emerald-400",
+    }
   }
 
-  if (normalizedKey.includes("coding") || normalizedKey.includes("code")) {
-    return Code2Icon
+  if (normalizedKey.includes("coding") || normalizedKey.includes("code") || normalizedKey.includes("practical")) {
+    return {
+      Icon: Code2Icon,
+      className: "text-amber-500 dark:text-amber-400",
+    }
   }
 
   if (normalizedKey.includes("advanced")) {
-    return SparklesIcon
+    return {
+      Icon: SparklesIcon,
+      className: "text-fuchsia-500 dark:text-fuchsia-400",
+    }
   }
 
-  return FolderIcon
+  if (normalizedKey.includes("behavioral")) {
+    return {
+      Icon: FolderIcon,
+      className: "text-orange-500 dark:text-orange-400",
+    }
+  }
+
+  if (normalizedKey.includes("logistics")) {
+    return {
+      Icon: FolderIcon,
+      className: "text-cyan-500 dark:text-cyan-400",
+    }
+  }
+
+  if (normalizedKey.includes("frameworks")) {
+    return {
+      Icon: FolderIcon,
+      className: "text-indigo-500 dark:text-indigo-400",
+    }
+  }
+
+  return {
+    Icon: FolderIcon,
+    className: "text-slate-500 dark:text-slate-400",
+  }
 }
 
 function getStarRatingAppearance(rating: number) {
@@ -259,7 +303,7 @@ function TopicNavButton({
       {topic.starRating && !topic.topicTitle ? (
         <StarRatingDot rating={topic.starRating} />
       ) : RootTopicIcon ? (
-        <RootTopicIcon className="mt-0.5 shrink-0" />
+        <RootTopicIcon.Icon className={cn("mt-0.5 shrink-0", RootTopicIcon.className)} />
       ) : null}
       <span className="line-clamp-2 leading-tight">{topic.title}</span>
     </SidebarMenuButton>
@@ -303,7 +347,7 @@ export function AppSidebar({
         <div className="flex items-center gap-2 rounded-md border border-sidebar-border/65 bg-sidebar-accent/24 px-2.5 py-2 dark:border-sidebar-border/30">
           <BookOpenTextIcon className="size-4 shrink-0 text-sidebar-primary" />
           <div className="grid min-w-0 flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="truncate font-semibold">Interview Kit Portal</span>
+            <span className="truncate font-semibold">Interview Kits</span>
             <span className="truncate text-xs text-sidebar-foreground/82">Browse all kits</span>
           </div>
         </div>
@@ -413,7 +457,7 @@ export function AppSidebar({
                                   />
                                 }
                               >
-                                <SectionIcon className="size-3.5 shrink-0" />
+                                <SectionIcon.Icon className={cn("size-3.5 shrink-0", SectionIcon.className)} />
                                 <span>{section.label}</span>
                                 <ChevronRightIcon className="ml-auto size-3.5 transition-transform duration-200 group-data-open/section-collapsible:rotate-90" />
                               </CollapsibleTrigger>

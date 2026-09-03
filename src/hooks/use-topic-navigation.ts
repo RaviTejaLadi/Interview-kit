@@ -69,7 +69,6 @@ export function useReadingSession(
   scrollRef: { current: HTMLElement | null },
   topicId: string | null,
 ) {
-  const [progress, setProgress] = useState(0)
   const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
@@ -79,13 +78,9 @@ export function useReadingSession(
     }
 
     element.scrollTo({ top: 0 })
-    setProgress(0)
     setScrolled(false)
 
     const update = () => {
-      const max = element.scrollHeight - element.clientHeight
-      const nextProgress = max <= 0 ? 100 : (element.scrollTop / max) * 100
-      setProgress(Math.min(100, Math.max(0, nextProgress)))
       setScrolled(element.scrollTop > 120)
     }
 
@@ -104,7 +99,7 @@ export function useReadingSession(
     scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" })
   }
 
-  return { progress, scrolled, scrollToTop }
+  return { scrolled, scrollToTop }
 }
 
 export function useFooterInView(

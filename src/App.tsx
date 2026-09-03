@@ -15,7 +15,6 @@ import { AppSidebar } from "@/components/app-sidebar"
 import { MarkdownPreview } from "@/components/markdown-preview"
 import {
   FullscreenButton,
-  ReadingProgressBar,
   ScrollToTopButton,
   TopicDock,
   TopicNavigator,
@@ -167,7 +166,7 @@ function App() {
     navigationTopics,
     selectedTopic?.id ?? null,
   )
-  const { progress, scrolled, scrollToTop } = useReadingSession(
+  const { scrolled, scrollToTop } = useReadingSession(
     scrollRef,
     selectedTopic?.id ?? null,
   )
@@ -286,7 +285,6 @@ function App() {
               </span>
             </Button>
           </div>
-          {selectedTopic ? <ReadingProgressBar value={progress} /> : null}
         </header>
         <ScrollArea className="min-h-0 flex-1" viewportRef={scrollRef}>
         {!selectedTopic ? (

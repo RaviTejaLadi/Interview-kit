@@ -193,20 +193,6 @@ export function TopicDock({
   )
 }
 
-export function ReadingProgressBar({ value }: { value: number }) {
-  return (
-    <div
-      className="absolute inset-x-0 bottom-0 h-0.5 bg-border/50 dark:bg-border/30"
-      aria-hidden="true"
-    >
-      <div
-        className="h-full bg-primary transition-[width] duration-150 ease-out"
-        style={{ width: `${value}%` }}
-      />
-    </div>
-  )
-}
-
 export function ScrollToTopButton({
   visible,
   dockVisible,
