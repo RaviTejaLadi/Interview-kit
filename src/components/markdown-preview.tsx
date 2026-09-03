@@ -17,35 +17,6 @@ const markdownHierarchy = {
   nestedList: 'pl-8 md:pl-9',
 };
 
-// Stable per-language accent so the same language always gets the same color.
-const LANGUAGE_COLORS: Record<string, { dot: string; text: string }> = {
-  js: { dot: 'bg-yellow-400', text: 'text-yellow-500' },
-  javascript: { dot: 'bg-yellow-400', text: 'text-yellow-500' },
-  jsx: { dot: 'bg-cyan-400', text: 'text-cyan-500' },
-  ts: { dot: 'bg-blue-400', text: 'text-blue-500' },
-  typescript: { dot: 'bg-blue-400', text: 'text-blue-500' },
-  tsx: { dot: 'bg-sky-400', text: 'text-sky-500' },
-  python: { dot: 'bg-emerald-400', text: 'text-emerald-500' },
-  py: { dot: 'bg-emerald-400', text: 'text-emerald-500' },
-  bash: { dot: 'bg-slate-400', text: 'text-slate-500' },
-  sh: { dot: 'bg-slate-400', text: 'text-slate-500' },
-  json: { dot: 'bg-amber-400', text: 'text-amber-500' },
-  html: { dot: 'bg-orange-400', text: 'text-orange-500' },
-  css: { dot: 'bg-violet-400', text: 'text-violet-500' },
-  sql: { dot: 'bg-fuchsia-400', text: 'text-fuchsia-500' },
-  rust: { dot: 'bg-orange-500', text: 'text-orange-600' },
-  go: { dot: 'bg-cyan-500', text: 'text-cyan-600' },
-  yaml: { dot: 'bg-rose-400', text: 'text-rose-500' },
-  yml: { dot: 'bg-rose-400', text: 'text-rose-500' },
-  markdown: { dot: 'bg-indigo-400', text: 'text-indigo-500' },
-  md: { dot: 'bg-indigo-400', text: 'text-indigo-500' },
-};
-
-function getLanguageColor(language?: string) {
-  if (!language) return { dot: 'bg-primary/60', text: 'text-muted-foreground' };
-  return LANGUAGE_COLORS[language.toLowerCase()] ?? { dot: 'bg-primary/60', text: 'text-primary' };
-}
-
 function CodeBlock({
   codeText,
   language,
@@ -56,7 +27,6 @@ function CodeBlock({
   isDarkTheme: boolean;
 }) {
   const [copied, setCopied] = useState(false);
-  const langColor = getLanguageColor(language);
 
   const handleCopy = async () => {
     try {
@@ -71,51 +41,27 @@ function CodeBlock({
   return (
     <div
       className={cn(
-        'my-3 overflow-hidden rounded-md border shadow-sm',
+        'my-3 overflow-hidden rounded-md border shadow-sm relative',
         'ml-5 md:ml-6',
         isDarkTheme ? 'border-slate-700/60' : 'border-slate-200',
       )}
     >
-      <div
+      <button
+        type="button"
+        onClick={handleCopy}
         className={cn(
-          'flex items-center justify-between border-b px-3 py-1 text-[11px] font-medium',
-          isDarkTheme
-            ? 'border-slate-700/60 bg-gradient-to-r from-slate-800 to-slate-800/70 text-slate-400'
-            : 'border-slate-200 bg-gradient-to-r from-slate-100 to-slate-50 text-slate-500',
+          'absolute top-2 right-2 rounded px-1.5 py-1 text-[11px] font-medium transition-colors',
+          copied
+            ? 'text-emerald-500'
+            : isDarkTheme
+              ? 'text-slate-400 hover:bg-slate-700/60 hover:text-slate-200'
+              : 'text-slate-500 hover:bg-slate-200/70 hover:text-slate-700',
         )}
+        aria-label="Copy code"
       >
-        <span className="flex items-center gap-1.5">
-          <span className={cn('h-1.5 w-1.5 rounded-full', langColor.dot)} />
-          <span className={cn('font-mono tracking-wide uppercase', langColor.text)}>
-            {language ?? 'text'}
-          </span>
-        </span>
-        <button
-          type="button"
-          onClick={handleCopy}
-          className={cn(
-            'flex items-center gap-1 rounded px-1.5 py-0.5 text-[11px] font-medium transition-colors',
-            copied
-              ? 'text-emerald-500'
-              : isDarkTheme
-                ? 'text-slate-400 hover:bg-slate-700/60 hover:text-slate-200'
-                : 'text-slate-500 hover:bg-slate-200/70 hover:text-slate-700',
-          )}
-          aria-label="Copy code"
-        >
-          {copied ? (
-            <>
-              <Check className="h-3 w-3" />
-              Copied
-            </>
-          ) : (
-            <>
-              <Copy className="h-3 w-3" />
-              Copy
-            </>
-          )}
-        </button>
-      </div>
+        {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
+      </button>
+
       <SyntaxHighlighter
         language={language ?? 'text'}
         PreTag="div"
@@ -157,7 +103,7 @@ function createMarkdownComponents(theme: Theme): Components {
       <h1
         className={cn(
           'mt-1 mb-3 scroll-m-20 border-b-2 border-primary/50 pb-2 text-xl font-bold tracking-tight first:mt-0 md:text-2xl',
-          'bg-gradient-to-r from-primary to-fuchsia-500 bg-clip-text text-transparent',
+          'bg-linear-to-r from-primary to-fuchsia-500 bg-clip-text text-transparent',
           className,
         )}
         {...props}
@@ -284,7 +230,7 @@ function createMarkdownComponents(theme: Theme): Components {
     blockquote: ({ className, ...props }) => (
       <blockquote
         className={cn(
-          'my-3 rounded-r-md border-l-4 border-amber-400 bg-gradient-to-r from-amber-400/10 to-transparent px-3 py-2 text-[13.5px] leading-6 text-foreground/85 italic',
+          'my-3 rounded-r-md border-l-4 border-amber-400 bg-linear-to-r from-amber-400/10 to-transparent px-3 py-2 text-[13.5px] leading-6 text-foreground/85 italic',
           '[&>p]:not-first:mt-1',
           markdownHierarchy.body,
           className,
@@ -295,7 +241,7 @@ function createMarkdownComponents(theme: Theme): Components {
     hr: ({ className, ...props }) => (
       <hr
         className={cn(
-          'my-4 h-px border-0 bg-gradient-to-r from-primary/60 via-violet-400/60 to-transparent',
+          'my-4 h-px border-0 bg-linear-to-r from-primary/60 via-violet-400/60 to-transparent',
           markdownHierarchy.body,
           className,
         )}
@@ -334,10 +280,7 @@ function createMarkdownComponents(theme: Theme): Components {
     ),
     thead: ({ className, ...props }) => (
       <thead
-        className={cn(
-          'bg-gradient-to-r from-primary/15 via-violet-400/10 to-transparent',
-          className,
-        )}
+        className={cn('bg-linear-to-r from-primary/15 via-violet-400/10 to-transparent', className)}
         {...props}
       />
     ),
@@ -421,7 +364,7 @@ export function MarkdownPreview({ content, theme }: MarkdownPreviewProps) {
   const markdownComponents = useMemo(() => createMarkdownComponents(theme), [theme]);
 
   return (
-    <div className="markdown-body markdown-preview max-w-none break-words">
+    <div className="markdown-body markdown-preview max-w-none wrap-break-word">
       <ReactMarkdown
         rehypePlugins={[rehypeRaw]}
         remarkPlugins={[remarkGfm]}
