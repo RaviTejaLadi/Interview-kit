@@ -38,6 +38,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar"
 import { cn } from "@/lib/utils"
 
@@ -247,9 +248,20 @@ export function AppSidebar({
   className,
   ...props
 }: AppSidebarProps) {
+  const { isMobile, setOpenMobile } = useSidebar()
   const totalTopics = groups.reduce((count, group) => count + group.topics.length, 0)
   const kitMenus = React.useMemo(() => buildKitMenus(groups), [groups])
   const hasSearchQuery = searchValue.trim().length > 0
+
+  const handleSelectTopic = React.useCallback(
+    (topicId: string) => {
+      onSelectTopic(topicId)
+      if (isMobile) {
+        setOpenMobile(false)
+      }
+    },
+    [isMobile, onSelectTopic, setOpenMobile],
+  )
 
   return (
     <Sidebar
@@ -340,7 +352,7 @@ export function AppSidebar({
                                 key={topic.id}
                                 topic={topic}
                                 isActive={selectedTopicId === topic.id}
-                                onSelect={onSelectTopic}
+                                onSelect={handleSelectTopic}
                               />
                             ))}
                           </div>
@@ -379,7 +391,7 @@ export function AppSidebar({
                                       key={topic.id}
                                       topic={topic}
                                       isActive={selectedTopicId === topic.id}
-                                      onSelect={onSelectTopic}
+                                      onSelect={handleSelectTopic}
                                     />
                                   ))}
                                 </div>

@@ -41,7 +41,7 @@ function CodeBlock({
   return (
     <div
       className={cn(
-        'my-3 overflow-hidden rounded-md border shadow-sm relative',
+        'my-3 overflow-hidden group rounded-md border shadow-sm relative',
         'ml-5 md:ml-6',
         isDarkTheme ? 'border-slate-700/60' : 'border-slate-200',
       )}
@@ -50,7 +50,7 @@ function CodeBlock({
         type="button"
         onClick={handleCopy}
         className={cn(
-          'absolute top-2 right-2 rounded px-1.5 py-1 text-[11px] font-medium transition-colors',
+          'group-hover:opacity-100 opacity-0 absolute top-2 right-2 rounded px-1.5 py-1 text-[11px] font-medium transition-colors',
           copied
             ? 'text-emerald-500'
             : isDarkTheme
@@ -67,7 +67,7 @@ function CodeBlock({
         PreTag="div"
         style={isDarkTheme ? oneDark : oneLight}
         wrapLongLines
-        showLineNumbers={codeText.split('\n').length > 5}
+        showLineNumbers={false}
         customStyle={{
           margin: 0,
           borderRadius: 0,
@@ -75,12 +75,6 @@ function CodeBlock({
           fontSize: '12px',
           lineHeight: '1.55',
           background: isDarkTheme ? '#0b1120' : '#fafbfc',
-        }}
-        lineNumberStyle={{
-          minWidth: '2em',
-          paddingRight: '0.85em',
-          color: isDarkTheme ? '#475569' : '#cbd5e1',
-          userSelect: 'none',
         }}
         codeTagProps={{
           style: {
@@ -273,7 +267,7 @@ function createMarkdownComponents(theme: Theme): Components {
         )}
       >
         <table
-          className={cn('w-full min-w-xl border-collapse text-[13px]', className)}
+          className={cn('w-full min-w-0 border-collapse text-[13px]', className)}
           {...props}
         />
       </div>

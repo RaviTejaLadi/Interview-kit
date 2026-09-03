@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useMemo, useRef, useState } from "react"
 import { MoonIcon, SunIcon } from "lucide-react"
 import cssKitIcon from "../assets/kits-svgs/css.svg"
 import gitKitIcon from "../assets/kits-svgs/git.svg"
@@ -13,12 +13,26 @@ import tailwindKitIcon from "../assets/kits-svgs/tailwind.svg"
 
 import { AppSidebar } from "@/components/app-sidebar"
 import { MarkdownPreview } from "@/components/markdown-preview"
+import {
+  FullscreenButton,
+  ReadingProgressBar,
+  ScrollToTopButton,
+  TopicDock,
+  TopicNavigator,
+} from "@/components/topic-navigator"
 import { Button } from "@/components/ui/button"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
+import {
+  useAdjacentTopics,
+  useFooterInView,
+  useReadingSession,
+  useTopicHotkeys,
+} from "@/hooks/use-topic-navigation"
 import { buildTopicIndex, type Topic, type TopicGroup } from "@/lib/content-index"
 
 let allTopics: Topic[] = [];
@@ -115,6 +129,38 @@ function App() {
   const selectedTopicContent = selectedTopic ? (topicContentById[selectedTopic.id] ?? "") : ""
   const hasSelectedTopicContent = selectedTopic ? hasOwn(topicContentById, selectedTopic.id) : false;
 
+  const scrollRef = useRef<HTMLDivElement | null>(null)
+  const footerNavRef = useRef<HTMLElement | null>(null)
+
+  const navigationTopics = useMemo(() => {
+    if (searchValue.trim()) {
+      return filteredGroups.flatMap((group) => group.topics)
+    }
+
+    if (!selectedTopic) {
+      return []
+    }
+
+    const kitGroup = filteredGroups.find((group) => group.id === selectedTopic.kitKey)
+    return kitGroup?.topics ?? []
+  }, [filteredGroups, searchValue, selectedTopic])
+
+  const { previousTopic, nextTopic, currentIndex, totalCount } = useAdjacentTopics(
+    navigationTopics,
+    selectedTopic?.id ?? null,
+  )
+  const { progress, scrolled, scrollToTop } = useReadingSession(
+    scrollRef,
+    selectedTopic?.id ?? null,
+  )
+  const footerInView = useFooterInView(footerNavRef, scrollRef, selectedTopic?.id ?? null)
+
+  useTopicHotkeys({
+    previousTopic,
+    nextTopic,
+    onSelect: setSelectedTopicId,
+  })
+
   useEffect(() => {
     if (selectedTopic && selectedTopic.id !== selectedTopicId) {
       setSelectedTopicId(selectedTopic.id)
@@ -178,47 +224,61 @@ function App() {
         onSelectTopic={setSelectedTopicId}
       />
       <SidebarInset className="bg-linear-to-b from-background via-background to-secondary/8">
-        <header className="sticky top-0 z-20 flex h-16 shrink-0 items-center gap-3 border-b border-border/70 bg-card/94 px-4 backdrop-blur supports-backdrop-filter:bg-card/82 dark:border-border/35">
-          <SidebarTrigger className="-ml-1 rounded-md border border-border/70 bg-card/96 shadow-[0_1px_2px_rgb(15_23_42/6%)] hover:bg-muted/60 dark:border-border/35 dark:bg-card/90 dark:shadow-none" />
-          <div className="h-4 w-px bg-border/70 dark:bg-border/40" />
-          <div className="flex min-w-0 items-center gap-2 px-1 py-0.5">
+        <header className="sticky top-0 z-20 flex min-h-14 shrink-0 items-center gap-2 border-b border-border/70 bg-card/94 px-2 py-2 backdrop-blur supports-backdrop-filter:bg-card/82 sm:min-h-16 sm:gap-3 sm:px-4 dark:border-border/35">
+          <SidebarTrigger className="-ml-0.5 rounded-md border border-border/70 bg-card/96 shadow-[0_1px_2px_rgb(15_23_42/6%)] hover:bg-muted/60 sm:-ml-1 dark:border-border/35 dark:bg-card/90 dark:shadow-none" />
+          <div className="hidden h-4 w-px bg-border/70 sm:block dark:bg-border/40" />
+          <div className="flex min-w-0 items-center gap-2 px-0.5 py-0.5 sm:px-1">
             {selectedTopicIcon ? (
               <img
                 src={selectedTopicIcon}
                 alt=""
                 aria-hidden="true"
-                className="size-5 shrink-0 rounded-sm bg-card p-0.5 object-contain"
+                className="size-4 shrink-0 rounded-sm bg-card p-0.5 object-contain sm:size-5"
               />
             ) : null}
-            <p className="truncate text-base font-semibold tracking-tight text-foreground/95 md:text-lg">
-              {selectedTopic?.kitLabel ?? "Interview Kits"}
-            </p>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-semibold tracking-tight text-foreground/95 sm:text-base md:text-lg">
+                {selectedTopic?.kitLabel ?? "Interview Kits"}
+              </p>
+              {selectedTopic ? (
+                <p className="truncate text-[11px] text-muted-foreground sm:text-xs">
+                  {selectedTopic.section}
+                  {" · "}
+                  {selectedTopic.title}
+                  {currentIndex >= 0 && totalCount > 0 ? ` · ${currentIndex + 1}/${totalCount}` : ""}
+                </p>
+              ) : null}
+            </div>
           </div>
-          <Button
-            type="button"
-            variant="outline"
-            size="icon-sm"
-            className="ml-auto rounded-md border-border/70 bg-card/96 shadow-[0_1px_2px_rgb(15_23_42/6%)] hover:bg-muted/60 dark:border-border/35 dark:bg-card/90 dark:shadow-none"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-            title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-          >
-            {theme === "dark" ? <SunIcon /> : <MoonIcon />}
-            <span className="sr-only">
-              Switch to {theme === "dark" ? "light" : "dark"} mode
-            </span>
-          </Button>
+          <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
+            <FullscreenButton />
+            <Button
+              type="button"
+              variant="outline"
+              size="icon-sm"
+              className="rounded-md border-border/70 bg-card/96 shadow-[0_1px_2px_rgb(15_23_42/6%)] hover:bg-muted/60 dark:border-border/35 dark:bg-card/90 dark:shadow-none"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+              title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+            >
+              {theme === "dark" ? <SunIcon /> : <MoonIcon />}
+              <span className="sr-only">
+                Switch to {theme === "dark" ? "light" : "dark"} mode
+              </span>
+            </Button>
+          </div>
+          {selectedTopic ? <ReadingProgressBar value={progress} /> : null}
         </header>
-        <div className="flex-1 overflow-y-auto">
+        <ScrollArea className="min-h-0 flex-1" viewportRef={scrollRef}>
         {!selectedTopic ? (
-            <div className="flex h-full items-center justify-center p-6">
-            <p className="rounded-md border border-border/70 bg-card/96 p-5 text-sm text-foreground/75 shadow-[0_1px_2px_rgb(15_23_42/5%)] dark:border-border/35 dark:bg-card/90 dark:shadow-none">
+            <div className="flex h-full items-center justify-center p-4 sm:p-6">
+            <p className="rounded-md border border-border/70 bg-card/96 p-4 text-sm text-foreground/75 shadow-[0_1px_2px_rgb(15_23_42/5%)] sm:p-5 dark:border-border/35 dark:bg-card/90 dark:shadow-none">
               Select a topic to view content.
             </p>
           </div>
         ) : (
-            <article className="mx-auto w-full max-w-6xl space-y-4 p-4 md:p-8">
-            <div className="rounded-md border border-border/70 bg-card/96 p-5 shadow-[0_2px_10px_rgb(15_23_42/5%)] backdrop-blur md:p-7 dark:border-border/35 dark:bg-card/92 dark:shadow-none">
+            <article className="mx-auto w-full min-w-0 max-w-6xl space-y-3 p-3 sm:space-y-4 sm:p-5 md:p-8">
+            <div className="rounded-md border border-border/70 bg-card/96 p-4 shadow-[0_2px_10px_rgb(15_23_42/5%)] backdrop-blur sm:p-5 md:p-7 dark:border-border/35 dark:bg-card/92 dark:shadow-none">
               {isLoadingTopic && !hasSelectedTopicContent ? (
                 <p className="text-sm text-foreground/70">Loading markdown...</p>
               ) : topicLoadError ? (
@@ -229,9 +289,34 @@ function App() {
                 <MarkdownPreview content={selectedTopicContent} theme={theme} />
               )}
             </div>
+            <TopicNavigator
+              previousTopic={previousTopic}
+              nextTopic={nextTopic}
+              onSelect={setSelectedTopicId}
+              navRef={footerNavRef}
+            />
           </article>
         )}
-        </div>
+        </ScrollArea>
+        {selectedTopic ? (
+          <>
+            <TopicDock
+              previousTopic={previousTopic}
+              nextTopic={nextTopic}
+              currentTopic={selectedTopic}
+              currentIndex={Math.max(currentIndex, 0)}
+              totalCount={totalCount}
+              visible={scrolled && !footerInView}
+              onSelect={setSelectedTopicId}
+              onBackToTop={scrollToTop}
+            />
+            <ScrollToTopButton
+              visible={scrolled}
+              dockVisible={scrolled && !footerInView}
+              onClick={scrollToTop}
+            />
+          </>
+        ) : null}
       </SidebarInset>
     </SidebarProvider>
   )
