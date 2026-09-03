@@ -1,4 +1,4 @@
-# 1. CSS Box Model & Sizing
+# CSS Box Model & Sizing
 
 The **CSS Box Model** is one of the most important CSS concepts for understanding how elements take up space on a webpage. Once you understand it, properties like `width`, `height`, `padding`, `border`, and `margin` become much easier to reason about.
 
@@ -34,7 +34,7 @@ Every element has these four areas:
 
 ---
 
-# 2. What are the 4 layers of the Box Model?
+## 2. What are the 4 layers of the Box Model?
 
 ### 1. Content
 
@@ -112,7 +112,7 @@ Or:
 
 ---
 
-# 3. `box-sizing: content-box` vs `border-box`
+## 3. `box-sizing: content-box` vs `border-box`
 
 This controls **how CSS calculates the width and height of an element**.
 
@@ -200,7 +200,7 @@ So:
 
 ---
 
-# 4. Why is `* { box-sizing: border-box; }` commonly used?
+## 4. Why is `* { box-sizing: border-box; }` commonly used?
 
 Because it makes **element sizing much easier to predict**.
 
@@ -264,7 +264,7 @@ A common modern reset is:
 
 ---
 
-# 5. What is Margin Collapsing?
+## 5. What is Margin Collapsing?
 
 **Margin collapsing** happens when the vertical margins of certain block elements combine instead of adding together.
 
@@ -435,7 +435,7 @@ Remember:
 
 ---
 
-# 7. How do negative margins behave?
+## 7. How do negative margins behave?
 
 A **negative margin pulls an element toward another element**.
 
