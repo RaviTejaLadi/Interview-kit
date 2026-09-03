@@ -1,0 +1,1 @@
+# What is lexical scope?

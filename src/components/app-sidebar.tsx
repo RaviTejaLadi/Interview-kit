@@ -50,10 +50,18 @@ type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
   onSelectTopic: (topicId: string) => void
 }
 
+type KitTopicFolder = {
+  id: string
+  label: string
+  starRating: number | null
+  questions: TopicGroup["topics"]
+}
+
 type KitSection = {
   id: string
   label: string
   topics: TopicGroup["topics"]
+  folders: KitTopicFolder[]
 }
 
 type KitMenu = {
@@ -125,13 +133,32 @@ function buildKitMenus(groups: TopicGroup[]): KitMenu[] {
           id: sectionKey,
           label: toSectionLabel(sectionKey),
           topics: [],
+          folders: [],
         })
       }
 
       const section = sectionsByKey.get(sectionKey)
-      if (section) {
-        section.topics.push(topic)
+      if (!section) {
+        continue
       }
+
+      const folderKey = pathParts[2]
+      if (pathParts.length >= 4 && folderKey) {
+        let folder = section.folders.find((item) => item.id === folderKey)
+        if (!folder) {
+          folder = {
+            id: folderKey,
+            label: topic.topicTitle ?? toSectionLabel(folderKey),
+            starRating: topic.starRating,
+            questions: [],
+          }
+          section.folders.push(folder)
+        }
+        folder.questions.push(topic)
+        continue
+      }
+
+      section.topics.push(topic)
     }
 
     return {
@@ -229,7 +256,7 @@ function TopicNavButton({
       onClick={() => onSelect(topic.id)}
       className="h-auto rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
     >
-      {topic.starRating ? (
+      {topic.starRating && !topic.topicTitle ? (
         <StarRatingDot rating={topic.starRating} />
       ) : RootTopicIcon ? (
         <RootTopicIcon className="mt-0.5 shrink-0" />
@@ -309,7 +336,10 @@ export function AppSidebar({
                   selectedTopicId !== null &&
                   (kit.rootTopics.some((topic) => topic.id === selectedTopicId) ||
                     kit.sections.some((section) =>
-                      section.topics.some((topic) => topic.id === selectedTopicId),
+                      section.topics.some((topic) => topic.id === selectedTopicId) ||
+                      section.folders.some((folder) =>
+                        folder.questions.some((topic) => topic.id === selectedTopicId),
+                      ),
                     ))
                 const kitIcon = KIT_ICON_BY_ID[kit.id]
 
@@ -361,7 +391,10 @@ export function AppSidebar({
                         {kit.sections.map((section) => {
                           const sectionHasSelectedTopic =
                             selectedTopicId !== null &&
-                            section.topics.some((topic) => topic.id === selectedTopicId)
+                            (section.topics.some((topic) => topic.id === selectedTopicId) ||
+                              section.folders.some((folder) =>
+                                folder.questions.some((topic) => topic.id === selectedTopicId),
+                              ))
                           const SectionIcon = getSectionIcon(section)
 
                           return (
@@ -394,6 +427,50 @@ export function AppSidebar({
                                       onSelect={handleSelectTopic}
                                     />
                                   ))}
+                                  {section.folders.map((folder) => {
+                                    const folderHasSelectedTopic =
+                                      selectedTopicId !== null &&
+                                      folder.questions.some((topic) => topic.id === selectedTopicId)
+
+                                    return (
+                                      <Collapsible
+                                        key={`${kit.id}-${section.id}-${folder.id}-${hasSearchQuery ? "search" : "browse"}`}
+                                        defaultOpen={folderHasSelectedTopic || hasSearchQuery}
+                                        className="group/topic-collapsible space-y-1"
+                                      >
+                                        <CollapsibleTrigger
+                                          render={
+                                            <SidebarMenuButton
+                                              size="sm"
+                                              tooltip={folder.label}
+                                              isActive={folderHasSelectedTopic}
+                                              className="h-auto rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/12 data-[active=true]:text-sidebar-primary"
+                                            />
+                                          }
+                                        >
+                                          {folder.starRating ? (
+                                            <StarRatingDot rating={folder.starRating} />
+                                          ) : (
+                                            <FolderIcon className="mt-0.5 size-3.5 shrink-0" />
+                                          )}
+                                          <span className="line-clamp-2 leading-tight">{folder.label}</span>
+                                          <ChevronRightIcon className="ml-auto size-3.5 shrink-0 transition-transform duration-200 group-data-open/topic-collapsible:rotate-90" />
+                                        </CollapsibleTrigger>
+                                        <CollapsibleContent>
+                                          <div className="space-y-1 pl-3">
+                                            {folder.questions.map((topic) => (
+                                              <TopicNavButton
+                                                key={topic.id}
+                                                topic={topic}
+                                                isActive={selectedTopicId === topic.id}
+                                                onSelect={handleSelectTopic}
+                                              />
+                                            ))}
+                                          </div>
+                                        </CollapsibleContent>
+                                      </Collapsible>
+                                    )
+                                  })}
                                 </div>
                               </CollapsibleContent>
                             </Collapsible>
@@ -409,7 +486,7 @@ export function AppSidebar({
         )}
       </SidebarContent>
       <SidebarFooter className="border-t border-sidebar-border/70 bg-sidebar/92 px-4 py-3 group-data-[collapsible=icon]:hidden dark:border-sidebar-border/35">
-        <p className="text-xs font-medium text-sidebar-foreground/80">{totalTopics} topics loaded</p>
+        <p className="text-xs font-medium text-sidebar-foreground/80">{totalTopics} questions loaded</p>
         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-sidebar-foreground/72">
           <span className="inline-flex items-center gap-1.5">
             <span className="size-1.5 rounded-full bg-emerald-500" aria-hidden="true" />

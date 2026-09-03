@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { MoonIcon, SunIcon } from "lucide-react"
 import cssKitIcon from "../assets/kits-svgs/css.svg"
 import gitKitIcon from "../assets/kits-svgs/git.svg"
@@ -33,7 +33,7 @@ import {
   useReadingSession,
   useTopicHotkeys,
 } from "@/hooks/use-topic-navigation"
-import { buildTopicIndex, type Topic, type TopicGroup } from "@/lib/content-index"
+import { buildTopicIndex, resolveTopicFromHref, type Topic, type TopicGroup } from "@/lib/content-index"
 
 let allTopics: Topic[] = [];
 let groups: TopicGroup[] = [];
@@ -101,7 +101,7 @@ function App() {
       .map((group) => ({
         ...group,
         topics: group.topics.filter((topic) => {
-          const haystack = `${topic.title} ${topic.section} ${topic.kitLabel}`.toLowerCase()
+            const haystack = `${topic.title} ${topic.topicTitle ?? ""} ${topic.section} ${topic.kitLabel}`.toLowerCase()
           return haystack.includes(query)
         }),
       }))
@@ -125,6 +125,24 @@ function App() {
     return filteredGroups[0]?.topics[0] ?? null
   }, [filteredGroups, filteredTopicIds, selectedTopicId])
   const selectedTopicIcon = selectedTopic ? KIT_ICON_BY_KEY[selectedTopic.kitKey] : null
+
+  const handleInternalLink = useCallback(
+    (href: string) => {
+      if (!selectedTopic) {
+        return false
+      }
+
+      const target = resolveTopicFromHref(selectedTopic.path, href, allTopics)
+      if (!target) {
+        return false
+      }
+
+      setSearchValue("")
+      setSelectedTopicId(target.id)
+      return true
+    },
+    [selectedTopic],
+  )
 
   const selectedTopicContent = selectedTopic ? (topicContentById[selectedTopic.id] ?? "") : ""
   const hasSelectedTopicContent = selectedTopic ? hasOwn(topicContentById, selectedTopic.id) : false;
@@ -243,6 +261,7 @@ function App() {
               {selectedTopic ? (
                 <p className="truncate text-[11px] text-muted-foreground sm:text-xs">
                   {selectedTopic.section}
+                  {selectedTopic.topicTitle ? ` · ${selectedTopic.topicTitle}` : ""}
                   {" · "}
                   {selectedTopic.title}
                   {currentIndex >= 0 && totalCount > 0 ? ` · ${currentIndex + 1}/${totalCount}` : ""}
@@ -286,7 +305,11 @@ function App() {
                   Could not load this file. {topicLoadError}
                 </p>
               ) : (
-                <MarkdownPreview content={selectedTopicContent} theme={theme} />
+                <MarkdownPreview
+                  content={selectedTopicContent}
+                  theme={theme}
+                  onInternalLink={handleInternalLink}
+                />
               )}
             </div>
             <TopicNavigator

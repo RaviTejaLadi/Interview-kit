@@ -19,6 +19,8 @@ export type Topic = {
   id: string;
   title: string;
   section: string;
+  topicKey: string | null;
+  topicTitle: string | null;
   path: string;
   kitKey: string;
   kitLabel: string;
@@ -146,23 +148,41 @@ function parseTopic(
   importPath: string,
   loadContent: () => Promise<string>,
   ratingsByKit: Map<string, KitStarRatings>,
-): Topic {
+): Topic | null {
   const relativePath = importPath.replace('../interview-kits/', '');
   const parts = relativePath.split('/');
   const lastPart = parts[parts.length - 1];
   const fileName = lastPart ? lastPart.replace('.md', '') : 'Untitled';
   const kitKey = parts[0] ?? 'unknown-kit';
-  const section = parts[1] ? toTitleCase(parts[1]) : 'General';
-  const title = fileName.toLowerCase() === 'readme' ? 'Overview' : toTitleCase(fileName);
+  const isKitRootFile = parts.length <= 2;
+
+  if (fileName.toLowerCase() === 'readme' && !isKitRootFile) {
+    return null;
+  }
+
+  const sectionKey = parts.length > 2 ? parts[1] : null;
+  const topicKey = parts.length > 3 ? (parts[2] ?? null) : null;
+  const ratingFileName = topicKey ?? fileName;
+  const section = sectionKey ? toTitleCase(sectionKey) : 'General';
+  const questionNumber = topicKey ? parseLeadingNumber(fileName) : null;
+  const displayName = toTitleCase(fileName);
+  const title =
+    fileName.toLowerCase() === 'readme'
+      ? 'Overview'
+      : questionNumber !== null
+        ? `${questionNumber}. ${displayName}`
+        : displayName;
 
   return {
     id: relativePath,
     title,
     section,
+    topicKey,
+    topicTitle: topicKey ? toTitleCase(topicKey) : null,
     path: relativePath,
     kitKey,
     kitLabel: KIT_LABELS[kitKey] ?? toTitleCase(kitKey),
-    starRating: getStarRatingForFile(kitKey, fileName, ratingsByKit),
+    starRating: getStarRatingForFile(kitKey, ratingFileName, ratingsByKit),
     loadContent,
   };
 }
@@ -171,6 +191,7 @@ export function buildTopicIndex() {
   const ratingsByKit = getReadmeRatingsByKit();
   const allTopics = Object.entries(markdownModules)
     .map(([path, loadContent]) => parseTopic(path, loadContent, ratingsByKit))
+    .filter((topic): topic is Topic => topic !== null)
     .sort((a, b) => a.path.localeCompare(b.path));
 
   const grouped = allTopics.reduce((acc, topic) => {
@@ -198,4 +219,66 @@ export function buildTopicIndex() {
   });
 
   return { allTopics, groups };
+}
+
+function isInternalMarkdownHref(href: string) {
+  const trimmed = href.trim();
+  if (!trimmed || trimmed.startsWith('#') || trimmed.startsWith('mailto:') || trimmed.startsWith('tel:')) {
+    return false;
+  }
+
+  return !/^[a-z][a-z0-9+.-]*:/i.test(trimmed);
+}
+
+function resolveRelativePath(fromFile: string, href: string) {
+  const pathOnly = decodeURIComponent(href.split('#')[0]?.split('?')[0] ?? '').replace(/\\/g, '/');
+  if (!pathOnly) {
+    return null;
+  }
+
+  const baseSegments = fromFile.replace(/\\/g, '/').split('/').slice(0, -1);
+  const hrefSegments = pathOnly.split('/');
+  const segments = pathOnly.startsWith('/') ? [] : [...baseSegments];
+
+  for (const segment of hrefSegments) {
+    if (!segment || segment === '.') {
+      continue;
+    }
+
+    if (segment === '..') {
+      segments.pop();
+      continue;
+    }
+
+    segments.push(segment);
+  }
+
+  return segments.join('/');
+}
+
+export function resolveTopicFromHref(currentPath: string, href: string, topics: Topic[]) {
+  if (!isInternalMarkdownHref(href)) {
+    return null;
+  }
+
+  const resolved = resolveRelativePath(currentPath, href);
+  if (!resolved) {
+    return null;
+  }
+
+  const normalized = resolved.replace(/\/+$/, '');
+  const candidates = [resolved, normalized, `${normalized}.md`];
+
+  for (const candidate of candidates) {
+    const exact = topics.find((topic) => topic.path === candidate || topic.id === candidate);
+    if (exact) {
+      return exact;
+    }
+  }
+
+  const nested = topics.filter(
+    (topic) => topic.path === normalized || topic.path.startsWith(`${normalized}/`),
+  );
+
+  return nested[0] ?? null;
 }

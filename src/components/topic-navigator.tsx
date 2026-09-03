@@ -73,7 +73,7 @@ function TopicNavCard({
         {topic.title}
       </span>
       <span className="mt-0.5 block truncate text-xs text-muted-foreground">
-        {topic.section}
+        {topic.topicTitle ?? topic.section}
       </span>
     </button>
   )
@@ -159,7 +159,9 @@ export function TopicDock({
           <p className="truncate text-xs font-medium text-foreground">
             {currentIndex + 1} / {totalCount}
           </p>
-          <p className="truncate text-[11px] text-muted-foreground">{currentTopic.section}</p>
+          <p className="truncate text-[11px] text-muted-foreground">
+            {currentTopic.topicTitle ?? currentTopic.section}
+          </p>
         </button>
 
         <Button

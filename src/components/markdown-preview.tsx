@@ -89,7 +89,10 @@ function CodeBlock({
   );
 }
 
-function createMarkdownComponents(theme: Theme): Components {
+function createMarkdownComponents(
+  theme: Theme,
+  onInternalLink?: (href: string) => boolean,
+): Components {
   const isDarkTheme = theme === 'dark';
 
   return {
@@ -242,18 +245,28 @@ function createMarkdownComponents(theme: Theme): Components {
         {...props}
       />
     ),
-    a: ({ className, href, rel, target, children, ...props }) => {
+    a: ({ className, href, rel, target, children, onClick, ...props }) => {
       const isAnchorLink = href?.startsWith('#');
+      const isExternalLink = Boolean(href && /^[a-z][a-z0-9+.-]*:/i.test(href));
 
       return (
         <a
           href={href}
-          target={isAnchorLink ? target : (target ?? '_blank')}
-          rel={isAnchorLink ? rel : (rel ?? 'noreferrer noopener')}
+          target={isAnchorLink || !isExternalLink ? target : (target ?? '_blank')}
+          rel={isAnchorLink || !isExternalLink ? rel : (rel ?? 'noreferrer noopener')}
           className={cn(
             'font-medium text-sky-500 underline decoration-sky-400/50 underline-offset-2 transition-colors hover:text-sky-600 hover:decoration-sky-500 dark:text-sky-400 dark:hover:text-sky-300',
             className,
           )}
+          onClick={(event) => {
+            onClick?.(event);
+            if (event.defaultPrevented || !href || isAnchorLink || isExternalLink) {
+              return;
+            }
+
+            event.preventDefault();
+            onInternalLink?.(href);
+          }}
           {...props}
         >
           {children}
@@ -352,10 +365,14 @@ function createMarkdownComponents(theme: Theme): Components {
 type MarkdownPreviewProps = {
   content: string;
   theme: Theme;
+  onInternalLink?: (href: string) => boolean;
 };
 
-export function MarkdownPreview({ content, theme }: MarkdownPreviewProps) {
-  const markdownComponents = useMemo(() => createMarkdownComponents(theme), [theme]);
+export function MarkdownPreview({ content, theme, onInternalLink }: MarkdownPreviewProps) {
+  const markdownComponents = useMemo(
+    () => createMarkdownComponents(theme, onInternalLink),
+    [onInternalLink, theme],
+  );
 
   return (
     <div className="markdown-body markdown-preview max-w-none wrap-break-word">

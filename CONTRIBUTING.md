@@ -29,14 +29,17 @@ src/
     app-sidebar.tsx             # Sidebar grouping, labels, section/icon mapping
     ui/                         # Shared UI primitives
   lib/
-    content-index.ts            # Auto-discovers markdown topics via import.meta.glob
+    content-index.ts            # Auto-discovers markdown questions via import.meta.glob
   interview-kits/
     {tech}-interview-kit/
       README.md                 # Rendered as "Overview"
       TOPICS.md                 # Rendered as "TOPICS"
-      01-theory/                # Theory topics
-      02-coding/                # Coding topics (Git may use practical naming)
-      03-advanced/              # Advanced topics
+      01-theory/
+        01-topic-slug/          # One folder per topic
+          01-question-slug.md   # One markdown file per question
+          02-question-slug.md
+      02-coding/
+      03-advanced/
 ```
 
 HR kit uses `01-core/`, `02-behavioral/`, `03-logistics/`, and `04-frameworks/` instead of theory/coding/advanced.
@@ -59,17 +62,18 @@ Technology kits currently live at:
 ## How topic discovery works
 
 - All `*.md` files under `src/interview-kits/*-interview-kit/**` are auto-indexed by `src/lib/content-index.ts`.
-- `README.md` file names are displayed in the app as `Overview`.
-- Folder names become section labels in the sidebar (example: `01-theory` -> `Theory`).
+- `README.md` at the kit root is displayed as `Overview`.
+- Folder names become section and topic labels in the sidebar (example: `01-theory` -> `Theory`, `01-css-box-model-sizing` -> `Css Box Model Sizing`).
 - Keep folder names and numbering clean and predictable so sidebar grouping stays stable.
 
 ## How to add or edit a topic
 
 1. Update the corresponding kit `README.md` first (question map/source context).
-2. Create or edit the markdown topic file with numbered prefix + kebab-case slug (example: `12-flexbox-vs-css-grid-cheatsheet.md`).
-3. Keep numbering continuous within the kit section.
-4. Update `TOPICS.md` links for that kit.
-5. If adding a new kit, also update root [`README.md`](README.md), plus kit ordering/labels/icons in UI code (see next section).
+2. Create a topic folder with numbered prefix + kebab-case slug (example: `01-theory/12-flexbox-vs-css-grid-cheatsheet/`).
+3. Add one markdown file per question inside that folder (example: `01-what-is-flexbox.md`).
+4. Keep numbering continuous within the topic.
+5. Update `TOPICS.md` links for that kit.
+6. If adding a new kit, also update root [`README.md`](README.md), plus kit ordering/labels/icons in UI code (see next section).
 
 ## Adding a brand-new kit
 
@@ -92,35 +96,11 @@ Use the same stars as the root README:
 | ⭐⭐⭐⭐   | Important — commonly asked                    |
 | ⭐⭐⭐     | Good to Know — useful for stronger interviews |
 
-### Section heading conventions
+### Question files
 
-- Theory files: `### Must Know` (use `### Good to Know` only where already used in that kit)
-- Coding files: `### Must Solve` or `### Must Implement`
-
-### Topic template (theory)
-
-```markdown
-# 12. Topic Title
-
-### Must Know
-
-1. First question?
-2. Second question?
-
----
-
-## Answers
-
-### 1. First question?
-
-<!-- Write your answer -->
-
-### 2. Second question?
-
-<!-- Write your answer -->
-```
-
-Coding and advanced files may use different structures when needed (prompts, checklists, cheatsheets, diagrams).
+- Use an H1 for the question title.
+- Put the answer or prompt in the same file.
+- Cheatsheets and diagrams can stay as a single file inside the topic folder.
 
 ## Local checks
 
