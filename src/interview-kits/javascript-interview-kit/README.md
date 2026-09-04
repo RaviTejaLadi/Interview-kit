@@ -6,8 +6,6 @@
 
 ## 1. JavaScript Fundamentals ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is JavaScript?
 2. What is ECMAScript?
 3. Is JavaScript single-threaded?
@@ -22,8 +20,6 @@
 ---
 
 ## 2. Variables & Data Types ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. Difference between `var`, `let`, and `const`.
 2. What are primitive data types in JavaScript?
@@ -42,8 +38,6 @@
 
 ## 3. Scope ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is scope?
 2. What is global scope?
 3. What is function scope?
@@ -57,8 +51,6 @@
 
 ## 4. Hoisting & Temporal Dead Zone ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is hoisting?
 2. Are `var`, `let`, and `const` hoisted?
 3. How does hoisting differ between `var`, `let`, and `const`?
@@ -70,8 +62,6 @@
 ---
 
 ## 5. Execution Context ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is an execution context?
 2. What is the global execution context?
@@ -85,8 +75,6 @@
 ---
 
 ## 6. Functions ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. Function declaration vs function expression.
 2. What are arrow functions?
@@ -107,8 +95,6 @@
 
 ## 7. Closures ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is a closure?
 2. How does a closure work?
 3. Why are closures useful?
@@ -121,8 +107,6 @@
 ---
 
 ## 8. `this` Keyword ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is `this`?
 2. How is `this` determined?
@@ -139,8 +123,6 @@
 ---
 
 ## 9. Objects ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is an object?
 2. How can you create an object?
@@ -161,8 +143,6 @@
 
 ## 10. Prototypes & Prototype Chain ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is a prototype?
 2. What is the prototype chain?
 3. What is `prototype`?
@@ -180,8 +160,6 @@
 
 ## 11. Classes & OOP ⭐⭐⭐⭐
 
-### Must Know
-
 1. What are classes in JavaScript?
 2. What is a constructor?
 3. What is `extends`?
@@ -196,8 +174,6 @@
 ---
 
 ## 12. Arrays ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is an array?
 2. `map()` vs `forEach()`.
@@ -218,8 +194,6 @@
 
 ## 13. Strings ⭐⭐⭐⭐
 
-### Must Know
-
 1. Are JavaScript strings mutable?
 2. What are template literals?
 3. How do you manipulate strings?
@@ -231,8 +205,6 @@
 ---
 
 ## 14. Destructuring, Spread & Rest ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is destructuring?
 2. Array destructuring.
@@ -247,8 +219,6 @@
 
 ## 15. Call Stack ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is the call stack?
 2. How does the call stack execute functions?
 3. What is a stack overflow?
@@ -258,8 +228,6 @@
 ---
 
 ## 16. Event Loop ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is the event loop?
 2. Why is JavaScript single-threaded?
@@ -298,8 +266,6 @@ Expected output:
 
 ## 17. Promises ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is a Promise?
 2. What are the states of a Promise?
 3. What are `.then()`, `.catch()`, and `.finally()`?
@@ -317,8 +283,6 @@ Expected output:
 
 ## 18. Async/Await ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is `async/await`?
 2. What does an `async` function return?
 3. What does `await` do?
@@ -331,8 +295,6 @@ Expected output:
 ---
 
 ## 19. DOM ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is the DOM?
 2. What is the difference between DOM and BOM?
@@ -349,8 +311,6 @@ Expected output:
 
 ## 20. Events ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is event bubbling?
 2. What is event capturing?
 3. What is event propagation?
@@ -365,8 +325,6 @@ Expected output:
 ---
 
 ## 21. ES6+ Features ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. `let` and `const`.
 2. Arrow functions.
@@ -385,8 +343,6 @@ Expected output:
 
 ## 22. Modules ⭐⭐⭐⭐
 
-### Must Know
-
 1. What are JavaScript modules?
 2. What is `export`?
 3. What is `import`?
@@ -399,8 +355,6 @@ Expected output:
 ---
 
 ## 23. Map, Set, WeakMap & WeakSet ⭐⭐⭐⭐
-
-### Must Know
 
 1. What is `Map`?
 2. `Map` vs Object.
@@ -415,8 +369,6 @@ Expected output:
 
 ## 24. Error Handling ⭐⭐⭐⭐
 
-### Must Know
-
 1. What is `try...catch`?
 2. What is `finally`?
 3. What does `throw` do?
@@ -428,8 +380,6 @@ Expected output:
 ---
 
 ## 25. Memory & Garbage Collection ⭐⭐⭐⭐
-
-### Must Know
 
 1. How does JavaScript manage memory?
 2. What is garbage collection?
@@ -443,8 +393,6 @@ Expected output:
 ---
 
 ## 26. Debouncing & Throttling ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is debouncing?
 2. What is throttling?
@@ -544,8 +492,6 @@ The coding section focuses on problems that actually test important JavaScript s
 
 You should understand how these methods work internally.
 
-### Must Implement
-
 1. `map()`
 2. `filter()`
 3. `reduce()`
@@ -559,8 +505,6 @@ You should understand how these methods work internally.
 ---
 
 ## 32. `call`, `apply` & `bind` ⭐⭐⭐⭐⭐
-
-### Must Implement
 
 1. Implement `call()`.
 2. Implement `apply()`.
@@ -588,8 +532,6 @@ Also understand:
 ---
 
 ## 34. Promise Coding ⭐⭐⭐⭐⭐
-
-### Must Implement
 
 1. Create a Promise from scratch at a basic level.
 2. Implement `Promise.all()`.
@@ -622,8 +564,6 @@ Also understand:
 
 ## 36. Debounce & Throttle Coding ⭐⭐⭐⭐⭐
 
-### Must Implement
-
 1. `debounce()`
 2. `throttle()`
 
@@ -638,8 +578,6 @@ Also understand:
 ---
 
 ## 37. DOM & Event Coding ⭐⭐⭐⭐⭐
-
-### Must Build / Implement
 
 1. Event delegation.
 2. Dynamic list handling.

@@ -6,8 +6,6 @@
 
 ## 1. Node.js Architecture & Libuv ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is Node.js?
 2. What is Google V8 vs Libuv?
 3. Is Node.js completely single-threaded? (Distinction between JS execution thread and Libuv worker thread pool).
@@ -18,8 +16,6 @@
 ---
 
 ## 2. Event Loop Phases & Execution Timing ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What are the 6 phases of the Libuv Event Loop?
    - Timers phase
@@ -38,8 +34,6 @@
 
 ## 3. Buffers, Streams & Backpressure ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is a Buffer in Node.js?
 2. Why are Buffers allocated outside the V8 heap in raw C++ memory?
 3. What is a Stream and why are streams critical for handling large files?
@@ -53,8 +47,6 @@
 
 ## 4. Modules & Module Resolution ⭐⭐⭐⭐
 
-### Must Know
-
 1. CommonJS (`require`, `module.exports`) vs ES Modules (`import`, `export`).
 2. How does Node.js resolve module paths?
 3. What is module caching and do modules execute once or every time they are imported?
@@ -65,8 +57,6 @@
 ---
 
 ## 5. Concurrency & Scaling: Processes vs Threads ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. Why does Node.js only use 1 CPU core by default?
 2. What is the `cluster` module and how does it scale HTTP throughput across cores?
@@ -79,8 +69,6 @@
 
 ## 6. Error Handling & Process Lifecycle ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. Operational errors vs Programmer errors.
 2. What happens if a Promise rejection is unhandled (`unhandledRejection`)?
 3. What is `uncaughtException` and why should the process always be terminated after it occurs?
@@ -91,8 +79,6 @@
 ---
 
 ## 7. Security & Best Practices ⭐⭐⭐⭐
-
-### Must Know
 
 1. What is ReDoS (Regular Expression Denial of Service)?
 2. How can untrusted input block the single-threaded event loop?
@@ -110,8 +96,6 @@
 
 ## 8. Streams & File Processing Coding ⭐⭐⭐⭐⭐
 
-### Must Implement
-
 1. Process a multi-gigabyte log or CSV file line-by-line using `Transform` stream and `readline` with constant $O(1)$ memory usage.
 2. Implement custom Writable stream that respects backpressure by returning `false` and emitting `'drain'`.
 3. Implement file compression utility using `zlib.createGzip()` and `pipeline()`.
@@ -119,8 +103,6 @@
 ---
 
 ## 9. Middleware & Server Coding ⭐⭐⭐⭐⭐
-
-### Must Implement
 
 1. Build an in-memory sliding window rate limiter middleware from scratch.
 2. Build a central Express error-handling middleware that formats operational errors and hides internal stack traces in production.
@@ -130,8 +112,6 @@
 ---
 
 ## 10. Concurrency & Asynchronous Utility Coding ⭐⭐⭐⭐⭐
-
-### Must Implement
 
 1. Implement an async task queue / pool that limits concurrent promises to $N$ active tasks at a time.
 2. Offload an expensive CPU computation (e.g. prime factorization or image hashing) to a `Worker` thread.

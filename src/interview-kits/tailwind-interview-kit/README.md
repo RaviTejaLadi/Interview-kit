@@ -6,8 +6,6 @@
 
 ## 1. Utility-First Architecture & Core Concepts ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is Tailwind CSS?
 2. What is the Utility-First paradigm?
 3. Utility-first CSS vs Semantic CSS (BEM) vs CSS Modules.
@@ -18,8 +16,6 @@
 ---
 
 ## 2. JIT (Just-In-Time) Engine & Compilation ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is the Tailwind JIT (Just-In-Time) compiler?
 2. How did Tailwind v2 (PurgeCSS) differ from Tailwind v3+ (JIT)?
@@ -33,8 +29,6 @@
 
 ## 3. Configuration & Design Tokens (`tailwind.config.js`) ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is `tailwind.config.js` and what is its role?
 2. What is the difference between `theme` and `theme.extend`?
 3. What happens if you put colors directly under `theme: { colors: { ... } }`?
@@ -47,8 +41,6 @@
 
 ## 4. Class Conflicts & Dynamic Merging (`clsx` + `tailwind-merge`) ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What happens when two conflicting Tailwind classes are applied to the same element (e.g. `p-2 p-4`)?
 2. Why does the cascade order in generated CSS determine the winner rather than the class string order?
 3. What is `clsx` and what problem does it solve?
@@ -59,8 +51,6 @@
 ---
 
 ## 5. Responsive Design & Breakpoint Logic ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What are Tailwind's default responsive breakpoints (`sm`, `md`, `lg`, `xl`, `2xl`)?
 2. Are Tailwind breakpoints mobile-first (`min-width`) or desktop-first (`max-width`)?
@@ -73,8 +63,6 @@
 
 ## 6. Dark Mode & Theming Strategies ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. How does Dark Mode work in Tailwind (`dark:` prefix)?
 2. What is the difference between `darkMode: 'media'` and `darkMode: 'class'` (or `'selector'`)?
 3. How do you implement a user-toggleable dark mode with `localStorage`?
@@ -84,8 +72,6 @@
 ---
 
 ## 7. Pseudo-classes, States & Group Modifiers ⭐⭐⭐⭐
-
-### Must Know
 
 1. How do you style pseudo-classes (`hover:`, `focus:`, `active:`, `focus-visible:`, `disabled:`)?
 2. What is `group` and `group-hover` (styling child elements based on parent hover state)?
@@ -101,8 +87,6 @@
 
 ## 8. Component Building with Tailwind ⭐⭐⭐⭐⭐
 
-### Must Build / Implement
-
 1. Build a responsive, accessible **E-commerce Product Card** with image aspect ratio, badges, star ratings, and hover state transitions.
 2. Build an accessible **Modal Dialog Overlay** with backdrop blur and responsive modal card.
 3. Build a **Responsive Navigation Bar** with desktop links and mobile hamburger drawer.
@@ -112,8 +96,6 @@
 ---
 
 ## 9. Reusable Component Variants (React + Tailwind) ⭐⭐⭐⭐⭐
-
-### Must Implement
 
 1. Implement the `cn(...)` utility using `clsx` and `tailwind-merge`.
 2. Build a type-safe `Button` component supporting variants (`primary`, `secondary`, `outline`, `destructive`, `ghost`) and sizes (`sm`, `md`, `lg`) using `cva`.

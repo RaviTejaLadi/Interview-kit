@@ -6,8 +6,6 @@
 
 ## 1. MongoDB Fundamentals & Document Model ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is MongoDB and what kind of database is it (NoSQL, Document-oriented)?
 2. What is BSON (Binary JSON) and how does it differ from standard JSON?
 3. Relational databases (Tables/Rows/Columns) vs MongoDB (Databases/Collections/Documents).
@@ -20,8 +18,6 @@
 
 ## 2. Schema Design: Embedding vs Referencing ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is Embedding (Denormalization)?
 2. What is Referencing (Normalization)?
 3. When should you Embed child data (1-to-few, data read together, atomic updates)?
@@ -32,8 +28,6 @@
 ---
 
 ## 3. Indexing & The ESR (Equality, Sort, Range) Rule ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is an Index and why is it essential for query performance?
 2. What is a Collection Scan (`COLLSCAN`) vs Index Scan (`IXSCAN`)?
@@ -51,8 +45,6 @@
 
 ## 4. Aggregation Pipeline Framework ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is the Aggregation Pipeline in MongoDB?
 2. What are the most common aggregation pipeline stages?
    - `$match` (filtering)
@@ -69,8 +61,6 @@
 
 ## 5. Replication, Consensus & High Availability ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is a Replica Set in MongoDB?
 2. What is the role of the Primary node vs Secondary nodes?
 3. How does automatic failover and election work when the Primary goes down (Raft/Paxos consensus)?
@@ -82,8 +72,6 @@
 ---
 
 ## 6. Sharding & Horizontal Scaling ⭐⭐⭐⭐
-
-### Must Know
 
 1. Vertical scaling vs Horizontal scaling (Sharding).
 2. What are the core components of a Sharded Cluster?
@@ -97,8 +85,6 @@
 ---
 
 ## 7. ACID Transactions & Concurrency ⭐⭐⭐⭐
-
-### Must Know
 
 1. Are single-document operations in MongoDB atomic?
 2. Does MongoDB support Multi-Document ACID Transactions? (Yes, since v4.0/4.2).
@@ -126,8 +112,6 @@
 
 ## 9. Mongoose & Schema Modeling Coding ⭐⭐⭐⭐⭐
 
-### Must Implement
-
 1. Build a production Mongoose schema with type validation, required fields, and unique indexes.
 2. Implement pre-save middleware (`pre('save')`) to hash passwords with bcrypt.
 3. Implement virtual fields (`toJSON: { virtuals: true }`) and custom instance methods.
@@ -136,8 +120,6 @@
 ---
 
 ## 10. Transactions & CRUD Operations Coding ⭐⭐⭐⭐⭐
-
-### Must Implement
 
 1. Implement a bank transfer function executing an atomic multi-document transaction with session rollback.
 2. Write atomic counter updates using `$inc` without race conditions.

@@ -6,8 +6,6 @@
 
 ## 1. CSS Box Model & Sizing ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is the CSS Box Model?
 2. What are the 4 layers of the Box Model (Content, Padding, Border, Margin)?
 3. What is `box-sizing: content-box` vs `box-sizing: border-box`?
@@ -19,8 +17,6 @@
 ---
 
 ## 2. Specificity, Cascading & Inheritance ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is the Cascade in CSS?
 2. How is CSS Specificity calculated (Inline > ID > Class/Attribute/Pseudo-class > Element)?
@@ -34,8 +30,6 @@
 ---
 
 ## 3. Positioning & Stacking Context ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is `position: static`?
 2. What is `position: relative`?
@@ -53,8 +47,6 @@
 
 ## 4. Flexbox (1-Dimensional Layout) ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is Flexbox and what problem does it solve?
 2. Main axis vs Cross axis.
 3. `justify-content` vs `align-items` vs `align-content`.
@@ -69,8 +61,6 @@
 
 ## 5. CSS Grid (2-Dimensional Layout) ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. Flexbox vs CSS Grid: Architectural differences and when to use which.
 2. What is the `fr` unit?
 3. What is `repeat()` and `minmax()`?
@@ -83,8 +73,6 @@
 
 ## 6. Responsive Design & Units ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. Absolute units (`px`) vs Relative units (`rem`, `em`, `%`, `vw`, `vh`, `ch`).
 2. `rem` vs `em`: Key differences and inheritance pitfalls.
 3. Modern viewport units: `dvh`, `lvh`, `svh` (and why `100vh` causes bugs on mobile).
@@ -95,8 +83,6 @@
 ---
 
 ## 7. Rendering Performance & The Pixel Pipeline ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is the Critical Rendering Pipeline in CSS (CSSOM + DOM = Render Tree)?
 2. What is Reflow (Layout) vs Repaint vs Composite?
@@ -109,8 +95,6 @@
 ---
 
 ## 8. CSS Architecture & Modern Features ⭐⭐⭐⭐
-
-### Must Know
 
 1. What are CSS Custom Properties (CSS Variables) and how do they cascade?
 2. CSS Variables vs Sass/SCSS variables.
@@ -127,8 +111,6 @@
 
 ## 9. Layout Coding Challenges ⭐⭐⭐⭐⭐
 
-### Must Implement
-
 1. Center a `div` vertically and horizontally in 3 different ways (Flexbox, Grid, Absolute + Transform).
 2. Build a responsive Holy Grail layout (Header, Nav, Main, Aside, Footer) using CSS Grid.
 3. Build a responsive card grid that auto-fits items without media queries using `repeat(auto-fit, minmax(250px, 1fr))`.
@@ -138,8 +120,6 @@
 ---
 
 ## 10. UI Patterns & Component Styling ⭐⭐⭐⭐⭐
-
-### Must Build
 
 1. Implement single-line text truncation with ellipsis (`text-overflow: ellipsis`).
 2. Implement multi-line text clamping (`-webkit-line-clamp: 3`).

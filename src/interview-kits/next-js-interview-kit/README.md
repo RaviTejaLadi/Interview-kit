@@ -6,8 +6,6 @@
 
 ## 1. Next.js Fundamentals & App Router vs Pages Router ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is Next.js and why use it over pure React (Vite / CRA)?
 2. What are the key architectural differences between the Pages Router (`pages/`) and the App Router (`app/`)?
 3. How does routing work in the App Router (folder-based routing & `page.tsx`)?
@@ -19,8 +17,6 @@
 ---
 
 ## 2. React Server Components (RSC) & Client Components ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What are React Server Components (RSC)?
 2. What is the `'use client'` directive?
@@ -34,8 +30,6 @@
 ---
 
 ## 3. Rendering Strategies: SSR, SSG, ISR & CSR ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is Static Site Generation (SSG)?
 2. What is Server-Side Rendering (SSR) / Dynamic Rendering?
@@ -51,8 +45,6 @@
 
 ## 4. Data Fetching & Multi-Tier Caching Engine ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. How do you fetch data inside an async Server Component?
 2. What are the 4 caching mechanisms in Next.js (Request Memoization, Data Cache, Full Route Cache, Router Cache)?
 3. How does automatic `fetch()` request deduplication work?
@@ -64,8 +56,6 @@
 ---
 
 ## 5. Server Actions & Mutations ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What are Server Actions (`'use server'`)?
 2. How do Server Actions eliminate the need for manual API route boilerplate?
@@ -79,8 +69,6 @@
 
 ## 6. Routing, Navigation & Optimization APIs ⭐⭐⭐⭐
 
-### Must Know
-
 1. How does `<Link>` differ from standard `<a>` tag (client-side prefetching)?
 2. How does `useRouter()` work in the App Router (`next/navigation` vs `next/router`)?
 3. What are Dynamic Segments (`[slug]`) and Catch-all Segments (`[...slug]` / `[[...slug]]`)?
@@ -92,8 +80,6 @@
 ---
 
 ## 7. Middleware & Authentication ⭐⭐⭐⭐
-
-### Must Know
 
 1. What is Next.js Middleware (`middleware.ts`)?
 2. Where does Middleware execute (Edge runtime before request completion)?
@@ -110,8 +96,6 @@
 
 ## 8. Dynamic Routing & Data Fetching Coding ⭐⭐⭐⭐⭐
 
-### Must Implement
-
 1. Build a dynamic product page (`app/products/[slug]/page.tsx`) with `generateStaticParams` and ISR revalidation.
 2. Implement dynamic SEO metadata generation with `generateMetadata`.
 3. Build a page that streams slow data using `<Suspense fallback={<Skeleton />}>`.
@@ -120,8 +104,6 @@
 ---
 
 ## 9. Server Actions & Route Handlers Coding ⭐⭐⭐⭐⭐
-
-### Must Implement
 
 1. Create a secure POST Route Handler (`app/api/contact/route.ts`) validating body payloads with Zod.
 2. Build a Todo list with Server Actions, form validation, and revalidation via `revalidatePath`.

@@ -6,8 +6,6 @@
 
 ## 1. Introduction & Background ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. "Tell me about yourself." (The 90-second elevator pitch).
 2. Walk me through your resume.
 3. What are you currently working on in your day-to-day role?
@@ -18,8 +16,6 @@
 ---
 
 ## 2. Motivation & Company Fit ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. Why do you want to work at our company?
 2. What do you know about our product, culture, and business model?
@@ -33,8 +29,6 @@
 
 ## 3. Strengths, Weaknesses & Self-Awareness ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What are your greatest technical and non-technical strengths?
 2. What is your greatest weakness? (How to frame real self-improvement without disqualifying yourself).
 3. What is one area where you received constructive feedback, and how did you act on it?
@@ -46,8 +40,6 @@
 
 ## 4. Career Aspirations & Trajectory ⭐⭐⭐⭐
 
-### Must Know
-
 1. Where do you see yourself in 3 to 5 years?
 2. Do you see yourself moving toward individual contributor (IC / Staff Engineer) or engineering management?
 3. What are your long-term career goals?
@@ -57,8 +49,6 @@
 ---
 
 ## 5. Work Style, Productivity & Remote Work ⭐⭐⭐⭐
-
-### Must Know
 
 1. How do you prioritize tasks when everything seems urgent?
 2. How do you handle context-switching and interruptions during deep work?
@@ -77,8 +67,6 @@
 
 ## 6. Conflict Resolution & Team Dynamics ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. Tell me about a time you had a technical disagreement with a teammate or senior engineer. How was it resolved?
 2. Have you ever disagreed with a decision made by your manager or product manager? What did you do?
 3. How do you deal with a colleague who isn't pulling their weight or missing deadlines?
@@ -90,8 +78,6 @@
 
 ## 7. Ownership, Pressure & Tight Deadlines ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. Tell me about a time a project was at risk of missing a strict deadline. What actions did you take?
 2. Describe a high-pressure production outage or critical bug you had to resolve.
 3. Tell me about a time you had to make a technical trade-off (e.g., shipping fast vs writing perfect code / tech debt).
@@ -102,8 +88,6 @@
 
 ## 8. Failure, Mistakes & Resilience ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. Tell me about a project that failed or did not go as planned. What was your role, and what did you learn?
 2. Tell me about a time you introduced a critical bug into production. How did you handle the aftermath?
 3. Have you ever missed a deadline? What happened and how did you prevent it from happening again?
@@ -112,8 +96,6 @@
 ---
 
 ## 9. Mentorship, Cross-Functional Collaboration & Leadership ⭐⭐⭐⭐
-
-### Must Know
 
 1. Tell me about a time you mentored or onboarded a junior engineer or intern.
 2. How do you collaborate with non-technical stakeholders (Product Managers, Designers, QA, Sales)?
@@ -124,8 +106,6 @@
 ---
 
 ## 10. Ambiguity & Fast-Paced Change ⭐⭐⭐⭐
-
-### Must Know
 
 1. Tell me about a time requirements changed halfway through a project. How did you adapt?
 2. How do you approach a task when the requirements are vague or undefined?
@@ -140,8 +120,6 @@
 
 ## 11. Salary Expectations & Compensation ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. "What are your salary expectations?" (How to answer without anchoring too low or pricing yourself out).
 2. What is your current compensation (fixed vs variable vs ESOPs/stocks)?
 3. Are you open to negotiation, or is this number strict?
@@ -152,8 +130,6 @@
 
 ## 12. Notice Period & Availability ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is your official notice period?
 2. Can your notice period be bought out or negotiated for an early release?
 3. What is your earliest possible joining date?
@@ -163,8 +139,6 @@
 ---
 
 ## 13. Questions YOU Must Ask the HR / Recruiter ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. "What does success look like for this role in the first 90 days?"
 2. "How would you describe the engineering culture and work-life balance on this team?"

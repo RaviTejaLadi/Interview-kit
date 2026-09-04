@@ -6,8 +6,6 @@
 
 ## 1. HTML5 & Semantic Elements ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is HTML5 and what did it introduce?
 2. What is Semantic HTML?
 3. Why is Semantic HTML important for SEO and Accessibility?
@@ -20,8 +18,6 @@
 ---
 
 ## 2. Accessibility (a11y) & ARIA ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is web accessibility (a11y)?
 2. What is the Accessibility Tree?
@@ -38,8 +34,6 @@
 
 ## 3. Critical Rendering Path & Script Loading ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. How does the browser parse HTML into the DOM tree?
 2. What blocks HTML parsing?
 3. What is the difference between normal `<script>`, `<script async>`, and `<script defer>`?
@@ -52,8 +46,6 @@
 
 ## 4. Web Storage & Client-Side Data ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is `localStorage`?
 2. What is `sessionStorage`?
 3. What are Cookies (`document.cookie`)?
@@ -65,8 +57,6 @@
 ---
 
 ## 5. Forms, Inputs & Native Validation ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is the `<form>` element and how does it submit data?
 2. What are the common `input` types in HTML5 (`email`, `number`, `tel`, `date`, `file`, etc.)?
@@ -81,8 +71,6 @@
 
 ## 6. Media & Responsive Images ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. How does the `<img>` tag work with `srcset` and `sizes`?
 2. What is the `<picture>` element and when is it preferred over `<img>` with `srcset` (Art Direction vs Resolution Switching)?
 3. What is native image lazy loading (`loading="lazy"`)?
@@ -94,8 +82,6 @@
 
 ## 7. Meta Tags, Head & Modern SEO ⭐⭐⭐⭐
 
-### Must Know
-
 1. What is the purpose of `<head>`?
 2. What is the responsive viewport meta tag (`<meta name="viewport" content="width=device-width, initial-scale=1.0">`)?
 3. What is `<link rel="canonical">` and why is it vital for SEO?
@@ -106,8 +92,6 @@
 ---
 
 ## 8. Modern HTML5 APIs ⭐⭐⭐⭐
-
-### Must Know
 
 1. What is the native `<dialog>` element and `showModal()` API?
 2. What is the Intersection Observer API?
@@ -124,8 +108,6 @@
 
 ## 9. Semantic & Accessible Markup Coding ⭐⭐⭐⭐⭐
 
-### Must Build / Write
-
 1. Write a complete, semantic HTML5 document skeleton with accessibility landmarks.
 2. Build an accessible registration form with linked labels, helper text, error announcement regions, and submit button.
 3. Markup a semantic blog article with author, publication date, headings hierarchy, and related tags.
@@ -135,8 +117,6 @@
 ---
 
 ## 10. Performance & Media Coding ⭐⭐⭐⭐⭐
-
-### Must Implement
 
 1. Write a responsive `<picture>` element serving modern AVIF, WebP, and JPEG fallback with lazy loading.
 2. Implement resource hints (`preconnect`, `preload`) for Google Fonts and critical hero images.

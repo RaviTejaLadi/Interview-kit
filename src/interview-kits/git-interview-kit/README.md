@@ -6,8 +6,6 @@
 
 ## 1. Git Architecture & The Object Store ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is Git and how does it differ from centralized VCS (like SVN)?
 2. What is a content-addressable filesystem?
 3. What is the `.git` folder and what does it store?
@@ -24,8 +22,6 @@
 
 ## 2. The Three Trees & Working States ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What are the Three Trees / Areas of Git?
    - **Working Directory:** Untracked/modified local files.
    - **Staging Area (Index):** Snapshot prepared for the next commit.
@@ -38,8 +34,6 @@
 ---
 
 ## 3. Merge vs Rebase & The Golden Rule ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is `git merge` and what is a 3-way merge commit?
 2. What is a Fast-Forward merge?
@@ -55,8 +49,6 @@
 
 ## 4. Undoing Changes: Reset, Revert & Restore ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What does `git reset` do?
 2. What is the difference between:
    - `git reset --soft` (moves HEAD only; staging and working dir untouched)
@@ -71,8 +63,6 @@
 
 ## 5. Branching Strategies & Workflows ⭐⭐⭐⭐
 
-### Must Know
-
 1. What is **GitFlow** and what are its branches (`main`, `develop`, `feature/*`, `release/*`, `hotfix/*`)?
 2. What is **GitHub Flow** (single `main` branch with short-lived feature branches)?
 3. What is **Trunk-Based Development** and why is it preferred in modern CI/CD teams?
@@ -82,8 +72,6 @@
 ---
 
 ## 6. Disaster Recovery: Reflog, Detached HEAD & Cherry-Pick ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is the Git Reference Log (`git reflog`)?
 2. How does `git reflog` record changes to HEAD?

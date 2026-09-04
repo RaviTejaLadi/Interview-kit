@@ -6,8 +6,6 @@
 
 ## 1. React Fundamentals ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is React?
 2. What are the key features of React?
 3. What is JSX?
@@ -24,8 +22,6 @@
 
 ## 2. State & Props ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is state in React?
 2. What are props in React?
 3. State vs Props: Key differences.
@@ -40,8 +36,6 @@
 ---
 
 ## 3. Component Lifecycle & Hooks Basics ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What are the phases of component lifecycle (Mount, Update, Unmount)?
 2. How do Hooks replace class lifecycle methods?
@@ -58,8 +52,6 @@
 
 ## 4. Rules of Hooks & Hook Internals ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What are the two core Rules of Hooks?
 2. Why can't Hooks be called inside `if` statements, loops, or nested functions?
 3. How does React track hook state internally (Singly linked lists on Fiber)?
@@ -71,8 +63,6 @@
 ---
 
 ## 5. React Fiber & Reconciliation Algorithm ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is React Fiber?
 2. Why did React rewrite the reconciler from the stack reconciler to Fiber?
@@ -89,8 +79,6 @@
 
 ## 6. Rendering Behavior & React 18 Features ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What triggers a re-render in a React component?
 2. Does a parent re-render always re-render its children?
 3. What is Automatic Batching in React 18?
@@ -105,8 +93,6 @@
 ---
 
 ## 7. Advanced Hooks ⭐⭐⭐⭐⭐
-
-### Must Know
 
 1. What is `useRef()`?
 2. Difference between `useRef` and `useState`.
@@ -125,8 +111,6 @@
 
 ## 8. React Performance Optimization ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. How do you identify unnecessary re-renders (React DevTools Profiler)?
 2. What is `React.memo()`?
 3. Why does `React.memo` fail when passing inline functions or objects?
@@ -141,8 +125,6 @@
 
 ## 9. Context API & State Management ⭐⭐⭐⭐⭐
 
-### Must Know
-
 1. What is the Context API?
 2. When should you use Context vs Props?
 3. What is the "Context Re-render Trap"?
@@ -154,8 +136,6 @@
 ---
 
 ## 10. React Patterns & Error Handling ⭐⭐⭐⭐
-
-### Must Know
 
 1. What is the Compound Component pattern?
 2. What are Render Props?
@@ -173,8 +153,6 @@
 ---
 
 ## 11. Custom Hooks Implementation ⭐⭐⭐⭐⭐
-
-### Must Implement
 
 1. Implement `useDebounce(value, delay)`.
 2. Implement `useThrottle(value, interval)`.
@@ -203,8 +181,6 @@
 ---
 
 ## 13. UI Components & Machine Coding ⭐⭐⭐⭐⭐
-
-### Must Build
 
 1. Build an accessible **Modal / Dialog** with backdrop click and `Escape` key handler using Portals.
 2. Build an **Accordion** component (single-open and multi-open modes).
