@@ -147,7 +147,7 @@ function App() {
   const hasSelectedTopicContent = selectedTopic ? hasOwn(topicContentById, selectedTopic.id) : false;
 
   const scrollRef = useRef<HTMLDivElement | null>(null)
-  const footerNavRef = useRef<HTMLElement | null>(null)
+  const contentEndRef = useRef<HTMLDivElement | null>(null)
 
   const navigationTopics = useMemo(() => {
     if (searchValue.trim()) {
@@ -170,7 +170,7 @@ function App() {
     scrollRef,
     selectedTopic?.id ?? null,
   )
-  const footerInView = useFooterInView(footerNavRef, scrollRef, selectedTopic?.id ?? null)
+  const footerInView = useFooterInView(contentEndRef, scrollRef, selectedTopic?.id ?? null)
 
   useTopicHotkeys({
     previousTopic,
@@ -294,27 +294,32 @@ function App() {
             </p>
           </div>
         ) : (
-            <article className="mx-auto w-full min-w-0 max-w-6xl space-y-3 p-3 sm:space-y-4 sm:p-5 md:p-8">
-            <div className="rounded-md border border-border/70 bg-card/96 p-4 shadow-[0_2px_10px_rgb(15_23_42/5%)] backdrop-blur sm:p-5 md:p-7 dark:border-border/35 dark:bg-card/92 dark:shadow-none">
-              {isLoadingTopic && !hasSelectedTopicContent ? (
-                <p className="text-sm text-foreground/70">Loading markdown...</p>
-              ) : topicLoadError ? (
-                <p className="text-sm text-red-600">
-                  Could not load this file. {topicLoadError}
-                </p>
-              ) : (
-                <MarkdownPreview
-                  content={selectedTopicContent}
-                  theme={theme}
-                  onInternalLink={handleInternalLink}
-                />
-              )}
-            </div>
+            <article className="mx-auto w-full min-w-0 max-w-6xl space-y-3 px-1 py-3 sm:space-y-4 ">
             <TopicNavigator
               previousTopic={previousTopic}
               nextTopic={nextTopic}
               onSelect={setSelectedTopicId}
-              navRef={footerNavRef}
+            >
+              <div className="rounded-md border border-border/70 bg-card/96 p-4 shadow-[0_2px_10px_rgb(15_23_42/5%)] backdrop-blur sm:p-5 md:p-7 dark:border-border/35 dark:bg-card/92 dark:shadow-none">
+                {isLoadingTopic && !hasSelectedTopicContent ? (
+                  <p className="text-sm text-foreground/70">Loading markdown...</p>
+                ) : topicLoadError ? (
+                  <p className="text-sm text-red-600">
+                    Could not load this file. {topicLoadError}
+                  </p>
+                ) : (
+                  <MarkdownPreview
+                    content={selectedTopicContent}
+                    theme={theme}
+                    onInternalLink={handleInternalLink}
+                  />
+                )}
+              </div>
+            </TopicNavigator>
+            <div
+              ref={contentEndRef}
+              aria-hidden="true"
+              className="h-px w-full"
             />
           </article>
         )}

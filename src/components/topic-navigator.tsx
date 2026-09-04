@@ -1,4 +1,5 @@
-import { type MutableRefObject, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
+import type { ReactNode } from "react"
 import {
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -16,7 +17,7 @@ type AdjacentTopics = {
   nextTopic: Topic | null
 }
 
-function TopicNavCard({
+function TopicSideButton({
   topic,
   direction,
   onSelect,
@@ -26,56 +27,36 @@ function TopicNavCard({
   onSelect: (topicId: string) => void
 }) {
   const isPrevious = direction === "previous"
-  const shortcut = isPrevious ? "←" : "→"
-
-  if (!topic) {
-    return (
-      <div
-        className={cn(
-          "rounded-md border border-dashed border-border/60 px-4 py-3 text-sm text-muted-foreground/80 dark:border-border/30",
-          isPrevious ? "text-left" : "text-right",
-        )}
-      >
-        <p className="text-[11px] font-medium tracking-[0.08em] uppercase">
-          {isPrevious ? "Previous" : "Next"}
-        </p>
-        <p className="mt-1">{isPrevious ? "First topic in this kit" : "Last topic in this kit"}</p>
-      </div>
-    )
-  }
 
   return (
-    <button
+    <Button
       type="button"
-      onClick={() => onSelect(topic.id)}
+      variant="outline"
+      size="icon-sm"
+      disabled={!topic}
+      onClick={() => topic && onSelect(topic.id)}
       className={cn(
-        "group rounded-md border border-border/70 bg-card/96 px-4 py-3 text-left shadow-[0_1px_2px_rgb(15_23_42/5%)] transition-colors",
-        "hover:border-primary/35 hover:bg-muted/45 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
-        "dark:border-border/35 dark:bg-card/90 dark:shadow-none dark:hover:bg-muted/30",
-        !isPrevious && "text-right",
+        "size-7 rounded-md border-border/70 bg-card/96 shadow-[0_1px_2px_rgb(15_23_42/6%)]",
+        "hover:bg-muted/60 dark:border-border/35 dark:bg-card/90 dark:shadow-none",
       )}
-      aria-label={`${isPrevious ? "Previous" : "Next"} topic: ${topic.title}`}
+      aria-label={
+        topic
+          ? `${isPrevious ? "Previous" : "Next"} topic: ${topic.title}`
+          : isPrevious
+            ? "No previous topic"
+            : "No next topic"
+      }
+      title={
+        topic
+          ? `${isPrevious ? "Previous" : "Next"}: ${topic.title}`
+          : isPrevious
+            ? "First topic in this kit"
+            : "Last topic in this kit"
+      }
     >
-      <span
-        className={cn(
-          "flex items-center gap-1 text-[11px] font-medium tracking-[0.08em] text-muted-foreground uppercase",
-          !isPrevious && "justify-end",
-        )}
-      >
-        {isPrevious ? <ChevronLeftIcon className="size-3.5" /> : null}
-        {isPrevious ? "Previous" : "Next"}
-        {!isPrevious ? <ChevronRightIcon className="size-3.5" /> : null}
-        <kbd className="ml-1 hidden rounded border border-border/70 px-1 py-px text-[10px] font-normal normal-case tracking-normal text-muted-foreground/90 sm:inline dark:border-border/40">
-          {shortcut}
-        </kbd>
-      </span>
-      <span className="mt-1 block truncate font-semibold text-foreground group-hover:text-primary">
-        {topic.title}
-      </span>
-      <span className="mt-0.5 block truncate text-xs text-muted-foreground">
-        {topic.topicTitle ?? topic.section}
-      </span>
-    </button>
+      {isPrevious ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+      <span className="sr-only">{isPrevious ? "Previous topic" : "Next topic"}</span>
+    </Button>
   )
 }
 
@@ -83,21 +64,27 @@ export function TopicNavigator({
   previousTopic,
   nextTopic,
   onSelect,
-  navRef,
+  children,
 }: AdjacentTopics & {
   onSelect: (topicId: string) => void
-  navRef: MutableRefObject<HTMLElement | null>
+  children: ReactNode
 }) {
   return (
     <nav
-      ref={(node) => {
-        navRef.current = node
-      }}
       aria-label="Topic pagination"
-      className="grid grid-cols-1 gap-3 sm:grid-cols-2"
+      className="relative mx-auto w-full max-w-6xl px-0 sm:px-9"
     >
-      <TopicNavCard topic={previousTopic} direction="previous" onSelect={onSelect} />
-      <TopicNavCard topic={nextTopic} direction="next" onSelect={onSelect} />
+      <div className="min-w-0">{children}</div>
+      <div className="pointer-events-none absolute inset-y-0 left-0 hidden sm:block">
+        <div className="pointer-events-auto sticky top-1/2 w-fit -translate-y-1/2">
+          <TopicSideButton topic={previousTopic} direction="previous" onSelect={onSelect} />
+        </div>
+      </div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 hidden sm:block">
+        <div className="pointer-events-auto sticky top-1/2 w-fit -translate-y-1/2">
+          <TopicSideButton topic={nextTopic} direction="next" onSelect={onSelect} />
+        </div>
+      </div>
     </nav>
   )
 }
