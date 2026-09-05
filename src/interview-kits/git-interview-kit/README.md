@@ -89,8 +89,6 @@
 
 ## 7. History Manipulation & Rebasing ⭐⭐⭐⭐⭐
 
-### Must Execute / Master
-
 1. Perform an interactive rebase (`git rebase -i HEAD~4`) to squash 3 minor commits into 1 clean commit.
 2. Reword an old commit message using interactive rebase.
 3. Split a single large commit into two separate commits using `edit`.
@@ -100,8 +98,6 @@
 
 ## 8. Conflict Resolution & Branch Operations ⭐⭐⭐⭐⭐
 
-### Must Execute / Master
-
 1. Resolve merge conflicts manually by reading conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`), staging, and completing merge/rebase.
 2. Cherry-pick a specific hotfix commit from `main` to a release branch.
 3. Stash uncommitted changes with a message, switch branches, and re-apply stashed changes.
@@ -110,8 +106,6 @@
 ---
 
 ## 9. Disaster Recovery Scenarios ⭐⭐⭐⭐⭐
-
-### Must Execute / Master
 
 1. **Accidental Hard Reset Recovery:** Recover from an accidental `git reset --hard HEAD~3` using `git reflog` and restoring branch pointers.
 2. **Deleted Branch Recovery:** Restore a branch that was accidentally deleted with `git branch -D <branch>`.
