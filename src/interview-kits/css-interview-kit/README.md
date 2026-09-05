@@ -136,25 +136,7 @@
 ---
 
 ## 11. Specificity Tuple Calculation ⭐⭐⭐⭐⭐
-
-Specificity is calculated as a 4-part vector `(A, B, C, D)`:
-
-```text
-A: Inline styles      <div style="...">       (1, 0, 0, 0)
-B: IDs                #header                 (0, 1, 0, 0)
-C: Classes, pseudo    .card, :hover, [type]   (0, 0, 1, 0)
-D: Elements, pseudo   div, p, ::before        (0, 0, 0, 1)
-
-Universal (*) & combinators (+, >, ~)         (0, 0, 0, 0)
-```
-
----
-
 ## 12. Flexbox vs CSS Grid Cheatsheet ⭐⭐⭐⭐⭐
-
-- **Use Flexbox for:** 1D layouts (content flows in a line, toolbar, clusters, dynamic items).
-- **Use Grid for:** 2D layouts (rows and columns simultaneously, page scaffolding, card grids).
-
 ---
 
 # 🏆 TOP 25 — If You Have Very Little Time
