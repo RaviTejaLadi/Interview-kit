@@ -6,11 +6,16 @@ import {
   ChevronUpIcon,
   Maximize2Icon,
   Minimize2Icon,
+  MoonIcon,
+  SunIcon,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import type { Topic } from "@/lib/content-index"
 import { cn } from "@/lib/utils"
+
+const headerIconButtonClassName =
+  "rounded-md border-border/70 bg-card/96 shadow-[0_1px_2px_rgb(15_23_42/6%)] hover:bg-muted/60 dark:border-border/35 dark:bg-card/90 dark:shadow-none"
 
 type AdjacentTopics = {
   previousTopic: Topic | null
@@ -228,7 +233,7 @@ export function FullscreenButton() {
       type="button"
       variant="outline"
       size="icon-sm"
-      className="rounded-md border-border/70 bg-card/96 shadow-[0_1px_2px_rgb(15_23_42/6%)] hover:bg-muted/60 dark:border-border/35 dark:bg-card/90 dark:shadow-none"
+      className={headerIconButtonClassName}
       onClick={async () => {
         try {
           if (document.fullscreenElement) {
@@ -247,6 +252,31 @@ export function FullscreenButton() {
       {isFullscreen ? <Minimize2Icon /> : <Maximize2Icon />}
       <span className="sr-only">
         {isFullscreen ? "Exit full screen" : "Enter full screen"}
+      </span>
+    </Button>
+  )
+}
+
+export function ThemeToggle({
+  theme,
+  onToggle,
+}: {
+  theme: "light" | "dark"
+  onToggle: () => void
+}) {
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      size="icon-sm"
+      className={headerIconButtonClassName}
+      onClick={onToggle}
+      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+      title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
+    >
+      {theme === "dark" ? <SunIcon /> : <MoonIcon />}
+      <span className="sr-only">
+        Switch to {theme === "dark" ? "light" : "dark"} mode
       </span>
     </Button>
   )
