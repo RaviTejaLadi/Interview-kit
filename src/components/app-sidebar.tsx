@@ -12,7 +12,14 @@ import {
 } from "lucide-react"
 
 import type { Topic, TopicGroup } from "@/lib/content-index"
-import { KIT_ICON_BY_KEY, sortKitsByDisplayOrder } from "@/lib/kit-meta"
+import { KIT_ICON_BY_KEY } from "@/lib/kit-meta"
+import {
+  buildKitMenus,
+  getFolderNavId,
+  getTopicNavId,
+  type KitMenu,
+  type KitSection,
+} from "@/lib/kit-menu"
 import {
   Collapsible,
   CollapsibleContent,
@@ -36,98 +43,10 @@ import { cn } from "@/lib/utils"
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
   groups: TopicGroup[]
   searchValue: string
-  selectedTopicId: string | null
+  selectedNavId: string | null
   onSearchChange: (value: string) => void
-  onSelectTopic: (topicId: string) => void
+  onSelectNav: (navId: string) => void
   onBackToKits: () => void
-}
-
-type KitTopicFolder = {
-  id: string
-  label: string
-  starRating: number | null
-  questions: TopicGroup["topics"]
-}
-
-type KitSection = {
-  id: string
-  label: string
-  topics: TopicGroup["topics"]
-  folders: KitTopicFolder[]
-}
-
-type KitMenu = {
-  id: string
-  label: string
-  rootTopics: TopicGroup["topics"]
-  sections: KitSection[]
-}
-
-function toSectionLabel(value: string) {
-  return value
-    .replace(/^\d+[-_]?/, "")
-    .replace(/[-_]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim()
-    .replace(/\b\w/g, (char) => char.toUpperCase())
-}
-
-function buildKitMenus(groups: TopicGroup[]): KitMenu[] {
-  const orderedGroups = sortKitsByDisplayOrder(groups)
-
-  return orderedGroups.map((group) => {
-    const rootTopics: TopicGroup["topics"] = []
-    const sectionsByKey = new Map<string, KitSection>()
-
-    for (const topic of group.topics) {
-      const pathParts = topic.path.split("/")
-      const sectionKey = pathParts[1]
-
-      if (!sectionKey || pathParts.length <= 2) {
-        rootTopics.push(topic)
-        continue
-      }
-
-      if (!sectionsByKey.has(sectionKey)) {
-        sectionsByKey.set(sectionKey, {
-          id: sectionKey,
-          label: toSectionLabel(sectionKey),
-          topics: [],
-          folders: [],
-        })
-      }
-
-      const section = sectionsByKey.get(sectionKey)
-      if (!section) {
-        continue
-      }
-
-      const folderKey = pathParts[2]
-      if (pathParts.length >= 4 && folderKey) {
-        let folder = section.folders.find((item) => item.id === folderKey)
-        if (!folder) {
-          folder = {
-            id: folderKey,
-            label: topic.topicTitle ?? toSectionLabel(folderKey),
-            starRating: topic.starRating,
-            questions: [],
-          }
-          section.folders.push(folder)
-        }
-        folder.questions.push(topic)
-        continue
-      }
-
-      section.topics.push(topic)
-    }
-
-    return {
-      id: group.id,
-      label: group.label,
-      rootTopics,
-      sections: Array.from(sectionsByKey.values()),
-    }
-  })
 }
 
 type SidebarGlyph = {
@@ -249,7 +168,7 @@ function TopicNavButton({
 }: {
   topic: Topic
   isActive: boolean
-  onSelect: (topicId: string) => void
+  onSelect: (navId: string) => void
 }) {
   const RootTopicIcon = getRootTopicIcon(topic.title)
 
@@ -257,7 +176,7 @@ function TopicNavButton({
     <SidebarMenuButton
       size="sm"
       isActive={isActive}
-      onClick={() => onSelect(topic.id)}
+      onClick={() => onSelect(getTopicNavId(topic.id))}
       className="h-auto w-full rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
     >
       {topic.starRating && !topic.topicTitle ? (
@@ -272,15 +191,34 @@ function TopicNavButton({
 
 function KitTopicTree({
   kit,
-  selectedTopicId,
+  selectedNavId,
   hasSearchQuery,
-  onSelectTopic,
+  onSelectNav,
 }: {
   kit: KitMenu
-  selectedTopicId: string | null
+  selectedNavId: string | null
   hasSearchQuery: boolean
-  onSelectTopic: (topicId: string) => void
+  onSelectNav: (navId: string) => void
 }) {
+  const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({})
+
+  React.useEffect(() => {
+    for (const section of kit.sections) {
+      const sectionHasSelectedTopic =
+        selectedNavId !== null &&
+        (section.topics.some((topic) => getTopicNavId(topic.id) === selectedNavId) ||
+          section.folders.some(
+            (folder) => getFolderNavId(kit.id, section.id, folder.id) === selectedNavId,
+          ))
+
+      if (sectionHasSelectedTopic) {
+        setOpenSections((current) =>
+          current[section.id] ? current : { ...current, [section.id]: true },
+        )
+      }
+    }
+  }, [kit.id, kit.sections, selectedNavId])
+
   return (
     <div className="space-y-2">
       {kit.rootTopics.length > 0 && (
@@ -289,8 +227,8 @@ function KitTopicTree({
             <TopicNavButton
               key={topic.id}
               topic={topic}
-              isActive={selectedTopicId === topic.id}
-              onSelect={onSelectTopic}
+              isActive={selectedNavId === getTopicNavId(topic.id)}
+              onSelect={onSelectNav}
             />
           ))}
         </div>
@@ -298,17 +236,27 @@ function KitTopicTree({
 
       {kit.sections.map((section) => {
         const sectionHasSelectedTopic =
-          selectedTopicId !== null &&
-          (section.topics.some((topic) => topic.id === selectedTopicId) ||
-            section.folders.some((folder) =>
-              folder.questions.some((topic) => topic.id === selectedTopicId),
+          selectedNavId !== null &&
+          (section.topics.some((topic) => getTopicNavId(topic.id) === selectedNavId) ||
+            section.folders.some(
+              (folder) => getFolderNavId(kit.id, section.id, folder.id) === selectedNavId,
             ))
         const SectionIcon = getSectionIcon(section)
+        const isSectionOpen =
+          hasSearchQuery ||
+          openSections[section.id] ||
+          (openSections[section.id] === undefined && sectionHasSelectedTopic)
 
         return (
           <Collapsible
-            key={`${kit.id}-${section.id}-${hasSearchQuery ? "search" : "browse"}`}
-            defaultOpen={sectionHasSelectedTopic || hasSearchQuery}
+            key={`${kit.id}-${section.id}`}
+            open={isSectionOpen}
+            onOpenChange={(open) => {
+              setOpenSections((current) => ({
+                ...current,
+                [section.id]: open,
+              }))
+            }}
             className="group/section-collapsible space-y-1"
           >
             <CollapsibleTrigger
@@ -331,52 +279,33 @@ function KitTopicTree({
                   <TopicNavButton
                     key={topic.id}
                     topic={topic}
-                    isActive={selectedTopicId === topic.id}
-                    onSelect={onSelectTopic}
+                    isActive={selectedNavId === getTopicNavId(topic.id)}
+                    onSelect={onSelectNav}
                   />
                 ))}
                 {section.folders.map((folder) => {
-                  const folderHasSelectedTopic =
-                    selectedTopicId !== null &&
-                    folder.questions.some((topic) => topic.id === selectedTopicId)
+                  const folderNavId = getFolderNavId(kit.id, section.id, folder.id)
+                  const isActive = selectedNavId === folderNavId
 
                   return (
-                    <Collapsible
-                      key={`${kit.id}-${section.id}-${folder.id}-${hasSearchQuery ? "search" : "browse"}`}
-                      defaultOpen={folderHasSelectedTopic || hasSearchQuery}
-                      className="group/topic-collapsible space-y-1"
+                    <SidebarMenuButton
+                      key={folderNavId}
+                      size="sm"
+                      tooltip={folder.label}
+                      isActive={isActive}
+                      onClick={() => onSelectNav(folderNavId)}
+                      className="h-auto rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/12 data-[active=true]:text-sidebar-primary"
                     >
-                      <CollapsibleTrigger
-                        render={
-                          <SidebarMenuButton
-                            size="sm"
-                            tooltip={folder.label}
-                            isActive={folderHasSelectedTopic}
-                            className="h-auto rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/12 data-[active=true]:text-sidebar-primary"
-                          />
-                        }
-                      >
-                        {folder.starRating ? (
-                          <StarRatingDot rating={folder.starRating} />
-                        ) : (
-                          <FolderIcon className="mt-0.5 size-3.5 shrink-0" />
-                        )}
-                        <span className="line-clamp-2 leading-tight">{folder.label}</span>
-                        <ChevronRightIcon className="ml-auto size-3.5 shrink-0 transition-transform duration-200 group-data-open/topic-collapsible:rotate-90" />
-                      </CollapsibleTrigger>
-                      <CollapsibleContent>
-                        <div className="space-y-1 pl-3">
-                          {folder.questions.map((topic) => (
-                            <TopicNavButton
-                              key={topic.id}
-                              topic={topic}
-                              isActive={selectedTopicId === topic.id}
-                              onSelect={onSelectTopic}
-                            />
-                          ))}
-                        </div>
-                      </CollapsibleContent>
-                    </Collapsible>
+                      {folder.starRating ? (
+                        <StarRatingDot rating={folder.starRating} />
+                      ) : (
+                        <FolderIcon className="mt-0.5 size-3.5 shrink-0" />
+                      )}
+                      <span className="line-clamp-2 leading-tight">{folder.label}</span>
+                      <span className="ml-auto shrink-0 text-[11px] text-sidebar-foreground/65">
+                        {folder.questions.length}
+                      </span>
+                    </SidebarMenuButton>
                   )
                 })}
               </div>
@@ -391,9 +320,9 @@ function KitTopicTree({
 export function AppSidebar({
   groups,
   searchValue,
-  selectedTopicId,
+  selectedNavId,
   onSearchChange,
-  onSelectTopic,
+  onSelectNav,
   onBackToKits,
   className,
   ...props
@@ -405,14 +334,14 @@ export function AppSidebar({
   const kitIcon = activeKit ? KIT_ICON_BY_KEY[activeKit.id] : null
   const hasSearchQuery = searchValue.trim().length > 0
 
-  const handleSelectTopic = React.useCallback(
-    (topicId: string) => {
-      onSelectTopic(topicId)
+  const handleSelectNav = React.useCallback(
+    (navId: string) => {
+      onSelectNav(navId)
       if (isMobile) {
         setOpenMobile(false)
       }
     },
-    [isMobile, onSelectTopic, setOpenMobile],
+    [isMobile, onSelectNav, setOpenMobile],
   )
 
   const handleBackToKits = React.useCallback(() => {
@@ -484,9 +413,9 @@ export function AppSidebar({
             <div className="px-1">
               <KitTopicTree
                 kit={activeKit}
-                selectedTopicId={selectedTopicId}
+                selectedNavId={selectedNavId}
                 hasSearchQuery={hasSearchQuery}
-                onSelectTopic={handleSelectTopic}
+                onSelectNav={handleSelectNav}
               />
             </div>
           </SidebarGroup>

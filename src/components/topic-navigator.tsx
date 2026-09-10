@@ -11,15 +11,19 @@ import {
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
-import type { Topic } from "@/lib/content-index"
 import { cn } from "@/lib/utils"
+
+type NavTarget = {
+  id: string
+  title: string
+}
 
 const headerIconButtonClassName =
   "rounded-md border-border/70 bg-card/96 shadow-[0_1px_2px_rgb(15_23_42/6%)] hover:bg-muted/60 dark:border-border/35 dark:bg-card/90 dark:shadow-none"
 
 type AdjacentTopics = {
-  previousTopic: Topic | null
-  nextTopic: Topic | null
+  previousTopic: NavTarget | null
+  nextTopic: NavTarget | null
 }
 
 function TopicSideButton({
@@ -27,7 +31,7 @@ function TopicSideButton({
   direction,
   onSelect,
 }: {
-  topic: Topic | null
+  topic: NavTarget | null
   direction: "previous" | "next"
   onSelect: (topicId: string) => void
 }) {
@@ -97,14 +101,16 @@ export function TopicNavigator({
 export function TopicDock({
   previousTopic,
   nextTopic,
-  currentTopic,
+  currentTitle,
+  currentSubtitle,
   currentIndex,
   totalCount,
   visible,
   onSelect,
   onBackToTop,
 }: AdjacentTopics & {
-  currentTopic: Topic
+  currentTitle: string
+  currentSubtitle: string
   currentIndex: number
   totalCount: number
   visible: boolean
@@ -149,10 +155,11 @@ export function TopicDock({
           title="Back to top"
         >
           <p className="truncate text-xs font-medium text-foreground">
-            {currentIndex + 1} / {totalCount}
+            {currentTitle}
           </p>
           <p className="truncate text-[11px] text-muted-foreground">
-            {currentTopic.topicTitle ?? currentTopic.section}
+            {currentIndex + 1} / {totalCount}
+            {currentSubtitle ? ` · ${currentSubtitle}` : ""}
           </p>
         </button>
 

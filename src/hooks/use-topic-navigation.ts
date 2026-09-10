@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 
-import type { Topic } from "@/lib/content-index"
+type NavTarget = {
+  id: string
+  title: string
+}
 
-type AdjacentTopics = {
-  previousTopic: Topic | null
-  nextTopic: Topic | null
+type AdjacentTopics<T extends NavTarget = NavTarget> = {
+  previousTopic: T | null
+  nextTopic: T | null
 }
 
 function isTypingTarget(target: EventTarget | null) {
@@ -15,10 +18,10 @@ function isTypingTarget(target: EventTarget | null) {
   return Boolean(target.closest("input, textarea, select, [contenteditable='true']"))
 }
 
-export function useAdjacentTopics(
-  topics: Topic[],
+export function useAdjacentTopics<T extends NavTarget>(
+  topics: T[],
   selectedTopicId: string | null,
-): AdjacentTopics & { currentIndex: number; totalCount: number } {
+): AdjacentTopics<T> & { currentIndex: number; totalCount: number } {
   const currentIndex = selectedTopicId
     ? topics.findIndex((topic) => topic.id === selectedTopicId)
     : -1
@@ -34,11 +37,11 @@ export function useAdjacentTopics(
   }
 }
 
-export function useTopicHotkeys({
+export function useTopicHotkeys<T extends NavTarget>({
   previousTopic,
   nextTopic,
   onSelect,
-}: AdjacentTopics & { onSelect: (topicId: string) => void }) {
+}: AdjacentTopics<T> & { onSelect: (topicId: string) => void }) {
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.altKey || event.metaKey || event.ctrlKey || event.shiftKey) {
@@ -71,13 +74,13 @@ export function useReadingSession(
 ) {
   const [scrolled, setScrolled] = useState(false)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const element = scrollRef.current
     if (!element) {
       return
     }
 
-    element.scrollTo({ top: 0 })
+    element.scrollTop = 0
     setScrolled(false)
 
     const update = () => {

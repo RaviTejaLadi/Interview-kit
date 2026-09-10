@@ -4,6 +4,7 @@ import { ArrowLeftIcon } from "lucide-react"
 import { AppSidebar } from "@/components/app-sidebar"
 import { KitGallery } from "@/components/kit-gallery"
 import { MarkdownPreview } from "@/components/markdown-preview"
+import { TopicAccordion } from "@/components/topic-accordion"
 import {
   FullscreenButton,
   ScrollToTopButton,
@@ -25,6 +26,13 @@ import {
   useTopicHotkeys,
 } from "@/hooks/use-topic-navigation"
 import { KIT_ICON_BY_KEY } from "@/lib/kit-meta"
+import {
+  buildKitMenus,
+  findNavItemForTopic,
+  findNavItemForTopicInGroups,
+  getKitNavItems,
+  type KitNavItem,
+} from "@/lib/kit-menu"
 import { buildTopicIndex, resolveTopicFromHref, type Topic, type TopicGroup } from "@/lib/content-index"
 
 let allTopics: Topic[] = [];
@@ -41,8 +49,6 @@ try {
 function hasOwn(obj: Record<string, string>, key: string) {
   return Object.prototype.hasOwnProperty.call(obj, key);
 }
-
-const topicsById = new Map(allTopics.map((topic) => [topic.id, topic] as const));
 
 type Theme = "light" | "dark"
 
@@ -70,10 +76,19 @@ function getInitialTheme(): Theme {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
 }
 
+function getNavSubtitle(nav: KitNavItem) {
+  if (nav.kind === "folder") {
+    return `${nav.topics.length} question${nav.topics.length === 1 ? "" : "s"}`
+  }
+
+  return nav.section
+}
+
 function App() {
   const [searchValue, setSearchValue] = useState("");
   const [selectedKitId, setSelectedKitId] = useState<string | null>(() => getKitIdFromHash());
-  const [selectedTopicId, setSelectedTopicId] = useState<string | null>(null);
+  const [selectedNavId, setSelectedNavId] = useState<string | null>(null);
+  const [focusedTopicId, setFocusedTopicId] = useState<string | null>(null);
   const [topicContentById, setTopicContentById] = useState<Record<string, string>>({});
   const [isLoadingTopic, setIsLoadingTopic] = useState(false);
   const [topicLoadError, setTopicLoadError] = useState("");
@@ -100,39 +115,42 @@ function App() {
     }))
   }, [searchValue, selectedKitId])
 
-  const filteredTopicIds = useMemo(() => {
-    const topicIds = new Set<string>()
-    for (const group of filteredGroups) {
-      for (const topic of group.topics) {
-        topicIds.add(topic.id)
-      }
-    }
-    return topicIds
+  const navigationItems = useMemo(() => {
+    return buildKitMenus(filteredGroups).flatMap(getKitNavItems)
   }, [filteredGroups])
 
-  const selectedTopic = useMemo(() => {
+  const selectedNav = useMemo(() => {
     if (!selectedKitId) {
       return null
     }
 
-    if (selectedTopicId && filteredTopicIds.has(selectedTopicId)) {
-      return topicsById.get(selectedTopicId) ?? null
-    }
-
-    if (selectedTopicId && !searchValue.trim()) {
-      const topic = topicsById.get(selectedTopicId)
-      if (topic?.kitKey === selectedKitId) {
-        return topic
+    if (selectedNavId) {
+      const exact = navigationItems.find((item) => item.id === selectedNavId)
+      if (exact) {
+        return exact
       }
     }
 
-    return filteredGroups[0]?.topics[0] ?? null
-  }, [filteredGroups, filteredTopicIds, searchValue, selectedKitId, selectedTopicId])
-  const selectedTopicIcon = selectedTopic ? KIT_ICON_BY_KEY[selectedTopic.kitKey] : null
+    if (focusedTopicId && !searchValue.trim()) {
+      return findNavItemForTopicInGroups(
+        groups.filter((group) => group.id === selectedKitId),
+        focusedTopicId,
+      )
+    }
+
+    if (focusedTopicId) {
+      return findNavItemForTopic(navigationItems, focusedTopicId)
+    }
+
+    return navigationItems[0] ?? null
+  }, [focusedTopicId, navigationItems, searchValue, selectedKitId, selectedNavId])
+  const selectedTopicIcon = selectedNav ? KIT_ICON_BY_KEY[selectedNav.kitKey] : null
+  const selectedSingleTopic = selectedNav?.kind === "topic" ? (selectedNav.topics[0] ?? null) : null
 
   const closeKit = useCallback(() => {
     setSelectedKitId(null)
-    setSelectedTopicId(null)
+    setSelectedNavId(null)
+    setFocusedTopicId(null)
     setSearchValue("")
 
     if (window.location.hash) {
@@ -142,21 +160,33 @@ function App() {
 
   const openKit = useCallback((kitId: string, topicId?: string) => {
     setSelectedKitId(kitId)
-    setSelectedTopicId(topicId ?? null)
     setSearchValue("")
+
+    if (topicId) {
+      const nav = findNavItemForTopicInGroups(
+        groups.filter((group) => group.id === kitId),
+        topicId,
+      )
+      setSelectedNavId(nav?.id ?? null)
+      setFocusedTopicId(topicId)
+    } else {
+      setSelectedNavId(null)
+      setFocusedTopicId(null)
+    }
 
     if (window.location.hash !== `#${kitId}`) {
       window.history.pushState({ kitId }, "", `#${kitId}`)
     }
   }, [])
 
-  const handleInternalLink = useCallback(
-    (href: string) => {
-      if (!selectedTopic) {
-        return false
-      }
+  const handleSelectNav = useCallback((navId: string) => {
+    setSelectedNavId(navId)
+    setFocusedTopicId(null)
+  }, [])
 
-      const target = resolveTopicFromHref(selectedTopic.path, href, allTopics)
+  const handleInternalLink = useCallback(
+    (fromPath: string, href: string) => {
+      const target = resolveTopicFromHref(fromPath, href, allTopics)
       if (!target) {
         return false
       }
@@ -164,55 +194,43 @@ function App() {
       openKit(target.kitKey, target.id)
       return true
     },
-    [openKit, selectedTopic],
+    [openKit],
   )
 
-  const selectedTopicContent = selectedTopic ? (topicContentById[selectedTopic.id] ?? "") : ""
-  const hasSelectedTopicContent = selectedTopic ? hasOwn(topicContentById, selectedTopic.id) : false;
+  const selectedTopicContent = selectedSingleTopic ? (topicContentById[selectedSingleTopic.id] ?? "") : ""
+  const hasSelectedTopicContent = selectedSingleTopic ? hasOwn(topicContentById, selectedSingleTopic.id) : false;
 
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const contentEndRef = useRef<HTMLDivElement | null>(null)
 
-  const navigationTopics = useMemo(() => {
-    if (searchValue.trim()) {
-      return filteredGroups.flatMap((group) => group.topics)
-    }
-
-    if (!selectedTopic) {
-      return []
-    }
-
-    const kitGroup = filteredGroups.find((group) => group.id === selectedTopic.kitKey)
-    return kitGroup?.topics ?? []
-  }, [filteredGroups, searchValue, selectedTopic])
-
   const { previousTopic, nextTopic, currentIndex, totalCount } = useAdjacentTopics(
-    navigationTopics,
-    selectedTopic?.id ?? null,
+    navigationItems,
+    selectedNav?.id ?? null,
   )
   const { scrolled, scrollToTop } = useReadingSession(
     scrollRef,
-    selectedTopic?.id ?? null,
+    selectedNav?.id ?? null,
   )
-  const footerInView = useFooterInView(contentEndRef, scrollRef, selectedTopic?.id ?? null)
+  const footerInView = useFooterInView(contentEndRef, scrollRef, selectedNav?.id ?? null)
 
   useTopicHotkeys({
     previousTopic,
     nextTopic,
-    onSelect: setSelectedTopicId,
+    onSelect: handleSelectNav,
   })
 
   useEffect(() => {
-    if (selectedTopic && selectedTopic.id !== selectedTopicId) {
-      setSelectedTopicId(selectedTopic.id)
+    if (selectedNav && selectedNav.id !== selectedNavId) {
+      setSelectedNavId(selectedNav.id)
     }
-  }, [selectedTopic, selectedTopicId])
+  }, [selectedNav, selectedNavId])
 
   useEffect(() => {
     function syncKitFromLocation() {
       const kitId = getKitIdFromHash()
       setSelectedKitId(kitId)
-      setSelectedTopicId(null)
+      setSelectedNavId(null)
+      setFocusedTopicId(null)
       setSearchValue("")
     }
 
@@ -254,41 +272,60 @@ function App() {
     let ignore = false
 
     async function loadTopicContent() {
-      if (!selectedTopic) {
+      if (!selectedNav) {
         return
       }
 
-      if (hasOwn(topicContentById, selectedTopic.id)) {
+      const missingTopics = selectedNav.topics.filter((topic) => !hasOwn(topicContentById, topic.id))
+      if (missingTopics.length === 0) {
         return
       }
 
       setIsLoadingTopic(true)
       setTopicLoadError("")
 
-      try {
-        const markdown = await selectedTopic.loadContent()
-        if (!ignore) {
-          setTopicContentById((current) => ({
-            ...current,
-            [selectedTopic.id]: markdown,
-          }))
-        }
-      } catch (error) {
-        if (!ignore) {
-          setTopicLoadError(error instanceof Error ? error.message : "Failed to load markdown")
-        }
-      } finally {
-        if (!ignore) {
-          setIsLoadingTopic(false)
-        }
+      const results = await Promise.allSettled(
+        missingTopics.map(async (topic) => {
+          const markdown = await topic.loadContent()
+          return [topic.id, markdown] as const
+        }),
+      )
+
+      if (ignore) {
+        return
       }
+
+      const nextContent: Record<string, string> = {}
+      let failedCount = 0
+
+      results.forEach((result) => {
+        if (result.status === "fulfilled") {
+          nextContent[result.value[0]] = result.value[1]
+          return
+        }
+
+        failedCount += 1
+      })
+
+      if (Object.keys(nextContent).length > 0) {
+        setTopicContentById((current) => ({
+          ...current,
+          ...nextContent,
+        }))
+      }
+
+      if (failedCount > 0 && Object.keys(nextContent).length === 0) {
+        setTopicLoadError("Failed to load markdown")
+      }
+
+      setIsLoadingTopic(false)
     }
 
     loadTopicContent()
     return () => {
       ignore = true
     }
-  }, [selectedTopic, topicContentById])
+  }, [selectedNav, topicContentById])
 
   useEffect(() => {
     const root = document.documentElement
@@ -333,9 +370,9 @@ function App() {
       <AppSidebar
         groups={filteredGroups}
         searchValue={searchValue}
-        selectedTopicId={selectedTopic?.id ?? null}
+        selectedNavId={selectedNav?.id ?? null}
         onSearchChange={setSearchValue}
-        onSelectTopic={setSelectedTopicId}
+        onSelectNav={handleSelectNav}
         onBackToKits={closeKit}
       />
       <SidebarInset className="bg-linear-to-b from-background via-background to-secondary/8">
@@ -364,14 +401,14 @@ function App() {
             ) : null}
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold tracking-tight text-foreground/95 sm:text-base md:text-lg">
-                {selectedTopic?.kitLabel ?? "Interview Kits"}
+                {selectedNav?.kitLabel ?? "Interview Kits"}
               </p>
-              {selectedTopic ? (
+              {selectedNav ? (
                 <p className="truncate text-[11px] text-muted-foreground sm:text-xs">
-                  {selectedTopic.section}
-                  {selectedTopic.topicTitle ? ` · ${selectedTopic.topicTitle}` : ""}
+                  {selectedNav.section}
                   {" · "}
-                  {selectedTopic.title}
+                  {selectedNav.title}
+                  {selectedNav.kind === "folder" ? ` · ${getNavSubtitle(selectedNav)}` : ""}
                   {currentIndex >= 0 && totalCount > 0 ? ` · ${currentIndex + 1}/${totalCount}` : ""}
                 </p>
               ) : null}
@@ -379,8 +416,12 @@ function App() {
           </div>
           {headerActions}
         </header>
-        <ScrollArea className="min-h-0 flex-1" viewportRef={scrollRef}>
-        {!selectedTopic ? (
+        <ScrollArea
+          className="min-h-0 flex-1"
+          viewportRef={scrollRef}
+          viewportClassName="[overflow-anchor:none]"
+        >
+        {!selectedNav ? (
             <div className="flex h-full items-center justify-center p-4 sm:p-6">
             <p className="rounded-md border border-border/70 bg-card/96 p-4 text-sm text-foreground/75 shadow-[0_1px_2px_rgb(15_23_42/5%)] sm:p-5 dark:border-border/35 dark:bg-card/90 dark:shadow-none">
               {searchValue.trim()
@@ -393,23 +434,39 @@ function App() {
             <TopicNavigator
               previousTopic={previousTopic}
               nextTopic={nextTopic}
-              onSelect={setSelectedTopicId}
+              onSelect={handleSelectNav}
             >
-              <div className="rounded-md border border-border/70 bg-card/96 p-4 shadow-[0_2px_10px_rgb(15_23_42/5%)] backdrop-blur sm:p-5 md:p-7 dark:border-border/35 dark:bg-card/92 dark:shadow-none">
-                {isLoadingTopic && !hasSelectedTopicContent ? (
-                  <p className="text-sm text-foreground/70">Loading markdown...</p>
-                ) : topicLoadError ? (
-                  <p className="text-sm text-red-600">
-                    Could not load this file. {topicLoadError}
-                  </p>
-                ) : (
-                  <MarkdownPreview
-                    content={selectedTopicContent}
-                    theme={theme}
-                    onInternalLink={handleInternalLink}
-                  />
-                )}
-              </div>
+              {selectedNav.kind === "folder" ? (
+                <TopicAccordion
+                  key={selectedNav.id}
+                  title={selectedNav.title}
+                  section={selectedNav.section}
+                  topics={selectedNav.topics}
+                  contentById={topicContentById}
+                  isLoading={isLoadingTopic}
+                  theme={theme}
+                  focusedTopicId={focusedTopicId}
+                  onInternalLink={handleInternalLink}
+                />
+              ) : (
+                <div className="rounded-md border border-border/70 bg-card/96 p-4 shadow-[0_2px_10px_rgb(15_23_42/5%)] backdrop-blur sm:p-5 md:p-7 dark:border-border/35 dark:bg-card/92 dark:shadow-none">
+                  {isLoadingTopic && !hasSelectedTopicContent ? (
+                    <p className="text-sm text-foreground/70">Loading markdown...</p>
+                  ) : topicLoadError ? (
+                    <p className="text-sm text-red-600">
+                      Could not load this file. {topicLoadError}
+                    </p>
+                  ) : (
+                    <MarkdownPreview
+                      content={selectedTopicContent}
+                      theme={theme}
+                      onInternalLink={(href) =>
+                        handleInternalLink(selectedSingleTopic?.path ?? "", href)
+                      }
+                    />
+                  )}
+                </div>
+              )}
             </TopicNavigator>
             <div
               ref={contentEndRef}
@@ -419,16 +476,17 @@ function App() {
           </article>
         )}
         </ScrollArea>
-        {selectedTopic ? (
+        {selectedNav ? (
           <>
             <TopicDock
               previousTopic={previousTopic}
               nextTopic={nextTopic}
-              currentTopic={selectedTopic}
+              currentTitle={selectedNav.title}
+              currentSubtitle={getNavSubtitle(selectedNav)}
               currentIndex={Math.max(currentIndex, 0)}
               totalCount={totalCount}
               visible={scrolled && !footerInView}
-              onSelect={setSelectedTopicId}
+              onSelect={handleSelectNav}
               onBackToTop={scrollToTop}
             />
             <ScrollToTopButton
