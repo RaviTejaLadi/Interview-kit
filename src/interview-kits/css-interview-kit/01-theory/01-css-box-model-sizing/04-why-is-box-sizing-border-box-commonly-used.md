@@ -21,10 +21,10 @@ With the default `content-box`:
 
 This can cause unexpected overflow, especially in layouts using:
 
-* Flexbox
-* CSS Grid
-* responsive layouts
-* percentage widths
+- Flexbox
+- CSS Grid
+- responsive layouts
+- percentage widths
 
 With `border-box`:
 
@@ -55,7 +55,9 @@ A common modern reset is:
 
 ```css
 /* Make sizing predictable and inherit the rule for pseudo-elements. */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 ```

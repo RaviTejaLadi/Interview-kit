@@ -2,8 +2,8 @@
 
 HTML provides native elements for embedding audio and video:
 
-* `<audio>` → audio content
-* `<video>` → video content
+- `<audio>` → audio content
+- `<video>` → video content
 
 They provide built-in browser media controls when `controls` is specified.
 
@@ -27,12 +27,7 @@ The browser chooses a supported source.
 
 ```html
 <!-- Embed a video with native controls and a poster image -->
-<video
-  controls
-  width="640"
-  height="360"
-  poster="thumbnail.jpg"
->
+<video controls width="640" height="360" poster="thumbnail.jpg">
   <source src="video.mp4" type="video/mp4" />
   <source src="video.webm" type="video/webm" />
 
@@ -60,12 +55,7 @@ This is more likely to work:
 
 ```html
 <!-- Muted autoplay is commonly permitted where autoplay is allowed -->
-<video
-  autoplay
-  muted
-  loop
-  playsinline
->
+<video autoplay muted loop playsinline>
   <source src="background.mp4" type="video/mp4" />
 </video>
 ```

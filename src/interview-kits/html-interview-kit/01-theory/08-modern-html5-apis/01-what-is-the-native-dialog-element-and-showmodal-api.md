@@ -6,11 +6,11 @@ The `showModal()` method opens the dialog as a **modal**, meaning the user must 
 
 ### Key points
 
-* Native HTML modal support.
-* Can be opened with JavaScript.
-* Modal dialogs create a **top-layer** UI.
-* Supports a built-in `::backdrop` pseudo-element.
-* `close()` closes the dialog.
+- Native HTML modal support.
+- Can be opened with JavaScript.
+- Modal dialogs create a **top-layer** UI.
+- Supports a built-in `::backdrop` pseudo-element.
+- `close()` closes the dialog.
 
 ```html
 <!-- Open and close a native modal dialog -->
@@ -26,5 +26,5 @@ The `showModal()` method opens the dialog as a **modal**, meaning the user must 
 
 **`show()` vs `showModal()`**
 
-* `show()` → opens a non-modal dialog.
-* `showModal()` → opens a modal dialog and blocks interaction with the rest of the page.
+- `show()` → opens a non-modal dialog.
+- `showModal()` → opens a modal dialog and blocks interaction with the rest of the page.

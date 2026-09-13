@@ -33,10 +33,10 @@ Tells Git what you currently have checked out.
 
 Stores Git's underlying objects:
 
-* blobs
-* trees
-* commits
-* annotated tags
+- blobs
+- trees
+- commits
+- annotated tags
 
 **`refs/`**
 

@@ -69,12 +69,12 @@ Monitor
 
 ### Feature flags are especially useful for:
 
-* incomplete features
-* gradual rollouts
-* A/B testing
-* beta releases
-* emergency feature disabling
-* reducing long-lived branches
+- incomplete features
+- gradual rollouts
+- A/B testing
+- beta releases
+- emergency feature disabling
+- reducing long-lived branches
 
 ### Important gotcha
 

@@ -36,10 +36,10 @@ the hash changes too.
 
 Git can quickly determine:
 
-* whether two pieces of content are identical
-* whether content has changed
-* whether an object already exists
-* whether repository data has been corrupted
+- whether two pieces of content are identical
+- whether content has changed
+- whether an object already exists
+- whether repository data has been corrupted
 
 The important idea is:
 

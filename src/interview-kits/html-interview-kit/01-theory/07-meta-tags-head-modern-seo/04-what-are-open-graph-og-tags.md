@@ -10,20 +10,11 @@ Example:
 <!-- Define how the page should appear when shared on social platforms -->
 <meta property="og:title" content="Learn React Hooks" />
 
-<meta
-  property="og:description"
-  content="A practical guide to React Hooks."
-/>
+<meta property="og:description" content="A practical guide to React Hooks." />
 
-<meta
-  property="og:image"
-  content="https://example.com/react-cover.jpg"
-/>
+<meta property="og:image" content="https://example.com/react-cover.jpg" />
 
-<meta
-  property="og:url"
-  content="https://example.com/react-hooks"
-/>
+<meta property="og:url" content="https://example.com/react-hooks" />
 
 <meta property="og:type" content="article" />
 ```

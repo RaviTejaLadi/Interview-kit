@@ -50,10 +50,10 @@ After margin-top: -30px:
 
 Negative margins can be useful for:
 
-* overlapping cards
-* pulling elements closer
-* certain layout techniques
-* positioning elements within normal document flow
+- overlapping cards
+- pulling elements closer
+- certain layout techniques
+- positioning elements within normal document flow
 
 ### Negative horizontal margin
 

@@ -24,22 +24,22 @@ Everything else is generally **truthy**, including:
 
 ```javascript
 // Objects and arrays are truthy even when empty
-console.log(Boolean([]));     // true
-console.log(Boolean({}));     // true
-console.log(Boolean("hello")); // true
-console.log(Boolean(100));     // true
+console.log(Boolean([])); // true
+console.log(Boolean({})); // true
+console.log(Boolean('hello')); // true
+console.log(Boolean(100)); // true
 ```
 
 ### Practical example
 
 ```javascript
 // Check whether a value is truthy
-const username = "";
+const username = '';
 
 if (username) {
-  console.log("Username exists");
+  console.log('Username exists');
 } else {
-  console.log("Username is empty");
+  console.log('Username is empty');
 }
 ```
 
@@ -55,7 +55,9 @@ Because an empty string `""` is falsy.
 
 ```javascript
 // Render the message only when isLoggedIn is truthy
-{isLoggedIn && <p>Welcome back!</p>}
+{
+  isLoggedIn && <p>Welcome back!</p>;
+}
 ```
 
 If `isLoggedIn` is `true`, the `<p>` is rendered. If it is `false`, it isn't.
@@ -67,11 +69,11 @@ Empty arrays and objects are **truthy**:
 ```javascript
 // Empty arrays and objects are truthy
 if ([]) {
-  console.log("Runs");
+  console.log('Runs');
 }
 
 if ({}) {
-  console.log("Also runs");
+  console.log('Also runs');
 }
 ```
 

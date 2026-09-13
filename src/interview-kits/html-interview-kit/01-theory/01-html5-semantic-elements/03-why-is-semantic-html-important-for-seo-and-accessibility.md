@@ -26,10 +26,10 @@ Screen readers can use semantic landmarks to help users navigate the page.
 
 For example, a screen-reader user can quickly identify:
 
-* Navigation
-* Main content
-* Articles
-* Side content
-* Footer
+- Navigation
+- Main content
+- Articles
+- Side content
+- Footer
 
 **Important:** Semantic HTML does not automatically guarantee good SEO or accessibility, but it provides a much better foundation.

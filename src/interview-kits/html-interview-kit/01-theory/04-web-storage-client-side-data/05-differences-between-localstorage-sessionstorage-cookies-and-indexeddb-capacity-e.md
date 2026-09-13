@@ -5,9 +5,9 @@
 | **Type**                          | Key-value storage      | Key-value storage     | Small key-value data          | Database                         |
 | **Typical capacity**              | Several MB             | Several MB            | ~4 KB per cookie              | Much larger, quota-dependent     |
 | **Expiration**                    | Until removed          | Page/session lifetime | Configurable expiration       | Persistent until deleted/evicted |
-| **Sent to server automatically?** | ❌ No                   | ❌ No                  | ✅ Yes, when applicable        | ❌ No                             |
-| **Accessible from JS?**           | ✅ Yes                  | ✅ Yes                 | ✅ Unless `HttpOnly`           | ✅ Yes                            |
-| **Structured data**               | ❌ Strings              | ❌ Strings             | ❌ Strings                     | ✅ Yes                            |
+| **Sent to server automatically?** | ❌ No                  | ❌ No                 | ✅ Yes, when applicable       | ❌ No                            |
+| **Accessible from JS?**           | ✅ Yes                 | ✅ Yes                | ✅ Unless `HttpOnly`          | ✅ Yes                           |
+| **Structured data**               | ❌ Strings             | ❌ Strings            | ❌ Strings                    | ✅ Yes                           |
 | **Best for**                      | Persistent simple data | Temporary tab data    | Sessions/server communication | Large structured data            |
 
 ### Example use cases

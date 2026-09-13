@@ -9,10 +9,10 @@ It has a special queue called the **next tick queue**.
 ```javascript
 // Schedule work in Node.js's next tick queue.
 process.nextTick(() => {
-  console.log("nextTick");
+  console.log('nextTick');
 });
 
-console.log("sync");
+console.log('sync');
 ```
 
 Output:

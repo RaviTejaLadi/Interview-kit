@@ -14,9 +14,9 @@ The element follows the normal document flow. Properties such as `top`, `right`,
 
 ### Key points
 
-* Default positioning.
-* Element stays in normal flow.
-* `top`, `right`, `bottom`, `left` don't work.
-* `z-index` does not apply in the usual positioned-element sense.
+- Default positioning.
+- Element stays in normal flow.
+- `top`, `right`, `bottom`, `left` don't work.
+- `z-index` does not apply in the usual positioned-element sense.
 
-**Simple analogy:** `static` means *"stay where the normal HTML layout puts me."*
+**Simple analogy:** `static` means _"stay where the normal HTML layout puts me."_

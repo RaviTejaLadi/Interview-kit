@@ -8,10 +8,10 @@ The script is **independent**.
 
 Common examples:
 
-* Analytics
-* Ads
-* Tracking scripts
-* Independent third-party scripts
+- Analytics
+- Ads
+- Tracking scripts
+- Independent third-party scripts
 
 ```html id="qj6s9k"
 <!-- Independent analytics script can load asynchronously -->

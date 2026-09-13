@@ -6,11 +6,11 @@
 
 It helps you:
 
-* Arrange elements horizontally or vertically.
-* Align items easily.
-* Distribute available space.
-* Create responsive layouts.
-* Control how items grow or shrink.
+- Arrange elements horizontally or vertically.
+- Align items easily.
+- Distribute available space.
+- Create responsive layouts.
+- Control how items grow or shrink.
 
 ### Example
 

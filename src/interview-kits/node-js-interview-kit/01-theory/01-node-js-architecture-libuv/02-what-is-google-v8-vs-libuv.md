@@ -28,12 +28,12 @@ console.log(result);
 
 V8 is responsible for things such as:
 
-* Parsing JavaScript
-* Compiling JavaScript
-* Executing JavaScript
-* JIT optimization
-* Garbage collection
-* Managing JavaScript objects and memory
+- Parsing JavaScript
+- Compiling JavaScript
+- Executing JavaScript
+- JIT optimization
+- Garbage collection
+- Managing JavaScript objects and memory
 
 ### Libuv
 
@@ -41,18 +41,18 @@ V8 is responsible for things such as:
 
 It provides:
 
-* Event loop
-* Thread pool
-* File system APIs
-* Networking support
-* Timers
-* Async DNS operations
-* OS-specific I/O mechanisms
+- Event loop
+- Thread pool
+- File system APIs
+- Networking support
+- Timers
+- Async DNS operations
+- OS-specific I/O mechanisms
 
 ### Easy way to remember
 
 Think of Node.js as a restaurant:
 
-* **V8 = Chef** → executes JavaScript
-* **Libuv = Waiter/manager** → handles waiting for external operations
-* **OS = Kitchen suppliers** → provides files, network, DNS, etc.
+- **V8 = Chef** → executes JavaScript
+- **Libuv = Waiter/manager** → handles waiting for external operations
+- **OS = Kitchen suppliers** → provides files, network, DNS, etc.

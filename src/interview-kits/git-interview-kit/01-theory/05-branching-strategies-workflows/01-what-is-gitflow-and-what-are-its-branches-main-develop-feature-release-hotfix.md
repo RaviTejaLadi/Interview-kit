@@ -109,8 +109,8 @@ main
 
 After fixing it, the hotfix is merged back into:
 
-* `main`
-* `develop`
+- `main`
+- `develop`
 
 Conceptually:
 
@@ -126,7 +126,7 @@ main ──→ hotfix
 
 ```text
 feature/* ──→ develop ──→ release/* ──→ main
-                                     
+
 main ──→ hotfix/* ──→ main
                   └──→ develop
 ```
@@ -135,9 +135,9 @@ main ──→ hotfix/* ──→ main
 
 GitFlow can work well when you have:
 
-* scheduled releases
-* multiple supported release versions
-* formal QA/release phases
-* products that don't deploy continuously
+- scheduled releases
+- multiple supported release versions
+- formal QA/release phases
+- products that don't deploy continuously
 
 However, it can become unnecessarily complex for teams practicing continuous delivery.

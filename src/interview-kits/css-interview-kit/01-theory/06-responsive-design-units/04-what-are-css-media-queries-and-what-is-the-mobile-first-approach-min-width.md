@@ -4,10 +4,10 @@
 
 **Media Queries** allow CSS to apply different styles depending on conditions such as:
 
-* Viewport width
-* Viewport height
-* Orientation
-* User's display preferences
+- Viewport width
+- Viewport height
+- Orientation
+- User's display preferences
 
 Example:
 

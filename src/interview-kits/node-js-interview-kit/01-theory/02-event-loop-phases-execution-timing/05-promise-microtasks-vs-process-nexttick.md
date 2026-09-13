@@ -7,14 +7,14 @@ Consider:
 ```javascript
 // Compare Node.js nextTick callbacks with Promise microtasks.
 process.nextTick(() => {
-  console.log("nextTick");
+  console.log('nextTick');
 });
 
 Promise.resolve().then(() => {
-  console.log("Promise");
+  console.log('Promise');
 });
 
-console.log("sync");
+console.log('sync');
 ```
 
 Output:

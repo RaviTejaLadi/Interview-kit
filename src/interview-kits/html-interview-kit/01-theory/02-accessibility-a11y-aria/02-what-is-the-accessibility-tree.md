@@ -8,9 +8,7 @@ For example:
 
 ```html
 <!-- This DOM structure produces meaningful accessibility information -->
-<button aria-label="Close dialog">
-  ×
-</button>
+<button aria-label="Close dialog">×</button>
 ```
 
 The browser can expose information similar to:
@@ -26,7 +24,7 @@ A screen reader can then announce something like:
 
 The accessibility tree typically contains information such as:
 
-* **Role** — button, heading, link, textbox, etc.
-* **Accessible name** — what the element is called
-* **State** — checked, expanded, disabled, etc.
-* **Properties** — additional information about the element
+- **Role** — button, heading, link, textbox, etc.
+- **Accessible name** — what the element is called
+- **State** — checked, expanded, disabled, etc.
+- **Properties** — additional information about the element

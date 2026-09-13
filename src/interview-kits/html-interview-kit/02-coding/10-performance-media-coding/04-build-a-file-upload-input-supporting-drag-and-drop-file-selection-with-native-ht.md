@@ -4,8 +4,8 @@ A **file input** allows users to select files from their device.
 
 The HTML **Drag and Drop API** can be combined with `<input type="file">` to create a drop zone where users can either:
 
-* Click and select files.
-* Drag files onto the drop zone.
+- Click and select files.
+- Drag files onto the drop zone.
 
 A good implementation should also preserve the native file input as the accessible mechanism.
 
@@ -13,25 +13,14 @@ A good implementation should also preserve the native file input as the accessib
 <!-- Accessible file upload with click-to-select and drag-and-drop support -->
 <label for="file-input">Upload a file</label>
 
-<div
-  id="drop-zone"
-  tabindex="0"
-  role="button"
-  aria-describedby="upload-help"
->
+<div id="drop-zone" tabindex="0" role="button" aria-describedby="upload-help">
   <p>Drag and drop a file here</p>
   <p>or click to select a file</p>
 
-  <input
-    id="file-input"
-    type="file"
-    accept=".jpg,.jpeg,.png,.pdf"
-  />
+  <input id="file-input" type="file" accept=".jpg,.jpeg,.png,.pdf" />
 </div>
 
-<p id="upload-help">
-  Accepted formats: JPG, PNG, and PDF.
-</p>
+<p id="upload-help">Accepted formats: JPG, PNG, and PDF.</p>
 
 <p id="file-name" aria-live="polite"></p>
 ```
@@ -40,9 +29,9 @@ JavaScript handles both selection methods:
 
 ```javascript
 // Handle file selection from the input and files dropped onto the drop zone
-const input = document.querySelector("#file-input");
-const dropZone = document.querySelector("#drop-zone");
-const fileName = document.querySelector("#file-name");
+const input = document.querySelector('#file-input');
+const dropZone = document.querySelector('#drop-zone');
+const fileName = document.querySelector('#file-name');
 
 function displayFile(file) {
   if (!file) return;
@@ -50,15 +39,15 @@ function displayFile(file) {
   fileName.textContent = `Selected file: ${file.name}`;
 }
 
-input.addEventListener("change", () => {
+input.addEventListener('change', () => {
   displayFile(input.files[0]);
 });
 
-dropZone.addEventListener("dragover", (event) => {
+dropZone.addEventListener('dragover', (event) => {
   event.preventDefault();
 });
 
-dropZone.addEventListener("drop", (event) => {
+dropZone.addEventListener('drop', (event) => {
   event.preventDefault();
 
   const file = event.dataTransfer.files[0];
@@ -76,11 +65,7 @@ A common approach is to visually hide the input while keeping it accessible, or 
 <label for="file-input" id="drop-zone">
   <span>Drag and drop a file here or click to select</span>
 
-  <input
-    id="file-input"
-    type="file"
-    accept=".jpg,.jpeg,.png,.pdf"
-  />
+  <input id="file-input" type="file" accept=".jpg,.jpeg,.png,.pdf" />
 </label>
 ```
 
@@ -95,11 +80,11 @@ For an actual upload, you would typically send the file using `FormData` and `fe
 ```javascript
 // Upload the selected file to the server using multipart/form-data
 const formData = new FormData();
-formData.append("file", input.files[0]);
+formData.append('file', input.files[0]);
 
-fetch("/upload", {
-  method: "POST",
-  body: formData
+fetch('/upload', {
+  method: 'POST',
+  body: formData,
 });
 ```
 

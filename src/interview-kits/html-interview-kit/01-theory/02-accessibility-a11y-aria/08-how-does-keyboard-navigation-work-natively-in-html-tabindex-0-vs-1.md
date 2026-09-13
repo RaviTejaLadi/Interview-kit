@@ -4,11 +4,11 @@ Keyboard accessibility allows users to navigate and operate a website without a 
 
 Native interactive HTML elements such as:
 
-* `<button>`
-* `<a href="...">`
-* `<input>`
-* `<select>`
-* `<textarea>`
+- `<button>`
+- `<a href="...">`
+- `<input>`
+- `<select>`
+- `<textarea>`
 
 already provide keyboard behavior.
 
@@ -20,9 +20,7 @@ Makes an element **focusable using the normal keyboard tab order**.
 
 ```html
 <!-- tabindex=0 adds the element to the natural tab sequence -->
-<div tabindex="0">
-  Focusable content
-</div>
+<div tabindex="0">Focusable content</div>
 ```
 
 However, don't use `tabindex="0"` to turn generic elements into interactive controls unless there is a strong reason. Prefer native controls.
@@ -35,24 +33,22 @@ Makes an element **programmatically focusable but not part of the normal Tab seq
 
 ```html
 <!-- tabindex=-1 allows JavaScript to focus this heading when needed -->
-<h2 id="dialog-title" tabindex="-1">
-  Delete Account
-</h2>
+<h2 id="dialog-title" tabindex="-1">Delete Account</h2>
 ```
 
 JavaScript can then focus it:
 
 ```javascript
 // Move keyboard focus to the heading when the dialog opens.
-document.getElementById("dialog-title").focus();
+document.getElementById('dialog-title').focus();
 ```
 
 This is commonly useful for:
 
-* Dialog focus management
-* Error messages
-* SPA route changes
-* Managing focus after dynamic content updates
+- Dialog focus management
+- Error messages
+- SPA route changes
+- Managing focus after dynamic content updates
 
 ### Important
 

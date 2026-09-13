@@ -7,7 +7,7 @@ You can enable it for an entire script:
 
 ```javascript
 // Enable strict mode for this script
-"use strict";
+'use strict';
 
 x = 10; // ReferenceError
 ```
@@ -18,26 +18,26 @@ Another example:
 
 ```javascript
 // Strict mode prevents accidental modification of read-only properties
-"use strict";
+'use strict';
 
 const user = {};
 
-Object.defineProperty(user, "name", {
-  value: "Ravi",
+Object.defineProperty(user, 'name', {
+  value: 'Ravi',
   writable: false,
 });
 
-user.name = "John"; // TypeError
+user.name = 'John'; // TypeError
 ```
 
 ### Important points
 
 Strict mode:
 
-* Prevents accidental global variables
-* Throws errors for some otherwise silent mistakes
-* Makes certain operations illegal
-* Changes some `this` behavior
-* Helps write safer JavaScript
+- Prevents accidental global variables
+- Throws errors for some otherwise silent mistakes
+- Makes certain operations illegal
+- Changes some `this` behavior
+- Helps write safer JavaScript
 
 **Note:** JavaScript modules (`import`/`export`) and class bodies are automatically strict mode, so you generally don't need to manually write `"use strict"` there.

@@ -4,8 +4,8 @@ A **Pull Request (PR)** or **Merge Request (MR)** is a collaboration mechanism u
 
 The terminology differs by platform:
 
-* **GitHub / Bitbucket:** Pull Request (PR)
-* **GitLab:** Merge Request (MR)
+- **GitHub / Bitbucket:** Pull Request (PR)
+- **GitLab:** Merge Request (MR)
 
 They serve essentially the same purpose.
 
@@ -21,13 +21,13 @@ feature/login
 
 A PR/MR typically provides:
 
-* code diff
-* discussion/comments
-* code review
-* automated CI checks
-* approvals
-* commit history
-* merge controls
+- code diff
+- discussion/comments
+- code review
+- automated CI checks
+- approvals
+- commit history
+- merge controls
 
 Typical workflow:
 

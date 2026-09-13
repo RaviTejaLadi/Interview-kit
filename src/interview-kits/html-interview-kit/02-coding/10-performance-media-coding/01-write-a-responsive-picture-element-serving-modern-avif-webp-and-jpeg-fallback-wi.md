@@ -6,23 +6,17 @@ A common modern strategy is:
 
 **AVIF → WebP → JPEG fallback**
 
-* **AVIF** → usually excellent compression and quality.
-* **WebP** → widely supported modern format.
-* **JPEG** → fallback for older/unsupported browsers.
-* `loading="lazy"` → tells the browser to defer loading images that are not immediately needed.
+- **AVIF** → usually excellent compression and quality.
+- **WebP** → widely supported modern format.
+- **JPEG** → fallback for older/unsupported browsers.
+- `loading="lazy"` → tells the browser to defer loading images that are not immediately needed.
 
 ```html
 <!-- Serve AVIF first, WebP second, and JPEG as the final fallback -->
 <picture>
-  <source
-    srcset="/images/hero.avif"
-    type="image/avif"
-  />
+  <source srcset="/images/hero.avif" type="image/avif" />
 
-  <source
-    srcset="/images/hero.webp"
-    type="image/webp"
-  />
+  <source srcset="/images/hero.webp" type="image/webp" />
 
   <img
     src="/images/hero.jpg"

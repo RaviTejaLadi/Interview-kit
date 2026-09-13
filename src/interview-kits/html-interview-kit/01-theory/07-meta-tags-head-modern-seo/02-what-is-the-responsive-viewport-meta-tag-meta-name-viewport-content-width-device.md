@@ -6,10 +6,7 @@ The common version is:
 
 ```html id="0jyd2v"
 <!-- Configure the viewport for responsive layouts -->
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
-/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 ```
 
 ### `width=device-width`

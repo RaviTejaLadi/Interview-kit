@@ -16,11 +16,7 @@ Use `<img>` with `srcset`:
 <!-- Resolution switching: same image at different resolutions -->
 <img
   src="photo-800.jpg"
-  srcset="
-    photo-400.jpg 400w,
-    photo-800.jpg 800w,
-    photo-1200.jpg 1200w
-  "
+  srcset="photo-400.jpg 400w, photo-800.jpg 800w, photo-1200.jpg 1200w"
   sizes="100vw"
   alt="City skyline"
 />
@@ -41,20 +37,11 @@ Use `<picture>`:
 ```html
 <!-- Art direction: use a different crop on smaller screens -->
 <picture>
-  <source
-    media="(max-width: 600px)"
-    srcset="portrait-crop.jpg"
-  />
+  <source media="(max-width: 600px)" srcset="portrait-crop.jpg" />
 
-  <source
-    media="(min-width: 601px)"
-    srcset="landscape-crop.jpg"
-  />
+  <source media="(min-width: 601px)" srcset="landscape-crop.jpg" />
 
-  <img
-    src="landscape-crop.jpg"
-    alt="Person standing near a mountain"
-  />
+  <img src="landscape-crop.jpg" alt="Person standing near a mountain" />
 </picture>
 ```
 

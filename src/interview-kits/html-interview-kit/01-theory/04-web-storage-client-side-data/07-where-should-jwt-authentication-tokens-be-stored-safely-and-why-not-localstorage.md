@@ -18,7 +18,7 @@ If an attacker successfully executes malicious JavaScript through an XSS vulnera
 
 ```javascript id="l3g0qu"
 // An XSS payload could potentially read a token stored in localStorage.
-const token = localStorage.getItem("accessToken");
+const token = localStorage.getItem('accessToken');
 ```
 
 An `HttpOnly` cookie cannot be read through `document.cookie`.
@@ -33,13 +33,13 @@ So `HttpOnly` primarily helps prevent **token exfiltration through JavaScript**.
 
 You still need:
 
-* Strong XSS prevention
-* Output encoding
-* Safe React/DOM practices
-* Content Security Policy (CSP)
-* Proper input validation
-* Short-lived credentials where appropriate
-* Appropriate `SameSite` configuration
+- Strong XSS prevention
+- Output encoding
+- Safe React/DOM practices
+- Content Security Policy (CSP)
+- Proper input validation
+- Short-lived credentials where appropriate
+- Appropriate `SameSite` configuration
 
 ### What about CSRF?
 
@@ -47,10 +47,10 @@ Cookie-based authentication introduces an important consideration: **CSRF**.
 
 Because browsers automatically send cookies, applications should use appropriate CSRF defenses where needed, such as:
 
-* `SameSite` cookies
-* CSRF tokens
-* Origin/Referer validation
-* Appropriate request design
+- `SameSite` cookies
+- CSRF tokens
+- Origin/Referer validation
+- Appropriate request design
 
 ### Best practical pattern
 

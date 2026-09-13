@@ -2,8 +2,8 @@
 
 A Flexbox container has **two axes**:
 
-* **Main axis** → direction in which flex items are laid out.
-* **Cross axis** → perpendicular to the main axis.
+- **Main axis** → direction in which flex items are laid out.
+- **Cross axis** → perpendicular to the main axis.
 
 The direction depends on `flex-direction`.
 

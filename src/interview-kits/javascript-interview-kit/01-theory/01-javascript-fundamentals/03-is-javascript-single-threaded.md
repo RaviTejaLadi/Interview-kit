@@ -7,9 +7,9 @@ For example:
 
 ```javascript
 // These statements execute one at a time
-console.log("First");
-console.log("Second");
-console.log("Third");
+console.log('First');
+console.log('Second');
+console.log('Third');
 ```
 
 Output:

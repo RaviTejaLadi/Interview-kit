@@ -6,12 +6,12 @@ Its contents are generally not displayed as normal page content.
 
 Common elements inside `<head>` include:
 
-* `<title>`
-* `<meta>`
-* `<link>`
-* `<style>`
-* `<script>`
-* `<base>`
+- `<title>`
+- `<meta>`
+- `<link>`
+- `<style>`
+- `<script>`
+- `<base>`
 
 Example:
 
@@ -20,10 +20,7 @@ Example:
 <head>
   <meta charset="UTF-8" />
 
-  <meta
-    name="description"
-    content="Learn HTML fundamentals"
-  />
+  <meta name="description" content="Learn HTML fundamentals" />
 
   <title>HTML Tutorial</title>
 
@@ -41,10 +38,10 @@ Defines the page title shown in the browser tab and is also important for SEO.
 
 Provides metadata such as:
 
-* Character encoding
-* Viewport configuration
-* Description
-* Robots instructions
+- Character encoding
+- Viewport configuration
+- Description
+- Robots instructions
 
 **`<link>`**
 
@@ -52,10 +49,10 @@ Defines relationships between the document and external resources.
 
 Examples:
 
-* Stylesheets
-* Favicons
-* Canonical URLs
-* Preload resources
+- Stylesheets
+- Favicons
+- Canonical URLs
+- Preload resources
 
 ### Simple definition ⭐
 

@@ -6,11 +6,11 @@ Normally, JavaScript runs on the main thread. Heavy computation can block that t
 
 Web Workers are useful for CPU-intensive tasks such as:
 
-* Large calculations
-* Data processing
-* Parsing large datasets
-* Image/data processing
-* Cryptographic or computational operations
+- Large calculations
+- Data processing
+- Parsing large datasets
+- Image/data processing
+- Cryptographic or computational operations
 
 A worker communicates with the main thread using **`postMessage()`** and the **`message` event**.
 
@@ -18,12 +18,12 @@ A worker communicates with the main thread using **`postMessage()`** and the **`
 
 ```javascript
 // Start a worker and send data to it
-const worker = new Worker("worker.js");
+const worker = new Worker('worker.js');
 
 worker.postMessage(1000000);
 
 worker.onmessage = (event) => {
-  console.log("Result:", event.data);
+  console.log('Result:', event.data);
 };
 ```
 
@@ -46,7 +46,7 @@ So this will not work inside a normal worker:
 
 ```javascript
 // Workers cannot directly manipulate the DOM
-document.querySelector("#app");
+document.querySelector('#app');
 ```
 
 Think of it as:

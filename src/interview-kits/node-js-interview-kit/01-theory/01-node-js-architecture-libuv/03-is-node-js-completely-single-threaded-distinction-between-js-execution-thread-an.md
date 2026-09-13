@@ -28,13 +28,13 @@ For example:
 
 ```javascript
 // This JavaScript runs on the main Node.js thread.
-console.log("Hello");
+console.log('Hello');
 
 for (let i = 0; i < 1_000_000_000; i++) {
   // CPU-heavy JavaScript blocks the main thread.
 }
 
-console.log("Done");
+console.log('Done');
 ```
 
 While this loop is running, the event loop cannot process other JavaScript callbacks.

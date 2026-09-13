@@ -99,9 +99,9 @@ Is connection 10,000 ready?
 
 It allows applications to efficiently monitor events such as:
 
-* Network activity
-* File events
-* Process events
+- Network activity
+- File events
+- Process events
 
 Libuv uses `kqueue` where appropriate.
 

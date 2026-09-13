@@ -11,11 +11,11 @@ Module scripts behave **similarly to deferred scripts by default**.
 
 That means:
 
-* HTML parsing continues while the module downloads.
-* The module executes after HTML parsing has completed.
-* Module dependencies are fetched automatically.
-* Modules have their own scope.
-* Modules are automatically in **strict mode**.
+- HTML parsing continues while the module downloads.
+- The module executes after HTML parsing has completed.
+- Module dependencies are fetched automatically.
+- Modules have their own scope.
+- Modules are automatically in **strict mode**.
 
 For example:
 
@@ -26,7 +26,7 @@ For example:
 
 ```javascript id="w0d1as"
 // main.js imports functionality from another module.
-import { calculateTotal } from "./cart.js";
+import { calculateTotal } from './cart.js';
 
 console.log(calculateTotal());
 ```

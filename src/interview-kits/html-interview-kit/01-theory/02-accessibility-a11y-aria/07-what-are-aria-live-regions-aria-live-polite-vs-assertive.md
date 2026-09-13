@@ -12,9 +12,7 @@ For example:
 
 ```html
 <!-- Screen readers can announce dynamically added status messages -->
-<div aria-live="polite">
-  Your changes have been saved.
-</div>
+<div aria-live="polite">Your changes have been saved.</div>
 ```
 
 ## `aria-live="polite"`
@@ -27,10 +25,10 @@ It generally **does not interrupt** the user's current activity.
 
 Good for:
 
-* "Saved successfully"
-* Search result counts
-* Status updates
-* Loading completion
+- "Saved successfully"
+- Search result counts
+- Status updates
+- Loading completion
 
 ---
 
@@ -44,9 +42,7 @@ Example:
 
 ```html
 <!-- Use assertive only for important updates that need immediate attention -->
-<div aria-live="assertive">
-  Your session is about to expire.
-</div>
+<div aria-live="assertive">Your session is about to expire.</div>
 ```
 
 Good for situations where the user needs to know immediately.

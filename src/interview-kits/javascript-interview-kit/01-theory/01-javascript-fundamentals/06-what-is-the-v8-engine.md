@@ -5,17 +5,17 @@
 
 V8:
 
-* Parses JavaScript
-* Executes JavaScript
-* Compiles JavaScript to machine code
-* Optimizes frequently executed code
-* Performs garbage collection
+- Parses JavaScript
+- Executes JavaScript
+- Compiles JavaScript to machine code
+- Optimizes frequently executed code
+- Performs garbage collection
 
 For example, when you run:
 
 ```javascript
 // JavaScript executed by the V8 engine
-const message = "Hello V8";
+const message = 'Hello V8';
 
 console.log(message);
 ```

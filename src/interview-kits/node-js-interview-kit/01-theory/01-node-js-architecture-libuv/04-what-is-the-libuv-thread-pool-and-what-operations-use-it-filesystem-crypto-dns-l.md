@@ -12,18 +12,18 @@ You can increase this number when necessary.
 
 Important examples include:
 
-* File system operations
-* Some DNS operations
-* Cryptographic operations
-* Compression operations
+- File system operations
+- Some DNS operations
+- Cryptographic operations
+- Compression operations
 
 For example:
 
 ```javascript
 // The filesystem operation can be handled through Libuv's thread pool.
-const fs = require("node:fs");
+const fs = require('node:fs');
 
-fs.readFile("./large-file.txt", "utf8", (err, data) => {
+fs.readFile('./large-file.txt', 'utf8', (err, data) => {
   if (err) {
     console.error(err);
     return;
@@ -32,7 +32,7 @@ fs.readFile("./large-file.txt", "utf8", (err, data) => {
   console.log(data);
 });
 
-console.log("This can execute before the file is read.");
+console.log('This can execute before the file is read.');
 ```
 
 Conceptually:

@@ -1,4 +1,4 @@
-#  What is `.gitignore` and how do you ignore files that were already tracked?
+# What is `.gitignore` and how do you ignore files that were already tracked?
 
 `.gitignore` is a file that tells Git which **untracked files and directories should be ignored**.
 

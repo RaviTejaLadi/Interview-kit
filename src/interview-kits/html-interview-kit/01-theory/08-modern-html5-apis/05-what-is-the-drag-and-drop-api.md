@@ -4,11 +4,11 @@ The **HTML Drag and Drop API** allows users to **drag elements or data and drop 
 
 It is commonly used for:
 
-* File uploads
-* Reordering lists
-* Kanban boards
-* Moving items between containers
-* Dragging data between elements
+- File uploads
+- Reordering lists
+- Kanban boards
+- Moving items between containers
+- Dragging data between elements
 
 Important events include:
 
@@ -27,21 +27,21 @@ Important events include:
 <div id="dropZone">Drop here</div>
 
 <script>
-  const item = document.querySelector("#item");
-  const dropZone = document.querySelector("#dropZone");
+  const item = document.querySelector('#item');
+  const dropZone = document.querySelector('#dropZone');
 
-  item.addEventListener("dragstart", (event) => {
-    event.dataTransfer.setData("text/plain", item.id);
+  item.addEventListener('dragstart', (event) => {
+    event.dataTransfer.setData('text/plain', item.id);
   });
 
-  dropZone.addEventListener("dragover", (event) => {
+  dropZone.addEventListener('dragover', (event) => {
     event.preventDefault(); // Required to allow dropping
   });
 
-  dropZone.addEventListener("drop", (event) => {
+  dropZone.addEventListener('drop', (event) => {
     event.preventDefault();
 
-    const id = event.dataTransfer.getData("text/plain");
+    const id = event.dataTransfer.getData('text/plain');
     const draggedItem = document.getElementById(id);
 
     dropZone.appendChild(draggedItem);

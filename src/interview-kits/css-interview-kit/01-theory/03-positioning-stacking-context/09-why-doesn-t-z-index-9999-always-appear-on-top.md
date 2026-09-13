@@ -1,4 +1,3 @@
-
 # Why doesn't `z-index: 9999` always appear on top?
 
 Because `z-index` is **not a global priority number**.
@@ -34,9 +33,7 @@ HTML:
 </div>
 
 <!-- This stacking context is above container-a. -->
-<div class="container-b">
-  Content
-</div>
+<div class="container-b">Content</div>
 ```
 
 Even though:

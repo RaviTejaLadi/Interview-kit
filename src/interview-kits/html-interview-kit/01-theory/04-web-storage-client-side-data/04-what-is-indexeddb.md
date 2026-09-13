@@ -6,32 +6,32 @@ Unlike `localStorage`, which stores simple strings, IndexedDB can store structur
 
 Typical use cases:
 
-* Offline-first applications
-* Large datasets
-* Caching application data
-* Progressive Web Apps (PWAs)
-* Complex client-side applications
+- Offline-first applications
+- Large datasets
+- Caching application data
+- Progressive Web Apps (PWAs)
+- Complex client-side applications
 
 A simplified example:
 
 ```javascript
 // Open an IndexedDB database and create an object store on first use.
-const request = indexedDB.open("MyApp", 1);
+const request = indexedDB.open('MyApp', 1);
 
 request.onupgradeneeded = () => {
-  request.result.createObjectStore("users", {
-    keyPath: "id"
+  request.result.createObjectStore('users', {
+    keyPath: 'id',
   });
 };
 
 request.onsuccess = () => {
   const db = request.result;
-  const transaction = db.transaction("users", "readwrite");
-  const users = transaction.objectStore("users");
+  const transaction = db.transaction('users', 'readwrite');
+  const users = transaction.objectStore('users');
 
   users.put({
     id: 1,
-    name: "Ravi"
+    name: 'Ravi',
   });
 };
 ```

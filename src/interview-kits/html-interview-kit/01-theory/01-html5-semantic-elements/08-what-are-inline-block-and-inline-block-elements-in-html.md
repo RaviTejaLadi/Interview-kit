@@ -8,9 +8,9 @@ These terms mainly describe how elements participate in **layout**.
 
 A block-level element normally:
 
-* Starts on a new line
-* Takes the available width by default
-* Allows width and height to be applied
+- Starts on a new line
+- Takes the available width by default
+- Allows width and height to be applied
 
 Common examples:
 
@@ -38,23 +38,20 @@ Conceptually:
 
 An inline element normally:
 
-* Stays within the current line
-* Takes only the space required by its content
-* Does not normally accept `width` and `height` in the same way as block/inline-block elements
+- Stays within the current line
+- Takes only the space required by its content
+- Does not normally accept `width` and `height` in the same way as block/inline-block elements
 
 Common examples:
 
-* `<span>`
-* `<a>`
-* `<strong>`
-* `<em>`
+- `<span>`
+- `<a>`
+- `<strong>`
+- `<em>`
 
 ```html
 <!-- Inline elements flow within the same line -->
-<p>
-  Learn <strong>HTML</strong> and
-  <a href="/css">CSS</a>.
-</p>
+<p>Learn <strong>HTML</strong> and <a href="/css">CSS</a>.</p>
 ```
 
 Conceptually:
@@ -73,9 +70,9 @@ Learn HTML and CSS.
 
 It:
 
-* Stays inline with surrounding content
-* Allows `width` and `height`
-* Allows padding and margins to behave more like a box
+- Stays inline with surrounding content
+- Allows `width` and `height`
+- Allows padding and margins to behave more like a box
 
 ```html
 <!-- Inline-block elements stay on the same line but accept dimensions -->

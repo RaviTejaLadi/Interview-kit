@@ -10,14 +10,14 @@ Think of it like this:
 
 ECMAScript defines language features such as:
 
-* `let` and `const`
-* Arrow functions
-* Classes
-* Promises
-* Modules
-* Destructuring
-* Optional chaining
-* Async/await
+- `let` and `const`
+- Arrow functions
+- Classes
+- Promises
+- Modules
+- Destructuring
+- Optional chaining
+- Async/await
 
 For example, **ES6 (ECMAScript 2015)** introduced many important features such as `let`, `const`, arrow functions, classes, and modules.
 

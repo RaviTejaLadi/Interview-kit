@@ -49,10 +49,10 @@ Relative units calculate their size based on another value.
 
 ### Simple rule
 
-* `px` → fixed/predictable size
-* `rem` → relative to root font size
-* `em` → relative to font size
-* `%` → relative to a containing/reference dimension
-* `vw` → viewport width
-* `vh` → viewport height
-* `ch` → approximately character-based width
+- `px` → fixed/predictable size
+- `rem` → relative to root font size
+- `em` → relative to font size
+- `%` → relative to a containing/reference dimension
+- `vw` → viewport width
+- `vh` → viewport height
+- `ch` → approximately character-based width

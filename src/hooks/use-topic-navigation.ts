@@ -1,21 +1,21 @@
-import { useEffect, useLayoutEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from 'react';
 
 type NavTarget = {
-  id: string
-  title: string
-}
+  id: string;
+  title: string;
+};
 
 type AdjacentTopics<T extends NavTarget = NavTarget> = {
-  previousTopic: T | null
-  nextTopic: T | null
-}
+  previousTopic: T | null;
+  nextTopic: T | null;
+};
 
 function isTypingTarget(target: EventTarget | null) {
   if (!(target instanceof HTMLElement)) {
-    return false
+    return false;
   }
 
-  return Boolean(target.closest("input, textarea, select, [contenteditable='true']"))
+  return Boolean(target.closest("input, textarea, select, [contenteditable='true']"));
 }
 
 export function useAdjacentTopics<T extends NavTarget>(
@@ -24,7 +24,7 @@ export function useAdjacentTopics<T extends NavTarget>(
 ): AdjacentTopics<T> & { currentIndex: number; totalCount: number } {
   const currentIndex = selectedTopicId
     ? topics.findIndex((topic) => topic.id === selectedTopicId)
-    : -1
+    : -1;
 
   return {
     previousTopic: currentIndex > 0 ? (topics[currentIndex - 1] ?? null) : null,
@@ -34,7 +34,7 @@ export function useAdjacentTopics<T extends NavTarget>(
         : null,
     currentIndex,
     totalCount: topics.length,
-  }
+  };
 }
 
 export function useTopicHotkeys<T extends NavTarget>({
@@ -45,64 +45,64 @@ export function useTopicHotkeys<T extends NavTarget>({
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.altKey || event.metaKey || event.ctrlKey || event.shiftKey) {
-        return
+        return;
       }
 
       if (isTypingTarget(event.target)) {
-        return
+        return;
       }
 
-      if (event.key === "ArrowLeft" && previousTopic) {
-        event.preventDefault()
-        onSelect(previousTopic.id)
+      if (event.key === 'ArrowLeft' && previousTopic) {
+        event.preventDefault();
+        onSelect(previousTopic.id);
       }
 
-      if (event.key === "ArrowRight" && nextTopic) {
-        event.preventDefault()
-        onSelect(nextTopic.id)
+      if (event.key === 'ArrowRight' && nextTopic) {
+        event.preventDefault();
+        onSelect(nextTopic.id);
       }
     }
 
-    window.addEventListener("keydown", onKeyDown)
-    return () => window.removeEventListener("keydown", onKeyDown)
-  }, [nextTopic, onSelect, previousTopic])
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [nextTopic, onSelect, previousTopic]);
 }
 
 export function useReadingSession(
   scrollRef: { current: HTMLElement | null },
   topicId: string | null,
 ) {
-  const [scrolled, setScrolled] = useState(false)
+  const [scrolled, setScrolled] = useState(false);
 
   useLayoutEffect(() => {
-    const element = scrollRef.current
+    const element = scrollRef.current;
     if (!element) {
-      return
+      return;
     }
 
-    element.scrollTop = 0
-    setScrolled(false)
+    element.scrollTop = 0;
+    setScrolled(false);
 
     const update = () => {
-      setScrolled(element.scrollTop > 120)
-    }
+      setScrolled(element.scrollTop > 120);
+    };
 
-    update()
-    element.addEventListener("scroll", update, { passive: true })
-    const observer = new ResizeObserver(update)
-    observer.observe(element)
+    update();
+    element.addEventListener('scroll', update, { passive: true });
+    const observer = new ResizeObserver(update);
+    observer.observe(element);
 
     return () => {
-      element.removeEventListener("scroll", update)
-      observer.disconnect()
-    }
-  }, [scrollRef, topicId])
+      element.removeEventListener('scroll', update);
+      observer.disconnect();
+    };
+  }, [scrollRef, topicId]);
 
   const scrollToTop = () => {
-    scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" })
-  }
+    scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-  return { scrolled, scrollToTop }
+  return { scrolled, scrollToTop };
 }
 
 export function useFooterInView(
@@ -110,28 +110,28 @@ export function useFooterInView(
   scrollRef: { current: HTMLElement | null },
   topicId: string | null,
 ) {
-  const [inView, setInView] = useState(false)
+  const [inView, setInView] = useState(false);
 
   useEffect(() => {
-    const footer = footerRef.current
-    const root = scrollRef.current
+    const footer = footerRef.current;
+    const root = scrollRef.current;
     if (!footer) {
-      return
+      return;
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setInView(Boolean(entry?.isIntersecting))
+        setInView(Boolean(entry?.isIntersecting));
       },
       {
         root,
         threshold: 0.35,
       },
-    )
+    );
 
-    observer.observe(footer)
-    return () => observer.disconnect()
-  }, [footerRef, scrollRef, topicId])
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, [footerRef, scrollRef, topicId]);
 
-  return inView
+  return inView;
 }

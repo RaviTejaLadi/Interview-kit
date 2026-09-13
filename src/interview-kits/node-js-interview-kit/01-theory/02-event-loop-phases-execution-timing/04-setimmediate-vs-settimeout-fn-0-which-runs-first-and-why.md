@@ -17,11 +17,11 @@ For example:
 ```javascript
 // Compare a timer and an immediate scheduled from the main module.
 setTimeout(() => {
-  console.log("setTimeout");
+  console.log('setTimeout');
 }, 0);
 
 setImmediate(() => {
-  console.log("setImmediate");
+  console.log('setImmediate');
 });
 ```
 
@@ -41,15 +41,15 @@ The situation is different.
 
 ```javascript
 // Inside an I/O callback, setImmediate normally gets a chance before a zero-delay timer.
-const fs = require("node:fs");
+const fs = require('node:fs');
 
-fs.readFile("data.txt", () => {
+fs.readFile('data.txt', () => {
   setTimeout(() => {
-    console.log("setTimeout");
+    console.log('setTimeout');
   }, 0);
 
   setImmediate(() => {
-    console.log("setImmediate");
+    console.log('setImmediate');
   });
 });
 ```

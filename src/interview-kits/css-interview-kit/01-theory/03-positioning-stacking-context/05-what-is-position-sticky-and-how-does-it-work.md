@@ -53,4 +53,3 @@ Without an inset/offset, there is usually no sticking behavior to observe.
 ### Another important point
 
 Sticky positioning is constrained by its **scrolling container** and its containing block. It doesn't simply stick to the viewport forever.
-

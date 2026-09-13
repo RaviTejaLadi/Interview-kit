@@ -36,10 +36,10 @@ HTML Parsing ──────┐      ┌────────────�
 
 Behavior:
 
-* HTML parsing continues while the script downloads.
-* When the script finishes downloading, HTML parsing can be **paused**.
-* The script executes immediately.
-* HTML parsing then continues.
+- HTML parsing continues while the script downloads.
+- When the script finishes downloading, HTML parsing can be **paused**.
+- The script executes immediately.
+- HTML parsing then continues.
 
 ```text
 HTML Parsing ─────────────────────────
@@ -72,9 +72,9 @@ Use `async` when scripts are **independent** and don't depend on each other or t
 
 Behavior:
 
-* HTML parsing continues while the script downloads.
-* Script execution waits until HTML parsing is complete.
-* Deferred scripts execute **in document order**.
+- HTML parsing continues while the script downloads.
+- Script execution waits until HTML parsing is complete.
+- Deferred scripts execute **in document order**.
 
 ```text
 HTML Parsing ───────────────────────→ Complete
@@ -102,6 +102,6 @@ second.js
 
 | Script  | HTML parsing | Download       | Execution                    |
 | ------- | ------------ | -------------- | ---------------------------- |
-| Normal  | ⛔ Paused     | Blocks parsing | Immediately after download   |
+| Normal  | ⛔ Paused    | Blocks parsing | Immediately after download   |
 | `async` | Continues    | Parallel       | As soon as downloaded        |
 | `defer` | Continues    | Parallel       | After HTML parsing, in order |

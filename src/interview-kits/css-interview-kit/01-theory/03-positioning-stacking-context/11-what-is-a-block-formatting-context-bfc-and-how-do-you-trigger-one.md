@@ -1,4 +1,4 @@
-#  What is a Block Formatting Context (BFC) and how do you trigger one?
+# What is a Block Formatting Context (BFC) and how do you trigger one?
 
 A **Block Formatting Context (BFC)** is an independent block-level layout environment.
 

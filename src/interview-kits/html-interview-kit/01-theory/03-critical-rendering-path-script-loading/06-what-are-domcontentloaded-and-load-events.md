@@ -12,8 +12,8 @@ It does **not** wait for images and most other subresources to finish loading.
 
 ```javascript id="j3z0r4"
 // Run code when the HTML document has been parsed and deferred scripts have executed.
-document.addEventListener("DOMContentLoaded", () => {
-  console.log("DOM is ready");
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM is ready');
 });
 ```
 
@@ -35,15 +35,15 @@ The `load` event fires after the page and its dependent resources have finished 
 
 This can include:
 
-* Images
-* Stylesheets
-* Scripts
-* Other resources
+- Images
+- Stylesheets
+- Scripts
+- Other resources
 
 ```javascript id="n7m4tc"
 // Run code after the page and its dependent resources have loaded.
-window.addEventListener("load", () => {
-  console.log("Page and resources loaded");
+window.addEventListener('load', () => {
+  console.log('Page and resources loaded');
 });
 ```
 
@@ -51,8 +51,8 @@ window.addEventListener("load", () => {
 
 | Event              | Waits for HTML parsing | Waits for deferred scripts | Waits for images/resources |
 | ------------------ | ---------------------: | -------------------------: | -------------------------: |
-| `DOMContentLoaded` |                      ✅ |                          ✅ |                          ❌ |
-| `load`             |                      ✅ |                          ✅ |                          ✅ |
+| `DOMContentLoaded` |                     ✅ |                         ✅ |                         ❌ |
+| `load`             |                     ✅ |                         ✅ |                         ✅ |
 
 ### Easy way to remember
 

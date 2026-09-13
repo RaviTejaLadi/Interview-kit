@@ -22,9 +22,9 @@ input id="email"
 
 Benefits:
 
-* Clicking the label focuses the input.
-* Screen readers can correctly associate the label.
-* Works even when the elements aren't nested.
+- Clicking the label focuses the input.
+- Screen readers can correctly associate the label.
+- Works even when the elements aren't nested.
 
 ---
 
@@ -47,8 +47,7 @@ Both approaches are valid.
 Explicit association is often easier to maintain:
 
 ```html
-<label for="username">Username</label>
-<input id="username" name="username" type="text" />
+<label for="username">Username</label> <input id="username" name="username" type="text" />
 ```
 
 ### Important distinction

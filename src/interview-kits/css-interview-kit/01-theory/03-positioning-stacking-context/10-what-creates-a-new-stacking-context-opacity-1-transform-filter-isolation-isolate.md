@@ -64,16 +64,16 @@ This is particularly useful when you want to prevent internal stacking behavior 
 
 You should also know:
 
-* Positioned element with a non-`auto` `z-index`
-* `position: fixed`
-* `position: sticky`
-* Flex/grid item with non-`auto` `z-index`
-* `opacity < 1`
-* `transform` other than `none`
-* `filter` other than `none`
-* `isolation: isolate`
-* Certain `contain` values
-* `will-change` in relevant cases
-* Some newer CSS properties/features
+- Positioned element with a non-`auto` `z-index`
+- `position: fixed`
+- `position: sticky`
+- Flex/grid item with non-`auto` `z-index`
+- `opacity < 1`
+- `transform` other than `none`
+- `filter` other than `none`
+- `isolation: isolate`
+- Certain `contain` values
+- `will-change` in relevant cases
+- Some newer CSS properties/features
 
 So don't memorize only four properties.

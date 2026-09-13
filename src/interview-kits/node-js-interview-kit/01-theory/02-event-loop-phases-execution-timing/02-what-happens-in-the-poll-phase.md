@@ -27,13 +27,13 @@ Suppose you have:
 
 ```javascript
 // Register an asynchronous file read.
-const fs = require("node:fs");
+const fs = require('node:fs');
 
-fs.readFile("data.txt", "utf8", (err, data) => {
-  console.log("File read completed");
+fs.readFile('data.txt', 'utf8', (err, data) => {
+  console.log('File read completed');
 });
 
-console.log("Continue executing");
+console.log('Continue executing');
 ```
 
 The JavaScript thread doesn't sit there waiting for the file.

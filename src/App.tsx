@@ -1,39 +1,40 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { ArrowLeftIcon } from "lucide-react"
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ArrowLeftIcon } from 'lucide-react';
 
-import { AppSidebar } from "@/components/app-sidebar"
-import { KitGallery } from "@/components/kit-gallery"
-import { MarkdownPreview } from "@/components/markdown-preview"
-import { TopicAccordion } from "@/components/topic-accordion"
+import { AppSidebar } from '@/components/app-sidebar';
+import { KitGallery } from '@/components/kit-gallery';
+import { MarkdownPreview } from '@/components/markdown-preview';
+import { TopicAccordion } from '@/components/topic-accordion';
 import {
   FullscreenButton,
   ScrollToTopButton,
   ThemeToggle,
   TopicDock,
   TopicNavigator,
-} from "@/components/topic-navigator"
-import { Button } from "@/components/ui/button"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar"
+} from '@/components/topic-navigator';
+import { Button } from '@/components/ui/button';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import {
   useAdjacentTopics,
   useFooterInView,
   useReadingSession,
   useTopicHotkeys,
-} from "@/hooks/use-topic-navigation"
-import { KIT_ICON_BY_KEY } from "@/lib/kit-meta"
+} from '@/hooks/use-topic-navigation';
+import { KIT_ICON_BY_KEY } from '@/lib/kit-meta';
 import {
   buildKitMenus,
   findNavItemForTopic,
   findNavItemForTopicInGroups,
   getKitNavItems,
   type KitNavItem,
-} from "@/lib/kit-menu"
-import { buildTopicIndex, resolveTopicFromHref, type Topic, type TopicGroup } from "@/lib/content-index"
+} from '@/lib/kit-menu';
+import {
+  buildTopicIndex,
+  resolveTopicFromHref,
+  type Topic,
+  type TopicGroup,
+} from '@/lib/content-index';
 
 let allTopics: Topic[] = [];
 let groups: TopicGroup[] = [];
@@ -50,84 +51,85 @@ function hasOwn(obj: Record<string, string>, key: string) {
   return Object.prototype.hasOwnProperty.call(obj, key);
 }
 
-type Theme = "light" | "dark"
+type Theme = 'light' | 'dark';
 
-const THEME_STORAGE_KEY = "interview-kit-theme"
+const THEME_STORAGE_KEY = 'interview-kit-theme';
 
 function getKitIdFromHash() {
-  if (typeof window === "undefined") {
-    return null
+  if (typeof window === 'undefined') {
+    return null;
   }
 
-  const kitId = decodeURIComponent(window.location.hash.replace(/^#/, "")).trim()
-  return groups.some((group) => group.id === kitId) ? kitId : null
+  const kitId = decodeURIComponent(window.location.hash.replace(/^#/, '')).trim();
+  return groups.some((group) => group.id === kitId) ? kitId : null;
 }
 
 function getInitialTheme(): Theme {
-  if (typeof window === "undefined") {
-    return "light"
+  if (typeof window === 'undefined') {
+    return 'light';
   }
 
-  const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY)
-  if (savedTheme === "light" || savedTheme === "dark") {
-    return savedTheme
+  const savedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  if (savedTheme === 'light' || savedTheme === 'dark') {
+    return savedTheme;
   }
 
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
 function getNavSubtitle(nav: KitNavItem) {
-  if (nav.kind === "folder") {
-    return `${nav.topics.length} question${nav.topics.length === 1 ? "" : "s"}`
+  if (nav.kind === 'folder') {
+    return `${nav.topics.length} question${nav.topics.length === 1 ? '' : 's'}`;
   }
 
-  return nav.section
+  return nav.section;
 }
 
 function App() {
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const [selectedKitId, setSelectedKitId] = useState<string | null>(() => getKitIdFromHash());
   const [selectedNavId, setSelectedNavId] = useState<string | null>(null);
   const [focusedTopicId, setFocusedTopicId] = useState<string | null>(null);
   const [topicContentById, setTopicContentById] = useState<Record<string, string>>({});
   const [isLoadingTopic, setIsLoadingTopic] = useState(false);
-  const [topicLoadError, setTopicLoadError] = useState("");
-  const [theme, setTheme] = useState<Theme>(() => getInitialTheme())
+  const [topicLoadError, setTopicLoadError] = useState('');
+  const [theme, setTheme] = useState<Theme>(() => getInitialTheme());
 
   const filteredGroups = useMemo<TopicGroup[]>(() => {
     if (!selectedKitId) {
-      return []
+      return [];
     }
 
-    const kitGroups = groups.filter((group) => group.id === selectedKitId)
-    const query = searchValue.trim().toLowerCase()
+    const kitGroups = groups.filter((group) => group.id === selectedKitId);
+    const query = searchValue.trim().toLowerCase();
 
     if (!query) {
-      return kitGroups
+      return kitGroups;
     }
 
     return kitGroups.map((group) => ({
       ...group,
       topics: group.topics.filter((topic) => {
-        const haystack = `${topic.title} ${topic.topicTitle ?? ""} ${topic.section} ${topic.kitLabel}`.toLowerCase()
-        return haystack.includes(query)
+        const haystack =
+          `${topic.title} ${topic.topicTitle ?? ''} ${topic.section} ${topic.kitLabel}`.toLowerCase();
+        return haystack.includes(query);
       }),
-    }))
-  }, [searchValue, selectedKitId])
+    }));
+  }, [searchValue, selectedKitId]);
 
   const navigationItems = useMemo(() => {
-    return buildKitMenus(filteredGroups).flatMap(getKitNavItems)
-  }, [filteredGroups])
+    return buildKitMenus(filteredGroups).flatMap(getKitNavItems);
+  }, [filteredGroups]);
 
   const selectedNav = useMemo(() => {
     if (!selectedKitId) {
-      return null
+      return null;
     }
 
     if (selectedNavId) {
-      const exact = navigationItems.find((item) => item.id === selectedNavId)
+      const exact = navigationItems.find((item) => item.id === selectedNavId);
       if (exact) {
-        return exact
+        return exact;
       }
     }
 
@@ -135,221 +137,222 @@ function App() {
       return findNavItemForTopicInGroups(
         groups.filter((group) => group.id === selectedKitId),
         focusedTopicId,
-      )
+      );
     }
 
     if (focusedTopicId) {
-      return findNavItemForTopic(navigationItems, focusedTopicId)
+      return findNavItemForTopic(navigationItems, focusedTopicId);
     }
 
-    return navigationItems[0] ?? null
-  }, [focusedTopicId, navigationItems, searchValue, selectedKitId, selectedNavId])
-  const selectedTopicIcon = selectedNav ? KIT_ICON_BY_KEY[selectedNav.kitKey] : null
-  const selectedSingleTopic = selectedNav?.kind === "topic" ? (selectedNav.topics[0] ?? null) : null
+    return navigationItems[0] ?? null;
+  }, [focusedTopicId, navigationItems, searchValue, selectedKitId, selectedNavId]);
+  const selectedTopicIcon = selectedNav ? KIT_ICON_BY_KEY[selectedNav.kitKey] : null;
+  const selectedSingleTopic =
+    selectedNav?.kind === 'topic' ? (selectedNav.topics[0] ?? null) : null;
 
   const closeKit = useCallback(() => {
-    setSelectedKitId(null)
-    setSelectedNavId(null)
-    setFocusedTopicId(null)
-    setSearchValue("")
+    setSelectedKitId(null);
+    setSelectedNavId(null);
+    setFocusedTopicId(null);
+    setSearchValue('');
 
     if (window.location.hash) {
-      window.history.pushState({}, "", `${window.location.pathname}${window.location.search}`)
+      window.history.pushState({}, '', `${window.location.pathname}${window.location.search}`);
     }
-  }, [])
+  }, []);
 
   const openKit = useCallback((kitId: string, topicId?: string) => {
-    setSelectedKitId(kitId)
-    setSearchValue("")
+    setSelectedKitId(kitId);
+    setSearchValue('');
 
     if (topicId) {
       const nav = findNavItemForTopicInGroups(
         groups.filter((group) => group.id === kitId),
         topicId,
-      )
-      setSelectedNavId(nav?.id ?? null)
-      setFocusedTopicId(topicId)
+      );
+      setSelectedNavId(nav?.id ?? null);
+      setFocusedTopicId(topicId);
     } else {
-      setSelectedNavId(null)
-      setFocusedTopicId(null)
+      setSelectedNavId(null);
+      setFocusedTopicId(null);
     }
 
     if (window.location.hash !== `#${kitId}`) {
-      window.history.pushState({ kitId }, "", `#${kitId}`)
+      window.history.pushState({ kitId }, '', `#${kitId}`);
     }
-  }, [])
+  }, []);
 
   const handleSelectNav = useCallback((navId: string) => {
-    setSelectedNavId(navId)
-    setFocusedTopicId(null)
-  }, [])
+    setSelectedNavId(navId);
+    setFocusedTopicId(null);
+  }, []);
 
   const handleInternalLink = useCallback(
     (fromPath: string, href: string) => {
-      const target = resolveTopicFromHref(fromPath, href, allTopics)
+      const target = resolveTopicFromHref(fromPath, href, allTopics);
       if (!target) {
-        return false
+        return false;
       }
 
-      openKit(target.kitKey, target.id)
-      return true
+      openKit(target.kitKey, target.id);
+      return true;
     },
     [openKit],
-  )
+  );
 
-  const selectedTopicContent = selectedSingleTopic ? (topicContentById[selectedSingleTopic.id] ?? "") : ""
-  const hasSelectedTopicContent = selectedSingleTopic ? hasOwn(topicContentById, selectedSingleTopic.id) : false;
+  const selectedTopicContent = selectedSingleTopic
+    ? (topicContentById[selectedSingleTopic.id] ?? '')
+    : '';
+  const hasSelectedTopicContent = selectedSingleTopic
+    ? hasOwn(topicContentById, selectedSingleTopic.id)
+    : false;
 
-  const scrollRef = useRef<HTMLDivElement | null>(null)
-  const contentEndRef = useRef<HTMLDivElement | null>(null)
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const contentEndRef = useRef<HTMLDivElement | null>(null);
 
   const { previousTopic, nextTopic, currentIndex, totalCount } = useAdjacentTopics(
     navigationItems,
     selectedNav?.id ?? null,
-  )
-  const { scrolled, scrollToTop } = useReadingSession(
-    scrollRef,
-    selectedNav?.id ?? null,
-  )
-  const footerInView = useFooterInView(contentEndRef, scrollRef, selectedNav?.id ?? null)
+  );
+  const { scrolled, scrollToTop } = useReadingSession(scrollRef, selectedNav?.id ?? null);
+  const footerInView = useFooterInView(contentEndRef, scrollRef, selectedNav?.id ?? null);
 
   useTopicHotkeys({
     previousTopic,
     nextTopic,
     onSelect: handleSelectNav,
-  })
+  });
 
   useEffect(() => {
     if (selectedNav && selectedNav.id !== selectedNavId) {
-      setSelectedNavId(selectedNav.id)
+      setSelectedNavId(selectedNav.id);
     }
-  }, [selectedNav, selectedNavId])
+  }, [selectedNav, selectedNavId]);
 
   useEffect(() => {
     function syncKitFromLocation() {
-      const kitId = getKitIdFromHash()
-      setSelectedKitId(kitId)
-      setSelectedNavId(null)
-      setFocusedTopicId(null)
-      setSearchValue("")
+      const kitId = getKitIdFromHash();
+      setSelectedKitId(kitId);
+      setSelectedNavId(null);
+      setFocusedTopicId(null);
+      setSearchValue('');
     }
 
-    window.addEventListener("popstate", syncKitFromLocation)
-    window.addEventListener("hashchange", syncKitFromLocation)
+    window.addEventListener('popstate', syncKitFromLocation);
+    window.addEventListener('hashchange', syncKitFromLocation);
     return () => {
-      window.removeEventListener("popstate", syncKitFromLocation)
-      window.removeEventListener("hashchange", syncKitFromLocation)
-    }
-  }, [])
+      window.removeEventListener('popstate', syncKitFromLocation);
+      window.removeEventListener('hashchange', syncKitFromLocation);
+    };
+  }, []);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key !== "Escape" || !selectedKitId) {
-        return
+      if (event.key !== 'Escape' || !selectedKitId) {
+        return;
       }
 
       if (event.altKey || event.metaKey || event.ctrlKey || event.shiftKey) {
-        return
+        return;
       }
 
-      const target = event.target
+      const target = event.target;
       if (
         target instanceof HTMLElement &&
         target.closest("input, textarea, select, [contenteditable='true']")
       ) {
-        return
+        return;
       }
 
-      event.preventDefault()
-      closeKit()
+      event.preventDefault();
+      closeKit();
     }
 
-    window.addEventListener("keydown", onKeyDown)
-    return () => window.removeEventListener("keydown", onKeyDown)
-  }, [closeKit, selectedKitId])
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [closeKit, selectedKitId]);
 
   useEffect(() => {
-    let ignore = false
+    let ignore = false;
 
     async function loadTopicContent() {
       if (!selectedNav) {
-        return
+        return;
       }
 
-      const missingTopics = selectedNav.topics.filter((topic) => !hasOwn(topicContentById, topic.id))
+      const missingTopics = selectedNav.topics.filter(
+        (topic) => !hasOwn(topicContentById, topic.id),
+      );
       if (missingTopics.length === 0) {
-        return
+        return;
       }
 
-      setIsLoadingTopic(true)
-      setTopicLoadError("")
+      setIsLoadingTopic(true);
+      setTopicLoadError('');
 
       const results = await Promise.allSettled(
         missingTopics.map(async (topic) => {
-          const markdown = await topic.loadContent()
-          return [topic.id, markdown] as const
+          const markdown = await topic.loadContent();
+          return [topic.id, markdown] as const;
         }),
-      )
+      );
 
       if (ignore) {
-        return
+        return;
       }
 
-      const nextContent: Record<string, string> = {}
-      let failedCount = 0
+      const nextContent: Record<string, string> = {};
+      let failedCount = 0;
 
       results.forEach((result) => {
-        if (result.status === "fulfilled") {
-          nextContent[result.value[0]] = result.value[1]
-          return
+        if (result.status === 'fulfilled') {
+          nextContent[result.value[0]] = result.value[1];
+          return;
         }
 
-        failedCount += 1
-      })
+        failedCount += 1;
+      });
 
       if (Object.keys(nextContent).length > 0) {
         setTopicContentById((current) => ({
           ...current,
           ...nextContent,
-        }))
+        }));
       }
 
       if (failedCount > 0 && Object.keys(nextContent).length === 0) {
-        setTopicLoadError("Failed to load markdown")
+        setTopicLoadError('Failed to load markdown');
       }
 
-      setIsLoadingTopic(false)
+      setIsLoadingTopic(false);
     }
 
-    loadTopicContent()
+    loadTopicContent();
     return () => {
-      ignore = true
-    }
-  }, [selectedNav, topicContentById])
+      ignore = true;
+    };
+  }, [selectedNav, topicContentById]);
 
   useEffect(() => {
-    const root = document.documentElement
-    root.classList.toggle("dark", theme === "dark")
-    root.style.colorScheme = theme
-    window.localStorage.setItem(THEME_STORAGE_KEY, theme)
-  }, [theme])
+    const root = document.documentElement;
+    root.classList.toggle('dark', theme === 'dark');
+    root.style.colorScheme = theme;
+    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
+  }, [theme]);
 
   const headerActions = (
     <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
       <FullscreenButton />
-      <ThemeToggle
-        theme={theme}
-        onToggle={() => setTheme(theme === "dark" ? "light" : "dark")}
-      />
+      <ThemeToggle theme={theme} onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')} />
     </div>
-  )
+  );
 
   if (!selectedKitId) {
     return (
       <div className="theme flex h-svh flex-col bg-background">
         <header className="sticky top-0 z-20 flex min-h-14 shrink-0 items-center gap-2 border-b border-border/70 bg-card/94 px-3 py-2 backdrop-blur supports-backdrop-filter:bg-card/82 sm:min-h-16 sm:px-5 dark:border-border/35">
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold tracking-tight text-foreground/95 sm:text-base md:text-lg">
+            <p className="truncate text-sm font-semibold tracking-tight text-foreground/95 sm:text-base lg:text-lg">
               Interview Kits
             </p>
             <p className="truncate text-[11px] text-muted-foreground sm:text-xs">
@@ -362,7 +365,7 @@ function App() {
           <KitGallery groups={groups} onSelectKit={(kitId) => openKit(kitId)} />
         </ScrollArea>
       </div>
-    )
+    );
   }
 
   return (
@@ -400,16 +403,18 @@ function App() {
               />
             ) : null}
             <div className="min-w-0">
-              <p className="truncate text-sm font-semibold tracking-tight text-foreground/95 sm:text-base md:text-lg">
-                {selectedNav?.kitLabel ?? "Interview Kits"}
+              <p className="truncate text-sm font-semibold tracking-tight text-foreground/95 sm:text-base lg:text-lg">
+                {selectedNav?.kitLabel ?? 'Interview Kits'}
               </p>
               {selectedNav ? (
                 <p className="truncate text-[11px] text-muted-foreground sm:text-xs">
                   {selectedNav.section}
-                  {" · "}
+                  {' · '}
                   {selectedNav.title}
-                  {selectedNav.kind === "folder" ? ` · ${getNavSubtitle(selectedNav)}` : ""}
-                  {currentIndex >= 0 && totalCount > 0 ? ` · ${currentIndex + 1}/${totalCount}` : ""}
+                  {selectedNav.kind === 'folder' ? ` · ${getNavSubtitle(selectedNav)}` : ''}
+                  {currentIndex >= 0 && totalCount > 0
+                    ? ` · ${currentIndex + 1}/${totalCount}`
+                    : ''}
                 </p>
               ) : null}
             </div>
@@ -421,60 +426,56 @@ function App() {
           viewportRef={scrollRef}
           viewportClassName="[overflow-anchor:none]"
         >
-        {!selectedNav ? (
+          {!selectedNav ? (
             <div className="flex h-full items-center justify-center p-4 sm:p-6">
-            <p className="rounded-md border border-border/70 bg-card/96 p-4 text-sm text-foreground/75 shadow-[0_1px_2px_rgb(15_23_42/5%)] sm:p-5 dark:border-border/35 dark:bg-card/90 dark:shadow-none">
-              {searchValue.trim()
-                ? "No topics match this search in the current kit."
-                : "Select a topic to view content."}
-            </p>
-          </div>
-        ) : (
+              <p className="rounded-md border border-border/70 bg-card/96 p-4 text-sm text-foreground/75 shadow-[0_1px_2px_rgb(15_23_42/5%)] sm:p-5 dark:border-border/35 dark:bg-card/90 dark:shadow-none">
+                {searchValue.trim()
+                  ? 'No topics match this search in the current kit.'
+                  : 'Select a topic to view content.'}
+              </p>
+            </div>
+          ) : (
             <article className="mx-auto w-full min-w-0 max-w-6xl space-y-3 px-1 py-3 sm:space-y-4 ">
-            <TopicNavigator
-              previousTopic={previousTopic}
-              nextTopic={nextTopic}
-              onSelect={handleSelectNav}
-            >
-              {selectedNav.kind === "folder" ? (
-                <TopicAccordion
-                  key={selectedNav.id}
-                  title={selectedNav.title}
-                  section={selectedNav.section}
-                  topics={selectedNav.topics}
-                  contentById={topicContentById}
-                  isLoading={isLoadingTopic}
-                  theme={theme}
-                  focusedTopicId={focusedTopicId}
-                  onInternalLink={handleInternalLink}
-                />
-              ) : (
-                <div className="rounded-md border border-border/70 bg-card/96 p-4 shadow-[0_2px_10px_rgb(15_23_42/5%)] backdrop-blur sm:p-5 md:p-7 dark:border-border/35 dark:bg-card/92 dark:shadow-none">
-                  {isLoadingTopic && !hasSelectedTopicContent ? (
-                    <p className="text-sm text-foreground/70">Loading markdown...</p>
-                  ) : topicLoadError ? (
-                    <p className="text-sm text-red-600">
-                      Could not load this file. {topicLoadError}
-                    </p>
-                  ) : (
-                    <MarkdownPreview
-                      content={selectedTopicContent}
-                      theme={theme}
-                      onInternalLink={(href) =>
-                        handleInternalLink(selectedSingleTopic?.path ?? "", href)
-                      }
-                    />
-                  )}
-                </div>
-              )}
-            </TopicNavigator>
-            <div
-              ref={contentEndRef}
-              aria-hidden="true"
-              className="h-px w-full"
-            />
-          </article>
-        )}
+              <TopicNavigator
+                previousTopic={previousTopic}
+                nextTopic={nextTopic}
+                onSelect={handleSelectNav}
+              >
+                {selectedNav.kind === 'folder' ? (
+                  <TopicAccordion
+                    key={selectedNav.id}
+                    title={selectedNav.title}
+                    section={selectedNav.section}
+                    topics={selectedNav.topics}
+                    contentById={topicContentById}
+                    isLoading={isLoadingTopic}
+                    theme={theme}
+                    focusedTopicId={focusedTopicId}
+                    onInternalLink={handleInternalLink}
+                  />
+                ) : (
+                  <div className="rounded-md border border-border/70 bg-card/96 p-4 shadow-[0_2px_10px_rgb(15_23_42/5%)] backdrop-blur sm:p-5 lg:p-7 dark:border-border/35 dark:bg-card/92 dark:shadow-none">
+                    {isLoadingTopic && !hasSelectedTopicContent ? (
+                      <p className="text-sm text-foreground/70">Loading markdown...</p>
+                    ) : topicLoadError ? (
+                      <p className="text-sm text-red-600">
+                        Could not load this file. {topicLoadError}
+                      </p>
+                    ) : (
+                      <MarkdownPreview
+                        content={selectedTopicContent}
+                        theme={theme}
+                        onInternalLink={(href) =>
+                          handleInternalLink(selectedSingleTopic?.path ?? '', href)
+                        }
+                      />
+                    )}
+                  </div>
+                )}
+              </TopicNavigator>
+              <div ref={contentEndRef} aria-hidden="true" className="h-px w-full" />
+            </article>
+          )}
         </ScrollArea>
         {selectedNav ? (
           <>
@@ -498,7 +499,7 @@ function App() {
         ) : null}
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }
 
 export default App;

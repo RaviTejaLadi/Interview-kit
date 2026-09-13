@@ -1,19 +1,13 @@
-const markdownModules = import.meta.glob<string>(
-  '../interview-kits/*-interview-kit/**/*.md',
-  {
-    import: 'default',
-    query: '?raw',
-  },
-);
+const markdownModules = import.meta.glob<string>('../interview-kits/*-interview-kit/**/*.md', {
+  import: 'default',
+  query: '?raw',
+});
 
-const kitReadmeModules = import.meta.glob<string>(
-  '../interview-kits/*-interview-kit/README.md',
-  {
-    eager: true,
-    import: 'default',
-    query: '?raw',
-  },
-);
+const kitReadmeModules = import.meta.glob<string>('../interview-kits/*-interview-kit/README.md', {
+  eager: true,
+  import: 'default',
+  query: '?raw',
+});
 
 export type Topic = {
   id: string;
@@ -126,7 +120,11 @@ function getReadmeRatingsByKit() {
   return ratingsByKit;
 }
 
-function getStarRatingForFile(kitKey: string, fileName: string, ratingsByKit: Map<string, KitStarRatings>) {
+function getStarRatingForFile(
+  kitKey: string,
+  fileName: string,
+  ratingsByKit: Map<string, KitStarRatings>,
+) {
   const kitRatings = ratingsByKit.get(kitKey);
   if (!kitRatings) {
     return null;
@@ -223,7 +221,12 @@ export function buildTopicIndex() {
 
 function isInternalMarkdownHref(href: string) {
   const trimmed = href.trim();
-  if (!trimmed || trimmed.startsWith('#') || trimmed.startsWith('mailto:') || trimmed.startsWith('tel:')) {
+  if (
+    !trimmed ||
+    trimmed.startsWith('#') ||
+    trimmed.startsWith('mailto:') ||
+    trimmed.startsWith('tel:')
+  ) {
     return false;
   }
 

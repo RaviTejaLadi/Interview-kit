@@ -186,7 +186,7 @@ Pseudo-elements count in the **element column**.
 ```css
 /* Specificity: (0,0,0,2) */
 p::before {
-  content: "";
+  content: '';
 }
 ```
 
@@ -242,4 +242,3 @@ Inline → ID → Class/Attribute/Pseudo-class → Element/Pseudo-element
 ```
 
 ---
-

@@ -4,10 +4,10 @@
 
 It is mainly used to:
 
-* undo commits locally
-* unstage files
-* move a branch pointer backward
-* discard local changes, depending on the option
+- undo commits locally
+- unstage files
+- move a branch pointer backward
+- discard local changes, depending on the option
 
 For example:
 

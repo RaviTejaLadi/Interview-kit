@@ -35,11 +35,11 @@ Once the script finishes downloading, it executes immediately, potentially inter
 
 ### Characteristics
 
-* Download → **parallel**
-* Execution → **as soon as downloaded**
-* HTML parser → can be interrupted during execution
-* Execution order → **not guaranteed**
-* DOM availability → don't assume the full DOM exists
+- Download → **parallel**
+- Execution → **as soon as downloaded**
+- HTML parser → can be interrupted during execution
+- Execution order → **not guaranteed**
+- DOM availability → don't assume the full DOM exists
 
 **Best for:** Independent scripts such as analytics or advertising.
 
@@ -86,19 +86,19 @@ For example:
 
 ```javascript
 // Import functionality from another ES module
-import { calculateTotal } from "./utils.js";
+import { calculateTotal } from './utils.js';
 
 console.log(calculateTotal(100, 20));
 ```
 
 ### Characteristics
 
-* Downloads without blocking HTML parsing.
-* Executes after parsing by default.
-* Supports `import` / `export`.
-* Has its own module scope.
-* Runs in strict mode.
-* Dependencies are fetched as part of the module graph.
+- Downloads without blocking HTML parsing.
+- Executes after parsing by default.
+- Supports `import` / `export`.
+- Has its own module scope.
+- Runs in strict mode.
+- Dependencies are fetched as part of the module graph.
 
 ---
 
@@ -119,15 +119,15 @@ This is useful when the module is **independent of the rest of the page**.
 
 # ⭐ Complete Script Loading Matrix
 
-| Script            | Blocks HTML parsing? | Download            | Execution             | Order guaranteed?             | DOM ready?        |
-| ----------------- | -------------------- | ------------------- | --------------------- | ----------------------------- | ----------------- |
-| Normal `<script>` | ✅ Yes                | Sequential/blocking | Immediately           | Depends on placement          | ❌ Not necessarily |
-| `async`           | ❌ No*                | Parallel            | As soon as downloaded | ❌ No                          | ❌ Not necessarily |
-| `defer`           | ❌ No                 | Parallel            | After HTML parsing    | ✅ Yes                         | ✅ Yes             |
-| `type="module"`   | ❌ No                 | Parallel            | Deferred by default   | Module dependency order       | ✅ Yes             |
-| `module + async`  | ❌ No                 | Parallel            | As soon as ready      | ❌ Not for independent modules | ❌ Not necessarily |
+| Script            | Blocks HTML parsing? | Download            | Execution             | Order guaranteed?              | DOM ready?         |
+| ----------------- | -------------------- | ------------------- | --------------------- | ------------------------------ | ------------------ |
+| Normal `<script>` | ✅ Yes               | Sequential/blocking | Immediately           | Depends on placement           | ❌ Not necessarily |
+| `async`           | ❌ No*               | Parallel            | As soon as downloaded | ❌ No                          | ❌ Not necessarily |
+| `defer`           | ❌ No                | Parallel            | After HTML parsing    | ✅ Yes                         | ✅ Yes             |
+| `type="module"`   | ❌ No                | Parallel            | Deferred by default   | Module dependency order        | ✅ Yes             |
+| `module + async`  | ❌ No                | Parallel            | As soon as ready      | ❌ Not for independent modules | ❌ Not necessarily |
 
-* `async` execution can temporarily pause HTML parsing while the script executes.
+- `async` execution can temporarily pause HTML parsing while the script executes.
 
 ---
 
@@ -180,7 +180,7 @@ Remember these four rules:
 
 ### Which one should you use?
 
-* **Analytics / independent third-party script** → `async`
-* **Main application script** → `defer`
-* **Modern ES module application** → `type="module"`
-* **Module that is completely independent and should run as soon as ready** → `type="module" async`
+- **Analytics / independent third-party script** → `async`
+- **Main application script** → `defer`
+- **Modern ES module application** → `type="module"`
+- **Module that is completely independent and should run as soon as ready** → `type="module" async`

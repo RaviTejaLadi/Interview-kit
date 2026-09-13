@@ -42,9 +42,9 @@ So although you wrote `width: 200px`, the element actually occupies **250px** ho
 
 With `border-box`, the specified width includes:
 
-* Content
-* Padding
-* Border
+- Content
+- Padding
+- Border
 
 ```css
 /* width includes content, padding, and border. */

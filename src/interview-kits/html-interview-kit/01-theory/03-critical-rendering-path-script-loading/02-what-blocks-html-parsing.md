@@ -31,7 +31,7 @@ JavaScript can modify the DOM:
 
 ```javascript id="4eh7w1"
 // JavaScript can change the document while it is being parsed.
-document.body.append("Hello");
+document.body.append('Hello');
 ```
 
 Therefore, the browser must account for possible DOM changes before continuing.

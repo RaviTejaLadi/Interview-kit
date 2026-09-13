@@ -4,10 +4,10 @@ A **favicon** is a small icon associated with a website.
 
 It can appear in places such as:
 
-* Browser tabs
-* Bookmarks
-* Browser history
-* Other browser UI
+- Browser tabs
+- Bookmarks
+- Browser history
+- Other browser UI
 
 You configure it using `<link>` inside `<head>`.
 
@@ -15,32 +15,21 @@ Example:
 
 ```html id="kq9w6j"
 <!-- Configure the website favicon -->
-<link
-  rel="icon"
-  href="/favicon.ico"
-/>
+<link rel="icon" href="/favicon.ico" />
 ```
 
 You can also use PNG:
 
 ```html id="x2j7v0"
 <!-- Use a PNG favicon -->
-<link
-  rel="icon"
-  type="image/png"
-  href="/favicon.png"
-/>
+<link rel="icon" type="image/png" href="/favicon.png" />
 ```
 
 For SVG:
 
 ```html id="r7f3k2"
 <!-- Use an SVG favicon -->
-<link
-  rel="icon"
-  type="image/svg+xml"
-  href="/favicon.svg"
-/>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 ```
 
 ### Apple touch icon
@@ -49,10 +38,7 @@ For Apple devices, you may also provide:
 
 ```html id="c7n0tq"
 <!-- Provide an icon for Apple home-screen bookmarks -->
-<link
-  rel="apple-touch-icon"
-  href="/apple-touch-icon.png"
-/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 ```
 
 ### Typical `<head>` example
@@ -62,48 +48,23 @@ For Apple devices, you may also provide:
 <head>
   <meta charset="UTF-8" />
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>React Tutorial</title>
 
-  <meta
-    name="description"
-    content="Learn React with practical examples."
-  />
+  <meta name="description" content="Learn React with practical examples." />
 
-  <link
-    rel="canonical"
-    href="https://example.com/react"
-  />
+  <link rel="canonical" href="https://example.com/react" />
 
-  <link
-    rel="icon"
-    type="image/png"
-    href="/favicon.png"
-  />
+  <link rel="icon" type="image/png" href="/favicon.png" />
 
-  <meta
-    property="og:title"
-    content="React Tutorial"
-  />
+  <meta property="og:title" content="React Tutorial" />
 
-  <meta
-    property="og:description"
-    content="Learn React with practical examples."
-  />
+  <meta property="og:description" content="Learn React with practical examples." />
 
-  <meta
-    property="og:image"
-    content="https://example.com/react-cover.jpg"
-  />
+  <meta property="og:image" content="https://example.com/react-cover.jpg" />
 
-  <meta
-    property="og:url"
-    content="https://example.com/react"
-  />
+  <meta property="og:url" content="https://example.com/react" />
 </head>
 ```
 

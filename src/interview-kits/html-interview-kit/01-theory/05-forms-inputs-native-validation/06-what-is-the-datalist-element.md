@@ -10,11 +10,7 @@ Example:
 <!-- Provide suggestions while still allowing the user to enter another value -->
 <label for="browser">Choose a browser</label>
 
-<input
-  id="browser"
-  name="browser"
-  list="browsers"
-/>
+<input id="browser" name="browser" list="browsers" />
 
 <datalist id="browsers">
   <option value="Chrome"></option>

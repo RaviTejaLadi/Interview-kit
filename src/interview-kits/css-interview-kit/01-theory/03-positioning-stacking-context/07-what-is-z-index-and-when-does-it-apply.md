@@ -29,10 +29,10 @@ That's incomplete today.
 
 `z-index` applies to:
 
-* Positioned elements (`relative`, `absolute`, `fixed`, `sticky`)
-* Flex items
-* Grid items
-* Certain elements that establish stacking contexts
+- Positioned elements (`relative`, `absolute`, `fixed`, `sticky`)
+- Flex items
+- Grid items
+- Certain elements that establish stacking contexts
 
 Example:
 

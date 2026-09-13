@@ -4,11 +4,11 @@ The **Intersection Observer API** allows JavaScript to detect when an element **
 
 It is commonly used for:
 
-* Lazy loading images
-* Infinite scrolling
-* Implementing animations when elements become visible
-* Tracking visibility
-* Detecting when a section enters the viewport
+- Lazy loading images
+- Infinite scrolling
+- Implementing animations when elements become visible
+- Tracking visibility
+- Detecting when a section enters the viewport
 
 Instead of continuously using `scroll` events, the browser efficiently notifies you when the intersection changes.
 
@@ -17,12 +17,12 @@ Instead of continuously using `scroll` events, the browser efficiently notifies 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      console.log("Element is visible");
+      console.log('Element is visible');
     }
   });
 });
 
-observer.observe(document.querySelector("#target"));
+observer.observe(document.querySelector('#target'));
 ```
 
 ### Important property

@@ -6,26 +6,22 @@ For example:
 
 ```html
 <!-- Accessibility anti-pattern: div does not provide button behavior -->
-<div onclick="submitForm()">
-  Submit
-</div>
+<div onclick="submitForm()">Submit</div>
 ```
 
 Problems include:
 
-* Not naturally keyboard accessible
-* Incorrect semantic role
-* No native button behavior
-* Focus behavior is missing
-* Screen readers may not identify it as a button
+- Not naturally keyboard accessible
+- Incorrect semantic role
+- No native button behavior
+- Focus behavior is missing
+- Screen readers may not identify it as a button
 
 The correct solution is usually:
 
 ```html
 <!-- Native button provides accessible interaction by default -->
-<button type="button" onclick="submitForm()">
-  Submit
-</button>
+<button type="button" onclick="submitForm()">Submit</button>
 ```
 
 A native `<button>` supports keyboard interaction such as **Enter/Space activation**, focus, and proper semantics.

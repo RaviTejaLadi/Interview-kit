@@ -6,10 +6,10 @@ They can improve loading performance by allowing the browser to prepare resource
 
 The important ones are:
 
-* `preload`
-* `prefetch`
-* `preconnect`
-* `dns-prefetch`
+- `preload`
+- `prefetch`
+- `preconnect`
+- `dns-prefetch`
 
 ---
 
@@ -23,21 +23,15 @@ Example:
 
 ```html id="y0q8kt"
 <!-- Preload a font that is needed early during page rendering -->
-<link
-  rel="preload"
-  href="/fonts/inter.woff2"
-  as="font"
-  type="font/woff2"
-  crossorigin
-/>
+<link rel="preload" href="/fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
 ```
 
 Good candidates include:
 
-* Critical fonts
-* Hero images
-* Important CSS
-* Critical scripts
+- Critical fonts
+- Hero images
+- Important CSS
+- Critical scripts
 
 ### Important
 
@@ -97,9 +91,9 @@ Example:
 
 It can prepare parts of the connection process, such as:
 
-* DNS resolution
-* TCP connection
-* TLS negotiation for HTTPS
+- DNS resolution
+- TCP connection
+- TLS negotiation for HTTPS
 
 This can reduce connection setup time when the resource is requested later.
 
@@ -151,4 +145,4 @@ dns-prefetch
 "At least resolve this domain early."
 ```
 
-**Interview tip:** The most important distinction to remember is **`async` vs `defer`**: `async` prioritizes *early independent execution*, while `defer` prioritizes *preserving script order and waiting for HTML parsing to finish*.
+**Interview tip:** The most important distinction to remember is **`async` vs `defer`**: `async` prioritizes _early independent execution_, while `defer` prioritizes _preserving script order and waiting for HTML parsing to finish_.

@@ -49,5 +49,5 @@ Ask yourself:
 
 **"Can this content stand independently?"**
 
-* **Yes → `<article>`**
-* **No, it's a thematic part of something larger → `<section>`**
+- **Yes → `<article>`**
+- **No, it's a thematic part of something larger → `<section>`**

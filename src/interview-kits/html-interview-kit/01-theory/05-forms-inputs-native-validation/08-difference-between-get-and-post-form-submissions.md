@@ -29,12 +29,12 @@ The request will conceptually look like:
 
 ### GET characteristics
 
-* Data appears in the URL.
-* Can be bookmarked.
-* Can be cached depending on the request/cache configuration.
-* Useful for retrieving/searching/filtering data.
-* Should not be used for sensitive data in the URL.
-* GET requests should be **safe and idempotent** in their intended semantics.
+- Data appears in the URL.
+- Can be bookmarked.
+- Can be cached depending on the request/cache configuration.
+- Useful for retrieving/searching/filtering data.
+- Should not be used for sensitive data in the URL.
+- GET requests should be **safe and idempotent** in their intended semantics.
 
 ---
 
@@ -63,11 +63,11 @@ username=ravi&email=ravi@example.com
 
 ### POST characteristics
 
-* Data is sent in the request body.
-* Data doesn't appear in the URL by default.
-* Commonly used for creating or changing server-side data.
-* Suitable for larger payloads than GET query parameters.
-* Can be used for sensitive data **only with HTTPS and proper server-side security**.
+- Data is sent in the request body.
+- Data doesn't appear in the URL by default.
+- Commonly used for creating or changing server-side data.
+- Suitable for larger payloads than GET query parameters.
+- Can be used for sensitive data **only with HTTPS and proper server-side security**.
 
 ### Important interview point ⭐
 
@@ -88,10 +88,10 @@ HTTPS + proper authentication + server-side validation
 | Feature                | GET                            | POST                                         |
 | ---------------------- | ------------------------------ | -------------------------------------------- |
 | Data location          | URL/query string               | Request body                                 |
-| Visible in URL         | ✅ Yes                          | ❌ Normally no                                |
-| Bookmarkable           | ✅ Yes                          | ❌ Generally no                               |
+| Visible in URL         | ✅ Yes                         | ❌ Normally no                               |
+| Bookmarkable           | ✅ Yes                         | ❌ Generally no                              |
 | Typical purpose        | Retrieve/search/filter         | Create/change/submit                         |
-| Suitable for passwords | ❌ No                           | ✅ With HTTPS                                 |
+| Suitable for passwords | ❌ No                          | ✅ With HTTPS                                |
 | Data size              | Limited by URL constraints     | Generally much larger                        |
 | Browser caching        | More naturally cacheable       | Not normally cached as a normal GET response |
 | Idempotency            | Intended to be safe/idempotent | Not necessarily idempotent                   |

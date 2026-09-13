@@ -45,4 +45,3 @@ The layout still remembers where the box originally was.
 ```
 
 Here, `.badge` is positioned relative to `.card`.
-

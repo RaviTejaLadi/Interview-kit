@@ -6,19 +6,19 @@ Data generally remains available while that page session is open and is cleared 
 
 ```javascript
 // Store temporary data for the current page session.
-sessionStorage.setItem("step", "2");
+sessionStorage.setItem('step', '2');
 
-const step = sessionStorage.getItem("step");
+const step = sessionStorage.getItem('step');
 
 console.log(step); // "2"
 ```
 
 ### Common use cases
 
-* Multi-step form progress
-* Temporary UI state
-* One-tab session data
-* Temporary user preferences
+- Multi-step form progress
+- Temporary UI state
+- One-tab session data
+- Temporary user preferences
 
 ### Important difference
 

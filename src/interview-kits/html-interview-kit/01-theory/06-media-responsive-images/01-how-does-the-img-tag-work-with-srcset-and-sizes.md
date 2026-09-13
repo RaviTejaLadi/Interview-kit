@@ -10,11 +10,7 @@
 <!-- Let the browser choose the most appropriate image for the rendered size -->
 <img
   src="image-800.jpg"
-  srcset="
-    image-400.jpg 400w,
-    image-800.jpg 800w,
-    image-1200.jpg 1200w
-  "
+  srcset="image-400.jpg 400w, image-800.jpg 800w, image-1200.jpg 1200w"
   sizes="
     (max-width: 600px) 100vw,
     50vw
@@ -27,15 +23,15 @@
 
 Suppose:
 
-* Mobile screen → image occupies `100vw`
-* Desktop screen → image occupies `50vw`
+- Mobile screen → image occupies `100vw`
+- Desktop screen → image occupies `50vw`
 
 The browser considers:
 
-* Viewport size
-* Device pixel ratio
-* `sizes`
-* Available `srcset` candidates
+- Viewport size
+- Device pixel ratio
+- `sizes`
+- Available `srcset` candidates
 
 and selects an appropriate image.
 
@@ -63,9 +59,5 @@ Think of `sizes` as:
 
 ```html
 <!-- Pixel-density candidates do not use the sizes attribute -->
-<img
-  src="logo.png"
-  srcset="logo.png 1x, logo@2x.png 2x"
-  alt="Company logo"
-/>
+<img src="logo.png" srcset="logo.png 1x, logo@2x.png 2x" alt="Company logo" />
 ```

@@ -34,8 +34,8 @@ The Libuv event loop is commonly explained using these phases:
 
 Executes callbacks scheduled by:
 
-* `setTimeout()`
-* `setInterval()`
+- `setTimeout()`
+- `setInterval()`
 
 **Important:** A timer does not mean "execute exactly at this time."
 
@@ -44,7 +44,7 @@ For example:
 ```javascript
 // Run the callback after at least approximately 0ms.
 setTimeout(() => {
-  console.log("Timer");
+  console.log('Timer');
 }, 0);
 ```
 
@@ -78,9 +78,9 @@ This is one of the **most important phases**.
 
 The poll phase:
 
-* Retrieves new I/O events.
-* Executes appropriate I/O callbacks.
-* May wait for new I/O events when there is nothing else to process.
+- Retrieves new I/O events.
+- Executes appropriate I/O callbacks.
+- May wait for new I/O events when there is nothing else to process.
 
 We'll discuss this in detail in the next section.
 
@@ -91,7 +91,7 @@ We'll discuss this in detail in the next section.
 Executes callbacks scheduled using:
 
 ```javascript
-setImmediate()
+setImmediate();
 ```
 
 For example:
@@ -99,7 +99,7 @@ For example:
 ```javascript
 // setImmediate callbacks execute during the check phase.
 setImmediate(() => {
-  console.log("Immediate");
+  console.log('Immediate');
 });
 ```
 
@@ -113,7 +113,7 @@ For example:
 
 ```javascript
 // The close callback runs when the socket is closed.
-socket.on("close", () => {
-  console.log("Socket closed");
+socket.on('close', () => {
+  console.log('Socket closed');
 });
 ```

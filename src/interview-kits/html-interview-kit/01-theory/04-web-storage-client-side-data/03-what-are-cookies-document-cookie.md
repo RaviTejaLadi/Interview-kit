@@ -6,7 +6,7 @@ JavaScript can access some cookies through:
 
 ```javascript
 // Create a simple cookie that expires after one day.
-document.cookie = "theme=dark; max-age=86400";
+document.cookie = 'theme=dark; max-age=86400';
 
 // Read cookies available to JavaScript.
 console.log(document.cookie);
@@ -14,11 +14,11 @@ console.log(document.cookie);
 
 Cookies can be used for:
 
-* Session identifiers
-* Authentication
-* Preferences
-* Tracking
-* Other small pieces of state
+- Session identifiers
+- Authentication
+- Preferences
+- Tracking
+- Other small pieces of state
 
 ### Important limitation
 

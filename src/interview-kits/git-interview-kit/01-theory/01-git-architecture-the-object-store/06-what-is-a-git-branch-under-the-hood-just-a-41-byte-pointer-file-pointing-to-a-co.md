@@ -60,9 +60,9 @@ But saying **“a branch is always a 41-byte file” is too strong**.
 
 Git can store references in different ways, including:
 
-* packed refs
-* symbolic refs
-* different reference storage implementations
+- packed refs
+- symbolic refs
+- different reference storage implementations
 
 So the better interview definition is:
 

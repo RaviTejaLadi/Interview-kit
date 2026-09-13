@@ -11,10 +11,10 @@ import { cn } from '@/lib/utils';
 type Theme = 'light' | 'dark';
 
 const markdownHierarchy = {
-  section: 'pl-2.5 md:pl-3',
-  subsection: 'pl-4 md:pl-5',
-  body: 'pl-5 md:pl-6',
-  nestedList: 'pl-8 md:pl-9',
+  section: 'pl-1.5 sm:pl-2.5 lg:pl-3',
+  subsection: 'pl-2.5 sm:pl-4 lg:pl-5',
+  body: 'pl-3 sm:pl-5 lg:pl-6',
+  nestedList: 'pl-6 sm:pl-8 lg:pl-9',
 };
 
 function CodeBlock({
@@ -42,7 +42,7 @@ function CodeBlock({
     <div
       className={cn(
         'my-3 overflow-hidden group rounded-md border shadow-sm relative',
-        'ml-5 md:ml-6',
+        'ml-0 sm:ml-4 lg:ml-6',
         isDarkTheme ? 'border-slate-700/60' : 'border-slate-200',
       )}
     >
@@ -99,7 +99,7 @@ function createMarkdownComponents(
     h1: ({ className, ...props }) => (
       <h1
         className={cn(
-          'mt-1 mb-3 scroll-m-20 border-b-2 border-primary/50 pb-2 text-xl font-bold tracking-tight first:mt-0 md:text-2xl',
+          'mt-1 mb-3 scroll-m-20 border-b-2 border-primary/50 pb-2 text-lg font-bold tracking-tight first:mt-0 sm:text-xl lg:text-2xl',
           'bg-linear-to-r from-primary to-fuchsia-500 bg-clip-text text-transparent',
           className,
         )}
@@ -276,13 +276,10 @@ function createMarkdownComponents(
     table: ({ className, ...props }) => (
       <div
         className={cn(
-          'my-3 overflow-x-auto rounded-md ml-5 md:ml-6 border border-border/70 bg-card/70 shadow-sm',
+          'my-3 overflow-x-auto rounded-md ml-0 sm:ml-4 lg:ml-6 border border-border/70 bg-card/70 shadow-sm',
         )}
       >
-        <table
-          className={cn('w-full min-w-0 border-collapse text-[13px]', className)}
-          {...props}
-        />
+        <table className={cn('w-full min-w-0 border-collapse text-[13px]', className)} {...props} />
       </div>
     ),
     thead: ({ className, ...props }) => (

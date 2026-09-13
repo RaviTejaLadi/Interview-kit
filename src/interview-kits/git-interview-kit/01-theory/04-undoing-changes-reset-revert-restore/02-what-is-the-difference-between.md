@@ -2,11 +2,11 @@
 
 The three modes differ in **what they change after moving `HEAD`**.
 
-| Mode      | HEAD      | Staging Area | Working Directory   |
-| --------- | --------- | ------------ | ------------------- |
-| `--soft`  | ✅ Changed | ❌ Unchanged  | ❌ Unchanged         |
-| `--mixed` | ✅ Changed | ✅ Reset      | ❌ Unchanged         |
-| `--hard`  | ✅ Changed | ✅ Reset      | ✅ Reset/overwritten |
+| Mode      | HEAD       | Staging Area | Working Directory    |
+| --------- | ---------- | ------------ | -------------------- |
+| `--soft`  | ✅ Changed | ❌ Unchanged | ❌ Unchanged         |
+| `--mixed` | ✅ Changed | ✅ Reset     | ❌ Unchanged         |
+| `--hard`  | ✅ Changed | ✅ Reset     | ✅ Reset/overwritten |
 
 A useful diagram:
 
@@ -51,10 +51,10 @@ But the changes introduced by `C` remain **staged**.
 
 This is useful when you want to:
 
-* undo a commit
-* modify its commit message
-* combine it with another commit
-* recommit the same changes differently
+- undo a commit
+- modify its commit message
+- combine it with another commit
+- recommit the same changes differently
 
 Example:
 

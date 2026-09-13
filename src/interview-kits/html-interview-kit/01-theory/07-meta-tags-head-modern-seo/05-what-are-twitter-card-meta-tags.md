@@ -8,25 +8,13 @@ Example:
 
 ```html id="xv3f1f"
 <!-- Configure the social preview for X/Twitter -->
-<meta
-  name="twitter:card"
-  content="summary_large_image"
-/>
+<meta name="twitter:card" content="summary_large_image" />
 
-<meta
-  name="twitter:title"
-  content="Learn React Hooks"
-/>
+<meta name="twitter:title" content="Learn React Hooks" />
 
-<meta
-  name="twitter:description"
-  content="A practical guide to React Hooks."
-/>
+<meta name="twitter:description" content="A practical guide to React Hooks." />
 
-<meta
-  name="twitter:image"
-  content="https://example.com/react-cover.jpg"
-/>
+<meta name="twitter:image" content="https://example.com/react-cover.jpg" />
 ```
 
 ### Common Twitter Card properties
@@ -43,10 +31,7 @@ A common card type is:
 
 ```html id="0m5z7x"
 <!-- Use a large image preview for the social card -->
-<meta
-  name="twitter:card"
-  content="summary_large_image"
-/>
+<meta name="twitter:card" content="summary_large_image" />
 ```
 
 ### Open Graph vs Twitter Cards

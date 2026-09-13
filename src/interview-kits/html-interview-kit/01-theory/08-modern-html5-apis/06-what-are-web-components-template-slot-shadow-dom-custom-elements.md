@@ -30,11 +30,11 @@ You define its behavior using JavaScript:
 // Define the behavior of a custom HTML element
 class UserCard extends HTMLElement {
   connectedCallback() {
-    this.innerHTML = "<h2>John Doe</h2><p>Frontend Developer</p>";
+    this.innerHTML = '<h2>John Doe</h2><p>Frontend Developer</p>';
   }
 }
 
-customElements.define("user-card", UserCard);
+customElements.define('user-card', UserCard);
 ```
 
 Now `<user-card>` behaves as a custom HTML element.
@@ -55,7 +55,7 @@ class UserCard extends HTMLElement {
   constructor() {
     super();
 
-    const shadow = this.attachShadow({ mode: "open" });
+    const shadow = this.attachShadow({ mode: 'open' });
 
     shadow.innerHTML = `
       <style>
@@ -69,17 +69,17 @@ class UserCard extends HTMLElement {
   }
 }
 
-customElements.define("user-card", UserCard);
+customElements.define('user-card', UserCard);
 ```
 
 ### `mode`
 
-* `open` → JavaScript can access `element.shadowRoot`.
-* `closed` → `element.shadowRoot` returns `null`.
+- `open` → JavaScript can access `element.shadowRoot`.
+- `closed` → `element.shadowRoot` returns `null`.
 
 ---
 
-##  `<template>`
+## `<template>`
 
 The **`<template>`** element contains HTML that is **not rendered immediately**.
 
@@ -99,7 +99,7 @@ JavaScript can clone it:
 
 ```javascript
 // Clone the template content and add it to the page
-const template = document.querySelector("#userTemplate");
+const template = document.querySelector('#userTemplate');
 
 const clone = template.content.cloneNode(true);
 
@@ -108,7 +108,7 @@ document.body.appendChild(clone);
 
 ---
 
-##  `<slot>`
+## `<slot>`
 
 A **`<slot>`** provides a placeholder inside a Web Component where **content supplied by the component's consumer** can be inserted.
 

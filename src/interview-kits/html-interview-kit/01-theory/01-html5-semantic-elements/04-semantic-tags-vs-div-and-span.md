@@ -35,9 +35,7 @@ Use it when you need a container for layout or grouping and no semantic element 
 
 ```html
 <!-- span groups inline content without adding meaning -->
-<p>
-  Price: <span class="price">$100</span>
-</p>
+<p>Price: <span class="price">$100</span></p>
 ```
 
 ### Quick comparison

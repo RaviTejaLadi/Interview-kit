@@ -15,9 +15,9 @@ Deferred classic scripts execute **in document order**.
 
 Good for scripts that:
 
-* Need the DOM.
-* Depend on other scripts in a known order.
-* Are part of the main application.
+- Need the DOM.
+- Depend on other scripts in a known order.
+- Are part of the main application.
 
 ---
 
@@ -34,9 +34,9 @@ Its execution order relative to other async scripts is **not guaranteed**.
 
 Good for:
 
-* Analytics
-* Independent third-party scripts
-* Scripts that don't depend on the DOM or other scripts.
+- Analytics
+- Independent third-party scripts
+- Scripts that don't depend on the DOM or other scripts.
 
 ---
 
@@ -48,11 +48,11 @@ Module scripts are **deferred by default**.
 
 They support:
 
-* `import`
-* `export`
-* Module scope
-* Strict mode
-* Dependency loading
+- `import`
+- `export`
+- Module scope
+- Strict mode
+- Dependency loading
 
 ```html
 <!-- Load an ES module; module scripts are deferred by default -->

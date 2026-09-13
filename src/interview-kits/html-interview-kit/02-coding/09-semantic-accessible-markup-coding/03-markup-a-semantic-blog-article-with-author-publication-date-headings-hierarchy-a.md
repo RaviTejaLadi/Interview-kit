@@ -4,12 +4,12 @@ A semantic blog article uses `<article>` because a blog post is generally **self
 
 Use:
 
-* `<article>` → complete blog post
-* `<header>` → article introduction
-* `<h1>` → article title
-* `<time datetime="">` → machine-readable publication date
-* `<address>` → author/contact information when appropriate
-* `<footer>` → tags and other article metadata
+- `<article>` → complete blog post
+- `<header>` → article introduction
+- `<h1>` → article title
+- `<time datetime="">` → machine-readable publication date
+- `<address>` → author/contact information when appropriate
+- `<footer>` → tags and other article metadata
 
 ```html
 <!-- Semantic blog article with author, publication date, headings, and tags -->

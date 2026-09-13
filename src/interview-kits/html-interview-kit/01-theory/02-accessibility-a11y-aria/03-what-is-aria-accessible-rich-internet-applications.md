@@ -10,9 +10,7 @@ Examples:
 
 ```html
 <!-- ARIA provides additional information to assistive technologies -->
-<button aria-expanded="false" aria-controls="menu">
-  Menu
-</button>
+<button aria-expanded="false" aria-controls="menu">Menu</button>
 
 <ul id="menu" hidden>
   <li>Home</li>
@@ -22,11 +20,11 @@ Examples:
 
 ARIA can communicate information such as:
 
-* Role
-* State
-* Relationship
-* Accessible name
-* Dynamic updates
+- Role
+- State
+- Relationship
+- Accessible name
+- Dynamic updates
 
 ### Important
 
@@ -41,9 +39,9 @@ For example:
 
 You would still need to implement:
 
-* Click behavior
-* Keyboard behavior
-* Focus management
-* Appropriate states
+- Click behavior
+- Keyboard behavior
+- Focus management
+- Appropriate states
 
 Whenever possible, use **native HTML elements first**.

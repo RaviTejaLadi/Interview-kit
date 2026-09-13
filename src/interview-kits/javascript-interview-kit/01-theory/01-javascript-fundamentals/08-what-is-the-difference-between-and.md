@@ -10,10 +10,10 @@
 
 ```javascript
 // Loose equality performs type coercion
-console.log(5 == "5");   // true
+console.log(5 == '5'); // true
 
 // Strict equality checks both type and value
-console.log(5 === "5");  // false
+console.log(5 === '5'); // false
 ```
 
 Here:
@@ -34,7 +34,7 @@ In most application code, prefer:
 ```javascript
 // Prefer strict equality for predictable comparisons
 if (userId === 10) {
-  console.log("User found");
+  console.log('User found');
 }
 ```
 

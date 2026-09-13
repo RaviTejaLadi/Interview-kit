@@ -8,13 +8,13 @@ It is built on the **Google V8 JavaScript engine** and uses **Libuv** to provide
 
 Node.js is commonly used for:
 
-* REST APIs
-* Backend services
-* Real-time applications
-* WebSockets
-* CLI tools
-* Microservices
-* Streaming applications
+- REST APIs
+- Backend services
+- Real-time applications
+- WebSockets
+- CLI tools
+- Microservices
+- Streaming applications
 
 ### How it works
 

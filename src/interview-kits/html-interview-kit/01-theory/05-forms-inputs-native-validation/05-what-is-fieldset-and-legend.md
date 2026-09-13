@@ -36,7 +36,7 @@ This is particularly useful for **accessibility** because assistive technologies
 
 Common use cases:
 
-* Radio button groups
-* Related checkbox groups
-* Address sections
-* Personal information sections
+- Radio button groups
+- Related checkbox groups
+- Address sections
+- Personal information sections

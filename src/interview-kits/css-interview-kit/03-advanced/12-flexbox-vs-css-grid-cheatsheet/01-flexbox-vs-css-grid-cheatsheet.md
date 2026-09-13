@@ -119,10 +119,10 @@ place-items
 | Columns                | Limited          | Strong control        |
 | Alignment              | Excellent        | Excellent             |
 | Complex page layouts   | Possible         | Excellent             |
-| Navigation bars        | ⭐⭐⭐⭐⭐            | ⭐⭐⭐                   |
-| Card grids             | ⭐⭐⭐              | ⭐⭐⭐⭐⭐                 |
-| Page layouts           | ⭐⭐⭐              | ⭐⭐⭐⭐⭐                 |
-| Component-level layout | ⭐⭐⭐⭐⭐            | ⭐⭐⭐⭐                  |
+| Navigation bars        | ⭐⭐⭐⭐⭐       | ⭐⭐⭐                |
+| Card grids             | ⭐⭐⭐           | ⭐⭐⭐⭐⭐            |
+| Page layouts           | ⭐⭐⭐           | ⭐⭐⭐⭐⭐            |
+| Component-level layout | ⭐⭐⭐⭐⭐       | ⭐⭐⭐⭐              |
 
 ---
 
@@ -204,6 +204,7 @@ Flexbox
  ↓
 Component/internal alignment
 ```
+
 ### 🎯 Interview answer
 
 If asked **"When would you use Flexbox vs Grid?"**, a strong concise answer is:

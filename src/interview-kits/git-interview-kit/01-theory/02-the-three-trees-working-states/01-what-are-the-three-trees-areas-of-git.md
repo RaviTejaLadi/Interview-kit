@@ -20,10 +20,10 @@ The **Working Directory** is the actual project files you currently have checked
 
 It can contain:
 
-* modified files
-* new/untracked files
-* deleted files
-* files that haven't been changed
+- modified files
+- new/untracked files
+- deleted files
+- files that haven't been changed
 
 Example:
 

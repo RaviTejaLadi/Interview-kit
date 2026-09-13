@@ -9,12 +9,12 @@ Code executes sequentially and waits for the previous operation to finish.
 
 ```javascript
 // Synchronous execution
-console.log("Start");
+console.log('Start');
 
 const result = 10 + 20;
 
 console.log(result);
-console.log("End");
+console.log('End');
 ```
 
 Output:
@@ -31,13 +31,13 @@ An asynchronous operation can complete later without blocking the JavaScript thr
 
 ```javascript
 // setTimeout schedules the callback to run later
-console.log("Start");
+console.log('Start');
 
 setTimeout(() => {
-  console.log("Timeout completed");
+  console.log('Timeout completed');
 }, 1000);
 
-console.log("End");
+console.log('End');
 ```
 
 Output:

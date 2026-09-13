@@ -9,9 +9,9 @@ It makes complex layouts easier to understand because the CSS visually represent
 .page {
   display: grid;
   grid-template-areas:
-    "header header"
-    "sidebar main"
-    "footer footer";
+    'header header'
+    'sidebar main'
+    'footer footer';
 
   grid-template-columns: 200px 1fr;
 }

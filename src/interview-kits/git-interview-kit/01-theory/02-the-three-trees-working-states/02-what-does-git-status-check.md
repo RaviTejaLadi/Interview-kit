@@ -9,13 +9,13 @@ git status
 
 It can tell you about:
 
-* untracked files
-* modified files
-* deleted files
-* staged changes
-* unstaged changes
-* current branch
-* commits ahead/behind a remote in some configurations
+- untracked files
+- modified files
+- deleted files
+- staged changes
+- unstaged changes
+- current branch
+- commits ahead/behind a remote in some configurations
 
 For example:
 

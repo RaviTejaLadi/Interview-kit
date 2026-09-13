@@ -12,27 +12,23 @@ For example, don't do this:
 
 ```html
 <!-- Avoid recreating a button with a div -->
-<div role="button" tabindex="0">
-  Submit
-</div>
+<div role="button" tabindex="0">Submit</div>
 ```
 
 Use the native element:
 
 ```html
 <!-- Native button provides semantics, keyboard support, and behavior -->
-<button type="button">
-  Submit
-</button>
+<button type="button">Submit</button>
 ```
 
 The native `<button>` already provides:
 
-* Button semantics
-* Keyboard interaction
-* Focus behavior
-* Expected browser behavior
-* Better assistive-technology support
+- Button semantics
+- Keyboard interaction
+- Focus behavior
+- Expected browser behavior
+- Better assistive-technology support
 
 ### Good rule to remember ⭐
 

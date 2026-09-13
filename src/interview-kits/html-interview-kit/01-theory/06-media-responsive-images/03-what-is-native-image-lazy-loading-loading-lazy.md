@@ -6,11 +6,7 @@ Use:
 
 ```html
 <!-- Delay loading until the image is near the viewport -->
-<img
-  src="large-image.jpg"
-  loading="lazy"
-  alt="Mountain landscape"
-/>
+<img src="large-image.jpg" loading="lazy" alt="Mountain landscape" />
 ```
 
 Instead of downloading every image immediately:
@@ -28,11 +24,11 @@ More images → Load
 
 ### Benefits
 
-* Reduces initial network requests
-* Saves bandwidth
-* Improves initial page loading
-* Useful for long pages
-* Can improve performance on mobile devices
+- Reduces initial network requests
+- Saves bandwidth
+- Improves initial page loading
+- Useful for long pages
+- Can improve performance on mobile devices
 
 ### Important
 
@@ -42,10 +38,5 @@ Images that are immediately visible, especially important **hero/LCP images**, g
 
 ```html
 <!-- Above-the-fold hero image should generally load eagerly -->
-<img
-  src="hero.jpg"
-  alt="Product"
-  width="1200"
-  height="600"
-/>
+<img src="hero.jpg" alt="Product" width="1200" height="600" />
 ```

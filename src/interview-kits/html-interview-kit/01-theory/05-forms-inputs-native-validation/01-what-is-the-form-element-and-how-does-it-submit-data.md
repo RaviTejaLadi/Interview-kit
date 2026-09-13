@@ -4,10 +4,10 @@ The **`<form>` element** is used to collect user input and submit that data.
 
 Important attributes include:
 
-* `action` — URL where the form data is sent.
-* `method` — HTTP method, usually `GET` or `POST`.
-* `name` — identifies the form.
-* `enctype` — controls how form data is encoded, especially important for file uploads.
+- `action` — URL where the form data is sent.
+- `method` — HTTP method, usually `GET` or `POST`.
+- `name` — identifies the form.
+- `enctype` — controls how form data is encoded, especially important for file uploads.
 
 Example:
 
@@ -41,9 +41,3 @@ When the submit button is clicked, the browser:
 2. Collects successful form controls.
 3. Encodes the data.
 4. Sends an HTTP request to the `action` URL.
-
-
-
-
-
-

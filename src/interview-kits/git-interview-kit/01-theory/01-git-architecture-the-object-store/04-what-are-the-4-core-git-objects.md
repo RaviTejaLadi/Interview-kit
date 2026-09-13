@@ -104,11 +104,11 @@ It can point to another Git object, commonly a commit.
 
 It can contain:
 
-* tag name
-* tagger
-* message
-* referenced object
-* optional cryptographic signature
+- tag name
+- tagger
+- message
+- referenced object
+- optional cryptographic signature
 
 For example:
 

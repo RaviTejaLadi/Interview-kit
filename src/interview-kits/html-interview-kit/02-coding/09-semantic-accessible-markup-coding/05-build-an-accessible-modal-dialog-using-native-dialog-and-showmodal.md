@@ -4,25 +4,21 @@ The native **`<dialog>`** element provides built-in browser support for dialogs.
 
 A modal dialog should have:
 
-* A meaningful heading
-* An accessible name
-* A close button
-* `method="dialog"` or JavaScript for closing
-* Keyboard support provided by the native dialog
-* A backdrop when opened modally
+- A meaningful heading
+- An accessible name
+- A close button
+- `method="dialog"` or JavaScript for closing
+- Keyboard support provided by the native dialog
+- A backdrop when opened modally
 
 ```html
 <!-- Accessible native modal dialog opened with showModal() -->
-<button type="button" id="open-dialog">
-  Delete account
-</button>
+<button type="button" id="open-dialog">Delete account</button>
 
 <dialog id="delete-dialog" aria-labelledby="dialog-title">
   <h2 id="dialog-title">Delete account?</h2>
 
-  <p>
-    This action cannot be undone. Are you sure you want to delete your account?
-  </p>
+  <p>This action cannot be undone. Are you sure you want to delete your account?</p>
 
   <form method="dialog">
     <button type="submit">Cancel</button>
@@ -31,10 +27,10 @@ A modal dialog should have:
 </dialog>
 
 <script>
-  const dialog = document.querySelector("#delete-dialog");
-  const openButton = document.querySelector("#open-dialog");
+  const dialog = document.querySelector('#delete-dialog');
+  const openButton = document.querySelector('#open-dialog');
 
-  openButton.addEventListener("click", () => {
+  openButton.addEventListener('click', () => {
     dialog.showModal();
   });
 </script>
@@ -53,11 +49,11 @@ dialog::backdrop {
 
 A native `<dialog>` provides important modal behavior that would otherwise require significant JavaScript, including:
 
-* Modal/top-layer behavior
-* Focus handling
-* Keyboard interaction such as Escape
-* Built-in closing mechanisms
-* Backdrop support
+- Modal/top-layer behavior
+- Focus handling
+- Keyboard interaction such as Escape
+- Built-in closing mechanisms
+- Backdrop support
 
 ---
 

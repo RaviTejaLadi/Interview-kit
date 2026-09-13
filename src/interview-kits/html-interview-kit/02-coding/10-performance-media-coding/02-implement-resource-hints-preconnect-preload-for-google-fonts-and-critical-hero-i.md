@@ -21,11 +21,7 @@ It is commonly useful for **critical fonts, hero images, or other resources need
 ```html
 <!-- Establish the connection early and preload a critical font stylesheet -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link
-  rel="preconnect"
-  href="https://fonts.gstatic.com"
-  crossorigin
-/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
 <link
   href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
@@ -37,25 +33,14 @@ For a self-hosted critical font, `preload` can be more directly useful:
 
 ```html
 <!-- Preload a critical self-hosted font needed for initial rendering -->
-<link
-  rel="preload"
-  href="/fonts/inter-regular.woff2"
-  as="font"
-  type="font/woff2"
-  crossorigin
-/>
+<link rel="preload" href="/fonts/inter-regular.woff2" as="font" type="font/woff2" crossorigin />
 ```
 
 ### Critical hero image
 
 ```html
 <!-- Preload the critical hero image so it can be fetched earlier -->
-<link
-  rel="preload"
-  as="image"
-  href="/images/hero.webp"
-  type="image/webp"
-/>
+<link rel="preload" as="image" href="/images/hero.webp" type="image/webp" />
 ```
 
 ### Easy distinction

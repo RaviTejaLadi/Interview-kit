@@ -15,10 +15,10 @@ Represents introductory content for a page or section.
 
 It can contain:
 
-* Logo
-* Heading
-* Introductory content
-* Navigation
+- Logo
+- Heading
+- Introductory content
+- Navigation
 
 ---
 
@@ -61,10 +61,10 @@ Represents **self-contained, independently distributable content**.
 
 Examples:
 
-* Blog post
-* News article
-* Product review
-* Forum post
+- Blog post
+- News article
+- Product review
+- Forum post
 
 ```html
 <!-- Independent blog article -->
@@ -98,10 +98,10 @@ Represents content that is **indirectly related** to the main content.
 
 Examples:
 
-* Sidebar
-* Related articles
-* Advertisements
-* Author information
+- Sidebar
+- Related articles
+- Advertisements
+- Author information
 
 ```html
 <!-- Related content displayed beside the main article -->
@@ -126,10 +126,10 @@ Represents footer information for a page or section.
 
 It may contain:
 
-* Copyright information
-* Contact information
-* Related links
-* Author information
+- Copyright information
+- Contact information
+- Related links
+- Author information
 
 ### Typical page structure
 

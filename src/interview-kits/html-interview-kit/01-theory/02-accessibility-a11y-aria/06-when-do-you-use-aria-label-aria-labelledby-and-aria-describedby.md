@@ -10,9 +10,7 @@ Example:
 
 ```html
 <!-- aria-label gives this icon-only button an accessible name -->
-<button aria-label="Close">
-  ×
-</button>
+<button aria-label="Close">×</button>
 ```
 
 A screen reader can identify it as:
@@ -54,15 +52,9 @@ Use `aria-describedby` when you want to provide **additional descriptive informa
 <!-- aria-describedby connects the input to its additional help text -->
 <label for="password">Password</label>
 
-<input
-  id="password"
-  type="password"
-  aria-describedby="password-help"
-/>
+<input id="password" type="password" aria-describedby="password-help" />
 
-<p id="password-help">
-  Password must contain at least 8 characters.
-</p>
+<p id="password-help">Password must contain at least 8 characters.</p>
 ```
 
 A screen reader can associate the help text with the input.

@@ -32,7 +32,7 @@ set UV_THREADPOOL_SIZE=8 && node server.js
 
 ```javascript
 // Configure the Libuv thread pool before performing relevant operations.
-process.env.UV_THREADPOOL_SIZE = "8";
+process.env.UV_THREADPOOL_SIZE = '8';
 ```
 
 However, **setting it before Node.js starts is generally the safer approach** because some operations may initialize the thread pool before your application code changes the environment variable.
@@ -43,10 +43,10 @@ However, **setting it before Node.js starts is generally the safer approach** be
 
 More threads can introduce:
 
-* CPU contention
-* Context switching
-* Memory overhead
-* Reduced performance if the machine has limited CPU resources
+- CPU contention
+- Context switching
+- Memory overhead
+- Reduced performance if the machine has limited CPU resources
 
 So don't blindly set:
 

@@ -1,4 +1,4 @@
-import * as React from "react"
+import * as React from 'react';
 import {
   ArrowLeftIcon,
   BookIcon,
@@ -9,22 +9,18 @@ import {
   ListTreeIcon,
   SparklesIcon,
   SearchIcon,
-} from "lucide-react"
+} from 'lucide-react';
 
-import type { Topic, TopicGroup } from "@/lib/content-index"
-import { KIT_ICON_BY_KEY } from "@/lib/kit-meta"
+import type { Topic, TopicGroup } from '@/lib/content-index';
+import { KIT_ICON_BY_KEY } from '@/lib/kit-meta';
 import {
   buildKitMenus,
   getFolderNavId,
   getTopicNavId,
   type KitMenu,
   type KitSection,
-} from "@/lib/kit-menu"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+} from '@/lib/kit-menu';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   Sidebar,
   SidebarContent,
@@ -36,129 +32,133 @@ import {
   SidebarMenuButton,
   SidebarRail,
   useSidebar,
-} from "@/components/ui/sidebar"
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+} from '@/components/ui/sidebar';
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
-  groups: TopicGroup[]
-  searchValue: string
-  selectedNavId: string | null
-  onSearchChange: (value: string) => void
-  onSelectNav: (navId: string) => void
-  onBackToKits: () => void
-}
+  groups: TopicGroup[];
+  searchValue: string;
+  selectedNavId: string | null;
+  onSearchChange: (value: string) => void;
+  onSelectNav: (navId: string) => void;
+  onBackToKits: () => void;
+};
 
 type SidebarGlyph = {
-  Icon: React.ComponentType<{ className?: string }>
-  className: string
-}
+  Icon: React.ComponentType<{ className?: string }>;
+  className: string;
+};
 
 function getRootTopicIcon(title: string): SidebarGlyph | null {
-  const normalizedTitle = title.trim().toLowerCase()
+  const normalizedTitle = title.trim().toLowerCase();
 
-  if (normalizedTitle === "overview") {
+  if (normalizedTitle === 'overview') {
     return {
       Icon: BookIcon,
-      className: "text-sky-500 dark:text-sky-400",
-    }
+      className: 'text-sky-500 dark:text-sky-400',
+    };
   }
 
-  if (normalizedTitle === "topics") {
+  if (normalizedTitle === 'topics') {
     return {
       Icon: ListTreeIcon,
-      className: "text-violet-500 dark:text-violet-400",
-    }
+      className: 'text-violet-500 dark:text-violet-400',
+    };
   }
 
-  return null
+  return null;
 }
 
 function getSectionIcon(section: KitSection): SidebarGlyph {
-  const normalizedKey = `${section.id} ${section.label}`.toLowerCase()
+  const normalizedKey = `${section.id} ${section.label}`.toLowerCase();
 
-  if (normalizedKey.includes("theory")) {
+  if (normalizedKey.includes('theory')) {
     return {
       Icon: BookOpenTextIcon,
-      className: "text-emerald-500 dark:text-emerald-400",
-    }
+      className: 'text-emerald-500 dark:text-emerald-400',
+    };
   }
 
-  if (normalizedKey.includes("coding") || normalizedKey.includes("code") || normalizedKey.includes("practical")) {
+  if (
+    normalizedKey.includes('coding') ||
+    normalizedKey.includes('code') ||
+    normalizedKey.includes('practical')
+  ) {
     return {
       Icon: Code2Icon,
-      className: "text-amber-500 dark:text-amber-400",
-    }
+      className: 'text-amber-500 dark:text-amber-400',
+    };
   }
 
-  if (normalizedKey.includes("advanced")) {
+  if (normalizedKey.includes('advanced')) {
     return {
       Icon: SparklesIcon,
-      className: "text-fuchsia-500 dark:text-fuchsia-400",
-    }
+      className: 'text-fuchsia-500 dark:text-fuchsia-400',
+    };
   }
 
-  if (normalizedKey.includes("behavioral")) {
+  if (normalizedKey.includes('behavioral')) {
     return {
       Icon: FolderIcon,
-      className: "text-orange-500 dark:text-orange-400",
-    }
+      className: 'text-orange-500 dark:text-orange-400',
+    };
   }
 
-  if (normalizedKey.includes("logistics")) {
+  if (normalizedKey.includes('logistics')) {
     return {
       Icon: FolderIcon,
-      className: "text-cyan-500 dark:text-cyan-400",
-    }
+      className: 'text-cyan-500 dark:text-cyan-400',
+    };
   }
 
-  if (normalizedKey.includes("frameworks")) {
+  if (normalizedKey.includes('frameworks')) {
     return {
       Icon: FolderIcon,
-      className: "text-indigo-500 dark:text-indigo-400",
-    }
+      className: 'text-indigo-500 dark:text-indigo-400',
+    };
   }
 
   return {
     Icon: FolderIcon,
-    className: "text-slate-500 dark:text-slate-400",
-  }
+    className: 'text-slate-500 dark:text-slate-400',
+  };
 }
 
 function getStarRatingAppearance(rating: number) {
   if (rating >= 5) {
     return {
-      label: "Must know",
-      className: "bg-emerald-500",
-    }
+      label: 'Must know',
+      className: 'bg-emerald-500',
+    };
   }
 
   if (rating === 4) {
     return {
-      label: "Important",
-      className: "bg-amber-400",
-    }
+      label: 'Important',
+      className: 'bg-amber-400',
+    };
   }
 
   return {
-    label: "Good to know",
-    className: "bg-rose-500",
-  }
+    label: 'Good to know',
+    className: 'bg-rose-500',
+  };
 }
 
 function StarRatingDot({ rating }: { rating: number }) {
-  const appearance = getStarRatingAppearance(rating)
+  const appearance = getStarRatingAppearance(rating);
 
   return (
     <span
       className={cn(
-        "mt-0.5 size-2 shrink-0 rounded-full shadow-[0_0_0_1px_rgb(15_23_42/12%)] dark:shadow-[0_0_0_1px_rgb(255_255_255/18%)]",
+        'mt-0.5 size-2 shrink-0 rounded-full shadow-[0_0_0_1px_rgb(15_23_42/12%)] dark:shadow-[0_0_0_1px_rgb(255_255_255/18%)]',
         appearance.className,
       )}
-      title={`${appearance.label} (${rating} star${rating === 1 ? "" : "s"})`}
+      title={`${appearance.label} (${rating} star${rating === 1 ? '' : 's'})`}
       aria-label={`${appearance.label}, ${rating} star rating`}
     />
-  )
+  );
 }
 
 function TopicNavButton({
@@ -166,11 +166,11 @@ function TopicNavButton({
   isActive,
   onSelect,
 }: {
-  topic: Topic
-  isActive: boolean
-  onSelect: (navId: string) => void
+  topic: Topic;
+  isActive: boolean;
+  onSelect: (navId: string) => void;
 }) {
-  const RootTopicIcon = getRootTopicIcon(topic.title)
+  const RootTopicIcon = getRootTopicIcon(topic.title);
 
   return (
     <SidebarMenuButton
@@ -182,11 +182,11 @@ function TopicNavButton({
       {topic.starRating && !topic.topicTitle ? (
         <StarRatingDot rating={topic.starRating} />
       ) : RootTopicIcon ? (
-        <RootTopicIcon.Icon className={cn("mt-0.5 shrink-0", RootTopicIcon.className)} />
+        <RootTopicIcon.Icon className={cn('mt-0.5 shrink-0', RootTopicIcon.className)} />
       ) : null}
       <span className="line-clamp-2 leading-tight">{topic.title}</span>
     </SidebarMenuButton>
-  )
+  );
 }
 
 function KitTopicTree({
@@ -195,12 +195,12 @@ function KitTopicTree({
   hasSearchQuery,
   onSelectNav,
 }: {
-  kit: KitMenu
-  selectedNavId: string | null
-  hasSearchQuery: boolean
-  onSelectNav: (navId: string) => void
+  kit: KitMenu;
+  selectedNavId: string | null;
+  hasSearchQuery: boolean;
+  onSelectNav: (navId: string) => void;
 }) {
-  const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({})
+  const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({});
 
   React.useEffect(() => {
     for (const section of kit.sections) {
@@ -209,15 +209,15 @@ function KitTopicTree({
         (section.topics.some((topic) => getTopicNavId(topic.id) === selectedNavId) ||
           section.folders.some(
             (folder) => getFolderNavId(kit.id, section.id, folder.id) === selectedNavId,
-          ))
+          ));
 
       if (sectionHasSelectedTopic) {
         setOpenSections((current) =>
           current[section.id] ? current : { ...current, [section.id]: true },
-        )
+        );
       }
     }
-  }, [kit.id, kit.sections, selectedNavId])
+  }, [kit.id, kit.sections, selectedNavId]);
 
   return (
     <div className="space-y-2">
@@ -240,12 +240,12 @@ function KitTopicTree({
           (section.topics.some((topic) => getTopicNavId(topic.id) === selectedNavId) ||
             section.folders.some(
               (folder) => getFolderNavId(kit.id, section.id, folder.id) === selectedNavId,
-            ))
-        const SectionIcon = getSectionIcon(section)
+            ));
+        const SectionIcon = getSectionIcon(section);
         const isSectionOpen =
           hasSearchQuery ||
           openSections[section.id] ||
-          (openSections[section.id] === undefined && sectionHasSelectedTopic)
+          (openSections[section.id] === undefined && sectionHasSelectedTopic);
 
         return (
           <Collapsible
@@ -255,7 +255,7 @@ function KitTopicTree({
               setOpenSections((current) => ({
                 ...current,
                 [section.id]: open,
-              }))
+              }));
             }}
             className="group/section-collapsible space-y-1"
           >
@@ -269,7 +269,7 @@ function KitTopicTree({
                 />
               }
             >
-              <SectionIcon.Icon className={cn("size-3.5 shrink-0", SectionIcon.className)} />
+              <SectionIcon.Icon className={cn('size-3.5 shrink-0', SectionIcon.className)} />
               <span>{section.label}</span>
               <ChevronRightIcon className="ml-auto size-3.5 transition-transform duration-200 group-data-open/section-collapsible:rotate-90" />
             </CollapsibleTrigger>
@@ -284,8 +284,8 @@ function KitTopicTree({
                   />
                 ))}
                 {section.folders.map((folder) => {
-                  const folderNavId = getFolderNavId(kit.id, section.id, folder.id)
-                  const isActive = selectedNavId === folderNavId
+                  const folderNavId = getFolderNavId(kit.id, section.id, folder.id);
+                  const isActive = selectedNavId === folderNavId;
 
                   return (
                     <SidebarMenuButton
@@ -306,15 +306,15 @@ function KitTopicTree({
                         {folder.questions.length}
                       </span>
                     </SidebarMenuButton>
-                  )
+                  );
                 })}
               </div>
             </CollapsibleContent>
           </Collapsible>
-        )
+        );
       })}
     </div>
-  )
+  );
 }
 
 export function AppSidebar({
@@ -327,35 +327,35 @@ export function AppSidebar({
   className,
   ...props
 }: AppSidebarProps) {
-  const { isMobile, setOpenMobile } = useSidebar()
-  const totalTopics = groups.reduce((count, group) => count + group.topics.length, 0)
-  const kitMenus = React.useMemo(() => buildKitMenus(groups), [groups])
-  const activeKit = kitMenus[0] ?? null
-  const kitIcon = activeKit ? KIT_ICON_BY_KEY[activeKit.id] : null
-  const hasSearchQuery = searchValue.trim().length > 0
+  const { isMobile, setOpenMobile } = useSidebar();
+  const totalTopics = groups.reduce((count, group) => count + group.topics.length, 0);
+  const kitMenus = React.useMemo(() => buildKitMenus(groups), [groups]);
+  const activeKit = kitMenus[0] ?? null;
+  const kitIcon = activeKit ? KIT_ICON_BY_KEY[activeKit.id] : null;
+  const hasSearchQuery = searchValue.trim().length > 0;
 
   const handleSelectNav = React.useCallback(
     (navId: string) => {
-      onSelectNav(navId)
+      onSelectNav(navId);
       if (isMobile) {
-        setOpenMobile(false)
+        setOpenMobile(false);
       }
     },
     [isMobile, onSelectNav, setOpenMobile],
-  )
+  );
 
   const handleBackToKits = React.useCallback(() => {
-    onBackToKits()
+    onBackToKits();
     if (isMobile) {
-      setOpenMobile(false)
+      setOpenMobile(false);
     }
-  }, [isMobile, onBackToKits, setOpenMobile])
+  }, [isMobile, onBackToKits, setOpenMobile]);
 
   return (
     <Sidebar
       collapsible="icon"
       className={cn(
-        "border-r border-sidebar-border/70 bg-sidebar/94 backdrop-blur supports-backdrop-filter:bg-sidebar/84 dark:border-sidebar-border/35",
+        'border-r border-sidebar-border/70 bg-sidebar/94 backdrop-blur supports-backdrop-filter:bg-sidebar/84 dark:border-sidebar-border/35',
         className,
       )}
       {...props}
@@ -383,7 +383,7 @@ export function AppSidebar({
             <BookOpenTextIcon className="size-4 shrink-0 text-sidebar-primary" />
           )}
           <div className="grid min-w-0 flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="truncate font-semibold">{activeKit?.label ?? "Interview Kit"}</span>
+            <span className="truncate font-semibold">{activeKit?.label ?? 'Interview Kit'}</span>
             <span className="truncate text-xs text-sidebar-foreground/82">Topics in this kit</span>
           </div>
         </div>
@@ -422,7 +422,9 @@ export function AppSidebar({
         )}
       </SidebarContent>
       <SidebarFooter className="border-t border-sidebar-border/70 bg-sidebar/92 px-4 py-3 group-data-[collapsible=icon]:hidden dark:border-sidebar-border/35">
-        <p className="text-xs font-medium text-sidebar-foreground/80">{totalTopics} questions loaded</p>
+        <p className="text-xs font-medium text-sidebar-foreground/80">
+          {totalTopics} questions loaded
+        </p>
         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-sidebar-foreground/72">
           <span className="inline-flex items-center gap-1.5">
             <span className="size-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
@@ -440,5 +442,5 @@ export function AppSidebar({
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

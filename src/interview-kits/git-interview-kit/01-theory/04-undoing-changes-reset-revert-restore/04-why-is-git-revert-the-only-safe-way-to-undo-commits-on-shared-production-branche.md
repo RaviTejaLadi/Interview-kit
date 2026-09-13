@@ -44,10 +44,10 @@ Everyone keeps the same history, and `R` contains the inverse of `D`.
 
 `git revert`:
 
-* doesn't remove existing commits
-* doesn't rewrite shared history
-* doesn't require a force push in the normal case
-* provides an explicit record of the rollback
+- doesn't remove existing commits
+- doesn't rewrite shared history
+- doesn't require a force push in the normal case
+- provides an explicit record of the rollback
 
 This is why it is the standard approach for undoing already-published commits on **shared or production branches**.
 

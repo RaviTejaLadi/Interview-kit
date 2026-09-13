@@ -1,61 +1,61 @@
-import { useMemo, useState } from "react"
-import { ArrowRightIcon, BookOpenTextIcon, SearchIcon } from "lucide-react"
+import { useMemo, useState } from 'react';
+import { ArrowRightIcon, BookOpenTextIcon, SearchIcon } from 'lucide-react';
 
-import type { TopicGroup } from "@/lib/content-index"
+import type { TopicGroup } from '@/lib/content-index';
 import {
   KIT_CARD_ACCENT,
   KIT_DESCRIPTIONS,
   KIT_ICON_BY_KEY,
   sortKitsByDisplayOrder,
-} from "@/lib/kit-meta"
-import { cn } from "@/lib/utils"
-import { Input } from "@/components/ui/input"
+} from '@/lib/kit-meta';
+import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
 
 type KitGalleryProps = {
-  groups: TopicGroup[]
-  onSelectKit: (kitId: string) => void
-}
+  groups: TopicGroup[];
+  onSelectKit: (kitId: string) => void;
+};
 
 function getKitSections(group: TopicGroup) {
   return Array.from(new Set(group.topics.map((topic) => topic.section))).filter(
-    (section) => section !== "General",
-  )
+    (section) => section !== 'General',
+  );
 }
 
 export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
-  const [searchValue, setSearchValue] = useState("")
-  const query = searchValue.trim().toLowerCase()
+  const [searchValue, setSearchValue] = useState('');
+  const query = searchValue.trim().toLowerCase();
 
-  const orderedGroups = useMemo(() => sortKitsByDisplayOrder(groups), [groups])
-  const totalTopics = groups.reduce((count, group) => count + group.topics.length, 0)
+  const orderedGroups = useMemo(() => sortKitsByDisplayOrder(groups), [groups]);
+  const totalTopics = groups.reduce((count, group) => count + group.topics.length, 0);
 
   const visibleKits = useMemo(() => {
     if (!query) {
       return orderedGroups.map((group) => ({
         group,
         matchCount: 0,
-      }))
+      }));
     }
 
     return orderedGroups
       .map((group) => {
-        const description = KIT_DESCRIPTIONS[group.id] ?? ""
+        const description = KIT_DESCRIPTIONS[group.id] ?? '';
         const kitMatches =
-          group.label.toLowerCase().includes(query) || description.toLowerCase().includes(query)
+          group.label.toLowerCase().includes(query) || description.toLowerCase().includes(query);
         const matchCount = group.topics.filter((topic) => {
           const haystack =
-            `${topic.title} ${topic.topicTitle ?? ""} ${topic.section} ${topic.kitLabel}`.toLowerCase()
-          return haystack.includes(query)
-        }).length
+            `${topic.title} ${topic.topicTitle ?? ''} ${topic.section} ${topic.kitLabel}`.toLowerCase();
+          return haystack.includes(query);
+        }).length;
 
         if (!kitMatches && matchCount === 0) {
-          return null
+          return null;
         }
 
-        return { group, matchCount }
+        return { group, matchCount };
       })
-      .filter((item): item is { group: TopicGroup; matchCount: number } => item !== null)
-  }, [orderedGroups, query])
+      .filter((item): item is { group: TopicGroup; matchCount: number } => item !== null);
+  }, [orderedGroups, query]);
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-4 px-4 py-5 sm:space-y-5 sm:px-6 sm:py-6 lg:px-8">
@@ -68,8 +68,8 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
             Choose a kit to get started
           </h1>
           <p className="max-w-2xl text-sm text-muted-foreground">
-            Pick a topic card, then browse questions for that kit only.{" "}
-            {groups.length} kits · {totalTopics} questions.
+            Pick a topic card, then browse questions for that kit only. {groups.length} kits ·{' '}
+            {totalTopics} questions.
           </p>
         </div>
         <div className="relative max-w-md">
@@ -91,10 +91,11 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
       ) : (
         <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {visibleKits.map(({ group, matchCount }) => {
-            const icon = KIT_ICON_BY_KEY[group.id]
-            const accent = KIT_CARD_ACCENT[group.id]
-            const sections = getKitSections(group)
-            const description = KIT_DESCRIPTIONS[group.id] ?? "Interview questions and practice topics."
+            const icon = KIT_ICON_BY_KEY[group.id];
+            const accent = KIT_CARD_ACCENT[group.id];
+            const sections = getKitSections(group);
+            const description =
+              KIT_DESCRIPTIONS[group.id] ?? 'Interview questions and practice topics.';
 
             return (
               <button
@@ -102,26 +103,21 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
                 type="button"
                 onClick={() => onSelectKit(group.id)}
                 className={cn(
-                  "group flex cursor-pointer items-start gap-2.5 rounded-lg border border-border/70 bg-card/96 p-2.5 text-left shadow-[0_1px_2px_rgb(15_23_42/5%)] transition-all",
-                  "hover:-translate-y-px hover:shadow-[0_6px_16px_rgb(15_23_42/8%)]",
-                  "focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none",
-                  "dark:border-border/35 dark:bg-card/92 dark:shadow-none dark:hover:shadow-none",
+                  'group flex cursor-pointer items-start gap-2.5 rounded-lg border border-border/70 bg-card/96 p-2.5 text-left shadow-[0_1px_2px_rgb(15_23_42/5%)] transition-all',
+                  'hover:-translate-y-px hover:shadow-[0_6px_16px_rgb(15_23_42/8%)]',
+                  'focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none',
+                  'dark:border-border/35 dark:bg-card/92 dark:shadow-none dark:hover:shadow-none',
                   accent?.hover,
                 )}
               >
                 <div
                   className={cn(
-                    "flex size-9 shrink-0 items-center justify-center rounded-md border border-border/60 bg-white p-1.5 dark:border-border/30 dark:bg-white/10",
+                    'flex size-9 shrink-0 items-center justify-center rounded-md border border-border/60 bg-white p-1.5 dark:border-border/30 dark:bg-white/10',
                     accent?.iconWrap,
                   )}
                 >
                   {icon ? (
-                    <img
-                      src={icon}
-                      alt=""
-                      aria-hidden="true"
-                      className="size-6 object-contain"
-                    />
+                    <img src={icon} alt="" aria-hidden="true" className="size-6 object-contain" />
                   ) : (
                     <BookOpenTextIcon className="size-4 text-primary" />
                   )}
@@ -143,14 +139,14 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
                         ? `${matchCount} matching`
                         : `${group.topics.length} topics`}
                     </span>
-                    {sections.length > 0 ? ` · ${sections.join(" · ")}` : ""}
+                    {sections.length > 0 ? ` · ${sections.join(' · ')}` : ''}
                   </p>
                 </div>
               </button>
-            )
+            );
           })}
         </div>
       )}
     </div>
-  )
+  );
 }

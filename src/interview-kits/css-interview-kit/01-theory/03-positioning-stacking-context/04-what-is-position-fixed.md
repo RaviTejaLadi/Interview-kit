@@ -29,13 +29,12 @@ The button stays in the same viewport position.
 
 ### Common uses
 
-* Fixed navigation
-* Floating action buttons
-* Chat buttons
-* Back-to-top buttons
-* Cookie banners
+- Fixed navigation
+- Floating action buttons
+- Chat buttons
+- Back-to-top buttons
+- Cookie banners
 
 ### Gotcha ⚠️
 
 Certain properties on ancestors, especially `transform`, can change the containing-block behavior for descendants with `position: fixed`. So "fixed = always relative to viewport" is a useful rule, but not an absolute one.
-

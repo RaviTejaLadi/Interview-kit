@@ -6,10 +6,7 @@ It is especially important for users who cannot see the image and rely on screen
 
 ```html
 <!-- Descriptive alt text communicates the image's meaningful content -->
-<img
-  src="developer.jpg"
-  alt="Developer working on a laptop"
-/>
+<img src="developer.jpg" alt="Developer working on a laptop" />
 ```
 
 A screen reader can announce the alternative text instead of the image itself.

@@ -10,24 +10,20 @@ Examples:
 
 ```html
 <!-- ARIA roles describe the purpose of an element -->
-<div role="dialog">
-  Dialog content
-</div>
+<div role="dialog">Dialog content</div>
 
-<div role="alert">
-  Something went wrong.
-</div>
+<div role="alert">Something went wrong.</div>
 ```
 
 Examples of roles:
 
-* `button`
-* `dialog`
-* `alert`
-* `navigation`
-* `tab`
-* `tabpanel`
-* `checkbox`
+- `button`
+- `dialog`
+- `alert`
+- `navigation`
+- `tab`
+- `tabpanel`
+- `checkbox`
 
 ---
 
@@ -37,26 +33,22 @@ A **state** describes the current condition of an element.
 
 Examples:
 
-* `aria-expanded`
-* `aria-checked`
-* `aria-selected`
-* `aria-disabled`
-* `aria-hidden`
+- `aria-expanded`
+- `aria-checked`
+- `aria-selected`
+- `aria-disabled`
+- `aria-hidden`
 
 ```html
 <!-- aria-expanded communicates the current expanded state -->
-<button aria-expanded="false">
-  Menu
-</button>
+<button aria-expanded="false">Menu</button>
 ```
 
 The value can change when the UI changes:
 
 ```html
 <!-- The menu is now expanded -->
-<button aria-expanded="true">
-  Menu
-</button>
+<button aria-expanded="true">Menu</button>
 ```
 
 ---
@@ -67,21 +59,17 @@ The value can change when the UI changes:
 
 Examples:
 
-* `aria-label`
-* `aria-labelledby`
-* `aria-describedby`
-* `aria-controls`
-* `aria-haspopup`
+- `aria-label`
+- `aria-labelledby`
+- `aria-describedby`
+- `aria-controls`
+- `aria-haspopup`
 
 ```html
 <!-- aria-controls establishes a relationship with another element -->
-<button aria-controls="settings-panel">
-  Settings
-</button>
+<button aria-controls="settings-panel">Settings</button>
 
-<div id="settings-panel">
-  Settings content
-</div>
+<div id="settings-panel">Settings content</div>
 ```
 
 ### Simple way to remember

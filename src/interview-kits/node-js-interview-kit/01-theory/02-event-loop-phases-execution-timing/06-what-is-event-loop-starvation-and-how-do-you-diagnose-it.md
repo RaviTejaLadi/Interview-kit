@@ -15,7 +15,7 @@ For example:
 ```javascript
 // A CPU-heavy loop blocks the JavaScript thread.
 setInterval(() => {
-  console.log("Heartbeat");
+  console.log('Heartbeat');
 }, 1000);
 
 while (true) {
@@ -64,15 +64,15 @@ Node.js provides `monitorEventLoopDelay()` through `node:perf_hooks`.
 
 ```javascript
 // Monitor how much the event loop is being delayed.
-const { monitorEventLoopDelay } = require("node:perf_hooks");
+const { monitorEventLoopDelay } = require('node:perf_hooks');
 
 const histogram = monitorEventLoopDelay();
 
 histogram.enable();
 
 setInterval(() => {
-  console.log("Mean delay:", histogram.mean / 1e6, "ms");
-  console.log("Max delay:", histogram.max / 1e6, "ms");
+  console.log('Mean delay:', histogram.mean / 1e6, 'ms');
+  console.log('Max delay:', histogram.max / 1e6, 'ms');
 }, 5000);
 ```
 
@@ -84,11 +84,11 @@ Large event-loop delays can indicate that the JavaScript thread is being blocked
 
 For CPU-heavy problems, use tools such as:
 
-* Node.js Inspector
-* Chrome DevTools
-* CPU profiles
-* Flame graphs
-* `--prof`
+- Node.js Inspector
+- Chrome DevTools
+- CPU profiles
+- Flame graphs
+- `--prof`
 
 You are looking for functions consuming significant CPU time on the main thread.
 
@@ -100,9 +100,9 @@ A common source of blocking is accidental use of synchronous APIs:
 
 ```javascript
 // Synchronous filesystem access blocks the JavaScript thread.
-const fs = require("node:fs");
+const fs = require('node:fs');
 
-const data = fs.readFileSync("large-file.txt", "utf8");
+const data = fs.readFileSync('large-file.txt', 'utf8');
 
 console.log(data);
 ```

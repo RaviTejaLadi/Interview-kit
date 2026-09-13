@@ -6,10 +6,7 @@ Example:
 
 ```html id="d0xjlb"
 <!-- Tell search engines which URL is the preferred version of this page -->
-<link
-  rel="canonical"
-  href="https://example.com/products/react"
-/>
+<link rel="canonical" href="https://example.com/products/react" />
 ```
 
 Imagine the same page can be accessed through:
@@ -34,10 +31,10 @@ Preferred URL
 
 It helps search engines:
 
-* Consolidate duplicate/similar URLs
-* Understand your preferred URL
-* Consolidate certain ranking signals
-* Avoid unnecessary duplicate indexing
+- Consolidate duplicate/similar URLs
+- Understand your preferred URL
+- Consolidate certain ranking signals
+- Avoid unnecessary duplicate indexing
 
 ### Important
 

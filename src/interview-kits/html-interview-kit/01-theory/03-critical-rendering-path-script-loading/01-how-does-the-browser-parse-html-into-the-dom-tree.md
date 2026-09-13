@@ -20,10 +20,11 @@ DOM Tree
 2. It decodes the bytes into characters.
 3. The **HTML parser** converts the characters into tokens such as:
 
-   * Start tags
-   * End tags
-   * Text
-   * Attributes
+   - Start tags
+   - End tags
+   - Text
+   - Attributes
+
 4. The parser creates DOM nodes from those tokens.
 5. Nodes are connected to form the **DOM tree**.
 

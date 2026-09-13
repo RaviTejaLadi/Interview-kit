@@ -4,12 +4,12 @@ An **accessible form** provides clear labels, instructions, error messages, and 
 
 Important techniques include:
 
-* Use `<label>` for every form control.
-* Associate labels with inputs using `for` and `id`.
-* Use `aria-describedby` for helper text/errors.
-* Use `aria-invalid="true"` when a field contains an error.
-* Use an `aria-live` region to announce dynamic errors.
-* Use a proper `<button type="submit">`.
+- Use `<label>` for every form control.
+- Associate labels with inputs using `for` and `id`.
+- Use `aria-describedby` for helper text/errors.
+- Use `aria-invalid="true"` when a field contains an error.
+- Use an `aria-live` region to announce dynamic errors.
+- Use a proper `<button type="submit">`.
 
 ```html
 <!-- Accessible registration form with labels, helper text, and error announcements -->
@@ -44,9 +44,7 @@ Important techniques include:
     <p id="email-help">We'll use this email to sign you in.</p>
 
     <!-- This region can be updated dynamically when validation fails -->
-    <p id="email-error" role="alert">
-      Please enter a valid email address.
-    </p>
+    <p id="email-error" role="alert">Please enter a valid email address.</p>
   </div>
 
   <div>
@@ -60,9 +58,7 @@ Important techniques include:
       minlength="8"
       aria-describedby="password-help"
     />
-    <p id="password-help">
-      Password must contain at least 8 characters.
-    </p>
+    <p id="password-help">Password must contain at least 8 characters.</p>
   </div>
 
   <button type="submit">Create account</button>
@@ -71,8 +67,8 @@ Important techniques include:
 
 ### Key accessibility attributes
 
-* **`aria-describedby`** → associates helper/error text with the input.
-* **`aria-invalid="true"`** → indicates that the current value is invalid.
-* **`role="alert"`** → causes an important dynamically displayed error to be announced by many screen readers.
+- **`aria-describedby`** → associates helper/error text with the input.
+- **`aria-invalid="true"`** → indicates that the current value is invalid.
+- **`role="alert"`** → causes an important dynamically displayed error to be announced by many screen readers.
 
 > Prefer native HTML validation (`required`, `type="email"`, `minlength`, etc.) whenever possible. ARIA should supplement native semantics, not replace them.

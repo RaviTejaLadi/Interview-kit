@@ -4,25 +4,25 @@ The **FormData API** provides a way to construct a set of form key-value pairs t
 
 It is especially useful with:
 
-* `fetch()`
-* AJAX requests
-* File uploads
-* JavaScript-controlled forms
+- `fetch()`
+- AJAX requests
+- File uploads
+- JavaScript-controlled forms
 
 Example:
 
 ```javascript
 // Collect the values from a form and send them using fetch.
-const form = document.querySelector("#login-form");
+const form = document.querySelector('#login-form');
 
-form.addEventListener("submit", async (event) => {
+form.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const formData = new FormData(form);
 
-  const response = await fetch("/login", {
-    method: "POST",
-    body: formData
+  const response = await fetch('/login', {
+    method: 'POST',
+    body: formData,
   });
 
   console.log(await response.json());
@@ -47,10 +47,10 @@ You can also create `FormData` manually:
 // Create FormData manually and add key-value pairs.
 const formData = new FormData();
 
-formData.append("username", "ravi");
-formData.append("role", "developer");
+formData.append('username', 'ravi');
+formData.append('role', 'developer');
 
-console.log(formData.get("username")); // ravi
+console.log(formData.get('username')); // ravi
 ```
 
 ### File upload
@@ -59,14 +59,14 @@ console.log(formData.get("username")); // ravi
 
 ```javascript
 // Send a selected file to the server using multipart/form-data.
-const fileInput = document.querySelector("#profile");
+const fileInput = document.querySelector('#profile');
 
 const formData = new FormData();
-formData.append("profile", fileInput.files[0]);
+formData.append('profile', fileInput.files[0]);
 
-await fetch("/upload", {
-  method: "POST",
-  body: formData
+await fetch('/upload', {
+  method: 'POST',
+  body: formData,
 });
 ```
 

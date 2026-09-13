@@ -33,12 +33,7 @@ With dimensions:
 
 ```html
 <!-- Dimensions reserve the correct aspect-ratio space before the image loads -->
-<img
-  src="banner.jpg"
-  width="1200"
-  height="600"
-  alt="Banner"
-/>
+<img src="banner.jpg" width="1200" height="600" alt="Banner" />
 ```
 
 The browser knows the aspect ratio:

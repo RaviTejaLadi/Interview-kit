@@ -2,11 +2,11 @@
 
 An accessible navigation bar should provide:
 
-* Semantic `<nav>`
-* Clear navigation labels
-* Keyboard-accessible controls
-* `aria-haspopup="true"` to indicate that a control opens a submenu
-* `aria-expanded="false/true"` to communicate submenu state
+- Semantic `<nav>`
+- Clear navigation labels
+- Keyboard-accessible controls
+- `aria-haspopup="true"` to indicate that a control opens a submenu
+- `aria-expanded="false/true"` to communicate submenu state
 
 `aria-expanded` must be updated when the submenu opens or closes.
 
@@ -50,16 +50,14 @@ JavaScript can control the submenu state:
 
 ```javascript
 // Toggle the submenu and keep aria-expanded synchronized with its visibility
-const button = document.querySelector(
-  'button[aria-controls="products-menu"]'
-);
+const button = document.querySelector('button[aria-controls="products-menu"]');
 
-const menu = document.querySelector("#products-menu");
+const menu = document.querySelector('#products-menu');
 
-button.addEventListener("click", () => {
-  const isExpanded = button.getAttribute("aria-expanded") === "true";
+button.addEventListener('click', () => {
+  const isExpanded = button.getAttribute('aria-expanded') === 'true';
 
-  button.setAttribute("aria-expanded", String(!isExpanded));
+  button.setAttribute('aria-expanded', String(!isExpanded));
   menu.hidden = isExpanded;
 });
 ```
