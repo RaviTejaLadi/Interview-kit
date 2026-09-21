@@ -18,8 +18,13 @@ type NavTarget = {
   title: string;
 };
 
-const headerIconButtonClassName =
-  'rounded-md border-border/70 bg-card/96 shadow-[0_1px_2px_rgb(15_23_42/6%)] hover:bg-muted/60 dark:border-border/35 dark:bg-card/90 dark:shadow-none';
+const headerIconButtonClassName = {
+  paper:
+    'rounded-none border-foreground bg-card hover:bg-muted dark:border-border dark:bg-card dark:shadow-none',
+  ink: 'rounded-none border-paper/35 bg-transparent text-paper hover:bg-paper/12',
+};
+
+type ButtonTone = keyof typeof headerIconButtonClassName;
 
 type AdjacentTopics = {
   previousTopic: NavTarget | null;
@@ -45,8 +50,8 @@ function TopicSideButton({
       disabled={!topic}
       onClick={() => topic && onSelect(topic.id)}
       className={cn(
-        'size-7 rounded-md border-border/70 bg-card/96 shadow-[0_1px_2px_rgb(15_23_42/6%)]',
-        'hover:bg-muted/60 dark:border-border/35 dark:bg-card/90 dark:shadow-none',
+        'size-7 rounded-none border-foreground bg-card',
+        'hover:bg-muted dark:border-border dark:bg-card',
       )}
       aria-label={
         topic
@@ -91,7 +96,7 @@ export function TopicNavigator({
           size="sm"
           disabled={!previousTopic}
           onClick={() => previousTopic && onSelect(previousTopic.id)}
-          className="min-w-0 flex-1 justify-start rounded-md border-border/70 bg-card/96 dark:border-border/35 dark:bg-card/90"
+          className="min-w-0 flex-1 justify-start rounded-none border-foreground bg-card dark:border-border dark:bg-card"
           aria-label={
             previousTopic ? `Previous topic: ${previousTopic.title}` : 'No previous topic'
           }
@@ -105,7 +110,7 @@ export function TopicNavigator({
           size="sm"
           disabled={!nextTopic}
           onClick={() => nextTopic && onSelect(nextTopic.id)}
-          className="min-w-0 flex-1 justify-end rounded-md border-border/70 bg-card/96 dark:border-border/35 dark:bg-card/90"
+          className="min-w-0 flex-1 justify-end rounded-none border-foreground bg-card dark:border-border dark:bg-card"
           aria-label={nextTopic ? `Next topic: ${nextTopic.title}` : 'No next topic'}
         >
           <span className="truncate">{nextTopic?.title ?? 'Last topic'}</span>
@@ -155,8 +160,8 @@ export function TopicDock({
     >
       <div
         className={cn(
-          'pointer-events-auto mx-auto flex max-w-6xl items-center gap-2 rounded-md border border-border/70 bg-card/96 p-2 shadow-[0_8px_24px_rgb(15_23_42/12%)] backdrop-blur',
-          'dark:border-border/35 dark:bg-card/92 dark:shadow-none',
+          'pointer-events-auto mx-auto flex max-w-6xl items-center gap-2 border-2 border-foreground bg-card p-2',
+          'dark:border-border dark:bg-card',
           !visible && 'pointer-events-none',
         )}
       >
@@ -164,7 +169,7 @@ export function TopicDock({
           type="button"
           variant="outline"
           size="sm"
-          className="min-w-0 flex-1 justify-start rounded-md border-border/70 bg-card/96 dark:border-border/35 dark:bg-card/90"
+          className="min-w-0 flex-1 justify-start rounded-none border-foreground bg-card dark:border-border dark:bg-card"
           disabled={!previousTopic}
           onClick={() => previousTopic && onSelect(previousTopic.id)}
           aria-label={
@@ -178,7 +183,7 @@ export function TopicDock({
         <button
           type="button"
           onClick={onBackToTop}
-          className="hidden min-w-0 max-w-48 shrink-0 rounded-md px-2 py-1 text-center hover:bg-muted/50 lg:block"
+          className="hidden min-w-0 max-w-48 shrink-0 px-2 py-1 text-center hover:bg-muted lg:block"
           aria-label="Back to top"
           title="Back to top"
         >
@@ -193,7 +198,7 @@ export function TopicDock({
           type="button"
           variant="outline"
           size="icon-sm"
-          className="rounded-md border-border/70 bg-card/96 lg:hidden dark:border-border/35 dark:bg-card/90"
+          className="rounded-none border-foreground bg-card lg:hidden dark:border-border dark:bg-card"
           onClick={onBackToTop}
           aria-label="Back to top"
           title="Back to top"
@@ -205,7 +210,7 @@ export function TopicDock({
           type="button"
           variant="outline"
           size="sm"
-          className="min-w-0 flex-1 justify-end rounded-md border-border/70 bg-card/96 dark:border-border/35 dark:bg-card/90"
+          className="min-w-0 flex-1 justify-end rounded-none border-foreground bg-card dark:border-border dark:bg-card"
           disabled={!nextTopic}
           onClick={() => nextTopic && onSelect(nextTopic.id)}
           aria-label={nextTopic ? `Next topic: ${nextTopic.title}` : 'No next topic'}
@@ -233,8 +238,8 @@ export function ScrollToTopButton({
       variant="outline"
       size="icon"
       className={cn(
-        'absolute z-20 size-9 rounded-full border-border/70 bg-card/96 shadow-[0_8px_24px_rgb(15_23_42/16%)] backdrop-blur transition-all duration-200',
-        'hover:bg-muted/70 dark:border-border/35 dark:bg-card/92 dark:shadow-none',
+        'absolute z-20 size-9 rounded-none border-2 border-foreground bg-card transition-all duration-200',
+        'hover:bg-muted dark:border-border dark:bg-card',
         dockVisible ? 'right-3 bottom-20 sm:right-5' : 'right-3 bottom-3 sm:right-5 sm:bottom-5',
         visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0',
       )}
@@ -248,7 +253,7 @@ export function ScrollToTopButton({
   );
 }
 
-export function FullscreenButton() {
+export function FullscreenButton({ tone = 'paper' }: { tone?: ButtonTone }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
@@ -266,7 +271,7 @@ export function FullscreenButton() {
       type="button"
       variant="outline"
       size="icon-sm"
-      className={headerIconButtonClassName}
+      className={headerIconButtonClassName[tone]}
       onClick={async () => {
         try {
           if (document.fullscreenElement) {
@@ -291,16 +296,18 @@ export function FullscreenButton() {
 export function ThemeToggle({
   theme,
   onToggle,
+  tone = 'paper',
 }: {
   theme: 'light' | 'dark';
   onToggle: () => void;
+  tone?: ButtonTone;
 }) {
   return (
     <Button
       type="button"
       variant="outline"
       size="icon-sm"
-      className={headerIconButtonClassName}
+      className={headerIconButtonClassName[tone]}
       onClick={onToggle}
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
       title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}

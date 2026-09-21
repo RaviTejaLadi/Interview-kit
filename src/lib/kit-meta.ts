@@ -1,4 +1,5 @@
 import cssKitIcon from '../../assets/kits-svgs/css.svg';
+import dsaKitIcon from '../../assets/kits-svgs/css.svg';
 import gitKitIcon from '../../assets/kits-svgs/git.svg';
 import hrKitIcon from '../../assets/kits-svgs/hr.svg';
 import htmlKitIcon from '../../assets/kits-svgs/html.svg';
@@ -14,12 +15,16 @@ export const KIT_DISPLAY_ORDER = [
   'css-interview-kit',
   'tailwind-interview-kit',
   'javascript-interview-kit',
+  'dsa-interview-kit',
   'react-interview-kit',
   'next-js-interview-kit',
   'node-js-interview-kit',
   'mongo-db-interview-kit',
   'git-interview-kit',
+  'docker-devops-interview-kit',
   'hr-interview-kit',
+  'redis-interview-kit',
+  'testing-interview-kit',
 ] as const;
 
 export const KIT_ICON_BY_KEY: Record<string, string> = {
@@ -29,6 +34,7 @@ export const KIT_ICON_BY_KEY: Record<string, string> = {
   'css-interview-kit': cssKitIcon,
   'tailwind-interview-kit': tailwindKitIcon,
   'next-js-interview-kit': nextjsKitIcon,
+  'dsa-interview-kit': dsaKitIcon,
   'node-js-interview-kit': nodejsKitIcon,
   'mongo-db-interview-kit': mongodbKitIcon,
   'git-interview-kit': gitKitIcon,
@@ -40,12 +46,34 @@ export const KIT_DESCRIPTIONS: Record<string, string> = {
   'css-interview-kit': 'Layout, responsive design, specificity, and modern CSS features.',
   'tailwind-interview-kit': 'Utility-first styling, theme tokens, and reusable UI patterns.',
   'javascript-interview-kit': 'Language fundamentals, async behavior, and coding challenges.',
+  'dsa-interview-kit': 'Most-asked DSA patterns, problem solving strategy, and coding drills.',
   'react-interview-kit': 'Components, hooks, rendering, and interview-style React problems.',
   'next-js-interview-kit': 'App Router, server components, caching, and data mutations.',
   'node-js-interview-kit': 'Runtime internals, APIs, streams, and backend interview problems.',
   'mongo-db-interview-kit': 'Schema design, indexing, aggregation, and database operations.',
   'git-interview-kit': 'Version control workflows, branching, and recovery commands.',
+  'docker-devops-interview-kit':
+    'Containers, Compose, Kubernetes, and the path from image to production.',
   'hr-interview-kit': 'Behavioral stories, company fit, and interview logistics.',
+  'redis-interview-kit': 'Data structures, persistence, pub/sub, and caching patterns.',
+  'testing-interview-kit': 'Unit tests, TDD, mocks, and how you prove code works.',
+};
+
+export const KIT_DESKS: Record<string, string> = {
+  'html-interview-kit': 'Markup desk',
+  'css-interview-kit': 'Styles desk',
+  'tailwind-interview-kit': 'Utilities desk',
+  'javascript-interview-kit': 'Language desk',
+  'dsa-interview-kit': 'Algorithms desk',
+  'react-interview-kit': 'Interface desk',
+  'next-js-interview-kit': 'Framework desk',
+  'node-js-interview-kit': 'Runtime desk',
+  'mongo-db-interview-kit': 'Data desk',
+  'git-interview-kit': 'Version desk',
+  'docker-devops-interview-kit': 'Platform desk',
+  'hr-interview-kit': 'People desk',
+  'redis-interview-kit': 'Cache desk',
+  'testing-interview-kit': 'Quality desk',
 };
 
 export const KIT_CARD_ACCENT: Record<
@@ -70,6 +98,10 @@ export const KIT_CARD_ACCENT: Record<
   'javascript-interview-kit': {
     iconWrap: 'bg-amber-50 dark:bg-amber-400/10',
     hover: 'hover:border-amber-400/50 hover:shadow-amber-500/10',
+  },
+  'dsa-interview-kit': {
+    iconWrap: 'bg-indigo-50 dark:bg-indigo-400/10',
+    hover: 'hover:border-indigo-400/50 hover:shadow-indigo-500/10',
   },
   'react-interview-kit': {
     iconWrap: 'bg-sky-50 dark:bg-sky-400/10',

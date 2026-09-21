@@ -1,19 +1,26 @@
 import { useMemo, useState } from 'react';
-import { ArrowRightIcon, BookOpenTextIcon, SearchIcon } from 'lucide-react';
+import { BookOpenTextIcon, SearchIcon } from 'lucide-react';
 
+import { NewspaperNameplate } from '@/components/newspaper-masthead';
+import { Input } from '@/components/ui/input';
 import type { TopicGroup } from '@/lib/content-index';
 import {
-  KIT_CARD_ACCENT,
+  KIT_DESKS,
   KIT_DESCRIPTIONS,
   KIT_ICON_BY_KEY,
   sortKitsByDisplayOrder,
 } from '@/lib/kit-meta';
 import { cn } from '@/lib/utils';
-import { Input } from '@/components/ui/input';
 
 type KitGalleryProps = {
   groups: TopicGroup[];
+  theme: 'light' | 'dark';
   onSelectKit: (kitId: string) => void;
+};
+
+type VisibleKit = {
+  group: TopicGroup;
+  matchCount: number;
 };
 
 function getKitSections(group: TopicGroup) {
@@ -22,7 +29,130 @@ function getKitSections(group: TopicGroup) {
   );
 }
 
-export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
+function getDesk(kitId: string) {
+  return KIT_DESKS[kitId] ?? 'Special edition';
+}
+
+function StoryByline({
+  group,
+  matchCount,
+  query,
+}: {
+  group: TopicGroup;
+  matchCount: number;
+  query: string;
+}) {
+  const sections = getKitSections(group);
+  const countLabel =
+    query && matchCount > 0 ? `${matchCount} matching` : `${group.topics.length} questions`;
+
+  return (
+    <p className="font-kicker mt-2 text-[11px] tracking-[0.12em] text-muted-foreground uppercase">
+      {countLabel}
+      {sections.length > 0 ? ` · ${sections.slice(0, 3).join(' · ')}` : ''}
+    </p>
+  );
+}
+
+function StoryCell({
+  item,
+  query,
+  variant,
+  folio,
+  onSelect,
+}: {
+  item: VisibleKit;
+  query: string;
+  variant: 'lead' | 'secondary' | 'brief';
+  folio: string;
+  onSelect: (kitId: string) => void;
+}) {
+  const { group, matchCount } = item;
+  const icon = KIT_ICON_BY_KEY[group.id];
+  const description = KIT_DESCRIPTIONS[group.id] ?? 'Interview questions and practice topics.';
+  const desk = getDesk(group.id);
+  const isLead = variant === 'lead';
+  const isBrief = variant === 'brief';
+
+  return (
+    <button
+      type="button"
+      onClick={() => onSelect(group.id)}
+      className={cn(
+        'group relative flex h-full cursor-pointer flex-col text-left transition-colors',
+        'focus-visible:bg-foreground focus-visible:text-background focus-visible:outline-none',
+        isLead && 'gap-4 p-4 sm:p-5 lg:p-6',
+        variant === 'secondary' && 'gap-3 p-4 sm:p-5',
+        isBrief && 'gap-2 p-3.5 sm:p-4',
+      )}
+    >
+      {isLead ? (
+        <span className="font-kicker pointer-events-none absolute top-3 right-3 rotate-[-8deg] border-2 border-secondary px-2 py-0.5 text-[11px] tracking-[0.18em] text-secondary uppercase group-focus-visible:border-background group-focus-visible:text-background">
+          Extra
+        </span>
+      ) : null}
+
+      <div className={cn('flex items-start gap-3', isLead && 'flex-col sm:flex-row')}>
+        <div
+          className={cn(
+            'flex shrink-0 items-center justify-center border border-foreground bg-card',
+            isLead && 'size-20 sm:size-24',
+            variant === 'secondary' && 'size-12',
+            isBrief && 'size-9',
+          )}
+        >
+          {icon ? (
+            <img
+              src={icon}
+              alt=""
+              aria-hidden="true"
+              className={cn('object-contain', isLead ? 'size-12 sm:size-14' : 'size-6')}
+            />
+          ) : (
+            <BookOpenTextIcon className={cn(isLead ? 'size-8' : 'size-4')} />
+          )}
+        </div>
+
+        <div className="min-w-0 flex-1">
+          <p className="font-kicker text-[10px] tracking-[0.2em] text-secondary uppercase group-focus-visible:text-background">
+            {desk}
+          </p>
+          <h2
+            className={cn(
+              'font-heading mt-1 font-black tracking-[-0.03em] text-balance group-hover:underline group-hover:decoration-2 group-hover:underline-offset-4',
+              isLead && 'text-3xl leading-[0.95] sm:text-4xl lg:text-5xl',
+              variant === 'secondary' && 'text-2xl leading-tight sm:text-3xl',
+              isBrief && 'text-lg leading-tight sm:text-xl',
+            )}
+          >
+            {group.label}
+          </h2>
+        </div>
+      </div>
+
+      <p
+        className={cn(
+          'text-foreground/85',
+          isLead && 'max-w-xl text-base leading-7 sm:text-lg',
+          variant === 'secondary' && 'line-clamp-3 text-sm leading-6',
+          isBrief && 'line-clamp-2 text-[13px] leading-5',
+        )}
+      >
+        {description}
+      </p>
+
+      <div className="mt-auto">
+        <StoryByline group={group} matchCount={matchCount} query={query} />
+        <p className="font-kicker mt-2 flex items-center justify-between text-[10px] tracking-[0.16em] uppercase">
+          <span className="group-hover:text-secondary">Continue reading</span>
+          <span className="opacity-55">{folio}</span>
+        </p>
+      </div>
+    </button>
+  );
+}
+
+export function KitGallery({ groups, theme, onSelectKit }: KitGalleryProps) {
   const [searchValue, setSearchValue] = useState('');
   const query = searchValue.trim().toLowerCase();
 
@@ -40,8 +170,11 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
     return orderedGroups
       .map((group) => {
         const description = KIT_DESCRIPTIONS[group.id] ?? '';
+        const desk = getDesk(group.id);
         const kitMatches =
-          group.label.toLowerCase().includes(query) || description.toLowerCase().includes(query);
+          group.label.toLowerCase().includes(query) ||
+          description.toLowerCase().includes(query) ||
+          desk.toLowerCase().includes(query);
         const matchCount = group.topics.filter((topic) => {
           const haystack =
             `${topic.title} ${topic.topicTitle ?? ''} ${topic.section} ${topic.kitLabel}`.toLowerCase();
@@ -54,99 +187,126 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
 
         return { group, matchCount };
       })
-      .filter((item): item is { group: TopicGroup; matchCount: number } => item !== null);
+      .filter((item): item is VisibleKit => item !== null)
+      .sort((a, b) => {
+        const nameA = a.group.label.toLowerCase().includes(query) ? 0 : 1;
+        const nameB = b.group.label.toLowerCase().includes(query) ? 0 : 1;
+        if (nameA !== nameB) {
+          return nameA - nameB;
+        }
+        return b.matchCount - a.matchCount;
+      });
   }, [orderedGroups, query]);
 
+  const lead = visibleKits[0] ?? null;
+  const secondary = visibleKits.slice(1, 3);
+  const briefs = visibleKits.slice(3);
+  const ticker = orderedGroups.map((group) => group.label).join('  ·  ');
+
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-4 px-4 py-5 sm:space-y-5 sm:px-6 sm:py-6 lg:px-8">
-      <div className="space-y-2.5">
-        <p className="text-[11px] font-semibold tracking-[0.14em] text-primary uppercase">
-          Interview prep
-        </p>
-        <div className="space-y-1">
-          <h1 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-            Choose a kit to get started
-          </h1>
-          <p className="max-w-2xl text-sm text-muted-foreground">
-            Pick a topic card, then browse questions for that kit only. {groups.length} kits ·{' '}
-            {totalTopics} questions.
-          </p>
-        </div>
-        <div className="relative max-w-md">
+    <div className="mx-auto w-full max-w-6xl space-y-5 px-4 py-5 sm:px-6 sm:py-7 lg:px-8">
+      <NewspaperNameplate kitCount={groups.length} questionCount={totalTopics} theme={theme} />
+
+      <p className="font-kicker overflow-hidden text-[11px] tracking-[0.14em] text-ellipsis whitespace-nowrap uppercase opacity-80">
+        Inside today: {ticker || 'Late edition'}
+      </p>
+
+      <div>
+        <p className="font-kicker mb-1.5 text-[10px] tracking-[0.2em] uppercase">Classifieds</p>
+        <div className="relative">
           <SearchIcon className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             value={searchValue}
             onChange={(event) => setSearchValue(event.target.value)}
             aria-label="Search kits"
-            placeholder="Search kits or topics..."
-            className="h-9 rounded-md border-border/70 bg-card/96 pl-9 shadow-[0_1px_2px_rgb(15_23_42/5%)] dark:border-border/35 dark:bg-card/90"
+            placeholder="Wanted: kits, desks, or questions..."
+            className="h-10 rounded-none border-foreground bg-card/80 pl-9 font-sans"
           />
         </div>
       </div>
 
       {visibleKits.length === 0 ? (
-        <div className="rounded-lg border border-border/70 bg-card/96 p-4 text-sm text-muted-foreground shadow-[0_1px_2px_rgb(15_23_42/5%)] dark:border-border/35 dark:bg-card/90">
-          No kits match “{searchValue.trim()}”. Try another topic name.
+        <div className="border border-foreground bg-card px-4 py-8 text-center">
+          <p className="font-kicker text-[11px] tracking-[0.18em] uppercase">No notices posted</p>
+          <p className="mt-2 text-sm">
+            No kits match “{searchValue.trim()}”. Try another desk or topic.
+          </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {visibleKits.map(({ group, matchCount }) => {
-            const icon = KIT_ICON_BY_KEY[group.id];
-            const accent = KIT_CARD_ACCENT[group.id];
-            const sections = getKitSections(group);
-            const description =
-              KIT_DESCRIPTIONS[group.id] ?? 'Interview questions and practice topics.';
-
-            return (
-              <button
-                key={group.id}
-                type="button"
-                onClick={() => onSelectKit(group.id)}
-                className={cn(
-                  'group flex cursor-pointer items-start gap-2.5 rounded-lg border border-border/70 bg-card/96 p-2.5 text-left shadow-[0_1px_2px_rgb(15_23_42/5%)] transition-all',
-                  'hover:-translate-y-px hover:shadow-[0_6px_16px_rgb(15_23_42/8%)]',
-                  'focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none',
-                  'dark:border-border/35 dark:bg-card/92 dark:shadow-none dark:hover:shadow-none',
-                  accent?.hover,
-                )}
-              >
-                <div
-                  className={cn(
-                    'flex size-9 shrink-0 items-center justify-center rounded-md border border-border/60 bg-white p-1.5 dark:border-border/30 dark:bg-white/10',
-                    accent?.iconWrap,
-                  )}
-                >
-                  {icon ? (
-                    <img src={icon} alt="" aria-hidden="true" className="size-6 object-contain" />
-                  ) : (
-                    <BookOpenTextIcon className="size-4 text-primary" />
-                  )}
-                </div>
-
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-1.5">
-                    <h2 className="truncate text-sm font-semibold tracking-tight text-foreground">
-                      {group.label}
-                    </h2>
-                    <ArrowRightIcon className="ml-auto size-3.5 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:text-foreground" />
+        <div className="border-y-2 border-foreground">
+          {lead ? (
+            <div className="grid lg:grid-cols-12">
+              <div className="border-foreground lg:col-span-7 lg:border-r">
+                <StoryCell
+                  item={lead}
+                  query={query}
+                  variant="lead"
+                  folio="Page 1"
+                  onSelect={onSelectKit}
+                />
+              </div>
+              <div className="border-t border-foreground lg:col-span-5 lg:border-t-0">
+                {secondary.length === 0 ? (
+                  <div className="flex h-full min-h-40 items-center p-5">
+                    <p className="font-heading text-xl italic">More desks in later editions.</p>
                   </div>
-                  <p className="mt-0.5 line-clamp-1 text-xs leading-snug text-muted-foreground">
-                    {description}
-                  </p>
-                  <p className="mt-1 truncate text-[11px] text-muted-foreground">
-                    <span className="font-medium text-foreground/75">
-                      {query && matchCount > 0
-                        ? `${matchCount} matching`
-                        : `${group.topics.length} topics`}
-                    </span>
-                    {sections.length > 0 ? ` · ${sections.join(' · ')}` : ''}
-                  </p>
-                </div>
-              </button>
-            );
-          })}
+                ) : (
+                  secondary.map((item, index) => (
+                    <div
+                      key={item.group.id}
+                      className={cn(index > 0 && 'border-t border-foreground')}
+                    >
+                      <StoryCell
+                        item={item}
+                        query={query}
+                        variant="secondary"
+                        folio={`Page ${index + 2}`}
+                        onSelect={onSelectKit}
+                      />
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
+          ) : null}
+
+          {briefs.length > 0 ? (
+            <div className="border-t-2 border-foreground">
+              <div className="flex items-center justify-between px-4 py-2">
+                <p className="font-kicker text-[11px] tracking-[0.2em] uppercase">
+                  Briefs from the desks
+                </p>
+                <p className="font-kicker text-[10px] tracking-[0.16em] uppercase opacity-60">
+                  Continued inside
+                </p>
+              </div>
+              <div className="grid border-t border-foreground sm:grid-cols-2 lg:grid-cols-3">
+                {briefs.map((item, index) => (
+                  <div
+                    key={item.group.id}
+                    className="shadow-[inset_-1px_-1px_0_0_var(--foreground)]"
+                  >
+                    <StoryCell
+                      item={item}
+                      query={query}
+                      variant="brief"
+                      folio={`P. ${index + 4}`}
+                      onSelect={onSelectKit}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
       )}
+
+      <footer className="space-y-2 pb-4">
+        <div className="newspaper-rule-double" />
+        <p className="font-kicker text-center text-[10px] tracking-[0.18em] uppercase opacity-70">
+          Printed for candidates · Set in Playfair, Newsreader & Oswald · The Interview Gazette
+        </p>
+      </footer>
     </div>
   );
 }

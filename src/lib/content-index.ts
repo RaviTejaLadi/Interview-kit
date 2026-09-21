@@ -30,6 +30,7 @@ export type TopicGroup = {
 
 const KIT_ORDER = [
   'javascript-interview-kit',
+  'dsa-interview-kit',
   'react-interview-kit',
   'html-interview-kit',
   'css-interview-kit',
@@ -38,11 +39,15 @@ const KIT_ORDER = [
   'node-js-interview-kit',
   'mongo-db-interview-kit',
   'git-interview-kit',
+  'docker-devops-interview-kit',
   'hr-interview-kit',
+  'redis-interview-kit',
+  'testing-interview-kit',
 ];
 
 const KIT_LABELS: Record<string, string> = {
   'javascript-interview-kit': 'JavaScript',
+  'dsa-interview-kit': 'DSA',
   'react-interview-kit': 'React',
   'html-interview-kit': 'HTML',
   'css-interview-kit': 'CSS',
@@ -51,7 +56,10 @@ const KIT_LABELS: Record<string, string> = {
   'node-js-interview-kit': 'Node.js',
   'mongo-db-interview-kit': 'MongoDB',
   'git-interview-kit': 'Git',
+  'docker-devops-interview-kit': 'Docker & DevOps',
   'hr-interview-kit': 'HR Round',
+  'redis-interview-kit': 'Redis',
+  'testing-interview-kit': 'Testing',
 };
 
 function toTitleCase(value: string) {

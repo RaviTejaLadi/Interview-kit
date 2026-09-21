@@ -105,18 +105,18 @@ export function TopicAccordion({
   };
 
   return (
-    <div className="rounded-md border border-border/70 bg-card/96 p-4 shadow-[0_2px_10px_rgb(15_23_42/5%)] backdrop-blur sm:p-5 lg:p-7 dark:border-border/35 dark:bg-card/92 dark:shadow-none">
-      <div className="mb-4 flex flex-col gap-3 border-b border-border/70 pb-4 sm:flex-row sm:items-start sm:justify-between dark:border-border/35">
+    <div className="border border-foreground bg-card p-4 sm:p-5 lg:p-8">
+      <div className="mb-4 flex flex-col gap-3 border-b-2 border-foreground pb-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
-          <p className="text-[11px] font-semibold tracking-[0.12em] text-primary uppercase">
+          <p className="font-kicker text-[11px] tracking-[0.18em] text-secondary uppercase">
             {section}
           </p>
-          <h1 className="mt-1 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+          <h1 className="font-heading mt-1 text-2xl font-black tracking-[-0.03em] text-foreground sm:text-3xl">
             {title}
           </h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {topics.length} question{topics.length === 1 ? '' : 's'} in this topic. Open any item,
-            or expand all to read everything here.
+          <p className="mt-1 text-sm leading-6 text-muted-foreground">
+            {topics.length} question{topics.length === 1 ? '' : 's'} in this column. Open any item,
+            or expand the whole page.
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
@@ -125,7 +125,7 @@ export function TopicAccordion({
             variant="outline"
             size="sm"
             onClick={handleToggleAll}
-            className="rounded-md border-border/70 bg-card/96 dark:border-border/35 dark:bg-card/90"
+            className="rounded-none border-foreground bg-card uppercase"
           >
             {allOpen ? <ChevronsDownUpIcon /> : <ChevronsUpDownIcon />}
             {allOpen ? 'Collapse all' : 'Expand all'}
@@ -144,17 +144,17 @@ export function TopicAccordion({
               key={topic.id}
               id={`topic-accordion-${topic.id}`}
               value={topic.id}
-              className="scroll-mt-24 border-border/70 dark:border-border/35"
+              className="scroll-mt-24 border-foreground/40"
             >
-              <AccordionTrigger className="px-1 hover:no-underline">
-                <span className="min-w-0 flex-1 text-[15px] leading-snug font-semibold text-foreground">
+              <AccordionTrigger className="rounded-none px-1 hover:no-underline">
+                <span className="font-heading min-w-0 flex-1 text-[15px] leading-snug font-bold text-foreground">
                   {topic.title}
                 </span>
               </AccordionTrigger>
               <AccordionContent className="px-1">
                 {shouldRender ? (
                   isLoading && !hasContent ? (
-                    <p className="text-sm text-foreground/70">Loading markdown...</p>
+                    <p className="text-sm text-foreground/70">Setting the type...</p>
                   ) : hasContent ? (
                     <div className="[&_.markdown-body_h1:first-child]:hidden">
                       <MarkdownPreview

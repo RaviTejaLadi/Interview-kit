@@ -177,7 +177,7 @@ function TopicNavButton({
       size="sm"
       isActive={isActive}
       onClick={() => onSelect(getTopicNavId(topic.id))}
-      className="h-auto w-full rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/15 data-[active=true]:text-sidebar-primary"
+      className="h-auto w-full rounded-none py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
     >
       {topic.starRating && !topic.topicTitle ? (
         <StarRatingDot rating={topic.starRating} />
@@ -265,7 +265,7 @@ function KitTopicTree({
                   size="sm"
                   tooltip={section.label}
                   isActive={sectionHasSelectedTopic}
-                  className="h-7 rounded-md text-[11px] font-semibold tracking-[0.06em] uppercase text-sidebar-foreground/80 data-[active=true]:bg-sidebar-primary/12 data-[active=true]:text-sidebar-primary dark:data-[active=true]:bg-sidebar-primary/20"
+                  className="h-7 rounded-none font-kicker text-[11px] font-semibold tracking-[0.08em] uppercase text-sidebar-foreground/80 data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
                 />
               }
             >
@@ -294,7 +294,7 @@ function KitTopicTree({
                       tooltip={folder.label}
                       isActive={isActive}
                       onClick={() => onSelectNav(folderNavId)}
-                      className="h-auto rounded-md py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary/12 data-[active=true]:text-sidebar-primary"
+                      className="h-auto rounded-none py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
                     >
                       {folder.starRating ? (
                         <StarRatingDot rating={folder.starRating} />
@@ -355,36 +355,38 @@ export function AppSidebar({
     <Sidebar
       collapsible="icon"
       className={cn(
-        'border-r border-sidebar-border/70 bg-sidebar/94 backdrop-blur supports-backdrop-filter:bg-sidebar/84 dark:border-sidebar-border/35',
+        'border-r-2 border-sidebar-border bg-sidebar',
         className,
       )}
       {...props}
     >
-      <SidebarHeader className="gap-3 border-b border-sidebar-border/70 bg-sidebar/92 px-2 pb-3 pt-2 backdrop-blur dark:border-sidebar-border/35">
+      <SidebarHeader className="gap-3 border-b-2 border-sidebar-border bg-sidebar px-2 pt-2 pb-3">
         <Button
           type="button"
           variant="ghost"
           size="sm"
           onClick={handleBackToKits}
-          className="h-8 w-full justify-start rounded-md px-2 text-sidebar-foreground/90 hover:bg-sidebar-accent/50 group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
+          className="h-8 w-full justify-start rounded-none px-2 text-sidebar-foreground/90 uppercase hover:bg-sidebar-accent group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
         >
           <ArrowLeftIcon className="size-4" />
-          <span className="group-data-[collapsible=icon]:hidden">All kits</span>
+          <span className="group-data-[collapsible=icon]:hidden">Front page</span>
         </Button>
-        <div className="flex items-center gap-2 rounded-md border border-sidebar-border/65 bg-sidebar-accent/24 px-2.5 py-2 dark:border-sidebar-border/30">
+        <div className="flex items-center gap-2 border border-sidebar-border bg-sidebar-accent/40 px-2.5 py-2">
           {kitIcon ? (
             <img
               src={kitIcon}
               alt=""
               aria-hidden="true"
-              className="size-4 shrink-0 rounded-sm bg-white/75 p-0.5 object-contain dark:bg-white/15"
+              className="size-4 shrink-0 border border-sidebar-border bg-card object-contain p-0.5"
             />
           ) : (
             <BookOpenTextIcon className="size-4 shrink-0 text-sidebar-primary" />
           )}
           <div className="grid min-w-0 flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="truncate font-semibold">{activeKit?.label ?? 'Interview Kit'}</span>
-            <span className="truncate text-xs text-sidebar-foreground/82">Topics in this kit</span>
+            <span className="font-heading truncate font-bold">{activeKit?.label ?? 'Gazette'}</span>
+            <span className="font-kicker truncate text-[10px] tracking-[0.14em] text-sidebar-foreground/70 uppercase">
+              Index of this edition
+            </span>
           </div>
         </div>
         <div className="px-2 group-data-[collapsible=icon]:hidden">
@@ -394,21 +396,21 @@ export function AppSidebar({
               value={searchValue}
               onChange={(event) => onSearchChange(event.target.value)}
               aria-label="Search topics"
-              placeholder="Search this kit..."
-              className="h-9 rounded-md border-sidebar-border/70 bg-sidebar-accent/22 pl-8 shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring dark:border-sidebar-border/35 dark:bg-sidebar-accent/40"
+              placeholder="Search this edition..."
+              className="h-9 rounded-none border-sidebar-border bg-card pl-8 shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring"
             />
           </div>
         </div>
       </SidebarHeader>
-      <SidebarContent className="bg-linear-to-b from-sidebar via-sidebar to-sidebar-accent/10">
+      <SidebarContent className="bg-sidebar">
         {!activeKit || (activeKit.rootTopics.length === 0 && activeKit.sections.length === 0) ? (
           <div className="p-4 text-sm text-sidebar-foreground/70 group-data-[collapsible=icon]:hidden">
             No topics found.
           </div>
         ) : (
           <SidebarGroup className="py-1.5">
-            <SidebarGroupLabel className="px-2 text-[11px] tracking-[0.08em] uppercase text-sidebar-foreground/78">
-              {activeKit.label}
+            <SidebarGroupLabel className="font-kicker px-2 text-[11px] tracking-[0.12em] text-sidebar-foreground/78 uppercase">
+              Contents
             </SidebarGroupLabel>
             <div className="px-1">
               <KitTopicTree
@@ -421,9 +423,9 @@ export function AppSidebar({
           </SidebarGroup>
         )}
       </SidebarContent>
-      <SidebarFooter className="border-t border-sidebar-border/70 bg-sidebar/92 px-4 py-3 group-data-[collapsible=icon]:hidden dark:border-sidebar-border/35">
-        <p className="text-xs font-medium text-sidebar-foreground/80">
-          {totalTopics} questions loaded
+      <SidebarFooter className="border-t-2 border-sidebar-border bg-sidebar px-4 py-3 group-data-[collapsible=icon]:hidden">
+        <p className="font-kicker text-[11px] tracking-[0.12em] text-sidebar-foreground/80 uppercase">
+          {totalTopics} questions set
         </p>
         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-sidebar-foreground/72">
           <span className="inline-flex items-center gap-1.5">

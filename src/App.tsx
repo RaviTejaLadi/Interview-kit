@@ -4,6 +4,7 @@ import { ArrowLeftIcon } from 'lucide-react';
 import { AppSidebar } from '@/components/app-sidebar';
 import { KitGallery } from '@/components/kit-gallery';
 import { MarkdownPreview } from '@/components/markdown-preview';
+import { EditionDateline, GazetteBanner } from '@/components/newspaper-masthead';
 import { TopicAccordion } from '@/components/topic-accordion';
 import {
   FullscreenButton,
@@ -15,6 +16,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { KIT_DESKS } from '@/lib/kit-meta';
 import {
   useAdjacentTopics,
   useFooterInView,
@@ -341,35 +343,41 @@ function App() {
   }, [theme]);
 
   const headerActions = (
-    <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
-      <FullscreenButton />
-      <ThemeToggle theme={theme} onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')} />
-    </div>
+    <>
+      <FullscreenButton tone="ink" />
+      <ThemeToggle
+        theme={theme}
+        tone="ink"
+        onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      />
+    </>
   );
 
   if (!selectedKitId) {
     return (
-      <div className="theme flex h-svh flex-col bg-background">
-        <header className="sticky top-0 z-20 flex min-h-14 shrink-0 items-center gap-2 border-b border-border/70 bg-card/94 px-3 py-2 backdrop-blur supports-backdrop-filter:bg-card/82 sm:min-h-16 sm:px-5 dark:border-border/35">
-          <div className="min-w-0">
-            <p className="truncate text-sm font-semibold tracking-tight text-foreground/95 sm:text-base lg:text-lg">
-              Interview Kits
-            </p>
-            <p className="truncate text-[11px] text-muted-foreground sm:text-xs">
-              Browse kits as cards, then open one to study
-            </p>
-          </div>
-          {headerActions}
-        </header>
+      <div className="theme paper-grain flex h-svh flex-col bg-background">
+        <GazetteBanner theme={theme} actions={headerActions} />
         <ScrollArea className="min-h-0 flex-1">
-          <KitGallery groups={groups} onSelectKit={(kitId) => openKit(kitId)} />
+          <KitGallery groups={groups} theme={theme} onSelectKit={(kitId) => openKit(kitId)} />
         </ScrollArea>
       </div>
     );
   }
 
+  const kitDesk = selectedNav ? (KIT_DESKS[selectedNav.kitKey] ?? 'Special edition') : 'Inside';
+  const editionSubtitle = selectedNav
+    ? [
+        selectedNav.section,
+        selectedNav.title,
+        selectedNav.kind === 'folder' ? getNavSubtitle(selectedNav) : null,
+        currentIndex >= 0 && totalCount > 0 ? `Col. ${currentIndex + 1} / ${totalCount}` : null,
+      ]
+        .filter(Boolean)
+        .join(' · ')
+    : undefined;
+
   return (
-    <SidebarProvider className="theme bg-background">
+    <SidebarProvider className="theme paper-grain bg-background">
       <AppSidebar
         groups={filteredGroups}
         searchValue={searchValue}
@@ -378,49 +386,41 @@ function App() {
         onSelectNav={handleSelectNav}
         onBackToKits={closeKit}
       />
-      <SidebarInset className="bg-linear-to-b from-background via-background to-secondary/8">
-        <header className="sticky top-0 z-20 flex min-h-14 shrink-0 items-center gap-2 border-b border-border/70 bg-card/94 px-2 py-2 backdrop-blur supports-backdrop-filter:bg-card/82 sm:min-h-16 sm:gap-3 sm:px-4 dark:border-border/35">
-          <SidebarTrigger className="-ml-0.5 rounded-md border border-border/70 bg-card/96 shadow-[0_1px_2px_rgb(15_23_42/6%)] hover:bg-muted/60 sm:-ml-1 dark:border-border/35 dark:bg-card/90 dark:shadow-none" />
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={closeKit}
-            className="h-7 rounded-md border-border/70 bg-card/96 px-2 text-xs shadow-[0_1px_2px_rgb(15_23_42/6%)] dark:border-border/35 dark:bg-card/90 dark:shadow-none"
-          >
-            <ArrowLeftIcon className="size-3.5" />
-            <span className="hidden sm:inline">All kits</span>
-            <span className="sm:hidden">Kits</span>
-          </Button>
-          <div className="hidden h-4 w-px bg-border/70 sm:block dark:bg-border/40" />
-          <div className="flex min-w-0 items-center gap-2 px-0.5 py-0.5 sm:px-1">
-            {selectedTopicIcon ? (
-              <img
-                src={selectedTopicIcon}
-                alt=""
-                aria-hidden="true"
-                className="size-4 shrink-0 rounded-sm bg-card p-0.5 object-contain sm:size-5"
-              />
-            ) : null}
-            <div className="min-w-0">
-              <p className="truncate text-sm font-semibold tracking-tight text-foreground/95 sm:text-base lg:text-lg">
-                {selectedNav?.kitLabel ?? 'Interview Kits'}
-              </p>
-              {selectedNav ? (
-                <p className="truncate text-[11px] text-muted-foreground sm:text-xs">
-                  {selectedNav.section}
-                  {' · '}
-                  {selectedNav.title}
-                  {selectedNav.kind === 'folder' ? ` · ${getNavSubtitle(selectedNav)}` : ''}
-                  {currentIndex >= 0 && totalCount > 0
-                    ? ` · ${currentIndex + 1}/${totalCount}`
-                    : ''}
-                </p>
+      <SidebarInset className="bg-background">
+        <GazetteBanner
+          theme={theme}
+          sectionLabel={selectedNav?.kitLabel}
+          actions={headerActions}
+        />
+        <EditionDateline
+          kicker={kitDesk}
+          title={selectedNav?.kitLabel ?? 'Interview Gazette'}
+          subtitle={editionSubtitle}
+          leading={
+            <>
+              <SidebarTrigger className="-ml-0.5 rounded-none border border-foreground bg-card hover:bg-muted sm:-ml-1" />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={closeKit}
+                className="h-7 rounded-none border-foreground bg-card px-2 text-xs uppercase"
+              >
+                <ArrowLeftIcon className="size-3.5" />
+                <span className="hidden sm:inline">Front page</span>
+                <span className="sm:hidden">Front</span>
+              </Button>
+              {selectedTopicIcon ? (
+                <img
+                  src={selectedTopicIcon}
+                  alt=""
+                  aria-hidden="true"
+                  className="hidden size-5 shrink-0 border border-foreground bg-card object-contain p-0.5 sm:block"
+                />
               ) : null}
-            </div>
-          </div>
-          {headerActions}
-        </header>
+            </>
+          }
+        />
         <ScrollArea
           className="min-h-0 flex-1"
           viewportRef={scrollRef}
@@ -428,14 +428,14 @@ function App() {
         >
           {!selectedNav ? (
             <div className="flex h-full items-center justify-center p-4 sm:p-6">
-              <p className="rounded-md border border-border/70 bg-card/96 p-4 text-sm text-foreground/75 shadow-[0_1px_2px_rgb(15_23_42/5%)] sm:p-5 dark:border-border/35 dark:bg-card/90 dark:shadow-none">
+              <p className="border border-foreground bg-card p-4 text-sm text-foreground/80 sm:p-5">
                 {searchValue.trim()
-                  ? 'No topics match this search in the current kit.'
-                  : 'Select a topic to view content.'}
+                  ? 'No copy matches this search in the current edition.'
+                  : 'Select a column to read.'}
               </p>
             </div>
           ) : (
-            <article className="mx-auto w-full min-w-0 max-w-6xl space-y-3 px-1 py-3 sm:space-y-4 ">
+            <article className="newspaper-article mx-auto w-full min-w-0 max-w-5xl space-y-3 px-1 py-3 sm:space-y-4">
               <TopicNavigator
                 previousTopic={previousTopic}
                 nextTopic={nextTopic}
@@ -454,11 +454,11 @@ function App() {
                     onInternalLink={handleInternalLink}
                   />
                 ) : (
-                  <div className="rounded-md border border-border/70 bg-card/96 p-4 shadow-[0_2px_10px_rgb(15_23_42/5%)] backdrop-blur sm:p-5 lg:p-7 dark:border-border/35 dark:bg-card/92 dark:shadow-none">
+                  <div className="border border-foreground bg-card p-4 sm:p-5 lg:p-8">
                     {isLoadingTopic && !hasSelectedTopicContent ? (
-                      <p className="text-sm text-foreground/70">Loading markdown...</p>
+                      <p className="text-sm text-foreground/70">Setting the type...</p>
                     ) : topicLoadError ? (
-                      <p className="text-sm text-red-600">
+                      <p className="text-sm text-secondary">
                         Could not load this file. {topicLoadError}
                       </p>
                     ) : (
