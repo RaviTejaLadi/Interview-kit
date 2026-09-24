@@ -8,9 +8,7 @@ Instead of generating a large set of possible utilities first and then removing 
 
 ```html
 <!-- Tailwind detects these classes and generates their CSS -->
-<div class="text-white bg-blue-500 p-4 rounded-lg">
-  Hello
-</div>
+<div class="text-white bg-blue-500 p-4 rounded-lg">Hello</div>
 ```
 
 Conceptually:

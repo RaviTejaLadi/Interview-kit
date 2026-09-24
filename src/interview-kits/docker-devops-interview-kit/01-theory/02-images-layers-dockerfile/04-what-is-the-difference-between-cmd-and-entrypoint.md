@@ -4,6 +4,7 @@
 `ENTRYPOINT` is the main process; `CMD` supplies default arguments. `docker run image extra` appends to `CMD` if `ENTRYPOINT` is set, or overrides `CMD` if only `CMD` is set. Use exec form `[]` so PID 1 is your app (signals: SIGTERM). Shell form runs via `/bin/sh -c` and can ignore signals.
 
 **Key points:**
+
 - Exec form: `ENTRYPOINT ["node", "server.js"]`.
 - PID 1 must reap zombies or use `tini`.
 - Kubernetes `command`/`args` map to entrypoint/cmd.

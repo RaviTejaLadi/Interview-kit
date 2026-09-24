@@ -4,6 +4,7 @@
 Priority: accessible queries (`getByRole`, `getByLabelText`, `getByPlaceholderText`, `getByText`) then `getByAltText`/`getByTitle`, then `getByTestId` as last resort. `queryBy*` for asserting absence. `findBy*` returns a promise for async appearance. `getBy*` throws if missing — good for happy path.
 
 **Key points:**
+
 - Roles improve a11y as a side effect of testing.
 - Avoid CSS selectors and class names.
 - `screen` is preferred over destructuring render output.

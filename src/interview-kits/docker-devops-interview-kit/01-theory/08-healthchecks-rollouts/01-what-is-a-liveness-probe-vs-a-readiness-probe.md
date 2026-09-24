@@ -4,6 +4,7 @@
 Liveness: is the process stuck? Failure → kubelet restarts the container. Readiness: should it receive traffic? Failure → remove from Service endpoints, no restart. Startup probes delay liveness for slow boots. Wrong liveness on a busy app causes restart storms.
 
 **Key points:**
+
 - Liveness: deadlock, infinite loop — cheap check (`/healthz`).
 - Readiness: dependencies, warmup, migrations done (`/ready`).
 - Do not make liveness call the database if a DB blip should not kill pods.

@@ -4,6 +4,7 @@
 A plain `SET` removes any existing expire. `SET key value KEEPTTL` updates the value and keeps the previous TTL. Without it, a background refresh can accidentally make a key immortal, which is a classic memory-leak-in-Redis bug.
 
 **Key points:**
+
 - `SET ... EX` always sets a new TTL.
 - `KEEPTTL` is for value refresh without extending or clearing life.
 - Read the SET options: `NX`, `XX`, `EX`, `PX`, `KEEPTTL`, `GET`.

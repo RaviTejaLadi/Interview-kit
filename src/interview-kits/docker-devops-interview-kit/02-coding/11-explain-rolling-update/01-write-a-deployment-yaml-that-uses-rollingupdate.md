@@ -4,6 +4,7 @@
 Show `strategy.rollingUpdate` with `maxSurge` and `maxUnavailable`, a readiness probe, resource requests, and a container image pinned by tag/digest. This is the coding/practical artifact for Kubernetes rollouts.
 
 **Key points:**
+
 - `maxUnavailable: 0` and `maxSurge: 1` = extra pod, no capacity loss (needs headroom).
 - Readiness probe required for safe traffic shift.
 - Labels match the Service.

@@ -4,6 +4,7 @@
 Red: test that 80% discount caps at 50% (or throws — pick a spec). Green: `Math.min(discountPct, 50)`. Refactor names. Add a test that 50% is allowed and 51% caps. This is a complete red-green-refactor story for the interview whiteboard.
 
 **Key points:**
+
 - Ask the interviewer the business rule first.
 - Throw vs cap is a product decision.
 - Write the failing test before the `Math.min`.

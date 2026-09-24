@@ -4,6 +4,7 @@
 On miss, try to acquire a lock. If acquired, load DB, `SET` cache with TTL+jitter, release lock. If not acquired, wait and `GET` again (or return stale). This is the coding exercise paired with distributed locks theory.
 
 **Key points:**
+
 - Lock TTL > DB query time.
 - Always fill cache before unlock.
 - Sleep with cap; then hit DB as last resort (or fail 503).

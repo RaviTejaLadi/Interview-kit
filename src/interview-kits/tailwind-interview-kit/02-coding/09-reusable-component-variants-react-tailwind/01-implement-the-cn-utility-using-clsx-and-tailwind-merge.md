@@ -32,8 +32,8 @@ npm install clsx tailwind-merge
 
 ```typescript
 // Create a reusable className composition utility.
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -46,10 +46,10 @@ export function cn(...inputs: ClassValue[]) {
 // Conditionally compose Tailwind classes.
 <div
   className={cn(
-    "rounded-lg px-4 py-2",
-    isActive && "bg-blue-500",
-    disabled && "opacity-50",
-    className
+    'rounded-lg px-4 py-2',
+    isActive && 'bg-blue-500',
+    disabled && 'opacity-50',
+    className,
   )}
 />
 ```
@@ -58,10 +58,10 @@ The important part is that `twMerge()` understands Tailwind conflicts.
 
 ```tsx
 // tailwind-merge resolves conflicting utilities.
-cn("px-4", "px-6");
+cn('px-4', 'px-6');
 // → "px-6"
 
-cn("text-red-500", "text-blue-500");
+cn('text-red-500', 'text-blue-500');
 // → "text-blue-500"
 ```
 
@@ -71,7 +71,7 @@ cn("text-red-500", "text-blue-500");
 
 ```tsx
 // clsx does not understand Tailwind conflicts.
-clsx("px-4", "px-6");
+clsx('px-4', 'px-6');
 // "px-4 px-6"
 ```
 

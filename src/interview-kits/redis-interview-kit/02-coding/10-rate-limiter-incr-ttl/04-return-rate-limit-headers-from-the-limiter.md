@@ -4,6 +4,7 @@
 Map `{ limit, remaining, reset }` to `X-RateLimit-*` and `Retry-After` on reject. Reset is the end of the current window for fixed windows.
 
 **Key points:**
+
 - Same numbers as REST kit headers.
 - remaining never negative.
 - reset as unix seconds.

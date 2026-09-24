@@ -4,6 +4,7 @@
 Cache-aside: on miss, load DB, `SET key value EX ttl`. Choose TTL from freshness needs, not randomly. Too long → stale; too short → DB load. Add jitter. For stampede, see lock/singleflight patterns.
 
 **Key points:**
+
 - Serialize values (JSON) and version the schema in the key (`v2:`).
 - Negative caching: cache empty results briefly to protect the DB.
 - Null vs missing: distinguish 'cached not found' from 'not in cache'.

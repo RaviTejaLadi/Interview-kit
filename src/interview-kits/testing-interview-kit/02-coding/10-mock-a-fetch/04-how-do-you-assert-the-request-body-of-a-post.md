@@ -4,6 +4,7 @@
 With `jest.fn`, read `fetch.mock.calls[0][1].body`. With MSW, inspect `await request.json()` in the handler and `HttpResponse` after assertions, or use a listener. Canonicalize JSON key order if you stringify in the client.
 
 **Key points:**
+
 - Assert URL, method, headers, body.
 - Do not over-assert incidental headers if the browser adds them.
 - Content-Type application/json on POST.
@@ -12,7 +13,9 @@ With `jest.fn`, read `fetch.mock.calls[0][1].body`. With MSW, inspect `await req
 
 ```javascript
 test('createUser posts the email', async () => {
-  const fetchImpl = jest.fn().mockResolvedValue(new Response(JSON.stringify({ id: '1' }), { status: 201 }));
+  const fetchImpl = jest
+    .fn()
+    .mockResolvedValue(new Response(JSON.stringify({ id: '1' }), { status: 201 }));
   await createUser({ email: 'a@b.com' }, fetchImpl);
   expect(fetchImpl).toHaveBeenCalledWith('/api/users', expect.objectContaining({ method: 'POST' }));
   const body = JSON.parse(fetchImpl.mock.calls[0][1].body);

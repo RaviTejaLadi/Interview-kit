@@ -4,6 +4,7 @@
 Over-mocking is replacing so many collaborators that the test only proves your mocks return what you told them to. It stays green when the real SQL, schema, or HTTP contract breaks. Symptom: 90% mock setup, one `toHaveBeenCalled`. Fix: fewer mocks, more fakes or real integration at the boundary.
 
 **Key points:**
+
 - Mocks that mirror implementation line-by-line.
 - Rewriting the class in `jest.fn` form.
 - Tests break on rename, not on bug.

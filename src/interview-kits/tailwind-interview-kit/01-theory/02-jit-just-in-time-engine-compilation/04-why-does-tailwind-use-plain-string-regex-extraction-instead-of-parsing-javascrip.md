@@ -12,9 +12,7 @@ For example:
 
 ```jsx
 // Tailwind can extract these class candidates from the source text
-<div className="flex items-center gap-4">
-  Hello
-</div>
+<div className="flex items-center gap-4">Hello</div>
 ```
 
 It doesn't need to understand:

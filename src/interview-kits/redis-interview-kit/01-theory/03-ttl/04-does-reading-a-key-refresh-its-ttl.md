@@ -4,6 +4,7 @@
 No. `GET` does not extend TTL. If you want sliding sessions, you must `EXPIRE` again on access (or `GET` + `EXPIRE` pipeline). Sliding vs absolute session expiry is an application choice.
 
 **Key points:**
+
 - Absolute TTL: login sets `EX 86400` once.
 - Sliding: refresh TTL on each authenticated request (with a cap).
 - `SET` replaces the value and by default may remove TTL unless `KEEPTTL`.

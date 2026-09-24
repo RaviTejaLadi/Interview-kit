@@ -18,9 +18,7 @@ First, mark the parent:
 ```html id="4p2g6w"
 <!-- Mark the parent as a group so children can react to its state -->
 <div class="group">
-  <h2 class="text-gray-900 group-hover:text-blue-600">
-    Product
-  </h2>
+  <h2 class="text-gray-900 group-hover:text-blue-600">Product</h2>
 </div>
 ```
 
@@ -42,13 +40,9 @@ group
 <!-- Change the icon and title when the entire card is hovered -->
 <a href="#" class="group block rounded-lg p-4">
   <div class="flex items-center gap-3">
-    <span class="text-gray-500 group-hover:text-blue-600">
-      →
-    </span>
+    <span class="text-gray-500 group-hover:text-blue-600"> → </span>
 
-    <h2 class="text-gray-900 group-hover:text-blue-600">
-      Read article
-    </h2>
+    <h2 class="text-gray-900 group-hover:text-blue-600">Read article</h2>
   </div>
 </a>
 ```
@@ -62,9 +56,7 @@ Modern Tailwind also supports named groups when you have nested groups.
 ```html id="jyuwpn"
 <!-- Use a named group to target the correct parent state -->
 <div class="group/card">
-  <h2 class="group-hover/card:text-blue-600">
-    Card title
-  </h2>
+  <h2 class="group-hover/card:text-blue-600">Card title</h2>
 </div>
 ```
 

@@ -6,9 +6,9 @@ Example:
 
 ```js id="6l4t2x"
 // tailwind-merge keeps the last conflicting Tailwind utility
-import { twMerge } from "tailwind-merge";
+import { twMerge } from 'tailwind-merge';
 
-twMerge("p-2 p-4");
+twMerge('p-2 p-4');
 ```
 
 Result:
@@ -38,7 +38,7 @@ belong to the same Tailwind utility group: **padding**.
 
 ```js id="5v7h1n"
 // Resolve conflicting background utilities
-twMerge("bg-red-500 bg-blue-500");
+twMerge('bg-red-500 bg-blue-500');
 ```
 
 Result:
@@ -51,7 +51,7 @@ Similarly:
 
 ```js id="r8j2k1"
 // Resolve conflicting text-size utilities
-twMerge("text-sm text-lg");
+twMerge('text-sm text-lg');
 ```
 
 Result:
@@ -67,11 +67,7 @@ Consider a reusable React component:
 ```jsx id="4x2n8k"
 // Allow consumers to override the default padding
 function Button({ className }) {
-  return (
-    <button className={twMerge("px-4 py-2 bg-blue-500", className)}>
-      Save
-    </button>
-  );
+  return <button className={twMerge('px-4 py-2 bg-blue-500', className)}>Save</button>;
 }
 ```
 

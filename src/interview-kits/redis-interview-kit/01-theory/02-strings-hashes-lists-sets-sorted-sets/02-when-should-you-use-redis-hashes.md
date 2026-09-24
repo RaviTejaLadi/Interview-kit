@@ -4,6 +4,7 @@
 Hashes map field → value inside one key (`HSET user:1 name Ada`). They are good for objects you partially update. `HGETALL` is `O(N)` in fields — fine for small objects, dangerous for unbounded field counts. Prefer hashes over encoding JSON when you often update one field.
 
 **Key points:**
+
 - `HINCRBY` for per-field counters.
 - Memory can be more efficient than many tiny string keys.
 - Cluster: the whole hash is one key / one slot.

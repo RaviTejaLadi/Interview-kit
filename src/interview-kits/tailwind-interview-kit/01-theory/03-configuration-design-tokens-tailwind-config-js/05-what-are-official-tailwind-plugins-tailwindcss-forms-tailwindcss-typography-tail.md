@@ -12,10 +12,7 @@ Examples:
 
 ```html
 <!-- Form controls can use Tailwind's form plugin styles -->
-<input
-  type="text"
-  class="rounded-md border-gray-300"
-/>
+<input type="text" class="rounded-md border-gray-300" />
 ```
 
 It helps normalize controls such as:
@@ -38,9 +35,7 @@ For example:
 <!-- The prose utility provides typography suitable for long-form content -->
 <article class="prose">
   <h1>My Article</h1>
-  <p>
-    This is a paragraph of article content.
-  </p>
+  <p>This is a paragraph of article content.</p>
 </article>
 ```
 

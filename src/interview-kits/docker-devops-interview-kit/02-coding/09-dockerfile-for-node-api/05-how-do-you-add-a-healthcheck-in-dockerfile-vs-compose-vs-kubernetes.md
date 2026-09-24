@@ -4,6 +4,7 @@
 Dockerfile `HEALTHCHECK` is used by Docker Engine/Compose. Kubernetes ignores Dockerfile HEALTHCHECK and uses probes. Implement `/healthz` in the app and wire all three as appropriate. Do not only rely on Dockerfile when you deploy to K8s.
 
 **Key points:**
+
 - App endpoint is the source of truth.
 - Compose: `healthcheck.test: curl -f http://localhost:3000/healthz`.
 - K8s: httpGet probes.

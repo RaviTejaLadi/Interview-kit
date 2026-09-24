@@ -103,14 +103,14 @@ This is powerful because traditionally you needed JavaScript or complicated CSS 
 
 This distinction is worth memorizing.
 
-| Feature | Relationship | Example |
-|---|---|---|
-| `group` | Parent → child | Parent hover changes child |
-| `peer` | Sibling → sibling | Checkbox changes label |
-| `has-*` | Parent ← descendant | Parent reacts to descendant |
-| `*:` | Parent → direct children | Style all direct children |
-| `aria-*` | Attribute state | `aria-expanded` |
-| `data-*` | Custom state | `data-state="open"` |
+| Feature  | Relationship             | Example                     |
+| -------- | ------------------------ | --------------------------- |
+| `group`  | Parent → child           | Parent hover changes child  |
+| `peer`   | Sibling → sibling        | Checkbox changes label      |
+| `has-*`  | Parent ← descendant      | Parent reacts to descendant |
+| `*:`     | Parent → direct children | Style all direct children   |
+| `aria-*` | Attribute state          | `aria-expanded`             |
+| `data-*` | Custom state             | `data-state="open"`         |
 
 ### Mental model
 

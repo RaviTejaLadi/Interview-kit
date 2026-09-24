@@ -55,7 +55,7 @@ placeholder=" "
 This allows the CSS state:
 
 ```css
-:placeholder-shown
+:placeholder-shown;
 ```
 
 to distinguish between an empty and filled input.
@@ -79,17 +79,10 @@ You can conditionally add an error message:
       placeholder=" "
     />
 
-    <label
-      for="email"
-      class="absolute left-3 top-3 bg-white px-1 text-gray-500"
-    >
-      Email
-    </label>
+    <label for="email" class="absolute left-3 top-3 bg-white px-1 text-gray-500"> Email </label>
   </div>
 
-  <p id="email-error" class="mt-1 text-sm text-red-600">
-    Please enter a valid email address.
-  </p>
+  <p id="email-error" class="mt-1 text-sm text-red-600">Please enter a valid email address.</p>
 </div>
 ```
 

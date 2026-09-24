@@ -8,9 +8,7 @@ For example:
 
 ```html
 <!-- Stack on smaller screens and switch to columns at md -->
-<div class="flex flex-col md:flex-row">
-  ...
-</div>
+<div class="flex flex-col md:flex-row">...</div>
 ```
 
 Conceptually:

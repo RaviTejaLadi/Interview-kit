@@ -4,6 +4,7 @@
 Each Dockerfile instruction typically adds a layer (copy-on-write tarball). Layers are cached and reused. Changing a layer invalidates it and all layers after it. Order your Dockerfile so rarely changing steps (deps) come before frequently changing steps (app source).
 
 **Key points:**
+
 - Layer cache is the main build-speed lever.
 - `COPY package.json` then `npm ci` then `COPY .` is the Node pattern.
 - Smaller layers and fewer files → faster push/pull.

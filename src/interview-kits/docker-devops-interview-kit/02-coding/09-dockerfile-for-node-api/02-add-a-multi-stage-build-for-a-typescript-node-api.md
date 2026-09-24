@@ -4,6 +4,7 @@
 Build stage compiles TS; runtime stage copies `dist` and production `node_modules`. Optionally `npm ci` twice (with/without devDeps) or `prune`. Final image has no `tsc` or tests.
 
 **Key points:**
+
 - Builder has devDependencies.
 - Runtime user is non-root.
 - Same major Node version both stages.

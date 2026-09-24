@@ -4,6 +4,7 @@
 Use colons or a consistent separator: `env:service:entity:id:field`. Include a version or namespace to avoid collisions. Avoid unbounded key growth without TTL. In cluster mode, hash tags `{user:1}` colocate related keys.
 
 **Key points:**
+
 - `prod:session:u42` is readable in `SCAN`.
 - Never invent random key shapes per feature.
 - Document prefixes in a README.

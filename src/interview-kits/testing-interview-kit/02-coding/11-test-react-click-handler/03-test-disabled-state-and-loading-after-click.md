@@ -4,6 +4,7 @@
 When click triggers async work, the button should disable or show `Saving…`. Use a deferred promise: click, assert loading, then resolve, assert success. This catches double-submit bugs.
 
 **Key points:**
+
 - Deferred promise pattern.
 - `toBeDisabled()`.
 - Do not `waitFor` a mock call only — wait for UI too.
@@ -14,7 +15,12 @@ When click triggers async work, the button should disable or show `Saving…`. U
 test('disables submit while saving', async () => {
   const user = userEvent.setup();
   let resolve;
-  const onSave = jest.fn(() => new Promise((r) => { resolve = r; }));
+  const onSave = jest.fn(
+    () =>
+      new Promise((r) => {
+        resolve = r;
+      }),
+  );
   render(<InviteForm onSave={onSave} />);
   await user.type(screen.getByLabelText(/email/i), 'dev@example.com');
   await user.click(screen.getByRole('button', { name: /send invite/i }));

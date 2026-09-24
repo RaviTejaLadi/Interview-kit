@@ -28,8 +28,8 @@ Its purpose is to make component `className` handling cleaner and predictable.
 
 ```typescript
 // Combine conditional classes and resolve Tailwind conflicts.
-import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -65,10 +65,10 @@ There are conflicting utilities.
 
 ```tsx
 // tailwind-merge keeps the later conflicting utility.
-cn("px-4", "px-6");
+cn('px-4', 'px-6');
 // → "px-6"
 
-cn("bg-blue-500", "bg-red-500");
+cn('bg-blue-500', 'bg-red-500');
 // → "bg-red-500"
 ```
 
@@ -82,11 +82,7 @@ For example:
 
 ```tsx
 // clsx conditionally includes classes based on values.
-clsx(
-  "rounded-md px-4",
-  isActive && "bg-blue-500",
-  isDisabled && "opacity-50"
-);
+clsx('rounded-md px-4', isActive && 'bg-blue-500', isDisabled && 'opacity-50');
 ```
 
 If:
@@ -116,7 +112,7 @@ For example:
 
 ```typescript
 // tailwind-merge resolves conflicting Tailwind utilities.
-twMerge("px-4 px-6");
+twMerge('px-4 px-6');
 // → "px-6"
 ```
 
@@ -124,7 +120,7 @@ Another example:
 
 ```typescript
 // The later background utility wins.
-twMerge("bg-blue-500 bg-red-500");
+twMerge('bg-blue-500 bg-red-500');
 // → "bg-red-500"
 ```
 
@@ -158,11 +154,7 @@ classes          conflicts
 
 ```typescript
 // Combine conditional classes and resolve conflicts.
-cn(
-  "px-4 py-2",
-  isActive && "bg-blue-500",
-  "px-6"
-);
+cn('px-4 py-2', isActive && 'bg-blue-500', 'px-6');
 ```
 
 `clsx` first produces something like:
@@ -187,13 +179,13 @@ It allows `cn()` to accept different types of class inputs:
 
 ```typescript
 // ClassValue allows strings, arrays, objects, booleans, and more.
-import { type ClassValue } from "clsx";
+import { type ClassValue } from 'clsx';
 
 const classes: ClassValue[] = [
-  "px-4",
-  condition && "bg-blue-500",
+  'px-4',
+  condition && 'bg-blue-500',
   {
-    "opacity-50": disabled,
+    'opacity-50': disabled,
   },
 ];
 ```
@@ -222,7 +214,7 @@ The utility can then be imported anywhere:
 
 ```tsx
 // Import the shared className utility.
-import { cn } from "@/lib/cn";
+import { cn } from '@/lib/cn';
 ```
 
 ---
@@ -233,19 +225,12 @@ This is where the utility becomes particularly useful.
 
 ```tsx
 // Use cn() to combine component defaults with user-provided classes.
-type ButtonProps = React.ComponentProps<"button">;
+type ButtonProps = React.ComponentProps<'button'>;
 
-export function Button({
-  className,
-  ...props
-}: ButtonProps) {
+export function Button({ className, ...props }: ButtonProps) {
   return (
     <button
-      className={cn(
-        "rounded-md bg-blue-600 px-4 py-2 text-white",
-        "hover:bg-blue-700",
-        className
-      )}
+      className={cn('rounded-md bg-blue-600 px-4 py-2 text-white', 'hover:bg-blue-700', className)}
       {...props}
     />
   );
@@ -256,9 +241,7 @@ Now a consumer can override styles:
 
 ```tsx
 // Custom classes can override conflicting Tailwind utilities.
-<Button className="bg-red-600 px-6">
-  Delete
-</Button>
+<Button className="bg-red-600 px-6">Delete</Button>
 ```
 
 The final classes will effectively use:
@@ -313,26 +296,26 @@ The architecture becomes:
 
 # 10. `cn()` vs `clsx`
 
-| Feature | `clsx` | `cn()` |
-|---|---|---|
-| Conditional classes | ✅ | ✅ |
-| Object syntax | ✅ | ✅ |
-| Array syntax | ✅ | ✅ |
-| Tailwind conflict resolution | ❌ | ✅ |
-| Custom utility | ❌ | ✅ |
+| Feature                             | `clsx`    | `cn()` |
+| ----------------------------------- | --------- | ------ |
+| Conditional classes                 | ✅        | ✅     |
+| Object syntax                       | ✅        | ✅     |
+| Array syntax                        | ✅        | ✅     |
+| Tailwind conflict resolution        | ❌        | ✅     |
+| Custom utility                      | ❌        | ✅     |
 | Usually used directly in components | Sometimes | Common |
 
 For example:
 
 ```typescript
 // clsx combines classes but does not resolve Tailwind conflicts.
-clsx("p-4", condition && "p-6");
+clsx('p-4', condition && 'p-6');
 // → "p-4 p-6"
 ```
 
 ```typescript
 // cn() combines and resolves the conflicting padding utilities.
-cn("p-4", condition && "p-6");
+cn('p-4', condition && 'p-6');
 // → "p-6"
 ```
 

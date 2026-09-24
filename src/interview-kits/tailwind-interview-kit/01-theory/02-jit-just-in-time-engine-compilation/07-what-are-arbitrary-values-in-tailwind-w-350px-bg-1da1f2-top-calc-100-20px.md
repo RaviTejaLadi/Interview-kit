@@ -6,9 +6,7 @@ Instead of being limited to Tailwind's predefined values:
 
 ```html
 <!-- Use a custom width that isn't necessarily in the default scale -->
-<div class="w-[350px]">
-  Content
-</div>
+<div class="w-[350px]">Content</div>
 ```
 
 The syntax is:
@@ -23,9 +21,7 @@ utility-[custom-value]
 
 ```html
 <!-- Generate width: 350px -->
-<div class="w-[350px]">
-  Content
-</div>
+<div class="w-[350px]">Content</div>
 ```
 
 Conceptually:
@@ -41,9 +37,7 @@ width: 350px;
 
 ```html
 <!-- Generate a custom background color -->
-<div class="bg-[#1da1f2]">
-  Twitter-style blue
-</div>
+<div class="bg-[#1da1f2]">Twitter-style blue</div>
 ```
 
 Conceptually:
@@ -59,9 +53,7 @@ background-color: #1da1f2;
 
 ```html
 <!-- Generate a custom top offset -->
-<div class="top-[20px]">
-  Content
-</div>
+<div class="top-[20px]">Content</div>
 ```
 
 ---
@@ -70,18 +62,14 @@ background-color: #1da1f2;
 
 ```html
 <!-- Use a custom CSS calculation -->
-<div class="top-[calc(100%-20px)]">
-  Content
-</div>
+<div class="top-[calc(100%-20px)]">Content</div>
 ```
 
 For Tailwind syntax, spaces inside arbitrary values may need to be represented appropriately. For example:
 
 ```html
 <!-- Use underscores where a space is needed inside an arbitrary value -->
-<div class="top-[calc(100%_-_20px)]">
-  Content
-</div>
+<div class="top-[calc(100%_-_20px)]">Content</div>
 ```
 
 This represents:

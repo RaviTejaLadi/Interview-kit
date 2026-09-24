@@ -4,6 +4,7 @@
 Inject `now = () => Date.now` as a parameter (or a clock port) so tests pass a fixed timestamp. Do not spy on `Date` globally unless you must. This is the TDD design lesson: hidden time is a side effect.
 
 **Key points:**
+
 - Dependency injection beats `jest.useFakeTimers` for domain code.
 - Fake timers still useful for debounce in UI.
 - Freeze `2026-01-01T00:00:00.000Z`.

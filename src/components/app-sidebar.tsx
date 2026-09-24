@@ -354,10 +354,7 @@ export function AppSidebar({
   return (
     <Sidebar
       collapsible="icon"
-      className={cn(
-        'border-r-2 border-sidebar-border bg-sidebar',
-        className,
-      )}
+      className={cn('border-r-2 border-sidebar-border bg-sidebar', className)}
       {...props}
     >
       <SidebarHeader className="gap-3 border-b-2 border-sidebar-border bg-sidebar px-2 pt-2 pb-3">
@@ -383,7 +380,9 @@ export function AppSidebar({
             <BookOpenTextIcon className="size-4 shrink-0 text-sidebar-primary" />
           )}
           <div className="grid min-w-0 flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="font-heading truncate font-semibold">{activeKit?.label ?? 'Gazette'}</span>
+            <span className="font-heading truncate font-semibold">
+              {activeKit?.label ?? 'Gazette'}
+            </span>
             <span className="font-heading truncate text-[10px] tracking-[0.14em] text-sidebar-foreground/70 uppercase">
               Index of this edition
             </span>

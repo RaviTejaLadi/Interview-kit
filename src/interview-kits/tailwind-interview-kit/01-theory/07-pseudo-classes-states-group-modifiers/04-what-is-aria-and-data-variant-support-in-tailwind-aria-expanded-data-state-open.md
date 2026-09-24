@@ -14,12 +14,7 @@ For example:
 
 ```html id="q5w0sj"
 <!-- Change the icon when the disclosure is expanded -->
-<button
-  aria-expanded="true"
-  class="aria-expanded:font-bold"
->
-  Menu
-</button>
+<button aria-expanded="true" class="aria-expanded:font-bold">Menu</button>
 ```
 
 Tailwind can detect:
@@ -49,12 +44,7 @@ aria-selected:
 
 ```html id="4x3k29"
 <!-- Style the button differently when it is expanded -->
-<button
-  aria-expanded="false"
-  class="aria-expanded:bg-blue-100"
->
-  Options
-</button>
+<button aria-expanded="false" class="aria-expanded:bg-blue-100">Options</button>
 ```
 
 The advantage is that the **accessibility state and visual state can come from the same source of truth**.
@@ -69,9 +59,7 @@ For example:
 
 ```html id="8y5f6e"
 <!-- Style the component based on its custom state attribute -->
-<div data-state="open" class="data-[state=open]:bg-blue-100">
-  Menu content
-</div>
+<div data-state="open" class="data-[state=open]:bg-blue-100">Menu content</div>
 ```
 
 The syntax is:

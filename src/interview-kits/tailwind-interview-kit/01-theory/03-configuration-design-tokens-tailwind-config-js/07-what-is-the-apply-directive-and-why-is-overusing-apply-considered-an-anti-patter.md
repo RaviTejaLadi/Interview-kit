@@ -15,9 +15,7 @@ Then:
 
 ```html
 <!-- Use the custom component class -->
-<button class="btn-primary">
-  Save
-</button>
+<button class="btn-primary">Save</button>
 ```
 
 Without `@apply`, you'd write the CSS manually:

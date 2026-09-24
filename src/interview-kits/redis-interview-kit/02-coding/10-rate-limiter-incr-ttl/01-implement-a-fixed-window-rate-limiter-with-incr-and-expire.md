@@ -4,6 +4,7 @@
 Key by user and window (`rl:{userId}:{floor(now/window)}`). `INCR`; if the result is 1, `EXPIRE` the key for the window length. If count > limit, reject. This is the standard Redis interview limiter.
 
 **Key points:**
+
 - `INCR` is atomic.
 - Set TTL only when count == 1 to avoid resetting the window.
 - Fixed window allows burst at the boundary.

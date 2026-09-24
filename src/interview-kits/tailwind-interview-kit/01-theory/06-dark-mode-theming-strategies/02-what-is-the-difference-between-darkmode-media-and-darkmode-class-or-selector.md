@@ -21,7 +21,7 @@ In Tailwind v3:
 ```js
 // Configure dark mode to follow the operating system preference
 module.exports = {
-  darkMode: "media",
+  darkMode: 'media',
 };
 ```
 
@@ -68,7 +68,7 @@ Configuration in Tailwind v3:
 ```js
 // Configure dark mode to be controlled by a class
 module.exports = {
-  darkMode: "class",
+  darkMode: 'class',
 };
 ```
 
@@ -76,9 +76,7 @@ Now:
 
 ```html
 <!-- dark:bg-gray-900 applies because an ancestor has class="dark" -->
-<div class="bg-white dark:bg-gray-900">
-  Content
-</div>
+<div class="bg-white dark:bg-gray-900">Content</div>
 ```
 
 This is useful for:
@@ -97,7 +95,7 @@ In newer Tailwind versions, the terminology changed.
 Tailwind v3 commonly uses:
 
 ```js
-darkMode: "class";
+darkMode: 'class';
 ```
 
 Newer Tailwind approaches can use a **selector-based dark variant**, where the selector controlling dark mode can be customized.
@@ -114,7 +112,6 @@ The underlying idea is the same:
 > **Instead of asking the OS, look for a selector/class that indicates dark mode.**
 
 ---
-
 
 With `media`, dark mode follows the user's operating-system preference.
 
@@ -133,7 +130,7 @@ In Tailwind v3:
 ```js
 // Configure dark mode to follow the operating system preference
 module.exports = {
-  darkMode: "media",
+  darkMode: 'media',
 };
 ```
 

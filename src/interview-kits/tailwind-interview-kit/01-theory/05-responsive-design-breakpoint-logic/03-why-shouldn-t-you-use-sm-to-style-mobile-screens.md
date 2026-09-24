@@ -10,9 +10,7 @@ For example:
 
 ```html
 <!-- This applies blue only at 640px and above -->
-<div class="sm:bg-blue-500">
-  Content
-</div>
+<div class="sm:bg-blue-500">Content</div>
 ```
 
 Below `640px`, the `sm:bg-blue-500` utility doesn't apply.
@@ -21,9 +19,7 @@ If you want the mobile/default style, write it **without a breakpoint**:
 
 ```html
 <!-- Base style applies to all widths; md overrides it on larger screens -->
-<div class="bg-red-500 md:bg-blue-500">
-  Content
-</div>
+<div class="bg-red-500 md:bg-blue-500">Content</div>
 ```
 
 Meaning:
@@ -39,14 +35,14 @@ Instead of:
 
 ```html
 <!-- Less aligned with Tailwind's mobile-first approach -->
-<div class="sm:text-center">
+<div class="sm:text-center"></div>
 ```
 
 think:
 
 ```html
 <!-- Base styles target small screens; md modifies larger screens -->
-<div class="text-center md:text-left">
+<div class="text-center md:text-left"></div>
 ```
 
 The unprefixed class is your **base/mobile style**.

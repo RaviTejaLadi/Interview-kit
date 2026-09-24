@@ -10,9 +10,7 @@ For example, suppose your code contains:
 
 ```jsx
 // These utilities are detected from your source files
-<div className="flex p-4 bg-blue-500">
-  Hello
-</div>
+<div className="flex p-4 bg-blue-500">Hello</div>
 ```
 
 Tailwind generates the corresponding CSS utilities.

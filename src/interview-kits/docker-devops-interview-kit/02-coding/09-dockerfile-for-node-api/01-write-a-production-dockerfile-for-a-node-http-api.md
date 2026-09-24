@@ -4,6 +4,7 @@
 Use a pinned Node Alpine (or slim) image, lockfile-first install, non-root user, exec-form CMD, and production env. Include a .dockerignore. This is the baseline interview artifact.
 
 **Key points:**
+
 - `npm ci --omit=dev`.
 - `USER node`.
 - Do not run `npm install` without a lockfile.

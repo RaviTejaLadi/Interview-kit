@@ -4,6 +4,7 @@
 Use `profiles` or a `migrate` service with `docker compose run --rm migrate`. For dev, override to bind-mount source and run `node --watch`. Keep production compose without bind mounts.
 
 **Key points:**
+
 - Override file for dev-only mounts.
 - Migrations as a one-off, not always in CMD.
 - `npm` watch on bind mounts.
@@ -14,14 +15,14 @@ Use `profiles` or a `migrate` service with `docker compose run --rm migrate`. Fo
 # compose.dev.yaml
 services:
   api:
-    command: ["node", "--watch", "src/index.js"]
+    command: ['node', '--watch', 'src/index.js']
     volumes:
       - ./src:/app/src
   migrate:
     build: .
-    command: ["node", "src/migrate.js"]
+    command: ['node', 'src/migrate.js']
     depends_on:
       postgres:
         condition: service_healthy
-    profiles: ["tools"]
+    profiles: ['tools']
 ```

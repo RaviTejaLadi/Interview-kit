@@ -4,6 +4,7 @@
 `ZINCRBY key delta userId` adds delta (can be negative) atomically. Do not `ZSCORE` + `ZADD` in the client — that races. For 'best score only', compare in Lua: update if new > old.
 
 **Key points:**
+
 - `ZINCRBY` creates the member at 0 if missing.
 - Use Lua for max-score semantics.
 - Validate delta server-side to prevent cheating.

@@ -21,12 +21,9 @@ Restore preference on next visit
 function toggleDarkMode() {
   const html = document.documentElement;
 
-  const isDark = html.classList.toggle("dark");
+  const isDark = html.classList.toggle('dark');
 
-  localStorage.setItem(
-    "theme",
-    isDark ? "dark" : "light"
-  );
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
 }
 ```
 
@@ -34,19 +31,17 @@ Then:
 
 ```html
 <!-- Toggle the application's dark mode -->
-<button onclick="toggleDarkMode()">
-  Toggle theme
-</button>
+<button onclick="toggleDarkMode()">Toggle theme</button>
 ```
 
 On page load, restore the preference:
 
 ```js
 // Restore the saved theme when the application starts
-const savedTheme = localStorage.getItem("theme");
+const savedTheme = localStorage.getItem('theme');
 
-if (savedTheme === "dark") {
-  document.documentElement.classList.add("dark");
+if (savedTheme === 'dark') {
+  document.documentElement.classList.add('dark');
 }
 ```
 
@@ -54,9 +49,7 @@ Now:
 
 ```html
 <!-- The dark variant responds to the html.dark class -->
-<div class="bg-white text-black dark:bg-gray-900 dark:text-white">
-  Hello
-</div>
+<div class="bg-white text-black dark:bg-gray-900 dark:text-white">Hello</div>
 ```
 
 ---
@@ -67,29 +60,23 @@ In React, you can encapsulate the behavior in a custom hook.
 
 ```jsx
 // Manage a persisted light/dark theme in React
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export function useTheme() {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme") || "light";
+    return localStorage.getItem('theme') || 'light';
   });
 
   useEffect(() => {
-    document.documentElement.classList.toggle(
-      "dark",
-      theme === "dark"
-    );
+    document.documentElement.classList.toggle('dark', theme === 'dark');
 
-    localStorage.setItem("theme", theme);
+    localStorage.setItem('theme', theme);
   }, [theme]);
 
   return {
     theme,
     setTheme,
-    toggleTheme: () =>
-      setTheme((current) =>
-        current === "dark" ? "light" : "dark"
-      ),
+    toggleTheme: () => setTheme((current) => (current === 'dark' ? 'light' : 'dark')),
   };
 }
 ```
@@ -101,11 +88,7 @@ Usage:
 function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
 
-  return (
-    <button onClick={toggleTheme}>
-      {theme === "dark" ? "☀️ Light" : "🌙 Dark"}
-    </button>
-  );
+  return <button onClick={toggleTheme}>{theme === 'dark' ? '☀️ Light' : '🌙 Dark'}</button>;
 }
 ```
 

@@ -25,10 +25,7 @@ You would configure files to scan:
 ```js
 // Tailwind v2 configuration
 module.exports = {
-  purge: [
-    "./src/**/*.html",
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  purge: ['./src/**/*.html', './src/**/*.{js,jsx,ts,tsx}'],
 };
 ```
 
@@ -51,22 +48,19 @@ The configuration changed from `purge` to `content`:
 ```js
 // Tailwind v3 configuration
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-    "./public/index.html",
-  ],
+  content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
 };
 ```
 
 The basic difference:
 
-| Tailwind v2 + PurgeCSS | Tailwind v3+ |
-|---|---|
-| Generate many utilities | Generate utilities on demand |
+| Tailwind v2 + PurgeCSS     | Tailwind v3+                               |
+| -------------------------- | ------------------------------------------ |
+| Generate many utilities    | Generate utilities on demand               |
 | Purge unused CSS afterward | Detect classes and generate what is needed |
-| `purge` configuration | `content` configuration |
-| Larger development CSS | More focused generated CSS |
-| JIT was optional in v2.1 | JIT-style generation is default in v3 |
+| `purge` configuration      | `content` configuration                    |
+| Larger development CSS     | More focused generated CSS                 |
+| JIT was optional in v2.1   | JIT-style generation is default in v3      |
 
 ### Important current-version note
 

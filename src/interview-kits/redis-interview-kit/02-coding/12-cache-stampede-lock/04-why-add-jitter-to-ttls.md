@@ -4,6 +4,7 @@
 If a million keys are `SET EX 60` at the same second (cache warm script, deploy), they expire together and stampede together. Random extra 0–10s spreads expiry. Probabilistic early refresh (expire slightly early in the client) also helps.
 
 **Key points:**
+
 - Jitter is one line and huge in effect.
 - Do not jitter so much that SLAs on freshness break.
 - Warm-up jobs should also stagger writes.

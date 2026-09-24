@@ -15,18 +15,9 @@ Example:
 ```html id="2e5o1q"
 <!-- Let the label react to the checkbox state -->
 <div>
-  <input
-    id="terms"
-    type="checkbox"
-    class="peer"
-  />
+  <input id="terms" type="checkbox" class="peer" />
 
-  <label
-    for="terms"
-    class="text-gray-500 peer-checked:text-blue-600"
-  >
-    Accept terms
-  </label>
+  <label for="terms" class="text-gray-500 peer-checked:text-blue-600"> Accept terms </label>
 </div>
 ```
 
@@ -49,15 +40,9 @@ You can also react to a sibling receiving focus.
 ```html id="a6j5r7"
 <!-- Change the label when the associated input receives focus -->
 <div>
-  <input
-    type="text"
-    class="peer border"
-    placeholder=" "
-  />
+  <input type="text" class="peer border" placeholder=" " />
 
-  <label class="text-gray-500 peer-focus:text-blue-600">
-    Name
-  </label>
+  <label class="text-gray-500 peer-focus:text-blue-600"> Name </label>
 </div>
 ```
 

@@ -55,7 +55,9 @@ export function GazetteBanner({ theme, actions, leading, sectionLabel }: Gazette
       <p className="font-heading ml-auto hidden truncate text-[10px] tracking-[0.16em] uppercase opacity-80 md:block">
         {edition} · {date}
       </p>
-      {actions ? <div className="ml-auto flex shrink-0 items-center gap-1.5 md:ml-3">{actions}</div> : null}
+      {actions ? (
+        <div className="ml-auto flex shrink-0 items-center gap-1.5 md:ml-3">{actions}</div>
+      ) : null}
     </div>
   );
 }

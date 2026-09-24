@@ -4,6 +4,7 @@
 Sorted sets (ZSETs) map member → score and keep members ordered by score (then lexicographically). `ZADD`, `ZRANGE`, `ZREVRANGE`, `ZRANK`, `ZINCRBY`. This is the leaderboard type. Scores are floating point. Unique members — adding an existing member updates its score.
 
 **Key points:**
+
 - Leaderboards: score = points, member = userId.
 - `ZREVRANGE 0 9 WITHSCORES` = top 10.
 - `ZRANGEBYSCORE` for time indexes (score = timestamp).

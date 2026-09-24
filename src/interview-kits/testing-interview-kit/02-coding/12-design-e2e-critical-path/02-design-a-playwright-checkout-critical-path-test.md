@@ -4,6 +4,7 @@
 Seed a user and product in a test DB (or API). Open the app, login (or set a session cookie to skip UI login if that is not the path under test), add item, fill shipping, pay with a sandbox gateway or mocked payment route, assert order confirmation id. Isolate from real money.
 
 **Key points:**
+
 - Prefer API seed over UI for unrelated steps.
 - Do not E2E-test the payment provider's website — sandbox or mock.
 - Unique email per run.

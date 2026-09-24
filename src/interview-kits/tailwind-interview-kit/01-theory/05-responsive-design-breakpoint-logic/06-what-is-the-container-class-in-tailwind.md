@@ -6,9 +6,7 @@ For example:
 
 ```html
 <!-- Center a responsive content container -->
-<div class="container mx-auto">
-  Page content
-</div>
+<div class="container mx-auto">Page content</div>
 ```
 
 `container` controls the maximum width, while:
@@ -40,13 +38,9 @@ A common page structure is:
 ```html
 <!-- Build a centered responsive page container -->
 <div class="container mx-auto px-4">
-  <h1 class="text-3xl font-bold">
-    Dashboard
-  </h1>
+  <h1 class="text-3xl font-bold">Dashboard</h1>
 
-  <p class="mt-4">
-    Dashboard content goes here.
-  </p>
+  <p class="mt-4">Dashboard content goes here.</p>
 </div>
 ```
 
@@ -60,14 +54,10 @@ Here:
 
 ```html
 <!-- Full-width element -->
-<div class="w-full">
-  ...
-</div>
+<div class="w-full">...</div>
 
 <!-- Responsive max-width container -->
-<div class="container mx-auto">
-  ...
-</div>
+<div class="container mx-auto">...</div>
 ```
 
 `w-full` means:

@@ -4,6 +4,7 @@
 Render the component, query the button by role, `userEvent.click`, assert the visible count. Do not `act` on `useState` directly. This is the canonical RTL interview exercise.
 
 **Key points:**
+
 - `getByRole('button')`.
 - `await userEvent.click`.
 - Assert text in the document.

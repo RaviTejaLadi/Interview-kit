@@ -4,6 +4,7 @@
 Fill fields via labels, click submit, assert `onSave` was called with the parsed object. The handler is a prop (dependency injection). Do not inspect React state. This tests the wiring from DOM to callback.
 
 **Key points:**
+
 - `getByLabelText`.
 - `jest.fn()` for `onSave`.
 - `preventDefault` in the component so jsdom does not navigate.

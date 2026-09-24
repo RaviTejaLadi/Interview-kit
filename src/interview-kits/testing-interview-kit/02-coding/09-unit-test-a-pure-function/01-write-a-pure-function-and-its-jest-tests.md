@@ -4,6 +4,7 @@
 A pure function returns the same output for the same inputs and has no side effects. Unit-testing it is table-driven cases: happy path, edges, and invalid input. This is the baseline coding exercise.
 
 **Key points:**
+
 - No `Date.now` inside — pass clock if needed.
 - `it.each` for tables.
 - Names describe behavior.

@@ -4,6 +4,7 @@
 `docker compose logs -f`, `ps`, `exec` into a container, inspect networks, and check health. Common failures: wrong env, not healthy, bind port in use, volume permission, app connecting to `localhost` instead of `postgres`. `docker compose config` prints the merged YAML.
 
 **Key points:**
+
 - `config` to verify interpolation.
 - Print DNS inside the container: `getent hosts postgres`.
 - Resource limits locally can OOM the DB.

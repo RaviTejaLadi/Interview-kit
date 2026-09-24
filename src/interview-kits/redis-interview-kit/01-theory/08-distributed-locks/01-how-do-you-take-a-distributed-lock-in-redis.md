@@ -4,6 +4,7 @@
 The basic lock is `SET resource_name unique_token NX EX ttl`. If the set succeeds, you hold the lock until you `DEL` it (only if the token still matches) or it expires. The unique token prevents deleting someone else's lock after expiry. This is enough for many cache-stampede and cron jobs; it is not a silver bullet for correctness.
 
 **Key points:**
+
 - `NX` = only if not exists.
 - `EX` = safety timeout if the process dies.
 - Unlock with a compare-and-delete Lua script.

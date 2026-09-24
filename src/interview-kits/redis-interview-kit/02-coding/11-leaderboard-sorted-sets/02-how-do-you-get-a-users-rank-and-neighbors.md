@@ -4,6 +4,7 @@
 `ZREVRANK` gives 0-based rank from the top. Fetch a window `ZREVRANGE rank-5 rank+5` for a 'you are here' UI. Handle missing users (null rank).
 
 **Key points:**
+
 - `ZRANK` is low-to-high; leaderboards usually want `ZREVRANK`.
 - Rank is 0-based in Redis; add 1 for display.
 - Neighbors need bounds checks at the top/bottom.

@@ -4,6 +4,7 @@
 One Dockerfile with multiple `FROM` stages. A builder stage has compilers and devDependencies; the final stage copies only artifacts (`COPY --from=build`). The production image never contains `g++`, npm cache, or test fixtures. This is the standard way to ship small Node/Go/Java images.
 
 **Key points:**
+
 - Each `FROM` starts a new stage.
 - Name stages: `FROM node:20 AS build`.
 - `COPY --from=build /app/dist ./dist`.

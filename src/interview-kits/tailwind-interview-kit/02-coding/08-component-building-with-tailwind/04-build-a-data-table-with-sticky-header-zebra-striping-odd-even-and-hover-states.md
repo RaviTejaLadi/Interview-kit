@@ -63,7 +63,7 @@ Current mouse-hovered row
 Use:
 
 ```html
-<th scope="col">
+<th scope="col"></th>
 ```
 
 for column headers.
@@ -71,7 +71,7 @@ for column headers.
 For row headers, use:
 
 ```html
-<th scope="row">
+<th scope="row"></th>
 ```
 
 This helps screen readers understand table relationships.

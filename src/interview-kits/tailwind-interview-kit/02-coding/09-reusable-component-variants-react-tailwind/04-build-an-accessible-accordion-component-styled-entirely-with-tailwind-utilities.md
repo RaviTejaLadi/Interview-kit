@@ -25,7 +25,7 @@ An accessible accordion should:
 
 ```tsx
 // Build an accessible accordion with React state and Tailwind utilities.
-import { useState } from "react";
+import { useState } from 'react';
 
 type AccordionItem = {
   id: string;
@@ -35,21 +35,19 @@ type AccordionItem = {
 
 const items: AccordionItem[] = [
   {
-    id: "react",
-    title: "What is React?",
-    content: "React is a JavaScript library for building user interfaces.",
+    id: 'react',
+    title: 'What is React?',
+    content: 'React is a JavaScript library for building user interfaces.',
   },
   {
-    id: "tailwind",
-    title: "What is Tailwind CSS?",
-    content:
-      "Tailwind CSS is a utility-first CSS framework for building interfaces.",
+    id: 'tailwind',
+    title: 'What is Tailwind CSS?',
+    content: 'Tailwind CSS is a utility-first CSS framework for building interfaces.',
   },
   {
-    id: "cva",
-    title: "What is CVA?",
-    content:
-      "CVA helps create type-safe variant-based component styles.",
+    id: 'cva',
+    title: 'What is CVA?',
+    content: 'CVA helps create type-safe variant-based component styles.',
   },
 ];
 
@@ -68,18 +66,14 @@ export function Accordion() {
                 type="button"
                 aria-expanded={isOpen}
                 aria-controls={`${item.id}-content`}
-                onClick={() =>
-                  setOpenId(isOpen ? null : item.id)
-                }
+                onClick={() => setOpenId(isOpen ? null : item.id)}
                 className="flex w-full items-center justify-between px-4 py-4 text-left font-medium hover:bg-gray-50 focus-visible:outline-2 focus-visible:outline-blue-600"
               >
                 {item.title}
 
                 <span
                   aria-hidden="true"
-                  className={`transition-transform ${
-                    isOpen ? "rotate-180" : ""
-                  }`}
+                  className={`transition-transform ${isOpen ? 'rotate-180' : ''}`}
                 >
                   ↓
                 </span>
@@ -109,14 +103,14 @@ Tells assistive technology whether the section is open.
 
 ```html
 <!-- aria-expanded reflects the current accordion state -->
-<button aria-expanded="true">
+<button aria-expanded="true"></button>
 ```
 
 or:
 
 ```html
 <!-- Closed accordion section -->
-<button aria-expanded="false">
+<button aria-expanded="false"></button>
 ```
 
 #### `aria-controls`
@@ -125,19 +119,19 @@ Connects the button to the content it controls.
 
 ```html
 <!-- Button controls the matching content element -->
-<button aria-controls="react-content">
+<button aria-controls="react-content"></button>
 ```
 
 ```html
 <!-- Content controlled by the accordion button -->
-<div id="react-content">
+<div id="react-content"></div>
 ```
 
 #### `hidden`
 
 ```html
 <!-- Hidden content is removed from the rendered interaction when closed -->
-<div hidden>
+<div hidden></div>
 ```
 
 This is preferable to simply using `opacity-0` or `invisible` when the content should not be available to assistive technology while collapsed.

@@ -4,11 +4,9 @@ Consider:
 
 ```jsx
 // Dynamic interpolation does not contain a complete Tailwind class
-const color = "blue";
+const color = 'blue';
 
-<div className={`text-${color}-500`}>
-  Hello
-</div>
+<div className={`text-${color}-500`}>Hello</div>;
 ```
 
 At runtime React produces:
@@ -55,16 +53,12 @@ This works:
 
 ```jsx
 // Complete class names are visible to Tailwind
-<div className="text-blue-500">
-  Hello
-</div>
+<div className="text-blue-500">Hello</div>
 ```
 
 This is problematic:
 
 ```jsx
 // The complete class name does not exist statically
-<div className={`text-${color}-500`}>
-  Hello
-</div>
+<div className={`text-${color}-500`}>Hello</div>
 ```

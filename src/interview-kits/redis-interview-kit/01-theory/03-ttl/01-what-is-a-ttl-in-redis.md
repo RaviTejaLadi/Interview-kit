@@ -4,6 +4,7 @@
 TTL (time to live) is the remaining lifetime of a key. When it expires, Redis deletes the key (actively in the background and passively on access). Set it with `EXPIRE`, `PEXPIRE`, `SET key val EX seconds`, or `SETEX`. `TTL key` returns remaining seconds, `-1` if no expire, `-2` if missing.
 
 **Key points:**
+
 - Expiration is how caches stay bounded.
 - Sessions: TTL = idle or absolute timeout.
 - Rate limit windows: TTL on the counter key.

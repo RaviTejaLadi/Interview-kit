@@ -4,6 +4,7 @@
 Liveness should be local: process is up, event loop not wedged. Avoid downstream checks. Readiness can check 'can we serve' (DB ping with timeout). Return 200/503. Keep checks fast and cheap. Kubernetes will call them often.
 
 **Key points:**
+
 - Timeouts on probe HTTP client.
 - Do not authenticate probes if that can fail closed wrongly — use a dedicated port or allowlist.
 - Heavy checks cause false failures.

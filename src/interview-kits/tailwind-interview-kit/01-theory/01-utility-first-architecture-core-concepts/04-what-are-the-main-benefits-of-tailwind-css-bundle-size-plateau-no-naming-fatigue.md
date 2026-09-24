@@ -1,6 +1,6 @@
 # What are the main benefits of Tailwind CSS (bundle size plateau, no naming fatigue, local context)?
 
-##  Smaller CSS growth / bundle-size plateau
+## Smaller CSS growth / bundle-size plateau
 
 One important Tailwind advantage is that you don't generally create a new CSS rule every time you create a new component.
 
@@ -23,13 +23,9 @@ With Tailwind, many components reuse the **same utilities**:
 
 ```html
 <!-- Reuse the same generated utilities -->
-<div class="p-4 rounded-lg shadow">
-  Card
-</div>
+<div class="p-4 rounded-lg shadow">Card</div>
 
-<div class="p-4 rounded-lg shadow">
-  Another card
-</div>
+<div class="p-4 rounded-lg shadow">Another card</div>
 ```
 
 The CSS for `p-4`, `rounded-lg`, and `shadow` can be shared.
@@ -67,9 +63,7 @@ Tailwind removes much of that naming problem:
 
 ```html
 <!-- No custom class name is required -->
-<div class="p-4 rounded-xl shadow">
-  ...
-</div>
+<div class="p-4 rounded-xl shadow">...</div>
 ```
 
 You spend less time deciding:
@@ -84,9 +78,7 @@ With Tailwind, the styling is close to the element being styled.
 
 ```jsx
 // Styling is visible directly beside the component markup
-<button className="px-4 py-2 rounded-md bg-blue-600 text-white">
-  Submit
-</button>
+<button className="px-4 py-2 rounded-md bg-blue-600 text-white">Submit</button>
 ```
 
 You don't have to jump between:

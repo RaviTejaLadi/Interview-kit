@@ -6,21 +6,19 @@ For example:
 
 ```html
 <!-- Each class represents a specific styling responsibility -->
-<button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-  Save
-</button>
+<button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Save</button>
 ```
 
 Each utility does something specific:
 
-| Utility | Meaning |
-|---|---|
-| `px-4` | Horizontal padding |
-| `py-2` | Vertical padding |
-| `bg-blue-600` | Background color |
-| `text-white` | Text color |
-| `rounded-md` | Border radius |
-| `hover:bg-blue-700` | Hover background |
+| Utility             | Meaning            |
+| ------------------- | ------------------ |
+| `px-4`              | Horizontal padding |
+| `py-2`              | Vertical padding   |
+| `bg-blue-600`       | Background color   |
+| `text-white`        | Text color         |
+| `rounded-md`        | Border radius      |
+| `hover:bg-blue-700` | Hover background   |
 
 Think of utilities as **LEGO blocks**. You combine small blocks to create a component.
 
@@ -45,7 +43,5 @@ Think of utilities as **LEGO blocks**. You combine small blocks to create a comp
 
 ```html
 <!-- Compose the same styles from utilities -->
-<button class="px-4 py-2 bg-blue-600 text-white rounded-md">
-  Save
-</button>
+<button class="px-4 py-2 bg-blue-600 text-white rounded-md">Save</button>
 ```

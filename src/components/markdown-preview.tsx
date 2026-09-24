@@ -235,11 +235,7 @@ function createMarkdownComponents(
     ),
     hr: ({ className, ...props }) => (
       <hr
-        className={cn(
-          'my-4 h-px border-0 bg-foreground',
-          markdownHierarchy.body,
-          className,
-        )}
+        className={cn('my-4 h-px border-0 bg-foreground', markdownHierarchy.body, className)}
         {...props}
       />
     ),
@@ -273,18 +269,13 @@ function createMarkdownComponents(
     },
     table: ({ className, ...props }) => (
       <div
-        className={cn(
-          'my-3 overflow-x-auto ml-0 sm:ml-4 lg:ml-6 border border-foreground bg-card',
-        )}
+        className={cn('my-3 overflow-x-auto ml-0 sm:ml-4 lg:ml-6 border border-foreground bg-card')}
       >
         <table className={cn('w-full min-w-0 border-collapse text-[13px]', className)} {...props} />
       </div>
     ),
     thead: ({ className, ...props }) => (
-      <thead
-        className={cn('bg-muted/60', className)}
-        {...props}
-      />
+      <thead className={cn('bg-muted/60', className)} {...props} />
     ),
     tbody: ({ className, ...props }) => (
       <tbody className={cn('divide-y divide-border/60', className)} {...props} />
@@ -315,10 +306,7 @@ function createMarkdownComponents(
     img: ({ className, alt, ...props }) => (
       <span className={cn('my-3 block', markdownHierarchy.body)}>
         <img
-          className={cn(
-            'max-w-full border border-foreground',
-            className,
-          )}
+          className={cn('max-w-full border border-foreground', className)}
           alt={alt ?? 'Markdown image'}
           loading="lazy"
           {...props}

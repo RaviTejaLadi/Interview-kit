@@ -4,6 +4,7 @@
 Store request timestamps as zset members. On each request, `ZREMRANGEBYSCORE` old entries, `ZADD` now, `ZCARD`. Compare to limit. More accurate than fixed windows; more Redis ops and memory per user.
 
 **Key points:**
+
 - Score = timestamp, member = unique request id.
 - Memory = one zset element per request in the window.
 - Good for stricter APIs; heavy for huge QPS.

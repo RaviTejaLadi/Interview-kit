@@ -4,6 +4,7 @@
 Given `getUser(id)` calls `fetch` and parses JSON, stub `globalThis.fetch` to return a Response. Assert the mapped user and that the URL is correct. Restore fetch after the test.
 
 **Key points:**
+
 - `mockResolvedValue` with `new Response(JSON.stringify(...))`.
 - Assert `fetch` URL and headers.
 - Test 404 and network reject separately.

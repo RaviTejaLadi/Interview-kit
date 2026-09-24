@@ -4,6 +4,7 @@
 Use exec-form CMD so Node is PID 1, or use `tini`. Node can handle SIGTERM if it is PID 1. Shell form (`CMD node src/index.js` without JSON) often does not forward signals. Pair with `server.close` in the app.
 
 **Key points:**
+
 - JSON-array CMD.
 - Optional: `ENTRYPOINT ["/sbin/tini", "--"]`.
 - Alpine: `apk add tini`.

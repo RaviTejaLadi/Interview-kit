@@ -6,9 +6,7 @@ For example, suppose you want something to apply only between `md` and `lg`:
 
 ```html
 <!-- Apply the style from md up to, but not including, lg -->
-<div class="md:max-lg:bg-blue-500">
-  Content
-</div>
+<div class="md:max-lg:bg-blue-500">Content</div>
 ```
 
 Conceptually:
@@ -21,9 +19,7 @@ You can also use arbitrary maximum breakpoints when needed:
 
 ```html
 <!-- Apply only while the viewport is below 900px -->
-<div class="max-[900px]:bg-red-500">
-  Content
-</div>
+<div class="max-[900px]:bg-red-500">Content</div>
 ```
 
 ### Example

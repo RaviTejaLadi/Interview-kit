@@ -6,20 +6,16 @@ Without `clsx`:
 
 ```jsx id="r4h6j2"
 // Build conditional class names manually
-const className = `button ${isActive ? "active" : ""}`;
+const className = `button ${isActive ? 'active' : ''}`;
 ```
 
 With `clsx`:
 
 ```jsx id="3h9v1k"
 // Build class names declaratively with clsx
-import clsx from "clsx";
+import clsx from 'clsx';
 
-const className = clsx(
-  "button",
-  isActive && "active",
-  disabled && "opacity-50"
-);
+const className = clsx('button', isActive && 'active', disabled && 'opacity-50');
 ```
 
 If:
@@ -39,7 +35,7 @@ button active
 
 ```jsx id="1h0q8z"
 // Use an object to conditionally include classes
-const className = clsx("button", {
+const className = clsx('button', {
   active: isActive,
   disabled: isDisabled,
 });
@@ -53,7 +49,7 @@ For example:
 
 ```jsx id="1y7m5q"
 // clsx combines classes but does not resolve Tailwind conflicts
-clsx("p-2", "p-4");
+clsx('p-2', 'p-4');
 ```
 
 returns something like:

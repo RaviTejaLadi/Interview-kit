@@ -5,10 +5,7 @@ In Tailwind v3, you tell Tailwind which files may contain class names using the 
 ```js
 // Tell Tailwind which source files to scan for class names
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-    "./public/index.html",
-  ],
+  content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
 };
 ```
 
@@ -19,11 +16,7 @@ For example:
 ```jsx
 // These classes can be detected by Tailwind
 function Button() {
-  return (
-    <button className="px-4 py-2 bg-blue-500 text-white rounded">
-      Save
-    </button>
-  );
+  return <button className="px-4 py-2 bg-blue-500 text-white rounded">Save</button>;
 }
 ```
 
@@ -48,9 +41,7 @@ For example:
 ```js
 // Incorrect/incomplete content configuration can cause missing styles
 module.exports = {
-  content: [
-    "./src/components/**/*.jsx",
-  ],
+  content: ['./src/components/**/*.jsx'],
 };
 ```
 

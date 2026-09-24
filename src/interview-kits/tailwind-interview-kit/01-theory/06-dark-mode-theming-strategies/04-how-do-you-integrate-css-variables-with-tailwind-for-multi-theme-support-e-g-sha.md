@@ -6,7 +6,7 @@ Instead of hardcoding:
 
 ```html
 <!-- Hardcoded light/dark colors -->
-<div class="bg-white dark:bg-gray-900">
+<div class="bg-white dark:bg-gray-900"></div>
 ```
 
 you can define semantic CSS variables:
@@ -54,8 +54,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
       },
     },
   },
@@ -135,9 +135,7 @@ The component can remain:
 
 ```jsx
 // The component consumes the semantic token
-<button className="bg-primary text-primary-foreground">
-  Save
-</button>
+<button className="bg-primary text-primary-foreground">Save</button>
 ```
 
 This is essentially a **design-token architecture**.

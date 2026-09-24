@@ -4,6 +4,7 @@
 Use a key per window: `game:scores:2026-09-16` or `game:scores:{week}`. Set a TTL on the key after the week ends (keep for display a few days). Do not store all-time and weekly in one zset without encoding time in the member.
 
 **Key points:**
+
 - Daily/weekly keys are simple and cache-friendly.
 - TTL the previous window after it closes.
 - All-time board is a separate key.

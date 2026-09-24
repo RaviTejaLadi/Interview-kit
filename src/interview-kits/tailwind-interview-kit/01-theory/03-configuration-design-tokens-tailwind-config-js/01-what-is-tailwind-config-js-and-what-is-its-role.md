@@ -17,14 +17,12 @@ Example:
 // Configure Tailwind's source files and design tokens
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
 
   theme: {
     extend: {
       colors: {
-        brand: "#6366f1",
+        brand: '#6366f1',
       },
     },
   },

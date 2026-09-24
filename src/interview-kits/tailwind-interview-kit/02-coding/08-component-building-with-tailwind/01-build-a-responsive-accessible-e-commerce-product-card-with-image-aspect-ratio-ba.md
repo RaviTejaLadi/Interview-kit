@@ -15,20 +15,22 @@ A responsive card should adapt to different screen sizes, while an accessible ca
 
 ### Important Tailwind concepts
 
-| Requirement | Tailwind concept |
-|---|---|
-| Responsive layout | `sm:`, `md:`, `lg:` |
-| Image ratio | `aspect-square`, `aspect-[4/3]` |
-| Badge | `absolute`, positioning utilities |
-| Star rating | `text-yellow-500` |
-| Hover effect | `hover:` |
-| Smooth transition | `transition`, `duration-300` |
-| Keyboard focus | `focus-visible:` |
-| Image fitting | `object-cover` |
+| Requirement       | Tailwind concept                  |
+| ----------------- | --------------------------------- |
+| Responsive layout | `sm:`, `md:`, `lg:`               |
+| Image ratio       | `aspect-square`, `aspect-[4/3]`   |
+| Badge             | `absolute`, positioning utilities |
+| Star rating       | `text-yellow-500`                 |
+| Hover effect      | `hover:`                          |
+| Smooth transition | `transition`, `duration-300`      |
+| Keyboard focus    | `focus-visible:`                  |
+| Image fitting     | `object-cover`                    |
 
 ```html
 <!-- Responsive product card with hover and focus states -->
-<article class="group overflow-hidden rounded-xl border bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg">
+<article
+  class="group overflow-hidden rounded-xl border bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
+>
   <div class="relative aspect-square overflow-hidden">
     <img
       src="/product.jpg"
@@ -36,7 +38,9 @@ A responsive card should adapt to different screen sizes, while an accessible ca
       class="h-full w-full object-cover transition duration-300 group-hover:scale-105"
     />
 
-    <span class="absolute left-3 top-3 rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white">
+    <span
+      class="absolute left-3 top-3 rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white"
+    >
       Sale
     </span>
   </div>

@@ -11,8 +11,8 @@ A typical implementation combines:
 
 ```js id="7n3q8m"
 // Combine conditional classes and resolve Tailwind conflicts
-import { clsx } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -23,13 +23,7 @@ Now you can write:
 
 ```jsx id="9k1f4p"
 // Use cn for conditional Tailwind classes and overrides
-<button
-  className={cn(
-    "px-4 py-2 bg-blue-500 text-white",
-    isDisabled && "opacity-50",
-    className
-  )}
->
+<button className={cn('px-4 py-2 bg-blue-500 text-white', isDisabled && 'opacity-50', className)}>
   Save
 </button>
 ```

@@ -83,7 +83,7 @@ Tailwind v4 moved away from these `@tailwind` directives toward a CSS-first appr
 
 ```css
 /* Tailwind v4 imports the framework through a CSS import */
-@import "tailwindcss";
+@import 'tailwindcss';
 ```
 
 So `@tailwind base/components/utilities` is primarily a **Tailwind v3 pattern**.

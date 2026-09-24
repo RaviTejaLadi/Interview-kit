@@ -4,6 +4,7 @@
 A `FLUSHALL` or fail-over empty node makes every key miss. Serve from DB with concurrency limits (semaphore), serve degraded content, or pre-warm the hottest keys. Application-level circuit breakers (`max 200 concurrent origin loads`) protect the DB. Do not let the web tier unlimited-parallel rebuild.
 
 **Key points:**
+
 - Global semaphore in Redis (`INCR origin:inflight`).
 - Return 503 with Retry-After if origin overloaded.
 - Pre-warm top 1000 keys after failover.

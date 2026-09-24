@@ -56,10 +56,7 @@ You can use Tailwind's `accent-*` utilities:
 
 ```html
 <!-- Use a theme-aware accent color for a native checkbox -->
-<input
-  type="checkbox"
-  class="accent-blue-600 dark:accent-blue-400"
-/>
+<input type="checkbox" class="accent-blue-600 dark:accent-blue-400" />
 ```
 
 ---
@@ -116,18 +113,14 @@ For a small application, this is perfectly reasonable:
 
 ```jsx
 // Use explicit light/dark utilities for a small component
-<div className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">
-  Dashboard
-</div>
+<div className="bg-white text-gray-900 dark:bg-gray-900 dark:text-white">Dashboard</div>
 ```
 
 For a larger application, prefer semantic theme tokens:
 
 ```jsx
 // Use semantic design tokens for scalable theming
-<div className="bg-background text-foreground">
-  Dashboard
-</div>
+<div className="bg-background text-foreground">Dashboard</div>
 ```
 
 with:

@@ -4,6 +4,7 @@
 404 → `null` (or throw — match production). 500 → throw. `fetch` reject → throw. These branches are what UI loading spinners depend on. Do not only mock 200.
 
 **Key points:**
+
 - One test per status class.
 - `mockRejectedValue(new TypeError('network'))`.
 - Do not swallow errors in the client without a test.

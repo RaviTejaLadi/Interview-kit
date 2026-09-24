@@ -9,17 +9,13 @@ This is usually the cleanest solution.
 ```jsx
 // Map runtime values to complete Tailwind class names
 const colorClasses = {
-  blue: "text-blue-500",
-  red: "text-red-500",
-  green: "text-green-500",
+  blue: 'text-blue-500',
+  red: 'text-red-500',
+  green: 'text-green-500',
 };
 
 function Status({ color }) {
-  return (
-    <span className={colorClasses[color]}>
-      Status
-    </span>
-  );
+  return <span className={colorClasses[color]}>Status</span>;
 }
 ```
 
@@ -41,15 +37,7 @@ All complete class names are present in the source.
 // Select between complete, statically detectable class names
 function Button({ primary }) {
   return (
-    <button
-      className={
-        primary
-          ? "bg-blue-500 text-white"
-          : "bg-gray-200 text-black"
-      }
-    >
-      Save
-    </button>
+    <button className={primary ? 'bg-blue-500 text-white' : 'bg-gray-200 text-black'}>Save</button>
   );
 }
 ```
@@ -64,15 +52,15 @@ For larger React applications, `clsx` or similar utilities make conditional clas
 
 ```jsx
 // Compose complete Tailwind classes conditionally
-import clsx from "clsx";
+import clsx from 'clsx';
 
 function Button({ primary, disabled }) {
   return (
     <button
       className={clsx(
-        "px-4 py-2 rounded",
-        primary ? "bg-blue-500 text-white" : "bg-gray-200",
-        disabled && "opacity-50 cursor-not-allowed"
+        'px-4 py-2 rounded',
+        primary ? 'bg-blue-500 text-white' : 'bg-gray-200',
+        disabled && 'opacity-50 cursor-not-allowed',
       )}
     >
       Save
@@ -95,10 +83,7 @@ For example:
 // Use a CSS variable when the color is truly runtime data
 function UserBadge({ color }) {
   return (
-    <span
-      className="text-[var(--user-color)]"
-      style={{ "--user-color": color }}
-    >
+    <span className="text-[var(--user-color)]" style={{ '--user-color': color }}>
       User
     </span>
   );

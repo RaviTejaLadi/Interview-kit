@@ -4,6 +4,7 @@
 Run two counters (or a Lua that checks both). Reject if either exceeds its policy. Unauthenticated routes use IP; authenticated use key with a higher cap. Health checks bypass. This layered approach stops one key from being fine while a NAT IP hammers login.
 
 **Key points:**
+
 - Different limits per route (`/login` stricter).
 - Normalize IPv6 carefully.
 - API keys beat IP for paying customers.

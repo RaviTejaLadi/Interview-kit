@@ -33,9 +33,7 @@ Tailwind's responsive variants make this easy.
 <!-- Responsive navigation with desktop links and mobile menu button -->
 <nav class="border-b bg-white">
   <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
-    <a href="/" class="text-xl font-bold">
-      MyStore
-    </a>
+    <a href="/" class="text-xl font-bold"> MyStore </a>
 
     <div class="hidden items-center gap-6 md:flex">
       <a href="/" class="hover:text-blue-600">Home</a>
@@ -72,7 +70,7 @@ Then:
   className={`
     fixed inset-y-0 right-0 w-72 bg-white shadow-xl
     transition-transform duration-300
-    ${isOpen ? "translate-x-0" : "translate-x-full"}
+    ${isOpen ? 'translate-x-0' : 'translate-x-full'}
   `}
 >
   {/* Navigation links */}

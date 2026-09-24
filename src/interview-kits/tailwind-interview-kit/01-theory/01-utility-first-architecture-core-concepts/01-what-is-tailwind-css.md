@@ -17,9 +17,7 @@ You compose the styles directly:
 
 ```html
 <!-- Compose styles using Tailwind utilities -->
-<div class="p-4 bg-white rounded-lg">
-  Card content
-</div>
+<div class="p-4 bg-white rounded-lg">Card content</div>
 ```
 
 ### Simple definition

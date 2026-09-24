@@ -4,6 +4,7 @@
 If the function returns a Result (`{ ok: false, error }`) instead of throwing, assert both branches. Table-drive invalid strings. This pattern is cleaner than try/catch in every caller test.
 
 **Key points:**
+
 - Result types make tests obvious.
 - Do not only test the happy JSON.
 - Unknown keys: decide ignore vs error and test it.

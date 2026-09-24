@@ -7,8 +7,8 @@ Suppose you write:
 module.exports = {
   theme: {
     colors: {
-      primary: "#2563eb",
-      secondary: "#64748b",
+      primary: '#2563eb',
+      secondary: '#64748b',
     },
   },
 };
@@ -20,9 +20,7 @@ So classes such as:
 
 ```html
 <!-- These depend on the default color palette -->
-<div class="bg-red-500 text-gray-900">
-  Hello
-</div>
+<div class="bg-red-500 text-gray-900">Hello</div>
 ```
 
 may no longer work because `red` and `gray` are no longer part of your configured color palette.
@@ -31,9 +29,7 @@ Your custom classes work:
 
 ```html
 <!-- These use the custom colors defined in the configuration -->
-<div class="bg-primary text-secondary">
-  Hello
-</div>
+<div class="bg-primary text-secondary">Hello</div>
 ```
 
 ### Compare

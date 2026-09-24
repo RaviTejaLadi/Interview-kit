@@ -4,6 +4,7 @@
 If the process dies after `INCR` to 1 and before `EXPIRE`, the key never expires and the user is blocked forever (or until eviction). Fix: Lua that INCR+EXPIRE atomically, or `SET key 1 EX window NX` plus INCR for later hits, or Redis `INCR` with expiry options in newer versions (`SET`/`EXPIRE` in MULTI).
 
 **Key points:**
+
 - The immortal counter is a real production bug.
 - Lua / MULTI makes INCR+EXPIRE atomic.
 - You can also `EXPIRE` every time (idempotent) as a belt — still a race on first create without atomicity.

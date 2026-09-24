@@ -4,6 +4,7 @@
 On write, `DEL` local Redis and `PUBLISH invalidate user:42`. Other app instances drop in-process caches. This does not delete other Redis keys unless they subscribe and `DEL`. For multi-node Redis, invalidate the key on the shard that owns it (the writer already `DEL`s). In-process LRU is what pub/sub usually clears.
 
 **Key points:**
+
 - Redis is already shared — `DEL` is enough for Redis keys.
 - Pub/sub is for process-local memory caches.
 - Missed messages → rely on short local TTLs.

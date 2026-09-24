@@ -4,6 +4,7 @@
 `kubectl rollout status deployment/api`, watch error rate, then `kubectl rollout undo` if needed. GitOps: revert the digest commit. Confirm old ReplicaSet scales up and new scales down. Run smoke tests on a known endpoint.
 
 **Key points:**
+
 - `rollout history` lists revisions.
 - Undo is another rolling update.
 - Metrics over 'pods are running'.

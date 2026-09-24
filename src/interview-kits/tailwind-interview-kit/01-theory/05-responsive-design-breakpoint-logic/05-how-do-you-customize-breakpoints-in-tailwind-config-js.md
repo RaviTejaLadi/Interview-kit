@@ -9,8 +9,8 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        xs: "480px",
-        "3xl": "1920px",
+        xs: '480px',
+        '3xl': '1920px',
       },
     },
   },
@@ -21,9 +21,7 @@ Now you can use:
 
 ```html
 <!-- Use the custom xs and 3xl breakpoints -->
-<div class="text-sm xs:text-base 3xl:text-2xl">
-  Responsive text
-</div>
+<div class="text-sm xs:text-base 3xl:text-2xl">Responsive text</div>
 ```
 
 ### Add vs replace
@@ -71,7 +69,7 @@ Tailwind v4 uses a CSS-first configuration approach. Breakpoints can be customiz
 
 ```css
 /* Define a custom breakpoint in Tailwind v4 */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --breakpoint-xs: 30rem;

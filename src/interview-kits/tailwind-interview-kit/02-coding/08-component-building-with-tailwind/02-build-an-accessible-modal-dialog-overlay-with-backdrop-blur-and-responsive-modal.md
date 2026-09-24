@@ -34,9 +34,7 @@ Tailwind handles the **visual styling**, while JavaScript or the native `<dialog
 >
   <div class="w-full max-w-lg rounded-2xl bg-white p-6 shadow-2xl">
     <div class="flex items-center justify-between">
-      <h2 id="modal-title" class="text-xl font-bold">
-        Delete Product
-      </h2>
+      <h2 id="modal-title" class="text-xl font-bold">Delete Product</h2>
 
       <button
         type="button"
@@ -47,18 +45,12 @@ Tailwind handles the **visual styling**, while JavaScript or the native `<dialog
       </button>
     </div>
 
-    <p class="mt-4 text-gray-600">
-      Are you sure you want to delete this product?
-    </p>
+    <p class="mt-4 text-gray-600">Are you sure you want to delete this product?</p>
 
     <div class="mt-6 flex justify-end gap-3">
-      <button class="rounded-lg border px-4 py-2 hover:bg-gray-50">
-        Cancel
-      </button>
+      <button class="rounded-lg border px-4 py-2 hover:bg-gray-50">Cancel</button>
 
-      <button class="rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-700">
-        Delete
-      </button>
+      <button class="rounded-lg bg-red-600 px-4 py-2 text-white hover:bg-red-700">Delete</button>
     </div>
   </div>
 </div>

@@ -4,9 +4,7 @@ Consider:
 
 ```html id="h2b9c6"
 <!-- Two conflicting padding utilities -->
-<div class="p-2 p-4">
-  Content
-</div>
+<div class="p-2 p-4">Content</div>
 ```
 
 Both classes are present in the HTML:

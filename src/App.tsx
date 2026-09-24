@@ -387,11 +387,7 @@ function App() {
         onBackToKits={closeKit}
       />
       <SidebarInset className="bg-background">
-        <GazetteBanner
-          theme={theme}
-          sectionLabel={selectedNav?.kitLabel}
-          actions={headerActions}
-        />
+        <GazetteBanner theme={theme} sectionLabel={selectedNav?.kitLabel} actions={headerActions} />
         <EditionDateline
           kicker={kitDesk}
           title={selectedNav?.kitLabel ?? 'Interview Gazette'}

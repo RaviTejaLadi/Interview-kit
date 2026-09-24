@@ -4,6 +4,7 @@
 Lists are linked lists of strings. `LPUSH`/`RPUSH` add, `LPOP`/`RPOP` remove, `LRANGE` reads a range. They implement stacks, queues, and capped logs (`LTRIM`). Blocking pops (`BLPOP`) are a simple worker queue. `LRANGE 0 -1` on a huge list is costly.
 
 **Key points:**
+
 - `LPUSH` + `RPOP` = queue.
 - `BRPOP` waits for work.
 - Capped timeline: `LPUSH` then `LTRIM key 0 99`.

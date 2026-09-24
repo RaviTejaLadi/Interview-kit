@@ -17,9 +17,7 @@ Compare that with:
 
 ```jsx
 // A semantic class keeps the markup short
-<button className="primary-button">
-  Save
-</button>
+<button className="primary-button">Save</button>
 ```
 
 This is one of the most common criticisms of Tailwind.
@@ -32,7 +30,9 @@ A long utility list can be difficult to scan:
 
 ```html
 <!-- Many utilities can make the element harder to read -->
-<div class="flex items-center justify-between px-6 py-4 bg-white rounded-xl shadow-md border border-gray-200">
+<div
+  class="flex items-center justify-between px-6 py-4 bg-white rounded-xl shadow-md border border-gray-200"
+>
   ...
 </div>
 ```
@@ -61,10 +61,6 @@ For repeated UI patterns, you can extract a React component:
 ```jsx
 // Reuse a component instead of repeating the same utility classes
 function Button({ children }) {
-  return (
-    <button className="px-4 py-2 bg-blue-600 text-white rounded">
-      {children}
-    </button>
-  );
+  return <button className="px-4 py-2 bg-blue-600 text-white rounded">{children}</button>;
 }
 ```

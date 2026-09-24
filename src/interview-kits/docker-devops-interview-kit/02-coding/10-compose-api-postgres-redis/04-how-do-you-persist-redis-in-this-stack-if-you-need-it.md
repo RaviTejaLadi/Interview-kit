@@ -4,6 +4,7 @@
 Mount a volume on `/data` and run `redis-server --appendonly yes`. For a pure cache, skip persistence. Do not mix 'I can lose cache' with AOF on the same mental model as Postgres volumes.
 
 **Key points:**
+
 - Cache: no volume is OK.
 - Sessions/queues: volume + AOF.
 - `appendonly yes` in command or redis.conf.
@@ -13,7 +14,7 @@ Mount a volume on `/data` and run `redis-server --appendonly yes`. For a pure ca
 ```yaml
 redis:
   image: redis:7-alpine
-  command: ["redis-server", "--appendonly", "yes"]
+  command: ['redis-server', '--appendonly', 'yes']
   volumes:
     - redisdata:/data
 ```

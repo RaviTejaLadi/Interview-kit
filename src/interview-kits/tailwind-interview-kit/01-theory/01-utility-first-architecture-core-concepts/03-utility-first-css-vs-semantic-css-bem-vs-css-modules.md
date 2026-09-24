@@ -2,11 +2,11 @@
 
 These approaches solve the same general problem—organizing CSS—but use different strategies.
 
-| Approach | Main idea | Example |
-|---|---|---|
-| **Tailwind** | Compose utility classes | `p-4 text-white bg-blue-500` |
-| **BEM** | Semantic naming convention | `card__title--large` |
-| **CSS Modules** | Locally scoped CSS classes | `styles.card` |
+| Approach        | Main idea                  | Example                      |
+| --------------- | -------------------------- | ---------------------------- |
+| **Tailwind**    | Compose utility classes    | `p-4 text-white bg-blue-500` |
+| **BEM**         | Semantic naming convention | `card__title--large`         |
+| **CSS Modules** | Locally scoped CSS classes | `styles.card`                |
 
 ### A. Utility-first — Tailwind
 
@@ -79,7 +79,7 @@ CSS Modules provide **locally scoped CSS classes**.
 
 ```jsx
 // CSS Modules scope the class to this component
-import styles from "./Card.module.css";
+import styles from './Card.module.css';
 
 function Card() {
   return <div className={styles.card}>Hello</div>;
