@@ -148,49 +148,6 @@
 
 ---
 
-# 🧠 PART 4 — MUST-KNOW FRAMEWORKS & SCRIPTS
-
----
-
-## 14. The 90-Second "Tell Me About Yourself" Framework ⭐⭐⭐⭐⭐
-
-Use the **Present → Past → Future** formula:
-
-```text
-1. Present (30s):
-   "Currently, I am a [Your Title] at [Company], where I specialize in [Core Stack/Tech].
-    Most recently, I led [Key Achievement or Feature], which helped [Metric/Impact]."
-
-2. Past (30s):
-   "Before this, I worked at [Previous Company/Experience], where I built [Core Project],
-    honing my skills in [Key Skills, e.g., performance optimization, scalable systems]."
-
-3. Future (30s):
-   "I've reached a point where I'm looking to take on larger challenges, particularly in
-    [Domain/Scale], which is why I was excited to see this role at [Target Company] because [Specific Reason]."
-```
-
----
-
-## 15. The STAR Method Breakdown ⭐⭐⭐⭐⭐
-
-```text
-S - Situation: Set the scene briefly (15-20 seconds).
-T - Task:      Define the exact problem/goal you had to solve (10-15 seconds).
-A - Action:    The meat of the answer — what YOU did, why, and how (45-60 seconds).
-R - Result:    The quantified outcome and what you learned (15-20 seconds).
-```
-
----
-
-## 16. The Salary Question Script ⭐⭐⭐⭐⭐
-
-When asked _"What are your salary expectations?"_ early in the process:
-
-> _"Right now, my main priority is finding the right team fit and understanding the full scope of responsibilities for this role. Based on my research for this role and market standards, I'm targeting a range between **$X and $Y** [or ₹A to ₹B], but I'm flexible and open to looking at the entire compensation package, including bonuses, equity, and growth opportunities."_
-
----
-
 # 🏆 TOP 25 — If You Have Very Little Time
 
 ### 🔥 Core HR & Motivation
