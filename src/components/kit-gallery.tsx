@@ -47,7 +47,7 @@ function StoryByline({
     query && matchCount > 0 ? `${matchCount} matching` : `${group.topics.length} questions`;
 
   return (
-    <p className="font-kicker mt-2 text-[11px] tracking-[0.12em] text-muted-foreground uppercase">
+    <p className="font-heading mt-2 text-[11px] tracking-[0.12em] text-muted-foreground uppercase">
       {countLabel}
       {sections.length > 0 ? ` · ${sections.slice(0, 3).join(' · ')}` : ''}
     </p>
@@ -87,7 +87,7 @@ function StoryCell({
       )}
     >
       {isLead ? (
-        <span className="font-kicker pointer-events-none absolute top-3 right-3 rotate-[-8deg] border-2 border-secondary px-2 py-0.5 text-[11px] tracking-[0.18em] text-secondary uppercase group-focus-visible:border-background group-focus-visible:text-background">
+        <span className="font-heading pointer-events-none absolute top-3 right-3 rotate-[-8deg] border-2 border-secondary px-2 py-0.5 text-[11px] tracking-[0.18em] text-secondary uppercase group-focus-visible:border-background group-focus-visible:text-background">
           Extra
         </span>
       ) : null}
@@ -114,12 +114,12 @@ function StoryCell({
         </div>
 
         <div className="min-w-0 flex-1">
-          <p className="font-kicker text-[10px] tracking-[0.2em] text-secondary uppercase group-focus-visible:text-background">
+          <p className="font-heading text-[10px] tracking-[0.2em] text-secondary uppercase group-focus-visible:text-background">
             {desk}
           </p>
           <h2
             className={cn(
-              'font-heading mt-1 font-black tracking-[-0.03em] text-balance group-hover:underline group-hover:decoration-2 group-hover:underline-offset-4',
+              'font-heading mt-1 font-semibold tracking-tight text-balance group-hover:underline group-hover:decoration-2 group-hover:underline-offset-4',
               isLead && 'text-3xl leading-[0.95] sm:text-4xl lg:text-5xl',
               variant === 'secondary' && 'text-2xl leading-tight sm:text-3xl',
               isBrief && 'text-lg leading-tight sm:text-xl',
@@ -143,7 +143,7 @@ function StoryCell({
 
       <div className="mt-auto">
         <StoryByline group={group} matchCount={matchCount} query={query} />
-        <p className="font-kicker mt-2 flex items-center justify-between text-[10px] tracking-[0.16em] uppercase">
+        <p className="font-heading mt-2 flex items-center justify-between text-[10px] tracking-[0.16em] uppercase">
           <span className="group-hover:text-secondary">Continue reading</span>
           <span className="opacity-55">{folio}</span>
         </p>
@@ -207,12 +207,12 @@ export function KitGallery({ groups, theme, onSelectKit }: KitGalleryProps) {
     <div className="mx-auto w-full max-w-6xl space-y-5 px-4 py-5 sm:px-6 sm:py-7 lg:px-8">
       <NewspaperNameplate kitCount={groups.length} questionCount={totalTopics} theme={theme} />
 
-      <p className="font-kicker overflow-hidden text-[11px] tracking-[0.14em] text-ellipsis whitespace-nowrap uppercase opacity-80">
+      <p className="font-heading overflow-hidden text-[11px] tracking-[0.14em] text-ellipsis whitespace-nowrap uppercase opacity-80">
         Inside today: {ticker || 'Late edition'}
       </p>
 
       <div>
-        <p className="font-kicker mb-1.5 text-[10px] tracking-[0.2em] uppercase">Classifieds</p>
+        <p className="font-heading mb-1.5 text-[10px] tracking-[0.2em] uppercase">Classifieds</p>
         <div className="relative">
           <SearchIcon className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -227,7 +227,7 @@ export function KitGallery({ groups, theme, onSelectKit }: KitGalleryProps) {
 
       {visibleKits.length === 0 ? (
         <div className="border border-foreground bg-card px-4 py-8 text-center">
-          <p className="font-kicker text-[11px] tracking-[0.18em] uppercase">No notices posted</p>
+          <p className="font-heading text-[11px] tracking-[0.18em] uppercase">No notices posted</p>
           <p className="mt-2 text-sm">
             No kits match “{searchValue.trim()}”. Try another desk or topic.
           </p>
@@ -248,7 +248,7 @@ export function KitGallery({ groups, theme, onSelectKit }: KitGalleryProps) {
               <div className="border-t border-foreground lg:col-span-5 lg:border-t-0">
                 {secondary.length === 0 ? (
                   <div className="flex h-full min-h-40 items-center p-5">
-                    <p className="font-heading text-xl italic">More desks in later editions.</p>
+                    <p className="font-heading text-xl">More desks in later editions.</p>
                   </div>
                 ) : (
                   secondary.map((item, index) => (
@@ -273,10 +273,10 @@ export function KitGallery({ groups, theme, onSelectKit }: KitGalleryProps) {
           {briefs.length > 0 ? (
             <div className="border-t-2 border-foreground">
               <div className="flex items-center justify-between px-4 py-2">
-                <p className="font-kicker text-[11px] tracking-[0.2em] uppercase">
+                <p className="font-heading text-[11px] tracking-[0.2em] uppercase">
                   Briefs from the desks
                 </p>
-                <p className="font-kicker text-[10px] tracking-[0.16em] uppercase opacity-60">
+                <p className="font-heading text-[10px] tracking-[0.16em] uppercase opacity-60">
                   Continued inside
                 </p>
               </div>
@@ -303,8 +303,8 @@ export function KitGallery({ groups, theme, onSelectKit }: KitGalleryProps) {
 
       <footer className="space-y-2 pb-4">
         <div className="newspaper-rule-double" />
-        <p className="font-kicker text-center text-[10px] tracking-[0.18em] uppercase opacity-70">
-          Printed for candidates · Set in Playfair, Newsreader & Oswald · The Interview Gazette
+        <p className="font-heading text-center text-[10px] tracking-[0.18em] uppercase opacity-70">
+          Printed for candidates · Set in Inter & Plus Jakarta Sans · The Interview Gazette
         </p>
       </footer>
     </div>

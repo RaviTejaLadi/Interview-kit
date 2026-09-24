@@ -422,7 +422,7 @@ function App() {
           }
         />
         <ScrollArea
-          className="min-h-0 flex-1"
+          className="group/reader min-h-0 flex-1"
           viewportRef={scrollRef}
           viewportClassName="[overflow-anchor:none]"
         >

@@ -98,7 +98,7 @@ function createMarkdownComponents(
     h1: ({ className, ...props }) => (
       <h1
         className={cn(
-          'font-heading mt-1 mb-3 scroll-m-20 border-b-2 border-foreground pb-2 text-2xl font-black tracking-[-0.03em] first:mt-0 sm:text-3xl lg:text-4xl',
+          'font-heading mt-1 mb-3 scroll-m-20 border-b-2 border-foreground pb-2 text-lg font-semibold tracking-tight first:mt-0 sm:text-xl lg:text-2xl',
           className,
         )}
         {...props}
@@ -107,7 +107,7 @@ function createMarkdownComponents(
     h2: ({ className, ...props }) => (
       <h2
         className={cn(
-          'font-kicker mt-5 mb-2 scroll-m-20 border-b border-foreground/50 pb-1 text-[13px] font-semibold tracking-[0.16em] text-foreground uppercase first:mt-0',
+          'font-heading mt-5 mb-2 scroll-m-20 border-b border-foreground/40 pb-1 text-lg font-semibold tracking-tight text-foreground first:mt-0',
           markdownHierarchy.section,
           className,
         )}
@@ -117,7 +117,7 @@ function createMarkdownComponents(
     h3: ({ className, ...props }) => (
       <h3
         className={cn(
-          'font-heading mt-4 mb-1.5 scroll-m-20 text-lg font-bold tracking-tight text-foreground italic',
+          'font-heading mt-4 mb-1.5 scroll-m-20 text-base font-semibold tracking-tight text-foreground',
           markdownHierarchy.subsection,
           className,
         )}
@@ -127,7 +127,7 @@ function createMarkdownComponents(
     h4: ({ className, ...props }) => (
       <h4
         className={cn(
-          'font-heading mt-3 mb-1.5 scroll-m-20 text-base font-bold text-foreground',
+          'font-heading mt-3 mb-1.5 scroll-m-20 text-sm font-semibold text-foreground',
           markdownHierarchy.body,
           className,
         )}
@@ -137,7 +137,7 @@ function createMarkdownComponents(
     h5: ({ className, ...props }) => (
       <h5
         className={cn(
-          'font-heading mt-2.5 mb-1 scroll-m-20 text-[13px] font-bold text-foreground/95',
+          'font-heading mt-2.5 mb-1 scroll-m-20 text-[13px] font-semibold text-foreground/95',
           markdownHierarchy.body,
           className,
         )}
@@ -147,7 +147,7 @@ function createMarkdownComponents(
     h6: ({ className, ...props }) => (
       <h6
         className={cn(
-          'font-kicker mt-2 mb-1 scroll-m-20 text-[11px] font-semibold tracking-[0.16em] text-secondary uppercase',
+          'font-heading mt-2 mb-1 scroll-m-20 text-[11px] font-semibold tracking-wide text-secondary uppercase',
           markdownHierarchy.body,
           className,
         )}
@@ -225,7 +225,7 @@ function createMarkdownComponents(
     blockquote: ({ className, ...props }) => (
       <blockquote
         className={cn(
-          'my-4 border-l-2 border-secondary px-4 py-1 font-heading text-lg leading-7 text-foreground italic',
+          'my-4 border-l-2 border-secondary px-4 py-1 text-[13.5px] leading-6 text-foreground/85 italic',
           '[&>p]:not-first:mt-1 [&>p]:pl-0',
           markdownHierarchy.body,
           className,
@@ -370,7 +370,7 @@ export function MarkdownPreview({ content, theme, onInternalLink }: MarkdownPrev
   );
 
   return (
-    <div className="markdown-body markdown-preview max-w-none wrap-break-word">
+    <div className="markdown-body markdown-preview max-w-none font-sans wrap-break-word">
       <ReactMarkdown
         rehypePlugins={[rehypeRaw]}
         remarkPlugins={[remarkGfm]}

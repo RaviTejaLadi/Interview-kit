@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
 import type { Topic } from '@/lib/content-index';
+import { cn } from '@/lib/utils';
 
 type Theme = 'light' | 'dark';
 
@@ -108,10 +109,10 @@ export function TopicAccordion({
     <div className="border border-foreground bg-card p-4 sm:p-5 lg:p-8">
       <div className="mb-4 flex flex-col gap-3 border-b-2 border-foreground pb-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
-          <p className="font-kicker text-[11px] tracking-[0.18em] text-secondary uppercase">
+          <p className="font-heading text-[11px] tracking-[0.18em] text-secondary uppercase">
             {section}
           </p>
-          <h1 className="font-heading mt-1 text-2xl font-black tracking-[-0.03em] text-foreground sm:text-3xl">
+          <h1 className="font-heading mt-1 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
             {title}
           </h1>
           <p className="mt-1 text-sm leading-6 text-muted-foreground">
@@ -125,7 +126,11 @@ export function TopicAccordion({
             variant="outline"
             size="sm"
             onClick={handleToggleAll}
-            className="rounded-none border-foreground bg-card uppercase"
+            className={cn(
+              'rounded-none border-foreground bg-card uppercase opacity-0 transition-opacity duration-150',
+              'group-hover/reader:opacity-100 group-focus-within/reader:opacity-100',
+              '[@media(hover:none)]:opacity-100',
+            )}
           >
             {allOpen ? <ChevronsDownUpIcon /> : <ChevronsUpDownIcon />}
             {allOpen ? 'Collapse all' : 'Expand all'}
@@ -147,7 +152,7 @@ export function TopicAccordion({
               className="scroll-mt-24 border-foreground/40"
             >
               <AccordionTrigger className="rounded-none px-1 hover:no-underline">
-                <span className="font-heading min-w-0 flex-1 text-[15px] leading-snug font-bold text-foreground">
+                <span className="font-heading min-w-0 flex-1 text-[15px] leading-snug font-semibold text-foreground">
                   {topic.title}
                 </span>
               </AccordionTrigger>

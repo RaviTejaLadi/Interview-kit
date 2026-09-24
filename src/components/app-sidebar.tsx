@@ -265,7 +265,7 @@ function KitTopicTree({
                   size="sm"
                   tooltip={section.label}
                   isActive={sectionHasSelectedTopic}
-                  className="h-7 rounded-none font-kicker text-[11px] font-semibold tracking-[0.08em] uppercase text-sidebar-foreground/80 data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
+                  className="h-7 rounded-none font-heading text-[11px] font-semibold tracking-[0.08em] uppercase text-sidebar-foreground/80 data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
                 />
               }
             >
@@ -383,8 +383,8 @@ export function AppSidebar({
             <BookOpenTextIcon className="size-4 shrink-0 text-sidebar-primary" />
           )}
           <div className="grid min-w-0 flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="font-heading truncate font-bold">{activeKit?.label ?? 'Gazette'}</span>
-            <span className="font-kicker truncate text-[10px] tracking-[0.14em] text-sidebar-foreground/70 uppercase">
+            <span className="font-heading truncate font-semibold">{activeKit?.label ?? 'Gazette'}</span>
+            <span className="font-heading truncate text-[10px] tracking-[0.14em] text-sidebar-foreground/70 uppercase">
               Index of this edition
             </span>
           </div>
@@ -409,7 +409,7 @@ export function AppSidebar({
           </div>
         ) : (
           <SidebarGroup className="py-1.5">
-            <SidebarGroupLabel className="font-kicker px-2 text-[11px] tracking-[0.12em] text-sidebar-foreground/78 uppercase">
+            <SidebarGroupLabel className="font-heading px-2 text-[11px] tracking-[0.12em] text-sidebar-foreground/78 uppercase">
               Contents
             </SidebarGroupLabel>
             <div className="px-1">
@@ -424,7 +424,7 @@ export function AppSidebar({
         )}
       </SidebarContent>
       <SidebarFooter className="border-t-2 border-sidebar-border bg-sidebar px-4 py-3 group-data-[collapsible=icon]:hidden">
-        <p className="font-kicker text-[11px] tracking-[0.12em] text-sidebar-foreground/80 uppercase">
+        <p className="font-heading text-[11px] tracking-[0.12em] text-sidebar-foreground/80 uppercase">
           {totalTopics} questions set
         </p>
         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-sidebar-foreground/72">

@@ -118,12 +118,24 @@ export function TopicNavigator({
         </Button>
       </div>
       <div className="pointer-events-none absolute inset-y-0 left-0 hidden lg:block">
-        <div className="pointer-events-auto sticky top-1/2 w-fit -translate-y-1/2">
+        <div
+          className={cn(
+            'pointer-events-none sticky top-1/2 w-fit -translate-y-1/2 opacity-0 transition-opacity duration-150',
+            'group-hover/reader:pointer-events-auto group-hover/reader:opacity-100',
+            'group-focus-within/reader:pointer-events-auto group-focus-within/reader:opacity-100',
+          )}
+        >
           <TopicSideButton topic={previousTopic} direction="previous" onSelect={onSelect} />
         </div>
       </div>
       <div className="pointer-events-none absolute inset-y-0 right-0 hidden lg:block">
-        <div className="pointer-events-auto sticky top-1/2 w-fit -translate-y-1/2">
+        <div
+          className={cn(
+            'pointer-events-none sticky top-1/2 w-fit -translate-y-1/2 opacity-0 transition-opacity duration-150',
+            'group-hover/reader:pointer-events-auto group-hover/reader:opacity-100',
+            'group-focus-within/reader:pointer-events-auto group-focus-within/reader:opacity-100',
+          )}
+        >
           <TopicSideButton topic={nextTopic} direction="next" onSelect={onSelect} />
         </div>
       </div>
