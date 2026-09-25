@@ -1,5 +1,4 @@
 import cssKitIcon from '../../assets/kits-svgs/css.svg';
-import dsaKitIcon from '../../assets/kits-svgs/css.svg';
 import gitKitIcon from '../../assets/kits-svgs/git.svg';
 import hrKitIcon from '../../assets/kits-svgs/hr.svg';
 import htmlKitIcon from '../../assets/kits-svgs/html.svg';
@@ -9,6 +8,10 @@ import nextjsKitIcon from '../../assets/kits-svgs/nextjs.svg';
 import nodejsKitIcon from '../../assets/kits-svgs/nodejs.svg';
 import reactKitIcon from '../../assets/kits-svgs/react.svg';
 import tailwindKitIcon from '../../assets/kits-svgs/tailwind.svg';
+import redisKitIcon from '../../assets/kits-svgs/redis.svg';
+import dockerKitIcon from '../../assets/kits-svgs/docker.svg';
+import testingKitIcon from '../../assets/kits-svgs/testing.svg';
+import dsaKitIcon from '../../assets/kits-svgs/algorithm.svg';
 
 export const KIT_DISPLAY_ORDER = [
   'html-interview-kit',
@@ -39,6 +42,9 @@ export const KIT_ICON_BY_KEY: Record<string, string> = {
   'mongo-db-interview-kit': mongodbKitIcon,
   'git-interview-kit': gitKitIcon,
   'hr-interview-kit': hrKitIcon,
+  'redis-interview-kit': redisKitIcon,
+  'docker-devops-interview-kit': dockerKitIcon,
+  'testing-interview-kit': testingKitIcon,
 };
 
 export const KIT_DESCRIPTIONS: Record<string, string> = {
