@@ -10,6 +10,30 @@ import { cn } from '@/lib/utils';
 
 type Theme = 'light' | 'dark';
 
+const CODE_FONT =
+  '"Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+
+function inferLanguage(language: string | undefined, code: string) {
+  const normalized = language?.toLowerCase();
+  if (normalized === 'js') {
+    return 'javascript';
+  }
+
+  if (normalized && !['text', 'plaintext', 'txt', 'plain'].includes(normalized)) {
+    return normalized;
+  }
+
+  if (normalized) {
+    return 'text';
+  }
+
+  if (/(function|const|let|var|class|import|export|return|console\.|=>|\{|\}|;|\/\/)/.test(code)) {
+    return 'javascript';
+  }
+
+  return 'javascript';
+}
+
 const markdownHierarchy = {
   section: 'pl-1.5 sm:pl-2.5 lg:pl-3',
   subsection: 'pl-2.5 sm:pl-4 lg:pl-5',
@@ -60,7 +84,7 @@ function CodeBlock({
       </button>
 
       <SyntaxHighlighter
-        language={language ?? 'text'}
+        language={inferLanguage(language, codeText)}
         PreTag="div"
         style={isDarkTheme ? oneDark : oneLight}
         wrapLongLines
@@ -68,15 +92,14 @@ function CodeBlock({
         customStyle={{
           margin: 0,
           borderRadius: 0,
-          padding: '0.7rem 0.85rem',
-          fontSize: '12px',
-          lineHeight: '1.55',
+          padding: '0.85rem 1rem',
+          fontSize: '13px',
+          lineHeight: '1.6',
           background: isDarkTheme ? '#101014' : '#faf9f7',
         }}
         codeTagProps={{
           style: {
-            fontFamily:
-              '"Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
+            fontFamily: CODE_FONT,
           },
         }}
       >
@@ -326,15 +349,32 @@ function createMarkdownComponents(
       }
 
       return (
-        <code
-          className={cn(
-            'border border-border bg-muted px-1 py-0.5 font-mono text-[12px] font-medium text-foreground',
-            className,
-          )}
-          {...props}
+        <SyntaxHighlighter
+          language={inferLanguage(language, codeText)}
+          style={isDarkTheme ? oneDark : oneLight}
+          PreTag="span"
+          customStyle={{
+            display: 'inline',
+            margin: 0,
+            padding: '0.05rem 0.35rem',
+            borderRadius: 0,
+            fontSize: '12px',
+            lineHeight: '1.45',
+            verticalAlign: 'baseline',
+            background: isDarkTheme ? '#101014' : '#e9e8e4',
+            border: isDarkTheme
+              ? '1px solid rgba(242, 241, 238, 0.16)'
+              : '1px solid rgba(16, 16, 20, 0.16)',
+          }}
+          codeTagProps={{
+            style: {
+              display: 'inline',
+              fontFamily: CODE_FONT,
+            },
+          }}
         >
-          {children}
-        </code>
+          {codeText}
+        </SyntaxHighlighter>
       );
     },
   };

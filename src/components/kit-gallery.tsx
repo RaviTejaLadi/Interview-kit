@@ -138,49 +138,32 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
   }, [orderedGroups, query]);
 
   const kitCountLabel = `${countWord(groups.length)} kit${groups.length === 1 ? '' : 's'}`;
-  const firstKit = visibleKits[0]?.group ?? null;
 
   return (
     <div className="craft-scan relative">
       <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 sm:py-14 lg:pr-28">
-        <section id="craft-kits" className="scroll-mt-6">
+        <section id="kits" className="scroll-mt-6">
           <div className="flex items-end justify-between gap-6 border-b border-border pb-4">
-            <p className="hud-label text-muted-foreground">01 / Kits</p>
+            <p className="hud-label text-muted-foreground">01 / Interview Kits</p>
             <div className="min-w-0 text-right">
               <p className="hud-label text-faint mb-2 hidden sm:block">
-                {groups.length} kits · {totalTopics} questions · Local
+                {groups.length} kits · {totalTopics} questions
               </p>
-              <p className="font-display text-foreground text-4xl leading-none sm:text-6xl">Kits</p>
+              <p className="font-display text-foreground text-4xl leading-none sm:text-6xl">
+                Prepare
+              </p>
             </div>
           </div>
 
           <h1 className="font-display text-foreground mt-10 max-w-4xl text-4xl leading-[1.02] sm:text-5xl md:text-6xl">
-            {kitCountLabel}. One <span className="text-accent-ink">craft</span>.
+            {kitCountLabel} for every <span className="text-accent-ink">interview</span>.
           </h1>
           <p className="text-muted-foreground mt-5 max-w-xl text-base leading-7">
             Theory, coding, and the questions hiring teams ask across the stack. Read them on your
             machine, one kit at a time.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <button
-              type="button"
-              onClick={() => firstKit && onSelectKit(firstKit.id)}
-              disabled={!firstKit}
-              className="bg-primary text-primary-foreground inline-flex h-10 items-center px-6 font-mono text-[11px] font-bold tracking-[0.12em] uppercase transition-opacity disabled:opacity-40"
-            >
-              {firstKit ? `Open ${firstKit.label}` : 'Open a kit'}
-            </button>
-            <button
-              type="button"
-              onClick={() => document.getElementById('kit-search')?.focus()}
-              className="border-line-strong text-foreground inline-flex h-10 items-center border bg-transparent px-6 font-mono text-[11px] font-bold tracking-[0.12em] uppercase"
-            >
-              Search kits
-            </button>
-          </div>
-
-          <div className="relative mt-6 max-w-xl">
+          <div className="relative mt-8 max-w-xl">
             <SearchIcon className="text-faint pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
             <Input
               id="kit-search"
@@ -194,14 +177,12 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
 
         </section>
 
-        <section id="craft-lineup" className="scroll-mt-6 pt-20">
+        <section id="all-kits" className="scroll-mt-6 pt-20">
           <div className="flex items-end justify-between gap-6 border-b border-border pb-4">
-            <p className="hud-label text-muted-foreground">02 / The lineup</p>
+            <p className="hud-label text-muted-foreground">02 / All kits</p>
             <div className="text-right">
-              <p className="hud-label text-faint mb-2 hidden sm:block">Pick a kit to read</p>
-              <p className="font-display text-foreground text-4xl leading-none sm:text-6xl">
-                Lineup
-              </p>
+              <p className="hud-label text-faint mb-2 hidden sm:block">Choose a kit to study</p>
+              <p className="font-display text-foreground text-4xl leading-none sm:text-6xl">Kits</p>
             </div>
           </div>
 
@@ -251,11 +232,9 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
                       {description}
                     </span>
                     <span className="mt-5 flex items-end justify-between gap-3">
-                      <span className="hud-label text-faint">
-                        {getDesk(group.id)} · {countLabel}
-                      </span>
+                      <span className="hud-label text-faint">{countLabel}</span>
                       <span className="shrink-0 font-mono text-[11px] font-bold tracking-[0.12em] text-foreground uppercase">
-                        Explore
+                        Open
                       </span>
                     </span>
                   </button>
@@ -265,9 +244,9 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
           )}
         </section>
 
-        <section id="craft-read" className="scroll-mt-6 pt-20">
+        <section id="how-to-study" className="scroll-mt-6 pt-20">
           <div className="flex items-end justify-between gap-6 border-b border-border pb-4">
-            <p className="hud-label text-muted-foreground">03 / How to read</p>
+            <p className="hud-label text-muted-foreground">03 / How to study</p>
             <p className="font-display text-foreground text-4xl leading-none sm:text-6xl">Read</p>
           </div>
           <div className="grid gap-10 py-10 md:grid-cols-3">
@@ -286,7 +265,7 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
         <footer className="mt-8 border-t border-border pt-10 pb-12">
           <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <p className="font-display text-foreground text-lg">Interview Kit</p>
+              <p className="font-display text-foreground text-lg">Interview Kits</p>
               <p className="text-muted-foreground mt-3 max-w-xs text-sm leading-6">
                 Questions for the full stack, set locally and free to read.
               </p>
@@ -329,35 +308,35 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
                 <li>
                   <button
                     type="button"
-                    onClick={() => scrollToSection('craft-kits')}
+                    onClick={() => scrollToSection('kits')}
                     className="text-muted-foreground hover:text-foreground text-sm"
                   >
-                    Kits
+                    Prepare
                   </button>
                 </li>
                 <li>
                   <button
                     type="button"
-                    onClick={() => scrollToSection('craft-lineup')}
+                    onClick={() => scrollToSection('all-kits')}
                     className="text-muted-foreground hover:text-foreground text-sm"
                   >
-                    Lineup
+                    All kits
                   </button>
                 </li>
                 <li>
                   <button
                     type="button"
-                    onClick={() => scrollToSection('craft-read')}
+                    onClick={() => scrollToSection('how-to-study')}
                     className="text-muted-foreground hover:text-foreground text-sm"
                   >
-                    How to read
+                    How to study
                   </button>
                 </li>
               </ul>
             </div>
           </div>
           <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
-            <p className="hud-label text-faint">© {new Date().getFullYear()} Interview Kit</p>
+            <p className="hud-label text-faint">© {new Date().getFullYear()} Interview Kits</p>
             <p className="hud-label text-faint">Made for candidates</p>
           </div>
         </footer>
@@ -369,9 +348,9 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
       >
         <div className="pointer-events-auto sticky top-[32vh] flex flex-col items-end gap-4">
           {[
-            ['craft-kits', 'Kits'],
-            ['craft-lineup', 'Lineup'],
-            ['craft-read', 'Read'],
+            ['kits', 'Prepare'],
+            ['all-kits', 'Kits'],
+            ['how-to-study', 'Study'],
           ].map(([id, label]) => (
             <button
               key={id}

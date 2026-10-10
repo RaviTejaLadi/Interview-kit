@@ -73,71 +73,25 @@ function TopicSideButton({
   );
 }
 
-export function TopicNavigator({
+export function TopicStepButtons({
   previousTopic,
   nextTopic,
   onSelect,
-  children,
 }: AdjacentTopics & {
   onSelect: (topicId: string) => void;
-  children: ReactNode;
 }) {
   return (
-    <nav
-      aria-label="Topic pagination"
-      className="relative mx-auto w-full max-w-6xl px-0 md:px-4 lg:px-9"
-    >
-      <div className="min-w-0">{children}</div>
-      <div className="mt-3 flex items-center gap-2 lg:hidden">
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          disabled={!previousTopic}
-          onClick={() => previousTopic && onSelect(previousTopic.id)}
-          className="min-w-0 flex-1 justify-start rounded-none border-border bg-card dark:border-border dark:bg-card"
-          aria-label={
-            previousTopic ? `Previous topic: ${previousTopic.title}` : 'No previous topic'
-          }
-        >
-          <ChevronLeftIcon />
-          <span className="truncate">{previousTopic?.title ?? 'First topic'}</span>
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          disabled={!nextTopic}
-          onClick={() => nextTopic && onSelect(nextTopic.id)}
-          className="min-w-0 flex-1 justify-end rounded-none border-border bg-card dark:border-border dark:bg-card"
-          aria-label={nextTopic ? `Next topic: ${nextTopic.title}` : 'No next topic'}
-        >
-          <span className="truncate">{nextTopic?.title ?? 'Last topic'}</span>
-          <ChevronRightIcon />
-        </Button>
-      </div>
-      <div className="pointer-events-none absolute inset-y-0 left-0 hidden lg:block">
-        <div
-          className={cn(
-            'pointer-events-none sticky top-1/2 w-fit -translate-y-1/2 opacity-0 transition-opacity duration-150',
-            'group-hover/reader:pointer-events-auto group-hover/reader:opacity-100',
-            'group-focus-within/reader:pointer-events-auto group-focus-within/reader:opacity-100',
-          )}
-        >
-          <TopicSideButton topic={previousTopic} direction="previous" onSelect={onSelect} />
-        </div>
-      </div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 hidden lg:block">
-        <div
-          className={cn(
-            'pointer-events-none sticky top-1/2 w-fit -translate-y-1/2 opacity-0 transition-opacity duration-150',
-            'group-hover/reader:pointer-events-auto group-hover/reader:opacity-100',
-            'group-focus-within/reader:pointer-events-auto group-focus-within/reader:opacity-100',
-          )}
-        >
-          <TopicSideButton topic={nextTopic} direction="next" onSelect={onSelect} />
-        </div>
-      </div>
+    <div className="flex items-center gap-1">
+      <TopicSideButton topic={previousTopic} direction="previous" onSelect={onSelect} />
+      <TopicSideButton topic={nextTopic} direction="next" onSelect={onSelect} />
+    </div>
+  );
+}
+
+export function TopicNavigator({ children }: { children: ReactNode }) {
+  return (
+    <nav aria-label="Topic pagination" className="w-full min-w-0">
+      {children}
     </nav>
   );
 }

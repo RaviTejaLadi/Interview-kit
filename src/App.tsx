@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowLeftIcon } from 'lucide-react';
 
 import { AppSidebar } from '@/components/app-sidebar';
 import { KitGallery } from '@/components/kit-gallery';
 import { MarkdownPreview } from '@/components/markdown-preview';
-import { EditionDateline, GazetteBanner } from '@/components/newspaper-masthead';
+import { SiteHeader } from '@/components/newspaper-masthead';
 import { TopicAccordion } from '@/components/topic-accordion';
 import {
   FullscreenButton,
@@ -12,11 +11,10 @@ import {
   ThemeToggle,
   TopicDock,
   TopicNavigator,
+  TopicStepButtons,
 } from '@/components/topic-navigator';
-import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { KIT_DESKS } from '@/lib/kit-meta';
 import {
   useAdjacentTopics,
   useFooterInView,
@@ -355,7 +353,7 @@ function App() {
   if (!selectedKitId) {
     return (
       <div className="theme flex h-svh flex-col bg-background">
-        <GazetteBanner actions={headerActions} />
+        <SiteHeader actions={headerActions} />
         <ScrollArea className="min-h-0 flex-1">
           <KitGallery groups={groups} onSelectKit={(kitId) => openKit(kitId)} />
         </ScrollArea>
@@ -363,13 +361,12 @@ function App() {
     );
   }
 
-  const kitDesk = selectedNav ? (KIT_DESKS[selectedNav.kitKey] ?? 'Special edition') : 'Inside';
   const editionSubtitle = selectedNav
     ? [
         selectedNav.section,
-        selectedNav.title,
+        selectedNav.title === selectedNav.kitLabel ? null : selectedNav.title,
         selectedNav.kind === 'folder' ? getNavSubtitle(selectedNav) : null,
-        currentIndex >= 0 && totalCount > 0 ? `Col. ${currentIndex + 1} / ${totalCount}` : null,
+        currentIndex >= 0 && totalCount > 0 ? `${currentIndex + 1} / ${totalCount}` : null,
       ]
         .filter(Boolean)
         .join(' · ')
@@ -386,34 +383,14 @@ function App() {
         onBackToKits={closeKit}
       />
       <SidebarInset className="bg-background">
-        <GazetteBanner sectionLabel={selectedNav?.kitLabel} actions={headerActions} />
-        <EditionDateline
-          kicker={kitDesk}
-          title={selectedNav?.kitLabel ?? 'Interview Kit'}
-          subtitle={editionSubtitle}
+        <SiteHeader
+          actions={headerActions}
+          onBrandClick={closeKit}
+          kitLabel={selectedNav?.kitLabel}
+          kitIcon={selectedTopicIcon}
+          detail={editionSubtitle}
           leading={
-            <>
-              <SidebarTrigger className="-ml-0.5 border border-border bg-background hover:bg-muted sm:-ml-1" />
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={closeKit}
-                className="h-7 border-line-strong bg-transparent px-2 font-mono text-[11px] font-bold tracking-[0.12em] uppercase"
-              >
-                <ArrowLeftIcon className="size-3.5" />
-                <span className="hidden sm:inline">All kits</span>
-                <span className="sm:hidden">Kits</span>
-              </Button>
-              {selectedTopicIcon ? (
-                <img
-                  src={selectedTopicIcon}
-                  alt=""
-                  aria-hidden="true"
-                  className="hidden size-5 shrink-0 object-contain sm:block"
-                />
-              ) : null}
-            </>
+            <SidebarTrigger className="-ml-0.5 border border-border bg-background hover:bg-muted sm:-ml-1" />
           }
         />
         <ScrollArea
@@ -430,12 +407,8 @@ function App() {
               </p>
             </div>
           ) : (
-            <article className="mx-auto w-full min-w-0 max-w-5xl space-y-3 px-1 py-3 sm:space-y-4">
-              <TopicNavigator
-                previousTopic={previousTopic}
-                nextTopic={nextTopic}
-                onSelect={handleSelectNav}
-              >
+            <article className="w-full min-w-0 space-y-3">
+              <TopicNavigator>
                 {selectedNav.kind === 'folder' ? (
                   <TopicAccordion
                     key={selectedNav.id}
@@ -446,10 +419,20 @@ function App() {
                     isLoading={isLoadingTopic}
                     theme={theme}
                     focusedTopicId={focusedTopicId}
+                    previousTopic={previousTopic}
+                    nextTopic={nextTopic}
+                    onSelectTopic={handleSelectNav}
                     onInternalLink={handleInternalLink}
                   />
                 ) : (
                   <div className="border border-border bg-card p-4 sm:p-5 lg:p-8">
+                    <div className="mb-4 flex justify-end">
+                      <TopicStepButtons
+                        previousTopic={previousTopic}
+                        nextTopic={nextTopic}
+                        onSelect={handleSelectNav}
+                      />
+                    </div>
                     {isLoadingTopic && !hasSelectedTopicContent ? (
                       <p className="text-sm text-muted-foreground">Loading…</p>
                     ) : topicLoadError ? (

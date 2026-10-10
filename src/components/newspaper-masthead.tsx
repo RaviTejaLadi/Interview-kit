@@ -1,48 +1,51 @@
 import type { ReactNode } from 'react';
 
-type GazetteBannerProps = {
+type SiteHeaderProps = {
   actions?: ReactNode;
   leading?: ReactNode;
-  sectionLabel?: string;
+  kitLabel?: string;
+  kitIcon?: string | null;
+  detail?: string;
+  onBrandClick?: () => void;
 };
 
-type EditionDatelineProps = {
-  kicker?: string;
-  title: string;
-  subtitle?: string;
-  leading?: ReactNode;
-  actions?: ReactNode;
-};
-
-export function GazetteBanner({ actions, leading, sectionLabel }: GazetteBannerProps) {
+export function SiteHeader({
+  actions,
+  leading,
+  kitLabel,
+  kitIcon,
+  detail,
+  onBrandClick,
+}: SiteHeaderProps) {
   return (
-    <header className="flex h-12 shrink-0 items-center gap-3 border-b border-border bg-background px-3 sm:px-5">
+    <header className="flex min-h-12 shrink-0 items-center gap-3 border-b border-border bg-background px-3 py-2 sm:px-5">
       {leading}
-      <span className="font-display flex size-7 shrink-0 items-center justify-center bg-foreground text-[15px] leading-none text-background">
-        I
-      </span>
-      <p className="font-display hidden text-sm text-foreground sm:block">Interview Kit</p>
-      <span className="hidden h-4 w-px bg-border sm:block" aria-hidden="true" />
-      <span className="hud-label bg-foreground px-2.5 py-1 text-background">
-        {sectionLabel ?? 'Kits'}
-      </span>
+      {onBrandClick ? (
+        <button
+          type="button"
+          onClick={onBrandClick}
+          className="font-display shrink-0 text-sm text-foreground"
+        >
+          Interview Kits
+        </button>
+      ) : (
+        <p className="font-display shrink-0 text-sm text-foreground">Interview Kits</p>
+      )}
+      {kitLabel ? (
+        <>
+          <span className="hidden h-4 w-px shrink-0 bg-border sm:block" aria-hidden="true" />
+          {kitIcon ? (
+            <img src={kitIcon} alt="" aria-hidden="true" className="size-5 shrink-0 object-contain" />
+          ) : null}
+          <p className="font-display truncate text-lg leading-none text-foreground sm:text-xl">
+            {kitLabel}
+          </p>
+        </>
+      ) : null}
+      {detail ? (
+        <p className="hud-label hidden min-w-0 truncate text-faint lg:block">{detail}</p>
+      ) : null}
       {actions ? <div className="ml-auto flex shrink-0 items-center gap-1.5">{actions}</div> : null}
     </header>
-  );
-}
-
-export function EditionDateline({ kicker, title, subtitle, leading, actions }: EditionDatelineProps) {
-  return (
-    <div className="flex min-h-14 items-center gap-3 border-b border-border bg-background px-3 py-3 sm:px-5">
-      {leading}
-      <div className="min-w-0">
-        {kicker ? <p className="hud-label truncate text-muted-foreground">{kicker}</p> : null}
-        {subtitle ? <p className="hud-label truncate text-faint">{subtitle}</p> : null}
-      </div>
-      <p className="font-display ml-auto max-w-[46%] truncate text-right text-2xl leading-none text-foreground sm:text-3xl">
-        {title}
-      </p>
-      {actions}
-    </div>
   );
 }

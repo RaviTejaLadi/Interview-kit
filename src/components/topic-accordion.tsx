@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { ChevronsDownUpIcon, ChevronsUpDownIcon } from 'lucide-react';
 
 import { MarkdownPreview } from '@/components/markdown-preview';
+import { TopicStepButtons } from '@/components/topic-navigator';
 import {
   Accordion,
   AccordionContent,
@@ -22,6 +23,9 @@ type TopicAccordionProps = {
   isLoading: boolean;
   theme: Theme;
   focusedTopicId?: string | null;
+  previousTopic: { id: string; title: string } | null;
+  nextTopic: { id: string; title: string } | null;
+  onSelectTopic: (topicId: string) => void;
   onInternalLink: (fromPath: string, href: string) => boolean;
 };
 
@@ -37,6 +41,9 @@ export function TopicAccordion({
   isLoading,
   theme,
   focusedTopicId = null,
+  previousTopic,
+  nextTopic,
+  onSelectTopic,
   onInternalLink,
 }: TopicAccordionProps) {
   const topicIdsKey = topics.map((topic) => topic.id).join('\0');
@@ -106,7 +113,7 @@ export function TopicAccordion({
   };
 
   return (
-    <div className="border border-border bg-card p-4 sm:p-5 lg:p-8">
+    <div className="bg-card p-4 sm:p-5 lg:p-8">
       <div className="mb-4 flex flex-col gap-3 border-b border-border pb-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <p className="hud-label text-muted-foreground">{section}</p>
@@ -117,6 +124,11 @@ export function TopicAccordion({
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
+          <TopicStepButtons
+            previousTopic={previousTopic}
+            nextTopic={nextTopic}
+            onSelect={onSelectTopic}
+          />
           <Button
             type="button"
             variant="outline"
@@ -145,10 +157,10 @@ export function TopicAccordion({
               key={topic.id}
               id={`topic-accordion-${topic.id}`}
               value={topic.id}
-              className="scroll-mt-24 border-border"
+              className="scroll-mt-24 border-border mb-1 last:mb-0"
             >
-              <AccordionTrigger className="rounded-none px-1 hover:no-underline">
-                <span className="font-heading min-w-0 flex-1 text-[15px] leading-snug font-semibold text-foreground">
+              <AccordionTrigger className="rounded-none border-l-2 border-l-accent-ink bg-muted/60 px-3 py-3 hover:bg-muted hover:no-underline">
+                <span className="font-display min-w-0 flex-1 text-lg leading-tight text-foreground">
                   {topic.title}
                 </span>
               </AccordionTrigger>
