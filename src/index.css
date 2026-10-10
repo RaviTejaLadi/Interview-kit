@@ -5,8 +5,14 @@
 
 @theme inline {
   --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
-  --font-heading: 'Plus Jakarta Sans', Inter, ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-heading: Archivo, Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-faint: var(--faint);
+  --color-accent-ink: var(--accent-ink);
+  --color-invert: var(--invert-bg);
+  --color-invert-foreground: var(--invert-fg);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -38,44 +44,58 @@
   --radius-sm: 0;
   --radius-md: 0;
   --radius-lg: 0;
+  --radius-xl: 0;
 }
 
 @layer base {
   :root {
-    --paper: #f3ead3;
-    --ink: #1c1610;
-    --background: #f3ead3;
-    --foreground: #1c1610;
-    --card: #f8f1dc;
-    --card-foreground: #1c1610;
-    --primary: #1c1610;
-    --primary-foreground: #f3ead3;
-    --secondary: #9f1d1d;
-    --secondary-foreground: #f8f1dc;
-    --muted: #e4d7b8;
-    --muted-foreground: #5c5346;
-    --accent: #9f1d1d;
-    --accent-foreground: #f8f1dc;
-    --border: #1c1610;
-    --input: #d8cbaa;
-    --ring: #9f1d1d;
+    --bg: #f2f1ee;
+    --bg-raised: #faf9f7;
+    --bg-sunken: #e9e8e4;
+    --ink: #101014;
+    --ink-strong: #000;
+    --muted-ink: #1010149e;
+    --faint: #1010146b;
+    --line: #10101429;
+    --line-strong: #10101466;
+    --accent-ink: #1659c4;
+    --invert-bg: #101014;
+    --invert-fg: #f2f1ee;
+    --danger: #b3261e;
+    --scanline: #10101408;
+    --paper: var(--bg);
+    --background: var(--bg);
+    --foreground: var(--ink);
+    --card: var(--bg-raised);
+    --card-foreground: var(--ink);
+    --primary: var(--invert-bg);
+    --primary-foreground: var(--invert-fg);
+    --secondary: #2d81ff;
+    --secondary-foreground: #fff;
+    --muted: var(--bg-sunken);
+    --muted-foreground: var(--muted-ink);
+    --accent: var(--bg-sunken);
+    --accent-foreground: var(--ink);
+    --border: var(--line);
+    --input: var(--line-strong);
+    --ring: #2d81ff;
     --radius: 0;
-    --popover: #f8f1dc;
-    --popover-foreground: #1c1610;
-    --destructive: oklch(0.55 0.2 25);
-    --chart-1: #1c1610;
-    --chart-2: #9f1d1d;
-    --chart-3: #5c5346;
-    --chart-4: #c4a35a;
-    --chart-5: #3f5b4c;
-    --sidebar: #efe3c6;
-    --sidebar-foreground: #1c1610;
-    --sidebar-primary: #1c1610;
-    --sidebar-primary-foreground: #f3ead3;
-    --sidebar-accent: #e4d7b8;
-    --sidebar-accent-foreground: #1c1610;
-    --sidebar-border: #1c1610;
-    --sidebar-ring: #9f1d1d;
+    --popover: var(--bg-raised);
+    --popover-foreground: var(--ink);
+    --destructive: var(--danger);
+    --chart-1: #2d81ff;
+    --chart-2: #101014;
+    --chart-3: #1659c4;
+    --chart-4: #6b9cff;
+    --chart-5: #1010149e;
+    --sidebar: var(--bg-raised);
+    --sidebar-foreground: var(--ink);
+    --sidebar-primary: var(--invert-bg);
+    --sidebar-primary-foreground: var(--invert-fg);
+    --sidebar-accent: var(--bg-sunken);
+    --sidebar-accent-foreground: var(--ink);
+    --sidebar-border: var(--line);
+    --sidebar-ring: #2d81ff;
   }
 
   * {
@@ -87,24 +107,18 @@
     margin: 0;
     min-height: 100svh;
     line-height: 1.5;
-    background-image:
-      radial-gradient(1180px 520px at 50% -18%, rgb(159 29 29 / 8%), transparent 58%),
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 27px,
-        color-mix(in oklab, var(--foreground) 3.5%, transparent) 28px
-      );
   }
 
   .theme {
-    --font-heading: 'Plus Jakarta Sans', Inter, ui-sans-serif, system-ui, sans-serif;
+    --font-heading: Archivo, Inter, ui-sans-serif, system-ui, sans-serif;
     --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
-    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   }
 
   :where(h1, h2, h3, h4, h5, h6) {
-    @apply font-heading;
+    font-family: var(--font-heading);
+    font-weight: 620;
+    letter-spacing: -0.03em;
   }
 
   :where(code, kbd, samp, pre) {
@@ -112,37 +126,52 @@
   }
 
   .dark {
-    --paper: #eadfc8;
-    --ink: #16120e;
-    --background: #1a1612;
-    --foreground: #eadfc8;
-    --card: #221c16;
-    --card-foreground: #eadfc8;
-    --primary: #eadfc8;
-    --primary-foreground: #16120e;
-    --secondary: #d4a017;
-    --secondary-foreground: #16120e;
-    --muted: #2c241c;
-    --muted-foreground: #b7aa90;
-    --accent: #d4a017;
-    --accent-foreground: #16120e;
-    --destructive: oklch(0.7 0.17 25);
-    --border: rgb(234 223 200 / 28%);
-    --input: rgb(234 223 200 / 22%);
-    --ring: #d4a017;
-    --chart-1: #eadfc8;
-    --chart-2: #d4a017;
-    --chart-3: #b7aa90;
-    --chart-4: #9f1d1d;
-    --chart-5: #7d9a86;
-    --sidebar: #16120e;
-    --sidebar-foreground: #eadfc8;
-    --sidebar-primary: #eadfc8;
-    --sidebar-primary-foreground: #16120e;
-    --sidebar-accent: #2c241c;
-    --sidebar-accent-foreground: #eadfc8;
-    --sidebar-border: rgb(234 223 200 / 22%);
-    --sidebar-ring: #d4a017;
+    --bg: #121316;
+    --bg-raised: #101014;
+    --bg-sunken: #060607;
+    --ink: #f2f1ee;
+    --ink-strong: #fff;
+    --muted-ink: #f2f1ee99;
+    --faint: #f2f1ee61;
+    --line: #f2f1ee26;
+    --line-strong: #f2f1ee66;
+    --accent-ink: #74aaff;
+    --invert-bg: #fff;
+    --invert-fg: #0b0b0c;
+    --danger: #ff6259;
+    --scanline: #ffffff06;
+    --paper: #f2f1ee;
+    --background: var(--bg);
+    --foreground: var(--ink);
+    --card: var(--bg-raised);
+    --card-foreground: var(--ink);
+    --primary: var(--invert-bg);
+    --primary-foreground: var(--invert-fg);
+    --secondary: #2d81ff;
+    --secondary-foreground: #fff;
+    --muted: var(--bg-sunken);
+    --muted-foreground: var(--muted-ink);
+    --accent: var(--bg-sunken);
+    --accent-foreground: var(--ink);
+    --border: var(--line);
+    --input: var(--line-strong);
+    --ring: #2d81ff;
+    --popover: var(--bg-raised);
+    --popover-foreground: var(--ink);
+    --destructive: var(--danger);
+    --chart-1: #74aaff;
+    --chart-2: #2d81ff;
+    --chart-3: #f2f1ee;
+    --chart-4: #f2f1ee99;
+    --chart-5: #1659c4;
+    --sidebar: var(--bg-raised);
+    --sidebar-foreground: var(--ink);
+    --sidebar-primary: var(--invert-bg);
+    --sidebar-primary-foreground: var(--invert-fg);
+    --sidebar-accent: var(--bg-sunken);
+    --sidebar-accent-foreground: var(--ink);
+    --sidebar-border: var(--line);
+    --sidebar-ring: #2d81ff;
   }
 
   html {
@@ -150,40 +179,29 @@
   }
 }
 
-.paper-grain {
-  position: relative;
+.hud-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  line-height: 1.5;
+  text-transform: uppercase;
 }
 
-.paper-grain::after {
-  content: '';
-  pointer-events: none;
-  position: fixed;
-  inset: 0;
-  z-index: 80;
-  opacity: 0.14;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+.font-display {
+  font-family: var(--font-heading);
+  font-weight: 620;
+  letter-spacing: -0.035em;
 }
 
-.dark .paper-grain::after {
-  mix-blend-mode: overlay;
-  opacity: 0.16;
-}
-
-.newspaper-rule {
-  height: 1px;
-  background: currentColor;
-}
-
-.newspaper-rule-double {
-  height: 7px;
-  border-top: 1px solid currentColor;
-  border-bottom: 3px solid currentColor;
-}
-
-.newspaper-rule-thick {
-  height: 3px;
-  background: currentColor;
+.craft-scan {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 3px,
+    var(--scanline) 3px,
+    var(--scanline) 4px
+  );
 }
 
 .markdown-body {

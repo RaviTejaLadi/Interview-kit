@@ -344,10 +344,9 @@ function App() {
 
   const headerActions = (
     <>
-      <FullscreenButton tone="ink" />
+      <FullscreenButton />
       <ThemeToggle
         theme={theme}
-        tone="ink"
         onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       />
     </>
@@ -355,10 +354,10 @@ function App() {
 
   if (!selectedKitId) {
     return (
-      <div className="theme paper-grain flex h-svh flex-col bg-background">
-        <GazetteBanner theme={theme} actions={headerActions} />
+      <div className="theme flex h-svh flex-col bg-background">
+        <GazetteBanner actions={headerActions} />
         <ScrollArea className="min-h-0 flex-1">
-          <KitGallery groups={groups} theme={theme} onSelectKit={(kitId) => openKit(kitId)} />
+          <KitGallery groups={groups} onSelectKit={(kitId) => openKit(kitId)} />
         </ScrollArea>
       </div>
     );
@@ -377,7 +376,7 @@ function App() {
     : undefined;
 
   return (
-    <SidebarProvider className="theme paper-grain bg-background">
+    <SidebarProvider className="theme bg-background">
       <AppSidebar
         groups={filteredGroups}
         searchValue={searchValue}
@@ -387,31 +386,31 @@ function App() {
         onBackToKits={closeKit}
       />
       <SidebarInset className="bg-background">
-        <GazetteBanner theme={theme} sectionLabel={selectedNav?.kitLabel} actions={headerActions} />
+        <GazetteBanner sectionLabel={selectedNav?.kitLabel} actions={headerActions} />
         <EditionDateline
           kicker={kitDesk}
-          title={selectedNav?.kitLabel ?? 'Interview Gazette'}
+          title={selectedNav?.kitLabel ?? 'Interview Kit'}
           subtitle={editionSubtitle}
           leading={
             <>
-              <SidebarTrigger className="-ml-0.5 rounded-none border border-foreground bg-card hover:bg-muted sm:-ml-1" />
+              <SidebarTrigger className="-ml-0.5 border border-border bg-background hover:bg-muted sm:-ml-1" />
               <Button
                 type="button"
                 variant="outline"
                 size="sm"
                 onClick={closeKit}
-                className="h-7 rounded-none border-foreground bg-card px-2 text-xs uppercase"
+                className="h-7 border-line-strong bg-transparent px-2 font-mono text-[11px] font-bold tracking-[0.12em] uppercase"
               >
                 <ArrowLeftIcon className="size-3.5" />
-                <span className="hidden sm:inline">Front page</span>
-                <span className="sm:hidden">Front</span>
+                <span className="hidden sm:inline">All kits</span>
+                <span className="sm:hidden">Kits</span>
               </Button>
               {selectedTopicIcon ? (
                 <img
                   src={selectedTopicIcon}
                   alt=""
                   aria-hidden="true"
-                  className="hidden size-5 shrink-0 border border-foreground bg-card object-contain p-0.5 sm:block"
+                  className="hidden size-5 shrink-0 object-contain sm:block"
                 />
               ) : null}
             </>
@@ -424,14 +423,14 @@ function App() {
         >
           {!selectedNav ? (
             <div className="flex h-full items-center justify-center p-4 sm:p-6">
-              <p className="border border-foreground bg-card p-4 text-sm text-foreground/80 sm:p-5">
+              <p className="border border-border bg-card p-4 text-sm text-muted-foreground sm:p-5">
                 {searchValue.trim()
-                  ? 'No copy matches this search in the current edition.'
-                  : 'Select a column to read.'}
+                  ? 'No topics match this search in the current kit.'
+                  : 'Select a topic to read.'}
               </p>
             </div>
           ) : (
-            <article className="newspaper-article mx-auto w-full min-w-0 max-w-5xl space-y-3 px-1 py-3 sm:space-y-4">
+            <article className="mx-auto w-full min-w-0 max-w-5xl space-y-3 px-1 py-3 sm:space-y-4">
               <TopicNavigator
                 previousTopic={previousTopic}
                 nextTopic={nextTopic}
@@ -450,11 +449,11 @@ function App() {
                     onInternalLink={handleInternalLink}
                   />
                 ) : (
-                  <div className="border border-foreground bg-card p-4 sm:p-5 lg:p-8">
+                  <div className="border border-border bg-card p-4 sm:p-5 lg:p-8">
                     {isLoadingTopic && !hasSelectedTopicContent ? (
-                      <p className="text-sm text-foreground/70">Setting the type...</p>
+                      <p className="text-sm text-muted-foreground">Loading…</p>
                     ) : topicLoadError ? (
-                      <p className="text-sm text-secondary">
+                      <p className="text-sm text-destructive">
                         Could not load this file. {topicLoadError}
                       </p>
                     ) : (

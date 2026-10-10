@@ -1,20 +1,13 @@
 import { useMemo, useState } from 'react';
 import { BookOpenTextIcon, SearchIcon } from 'lucide-react';
 
-import { NewspaperNameplate } from '@/components/newspaper-masthead';
 import { Input } from '@/components/ui/input';
 import type { TopicGroup } from '@/lib/content-index';
-import {
-  KIT_DESKS,
-  KIT_DESCRIPTIONS,
-  KIT_ICON_BY_KEY,
-  sortKitsByDisplayOrder,
-} from '@/lib/kit-meta';
+import { KIT_DESCRIPTIONS, KIT_DESKS, KIT_ICON_BY_KEY, sortKitsByDisplayOrder } from '@/lib/kit-meta';
 import { cn } from '@/lib/utils';
 
 type KitGalleryProps = {
   groups: TopicGroup[];
-  theme: 'light' | 'dark';
   onSelectKit: (kitId: string) => void;
 };
 
@@ -23,136 +16,82 @@ type VisibleKit = {
   matchCount: number;
 };
 
-function getKitSections(group: TopicGroup) {
-  return Array.from(new Set(group.topics.map((topic) => topic.section))).filter(
-    (section) => section !== 'General',
-  );
+const COUNT_WORDS = [
+  'Zero',
+  'One',
+  'Two',
+  'Three',
+  'Four',
+  'Five',
+  'Six',
+  'Seven',
+  'Eight',
+  'Nine',
+  'Ten',
+  'Eleven',
+  'Twelve',
+  'Thirteen',
+  'Fourteen',
+  'Fifteen',
+  'Sixteen',
+  'Seventeen',
+  'Eighteen',
+  'Nineteen',
+  'Twenty',
+];
+
+const KIT_TILE: Record<string, string> = {
+  'html-interview-kit': '#e4572e',
+  'css-interview-kit': '#2f7bf5',
+  'tailwind-interview-kit': '#14b8a6',
+  'javascript-interview-kit': '#f5b301',
+  'dsa-interview-kit': '#7c5cbf',
+  'react-interview-kit': '#00b4d8',
+  'next-js-interview-kit': '#111111',
+  'node-js-interview-kit': '#3c9d4e',
+  'mongo-db-interview-kit': '#10aa50',
+  'git-interview-kit': '#f05033',
+  'docker-devops-interview-kit': '#2496ed',
+  'hr-interview-kit': '#e84d8a',
+  'redis-interview-kit': '#d82c20',
+  'testing-interview-kit': '#8b5cf6',
+};
+
+const PRINCIPLES = [
+  {
+    index: '01',
+    title: 'On your machine',
+    body: 'Every question is a markdown file in this project. Nothing is fetched from a server between you and the page.',
+  },
+  {
+    index: '02',
+    title: 'One kit at a time',
+    body: 'Open a kit, then move through its topics. The arrow keys jump to the previous and next item.',
+  },
+  {
+    index: '03',
+    title: 'Familiar from the first page',
+    body: 'Theory, coding drills, and the traps interviews actually use, in the order you would study them.',
+  },
+];
+
+function countWord(count: number) {
+  return COUNT_WORDS[count] ?? String(count);
 }
 
 function getDesk(kitId: string) {
-  return KIT_DESKS[kitId] ?? 'Special edition';
+  return KIT_DESKS[kitId] ?? 'Interview kit';
 }
 
-function StoryByline({
-  group,
-  matchCount,
-  query,
-}: {
-  group: TopicGroup;
-  matchCount: number;
-  query: string;
-}) {
-  const sections = getKitSections(group);
-  const countLabel =
-    query && matchCount > 0 ? `${matchCount} matching` : `${group.topics.length} questions`;
-
-  return (
-    <p className="font-heading mt-2 text-[11px] tracking-[0.12em] text-muted-foreground uppercase">
-      {countLabel}
-      {sections.length > 0 ? ` · ${sections.slice(0, 3).join(' · ')}` : ''}
-    </p>
-  );
+function padIndex(index: number) {
+  return String(index + 1).padStart(2, '0');
 }
 
-function StoryCell({
-  item,
-  query,
-  variant,
-  folio,
-  onSelect,
-}: {
-  item: VisibleKit;
-  query: string;
-  variant: 'lead' | 'secondary' | 'brief';
-  folio: string;
-  onSelect: (kitId: string) => void;
-}) {
-  const { group, matchCount } = item;
-  const icon = KIT_ICON_BY_KEY[group.id];
-  const description = KIT_DESCRIPTIONS[group.id] ?? 'Interview questions and practice topics.';
-  const desk = getDesk(group.id);
-  const isLead = variant === 'lead';
-  const isBrief = variant === 'brief';
-
-  return (
-    <button
-      type="button"
-      onClick={() => onSelect(group.id)}
-      className={cn(
-        'group relative flex h-full cursor-pointer flex-col text-left transition-colors',
-        'focus-visible:bg-foreground focus-visible:text-background focus-visible:outline-none',
-        isLead && 'gap-4 p-4 sm:p-5 lg:p-6',
-        variant === 'secondary' && 'gap-3 p-4 sm:p-5',
-        isBrief && 'gap-2 p-3.5 sm:p-4',
-      )}
-    >
-      {isLead ? (
-        <span className="font-heading pointer-events-none absolute top-3 right-3 rotate-[-8deg] border-2 border-secondary px-2 py-0.5 text-[11px] tracking-[0.18em] text-secondary uppercase group-focus-visible:border-background group-focus-visible:text-background">
-          Extra
-        </span>
-      ) : null}
-
-      <div className={cn('flex items-start gap-3', isLead && 'flex-col sm:flex-row')}>
-        <div
-          className={cn(
-            'flex shrink-0 items-center justify-center border border-foreground bg-card',
-            isLead && 'size-20 sm:size-24',
-            variant === 'secondary' && 'size-12',
-            isBrief && 'size-9',
-          )}
-        >
-          {icon ? (
-            <img
-              src={icon}
-              alt=""
-              aria-hidden="true"
-              className={cn('object-contain', isLead ? 'size-12 sm:size-14' : 'size-6')}
-            />
-          ) : (
-            <BookOpenTextIcon className={cn(isLead ? 'size-8' : 'size-4')} />
-          )}
-        </div>
-
-        <div className="min-w-0 flex-1">
-          <p className="font-heading text-[10px] tracking-[0.2em] text-secondary uppercase group-focus-visible:text-background">
-            {desk}
-          </p>
-          <h2
-            className={cn(
-              'font-heading mt-1 font-semibold tracking-tight text-balance group-hover:underline group-hover:decoration-2 group-hover:underline-offset-4',
-              isLead && 'text-3xl leading-[0.95] sm:text-4xl lg:text-5xl',
-              variant === 'secondary' && 'text-2xl leading-tight sm:text-3xl',
-              isBrief && 'text-lg leading-tight sm:text-xl',
-            )}
-          >
-            {group.label}
-          </h2>
-        </div>
-      </div>
-
-      <p
-        className={cn(
-          'text-foreground/85',
-          isLead && 'max-w-xl text-base leading-7 sm:text-lg',
-          variant === 'secondary' && 'line-clamp-3 text-sm leading-6',
-          isBrief && 'line-clamp-2 text-[13px] leading-5',
-        )}
-      >
-        {description}
-      </p>
-
-      <div className="mt-auto">
-        <StoryByline group={group} matchCount={matchCount} query={query} />
-        <p className="font-heading mt-2 flex items-center justify-between text-[10px] tracking-[0.16em] uppercase">
-          <span className="group-hover:text-secondary">Continue reading</span>
-          <span className="opacity-55">{folio}</span>
-        </p>
-      </div>
-    </button>
-  );
+function scrollToSection(id: string) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-export function KitGallery({ groups, theme, onSelectKit }: KitGalleryProps) {
+export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
   const [searchValue, setSearchValue] = useState('');
   const query = searchValue.trim().toLowerCase();
 
@@ -198,115 +137,255 @@ export function KitGallery({ groups, theme, onSelectKit }: KitGalleryProps) {
       });
   }, [orderedGroups, query]);
 
-  const lead = visibleKits[0] ?? null;
-  const secondary = visibleKits.slice(1, 3);
-  const briefs = visibleKits.slice(3);
-  const ticker = orderedGroups.map((group) => group.label).join('  ·  ');
+  const kitCountLabel = `${countWord(groups.length)} kit${groups.length === 1 ? '' : 's'}`;
+  const firstKit = visibleKits[0]?.group ?? null;
 
   return (
-    <div className="mx-auto w-full max-w-6xl space-y-5 px-4 py-5 sm:px-6 sm:py-7 lg:px-8">
-      <NewspaperNameplate kitCount={groups.length} questionCount={totalTopics} theme={theme} />
+    <div className="craft-scan relative">
+      <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 sm:py-14 lg:pr-28">
+        <section id="craft-kits" className="scroll-mt-6">
+          <div className="flex items-end justify-between gap-6 border-b border-border pb-4">
+            <p className="hud-label text-muted-foreground">01 / Kits</p>
+            <div className="min-w-0 text-right">
+              <p className="hud-label text-faint mb-2 hidden sm:block">
+                {groups.length} kits · {totalTopics} questions · Local
+              </p>
+              <p className="font-display text-foreground text-4xl leading-none sm:text-6xl">Kits</p>
+            </div>
+          </div>
 
-      <p className="font-heading overflow-hidden text-[11px] tracking-[0.14em] text-ellipsis whitespace-nowrap uppercase opacity-80">
-        Inside today: {ticker || 'Late edition'}
-      </p>
+          <h1 className="font-display text-foreground mt-10 max-w-4xl text-4xl leading-[1.02] sm:text-5xl md:text-6xl">
+            {kitCountLabel}. One <span className="text-accent-ink">craft</span>.
+          </h1>
+          <p className="text-muted-foreground mt-5 max-w-xl text-base leading-7">
+            Theory, coding, and the questions hiring teams ask across the stack. Read them on your
+            machine, one kit at a time.
+          </p>
 
-      <div>
-        <p className="font-heading mb-1.5 text-[10px] tracking-[0.2em] uppercase">Classifieds</p>
-        <div className="relative">
-          <SearchIcon className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            value={searchValue}
-            onChange={(event) => setSearchValue(event.target.value)}
-            aria-label="Search kits"
-            placeholder="Wanted: kits, desks, or questions..."
-            className="h-10 rounded-none border-foreground bg-card/80 pl-9 font-sans"
-          />
-        </div>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => firstKit && onSelectKit(firstKit.id)}
+              disabled={!firstKit}
+              className="bg-primary text-primary-foreground inline-flex h-10 items-center px-6 font-mono text-[11px] font-bold tracking-[0.12em] uppercase transition-opacity disabled:opacity-40"
+            >
+              {firstKit ? `Open ${firstKit.label}` : 'Open a kit'}
+            </button>
+            <button
+              type="button"
+              onClick={() => document.getElementById('kit-search')?.focus()}
+              className="border-line-strong text-foreground inline-flex h-10 items-center border bg-transparent px-6 font-mono text-[11px] font-bold tracking-[0.12em] uppercase"
+            >
+              Search kits
+            </button>
+          </div>
+
+          <div className="relative mt-6 max-w-xl">
+            <SearchIcon className="text-faint pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
+            <Input
+              id="kit-search"
+              value={searchValue}
+              onChange={(event) => setSearchValue(event.target.value)}
+              aria-label="Search kits"
+              placeholder="Search kits, topics, or questions"
+              className="border-line-strong h-10 bg-transparent pl-9 font-sans"
+            />
+          </div>
+
+        </section>
+
+        <section id="craft-lineup" className="scroll-mt-6 pt-20">
+          <div className="flex items-end justify-between gap-6 border-b border-border pb-4">
+            <p className="hud-label text-muted-foreground">02 / The lineup</p>
+            <div className="text-right">
+              <p className="hud-label text-faint mb-2 hidden sm:block">Pick a kit to read</p>
+              <p className="font-display text-foreground text-4xl leading-none sm:text-6xl">
+                Lineup
+              </p>
+            </div>
+          </div>
+
+          {visibleKits.length === 0 ? (
+            <div className="border-b border-border py-16 text-center">
+              <p className="hud-label text-muted-foreground">No kits</p>
+              <p className="text-foreground mt-3 text-sm">
+                Nothing matches “{searchValue.trim()}”.
+              </p>
+            </div>
+          ) : (
+            <div className="grid gap-4 pt-8 sm:grid-cols-2 lg:grid-cols-3">
+              {visibleKits.map((item, index) => {
+                const { group, matchCount } = item;
+                const icon = KIT_ICON_BY_KEY[group.id];
+                const tile = KIT_TILE[group.id] ?? '#2f7bf5';
+                const description =
+                  KIT_DESCRIPTIONS[group.id] ?? 'Interview questions and practice topics.';
+                const countLabel =
+                  query && matchCount > 0
+                    ? `${matchCount} matching`
+                    : `${group.topics.length} question${group.topics.length === 1 ? '' : 's'}`;
+
+                return (
+                  <button
+                    key={group.id}
+                    type="button"
+                    onClick={() => onSelectKit(group.id)}
+                    className="group flex h-full flex-col border border-border bg-card p-5 text-left transition-colors hover:border-line-strong"
+                  >
+                    <span className="flex items-start justify-between gap-3">
+                      <span className="flex size-12 shrink-0 items-center justify-center">
+                        {icon ? (
+                          <img src={icon} alt="" aria-hidden="true" className="size-12 object-contain" />
+                        ) : (
+                          <BookOpenTextIcon className="size-6 text-foreground" />
+                        )}
+                      </span>
+                      <span className="hud-label px-2 py-1 font-bold text-black" style={{ backgroundColor: tile }}>
+                        {padIndex(index)}
+                      </span>
+                    </span>
+                    <span className="font-display text-foreground mt-5 block text-2xl leading-none">
+                      {group.label}
+                    </span>
+                    <span className="text-muted-foreground mt-3 block flex-1 text-sm leading-6">
+                      {description}
+                    </span>
+                    <span className="mt-5 flex items-end justify-between gap-3">
+                      <span className="hud-label text-faint">
+                        {getDesk(group.id)} · {countLabel}
+                      </span>
+                      <span className="shrink-0 font-mono text-[11px] font-bold tracking-[0.12em] text-foreground uppercase">
+                        Explore
+                      </span>
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </section>
+
+        <section id="craft-read" className="scroll-mt-6 pt-20">
+          <div className="flex items-end justify-between gap-6 border-b border-border pb-4">
+            <p className="hud-label text-muted-foreground">03 / How to read</p>
+            <p className="font-display text-foreground text-4xl leading-none sm:text-6xl">Read</p>
+          </div>
+          <div className="grid gap-10 py-10 md:grid-cols-3">
+            {PRINCIPLES.map((principle) => (
+              <div key={principle.index}>
+                <p className="hud-label text-accent-ink">{principle.index}</p>
+                <h2 className="font-display text-foreground mt-3 text-2xl leading-tight">
+                  {principle.title}
+                </h2>
+                <p className="text-muted-foreground mt-3 text-sm leading-6">{principle.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <footer className="mt-8 border-t border-border pt-10 pb-12">
+          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            <div>
+              <p className="font-display text-foreground text-lg">Interview Kit</p>
+              <p className="text-muted-foreground mt-3 max-w-xs text-sm leading-6">
+                Questions for the full stack, set locally and free to read.
+              </p>
+            </div>
+            <div>
+              <p className="hud-label text-faint">Kits</p>
+              <ul className="mt-3 space-y-2">
+                {orderedGroups.slice(0, 7).map((group) => (
+                  <li key={group.id}>
+                    <button
+                      type="button"
+                      onClick={() => onSelectKit(group.id)}
+                      className="text-muted-foreground hover:text-foreground text-sm"
+                    >
+                      {group.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="hud-label text-faint">More</p>
+              <ul className="mt-3 space-y-2">
+                {orderedGroups.slice(7).map((group) => (
+                  <li key={group.id}>
+                    <button
+                      type="button"
+                      onClick={() => onSelectKit(group.id)}
+                      className="text-muted-foreground hover:text-foreground text-sm"
+                    >
+                      {group.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <p className="hud-label text-faint">On this page</p>
+              <ul className="mt-3 space-y-2">
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('craft-kits')}
+                    className="text-muted-foreground hover:text-foreground text-sm"
+                  >
+                    Kits
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('craft-lineup')}
+                    className="text-muted-foreground hover:text-foreground text-sm"
+                  >
+                    Lineup
+                  </button>
+                </li>
+                <li>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('craft-read')}
+                    className="text-muted-foreground hover:text-foreground text-sm"
+                  >
+                    How to read
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
+            <p className="hud-label text-faint">© {new Date().getFullYear()} Interview Kit</p>
+            <p className="hud-label text-faint">Made for candidates</p>
+          </div>
+        </footer>
       </div>
 
-      {visibleKits.length === 0 ? (
-        <div className="border border-foreground bg-card px-4 py-8 text-center">
-          <p className="font-heading text-[11px] tracking-[0.18em] uppercase">No notices posted</p>
-          <p className="mt-2 text-sm">
-            No kits match “{searchValue.trim()}”. Try another desk or topic.
-          </p>
+      <nav
+        aria-label="Page sections"
+        className="pointer-events-none absolute inset-y-0 right-3 hidden lg:block"
+      >
+        <div className="pointer-events-auto sticky top-[32vh] flex flex-col items-end gap-4">
+          {[
+            ['craft-kits', 'Kits'],
+            ['craft-lineup', 'Lineup'],
+            ['craft-read', 'Read'],
+          ].map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => scrollToSection(id)}
+              className={cn(
+                'hud-label text-faint hover:text-foreground [writing-mode:vertical-rl] rotate-180',
+              )}
+            >
+              {label}
+            </button>
+          ))}
         </div>
-      ) : (
-        <div className="border-y-2 border-foreground">
-          {lead ? (
-            <div className="grid lg:grid-cols-12">
-              <div className="border-foreground lg:col-span-7 lg:border-r">
-                <StoryCell
-                  item={lead}
-                  query={query}
-                  variant="lead"
-                  folio="Page 1"
-                  onSelect={onSelectKit}
-                />
-              </div>
-              <div className="border-t border-foreground lg:col-span-5 lg:border-t-0">
-                {secondary.length === 0 ? (
-                  <div className="flex h-full min-h-40 items-center p-5">
-                    <p className="font-heading text-xl">More desks in later editions.</p>
-                  </div>
-                ) : (
-                  secondary.map((item, index) => (
-                    <div
-                      key={item.group.id}
-                      className={cn(index > 0 && 'border-t border-foreground')}
-                    >
-                      <StoryCell
-                        item={item}
-                        query={query}
-                        variant="secondary"
-                        folio={`Page ${index + 2}`}
-                        onSelect={onSelectKit}
-                      />
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
-          ) : null}
-
-          {briefs.length > 0 ? (
-            <div className="border-t-2 border-foreground">
-              <div className="flex items-center justify-between px-4 py-2">
-                <p className="font-heading text-[11px] tracking-[0.2em] uppercase">
-                  Briefs from the desks
-                </p>
-                <p className="font-heading text-[10px] tracking-[0.16em] uppercase opacity-60">
-                  Continued inside
-                </p>
-              </div>
-              <div className="grid border-t border-foreground sm:grid-cols-2 lg:grid-cols-3">
-                {briefs.map((item, index) => (
-                  <div
-                    key={item.group.id}
-                    className="shadow-[inset_-1px_-1px_0_0_var(--foreground)]"
-                  >
-                    <StoryCell
-                      item={item}
-                      query={query}
-                      variant="brief"
-                      folio={`P. ${index + 4}`}
-                      onSelect={onSelectKit}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : null}
-        </div>
-      )}
-
-      <footer className="space-y-2 pb-4">
-        <div className="newspaper-rule-double" />
-        <p className="font-heading text-center text-[10px] tracking-[0.18em] uppercase opacity-70">
-          Printed for candidates · Set in Inter & Plus Jakarta Sans · The Interview Gazette
-        </p>
-      </footer>
+      </nav>
     </div>
   );
 }

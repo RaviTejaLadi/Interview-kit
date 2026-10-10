@@ -19,9 +19,8 @@ type NavTarget = {
 };
 
 const headerIconButtonClassName = {
-  paper:
-    'rounded-none border-foreground bg-card hover:bg-muted dark:border-border dark:bg-card dark:shadow-none',
-  ink: 'rounded-none border-paper/35 bg-transparent text-paper hover:bg-paper/12',
+  paper: 'border-line-strong bg-transparent hover:bg-muted',
+  ink: 'border-line-strong bg-transparent text-foreground hover:bg-muted',
 };
 
 type ButtonTone = keyof typeof headerIconButtonClassName;
@@ -50,7 +49,7 @@ function TopicSideButton({
       disabled={!topic}
       onClick={() => topic && onSelect(topic.id)}
       className={cn(
-        'size-7 rounded-none border-foreground bg-card',
+        'size-7 rounded-none border-border bg-card',
         'hover:bg-muted dark:border-border dark:bg-card',
       )}
       aria-label={
@@ -96,7 +95,7 @@ export function TopicNavigator({
           size="sm"
           disabled={!previousTopic}
           onClick={() => previousTopic && onSelect(previousTopic.id)}
-          className="min-w-0 flex-1 justify-start rounded-none border-foreground bg-card dark:border-border dark:bg-card"
+          className="min-w-0 flex-1 justify-start rounded-none border-border bg-card dark:border-border dark:bg-card"
           aria-label={
             previousTopic ? `Previous topic: ${previousTopic.title}` : 'No previous topic'
           }
@@ -110,7 +109,7 @@ export function TopicNavigator({
           size="sm"
           disabled={!nextTopic}
           onClick={() => nextTopic && onSelect(nextTopic.id)}
-          className="min-w-0 flex-1 justify-end rounded-none border-foreground bg-card dark:border-border dark:bg-card"
+          className="min-w-0 flex-1 justify-end rounded-none border-border bg-card dark:border-border dark:bg-card"
           aria-label={nextTopic ? `Next topic: ${nextTopic.title}` : 'No next topic'}
         >
           <span className="truncate">{nextTopic?.title ?? 'Last topic'}</span>
@@ -172,7 +171,7 @@ export function TopicDock({
     >
       <div
         className={cn(
-          'pointer-events-auto mx-auto flex max-w-6xl items-center gap-2 border-2 border-foreground bg-card p-2',
+          'pointer-events-auto mx-auto flex max-w-6xl items-center gap-2 border border-border bg-card p-2',
           'dark:border-border dark:bg-card',
           !visible && 'pointer-events-none',
         )}
@@ -181,7 +180,7 @@ export function TopicDock({
           type="button"
           variant="outline"
           size="sm"
-          className="min-w-0 flex-1 justify-start rounded-none border-foreground bg-card dark:border-border dark:bg-card"
+          className="min-w-0 flex-1 justify-start rounded-none border-border bg-card dark:border-border dark:bg-card"
           disabled={!previousTopic}
           onClick={() => previousTopic && onSelect(previousTopic.id)}
           aria-label={
@@ -210,7 +209,7 @@ export function TopicDock({
           type="button"
           variant="outline"
           size="icon-sm"
-          className="rounded-none border-foreground bg-card lg:hidden dark:border-border dark:bg-card"
+          className="rounded-none border-border bg-card lg:hidden dark:border-border dark:bg-card"
           onClick={onBackToTop}
           aria-label="Back to top"
           title="Back to top"
@@ -222,7 +221,7 @@ export function TopicDock({
           type="button"
           variant="outline"
           size="sm"
-          className="min-w-0 flex-1 justify-end rounded-none border-foreground bg-card dark:border-border dark:bg-card"
+          className="min-w-0 flex-1 justify-end rounded-none border-border bg-card dark:border-border dark:bg-card"
           disabled={!nextTopic}
           onClick={() => nextTopic && onSelect(nextTopic.id)}
           aria-label={nextTopic ? `Next topic: ${nextTopic.title}` : 'No next topic'}
@@ -250,7 +249,7 @@ export function ScrollToTopButton({
       variant="outline"
       size="icon"
       className={cn(
-        'absolute z-20 size-9 rounded-none border-2 border-foreground bg-card transition-all duration-200',
+        'absolute z-20 size-9 rounded-none border border-border bg-card transition-all duration-200',
         'hover:bg-muted dark:border-border dark:bg-card',
         dockVisible ? 'right-3 bottom-20 sm:right-5' : 'right-3 bottom-3 sm:right-5 sm:bottom-5',
         visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0',

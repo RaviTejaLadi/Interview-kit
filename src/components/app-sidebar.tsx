@@ -265,7 +265,7 @@ function KitTopicTree({
                   size="sm"
                   tooltip={section.label}
                   isActive={sectionHasSelectedTopic}
-                  className="h-7 rounded-none font-heading text-[11px] font-semibold tracking-[0.08em] uppercase text-sidebar-foreground/80 data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
+                  className="hud-label h-7 text-muted-foreground data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
                 />
               }
             >
@@ -354,38 +354,36 @@ export function AppSidebar({
   return (
     <Sidebar
       collapsible="icon"
-      className={cn('border-r-2 border-sidebar-border bg-sidebar', className)}
+      className={cn('border-r border-sidebar-border bg-sidebar', className)}
       {...props}
     >
-      <SidebarHeader className="gap-3 border-b-2 border-sidebar-border bg-sidebar px-2 pt-2 pb-3">
+      <SidebarHeader className="gap-3 border-b border-sidebar-border bg-sidebar px-2 pt-2 pb-3">
         <Button
           type="button"
           variant="ghost"
           size="sm"
           onClick={handleBackToKits}
-          className="h-8 w-full justify-start rounded-none px-2 text-sidebar-foreground/90 uppercase hover:bg-sidebar-accent group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
+          className="hud-label h-8 w-full justify-start px-2 text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
         >
           <ArrowLeftIcon className="size-4" />
-          <span className="group-data-[collapsible=icon]:hidden">Front page</span>
+          <span className="group-data-[collapsible=icon]:hidden">All kits</span>
         </Button>
-        <div className="flex items-center gap-2 border border-sidebar-border bg-sidebar-accent/40 px-2.5 py-2">
+        <div className="flex items-center gap-2 border border-sidebar-border px-2.5 py-2">
           {kitIcon ? (
             <img
               src={kitIcon}
               alt=""
               aria-hidden="true"
-              className="size-4 shrink-0 border border-sidebar-border bg-card object-contain p-0.5"
+              className="size-4 shrink-0 object-contain"
             />
           ) : (
             <BookOpenTextIcon className="size-4 shrink-0 text-sidebar-primary" />
           )}
           <div className="grid min-w-0 flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="font-heading truncate font-semibold">
-              {activeKit?.label ?? 'Gazette'}
+            <span className="font-display truncate text-sm">
+              {activeKit?.label ?? 'Kit'}
             </span>
-            <span className="font-heading truncate text-[10px] tracking-[0.14em] text-sidebar-foreground/70 uppercase">
-              Index of this edition
-            </span>
+            <span className="hud-label truncate text-faint">Topics</span>
           </div>
         </div>
         <div className="px-2 group-data-[collapsible=icon]:hidden">
@@ -395,7 +393,7 @@ export function AppSidebar({
               value={searchValue}
               onChange={(event) => onSearchChange(event.target.value)}
               aria-label="Search topics"
-              placeholder="Search this edition..."
+              placeholder="Search this kit"
               className="h-9 rounded-none border-sidebar-border bg-card pl-8 shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring"
             />
           </div>
@@ -408,9 +406,7 @@ export function AppSidebar({
           </div>
         ) : (
           <SidebarGroup className="py-1.5">
-            <SidebarGroupLabel className="font-heading px-2 text-[11px] tracking-[0.12em] text-sidebar-foreground/78 uppercase">
-              Contents
-            </SidebarGroupLabel>
+            <SidebarGroupLabel className="hud-label px-2 text-faint">Contents</SidebarGroupLabel>
             <div className="px-1">
               <KitTopicTree
                 kit={activeKit}
@@ -422,10 +418,8 @@ export function AppSidebar({
           </SidebarGroup>
         )}
       </SidebarContent>
-      <SidebarFooter className="border-t-2 border-sidebar-border bg-sidebar px-4 py-3 group-data-[collapsible=icon]:hidden">
-        <p className="font-heading text-[11px] tracking-[0.12em] text-sidebar-foreground/80 uppercase">
-          {totalTopics} questions set
-        </p>
+      <SidebarFooter className="border-t border-sidebar-border bg-sidebar px-4 py-3 group-data-[collapsible=icon]:hidden">
+        <p className="hud-label text-faint">{totalTopics} questions</p>
         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-sidebar-foreground/72">
           <span className="inline-flex items-center gap-1.5">
             <span className="size-1.5 rounded-full bg-emerald-500" aria-hidden="true" />

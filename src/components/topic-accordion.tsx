@@ -106,18 +106,14 @@ export function TopicAccordion({
   };
 
   return (
-    <div className="border border-foreground bg-card p-4 sm:p-5 lg:p-8">
-      <div className="mb-4 flex flex-col gap-3 border-b-2 border-foreground pb-4 sm:flex-row sm:items-start sm:justify-between">
+    <div className="border border-border bg-card p-4 sm:p-5 lg:p-8">
+      <div className="mb-4 flex flex-col gap-3 border-b border-border pb-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
-          <p className="font-heading text-[11px] tracking-[0.18em] text-secondary uppercase">
-            {section}
-          </p>
-          <h1 className="font-heading mt-1 text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-            {title}
-          </h1>
-          <p className="mt-1 text-sm leading-6 text-muted-foreground">
-            {topics.length} question{topics.length === 1 ? '' : 's'} in this column. Open any item,
-            or expand the whole page.
+          <p className="hud-label text-muted-foreground">{section}</p>
+          <h1 className="font-display mt-1 text-2xl text-foreground sm:text-3xl">{title}</h1>
+          <p className="mt-2 text-sm leading-6 text-muted-foreground">
+            {topics.length} question{topics.length === 1 ? '' : 's'}. Open any item, or expand the
+            whole page.
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
@@ -127,7 +123,7 @@ export function TopicAccordion({
             size="sm"
             onClick={handleToggleAll}
             className={cn(
-              'rounded-none border-foreground bg-card uppercase opacity-0 transition-opacity duration-150',
+              'border-line-strong bg-transparent font-mono text-[11px] font-bold tracking-[0.12em] uppercase opacity-0 transition-opacity duration-150',
               'group-hover/reader:opacity-100 group-focus-within/reader:opacity-100',
               '[@media(hover:none)]:opacity-100',
             )}
@@ -149,7 +145,7 @@ export function TopicAccordion({
               key={topic.id}
               id={`topic-accordion-${topic.id}`}
               value={topic.id}
-              className="scroll-mt-24 border-foreground/40"
+              className="scroll-mt-24 border-border"
             >
               <AccordionTrigger className="rounded-none px-1 hover:no-underline">
                 <span className="font-heading min-w-0 flex-1 text-[15px] leading-snug font-semibold text-foreground">
@@ -159,7 +155,7 @@ export function TopicAccordion({
               <AccordionContent className="px-1">
                 {shouldRender ? (
                   isLoading && !hasContent ? (
-                    <p className="text-sm text-foreground/70">Setting the type...</p>
+                    <p className="text-sm text-muted-foreground">Loading…</p>
                   ) : hasContent ? (
                     <div className="[&_.markdown-body_h1:first-child]:hidden">
                       <MarkdownPreview
