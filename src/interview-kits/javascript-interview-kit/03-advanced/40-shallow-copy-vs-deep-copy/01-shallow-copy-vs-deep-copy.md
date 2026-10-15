@@ -12,7 +12,7 @@ Reference assignment does **not create a copy** of an object. Both variables poi
 ```javascript
 // Both variables point to the same object.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   age: 25,
 };
 
@@ -20,7 +20,7 @@ const anotherUser = user;
 
 anotherUser.age = 26;
 
-console.log(user.age);        // 26
+console.log(user.age); // 26
 console.log(anotherUser.age); // 26
 console.log(user === anotherUser); // true
 ```
@@ -59,9 +59,9 @@ A **shallow copy** creates a new outer object, but nested objects and arrays are
 ```javascript
 // Spread creates a shallow copy of the outer object.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   address: {
-    city: "Bhubaneswar",
+    city: 'Bhubaneswar',
   },
 };
 
@@ -101,15 +101,15 @@ A **deep copy** creates a completely independent copy of the object, including i
 ```javascript
 // structuredClone() creates an independent deep copy.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   address: {
-    city: "Bhubaneswar",
+    city: 'Bhubaneswar',
   },
 };
 
 const copy = structuredClone(user);
 
-copy.address.city = "Hyderabad";
+copy.address.city = 'Hyderabad';
 
 console.log(user.address.city);
 // Bhubaneswar
@@ -146,7 +146,7 @@ The object spread operator (`...`) creates a **shallow copy** of an object.
 ```javascript
 // Spread creates a new top-level object.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   age: 25,
 };
 
@@ -166,9 +166,9 @@ However, nested objects remain shared.
 ```javascript
 // Nested objects are still shared after a spread copy.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   address: {
-    city: "Bhubaneswar",
+    city: 'Bhubaneswar',
   },
 };
 
@@ -176,7 +176,7 @@ const copy = {
   ...user,
 };
 
-copy.address.city = "Hyderabad";
+copy.address.city = 'Hyderabad';
 
 console.log(user.address.city);
 // Hyderabad
@@ -246,7 +246,7 @@ It performs a **shallow copy**, not a deep copy.
 ```javascript
 // Object.assign() creates a shallow copy.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   age: 25,
 };
 
@@ -264,15 +264,15 @@ Nested objects are still shared:
 ```javascript
 // Object.assign() does not clone nested objects.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   address: {
-    city: "Bhubaneswar",
+    city: 'Bhubaneswar',
   },
 };
 
 const copy = Object.assign({}, user);
 
-copy.address.city = "Hyderabad";
+copy.address.city = 'Hyderabad';
 
 console.log(user.address.city);
 // Hyderabad
@@ -298,7 +298,7 @@ Both commonly perform shallow copies.
 ```javascript
 // Spread and Object.assign() both create shallow copies.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   age: 25,
 };
 
@@ -308,21 +308,21 @@ const copy2 = Object.assign({}, user);
 
 For simple object copying, spread syntax is generally easier to read.
 
-| Feature | Spread | `Object.assign()` |
-|---|---|---|
-| Creates shallow copy | ✅ | ✅ |
-| Copies nested objects | ❌ | ❌ |
-| Mutates source | ❌ | ❌ |
-| Mutates target | N/A | ✅ |
-| Common syntax | `{ ...obj }` | `Object.assign({}, obj)` |
-| Deep copy | ❌ | ❌ |
+| Feature               | Spread       | `Object.assign()`        |
+| --------------------- | ------------ | ------------------------ |
+| Creates shallow copy  | ✅           | ✅                       |
+| Copies nested objects | ❌           | ❌                       |
+| Mutates source        | ❌           | ❌                       |
+| Mutates target        | N/A          | ✅                       |
+| Common syntax         | `{ ...obj }` | `Object.assign({}, obj)` |
+| Deep copy             | ❌           | ❌                       |
 
 An important distinction is that `Object.assign(target, source)` **mutates the target object**.
 
 ```javascript
 // Object.assign() writes properties into the target object.
 const target = {
-  name: "Original",
+  name: 'Original',
 };
 
 const source = {
@@ -345,15 +345,15 @@ console.log(target);
 ```javascript
 // structuredClone() creates independent nested objects.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   address: {
-    city: "Bhubaneswar",
+    city: 'Bhubaneswar',
   },
 };
 
 const copy = structuredClone(user);
 
-copy.address.city = "Hyderabad";
+copy.address.city = 'Hyderabad';
 
 console.log(user.address.city);
 // Bhubaneswar
@@ -381,9 +381,9 @@ Consider:
 ```javascript
 // The nested address object remains the same reference.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   address: {
-    city: "Bhubaneswar",
+    city: 'Bhubaneswar',
   },
 };
 
@@ -428,7 +428,7 @@ This is the most important concept to understand.
 // Both variables reference the same nested object.
 const original = {
   user: {
-    name: "Ravi",
+    name: 'Ravi',
   },
 };
 
@@ -447,7 +447,7 @@ So changing the nested object affects both:
 
 ```javascript
 // Mutating the shared nested object affects the original.
-copy.user.name = "Rahul";
+copy.user.name = 'Rahul';
 
 console.log(original.user.name);
 // Rahul
@@ -466,10 +466,10 @@ In React, for example, you normally create new references only along the path th
 ```javascript
 // Create new references only for the objects being updated.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   address: {
-    city: "Bhubaneswar",
-    country: "India",
+    city: 'Bhubaneswar',
+    country: 'India',
   },
 };
 
@@ -477,7 +477,7 @@ const updatedUser = {
   ...user,
   address: {
     ...user.address,
-    city: "Hyderabad",
+    city: 'Hyderabad',
   },
 };
 ```
@@ -562,10 +562,8 @@ Example:
 // structuredClone() preserves supported built-in types such as Date and Map.
 const original = {
   date: new Date(),
-  tags: new Set(["React", "JavaScript"]),
-  scores: new Map([
-    ["Ravi", 95],
-  ]),
+  tags: new Set(['React', 'JavaScript']),
+  scores: new Map([['Ravi', 95]]),
 };
 
 const copy = structuredClone(original);

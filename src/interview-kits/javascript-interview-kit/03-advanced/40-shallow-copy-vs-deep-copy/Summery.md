@@ -5,9 +5,9 @@ Consider:
 ```javascript
 // Determine which references are shared after a shallow copy.
 const original = {
-  name: "Ravi",
+  name: 'Ravi',
   address: {
-    city: "Bhubaneswar",
+    city: 'Bhubaneswar',
   },
 };
 

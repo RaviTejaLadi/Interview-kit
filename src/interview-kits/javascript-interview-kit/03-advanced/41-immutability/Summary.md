@@ -34,9 +34,7 @@ const updated = users.filter((user) => user.id !== id);
 
 ```javascript
 // Create a new array and replace only the matching item.
-const updated = users.map((user) =>
-  user.id === id ? { ...user, name: "New Name" } : user
-);
+const updated = users.map((user) => (user.id === id ? { ...user, name: 'New Name' } : user));
 ```
 
 **Nested object update:**
@@ -47,7 +45,7 @@ const updated = {
   ...user,
   address: {
     ...user.address,
-    city: "Hyderabad",
+    city: 'Hyderabad',
   },
 };
 ```

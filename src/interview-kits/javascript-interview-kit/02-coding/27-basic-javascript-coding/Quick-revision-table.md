@@ -1,7 +1,7 @@
 # Quick revision table
 
-| No. | Problem              | Core logic                    | Time complexity                 |
-| --- | -------------------- | ----------------------------- | ------------------------------- |
+| No. | Problem              | Core logic                    | Time complexity             |
+| --- | -------------------- | ----------------------------- | --------------------------- |
 | 1   | Reverse string       | Traverse backward             | (O(n))                      |
 | 2   | Palindrome           | Compare both ends             | (O(n))                      |
 | 3   | Anagrams             | Character frequency           | (O(n))                      |

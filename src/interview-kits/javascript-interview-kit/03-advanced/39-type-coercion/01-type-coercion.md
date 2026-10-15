@@ -17,7 +17,7 @@ JavaScript automatically converts the value.
 
 ```javascript
 // JavaScript implicitly converts the string to a number.
-console.log("5" - 2);
+console.log('5' - 2);
 // 3
 ```
 
@@ -27,7 +27,7 @@ You intentionally convert the value.
 
 ```javascript
 // Explicitly convert the string to a number.
-const value = Number("5");
+const value = Number('5');
 
 console.log(value);
 // 5
@@ -44,7 +44,7 @@ console.log(value);
 
 ```javascript
 // The string "5" is converted to the number 5.
-console.log(5 == "5");
+console.log(5 == '5');
 // true
 ```
 
@@ -59,19 +59,19 @@ JavaScript converts `"5"` into `5` before comparison.
 
 ```javascript
 // Different types make strict equality false.
-console.log(5 === "5");
+console.log(5 === '5');
 // false
 ```
 
 ### Comparison
 
-| Expression | Result | Reason |
-|---|---:|---|
-| `5 == "5"` | `true` | Type coercion |
-| `5 === "5"` | `false` | Different types |
-| `5 === 5` | `true` | Same type and value |
-| `"5" === "5"` | `true` | Same type and value |
-| `true === 1` | `false` | Boolean ≠ Number |
+| Expression    |  Result | Reason              |
+| ------------- | ------: | ------------------- |
+| `5 == "5"`    |  `true` | Type coercion       |
+| `5 === "5"`   | `false` | Different types     |
+| `5 === 5`     |  `true` | Same type and value |
+| `"5" === "5"` |  `true` | Same type and value |
+| `true === 1`  | `false` | Boolean ≠ Number    |
 
 ### Best practice
 
@@ -80,7 +80,7 @@ Prefer:
 ```javascript
 // Strict equality avoids implicit type conversion.
 if (value === 5) {
-  console.log("Five");
+  console.log('Five');
 }
 ```
 
@@ -131,13 +131,13 @@ Use `Number()` for explicit conversion.
 
 ```javascript
 // Convert strings into numbers.
-console.log(Number("42"));
+console.log(Number('42'));
 // 42
 
-console.log(Number("3.14"));
+console.log(Number('3.14'));
 // 3.14
 
-console.log(Number("hello"));
+console.log(Number('hello'));
 // NaN
 ```
 
@@ -145,11 +145,11 @@ Some important conversions:
 
 ```javascript
 // Demonstrate common Number() conversion rules.
-console.log(Number(""));        // 0
-console.log(Number("   "));     // 0
-console.log(Number(true));      // 1
-console.log(Number(false));     // 0
-console.log(Number(null));      // 0
+console.log(Number('')); // 0
+console.log(Number('   ')); // 0
+console.log(Number(true)); // 1
+console.log(Number(false)); // 0
+console.log(Number(null)); // 0
 console.log(Number(undefined)); // NaN
 ```
 
@@ -174,10 +174,10 @@ console.log(Boolean(1));
 console.log(Boolean(0));
 // false
 
-console.log(Boolean("hello"));
+console.log(Boolean('hello'));
 // true
 
-console.log(Boolean(""));
+console.log(Boolean(''));
 // false
 ```
 
@@ -185,12 +185,12 @@ JavaScript also performs Boolean coercion automatically in conditions.
 
 ```javascript
 // The empty string is converted to false in the condition.
-const username = "";
+const username = '';
 
 if (username) {
-  console.log("Username exists");
+  console.log('Username exists');
 } else {
-  console.log("Username is empty");
+  console.log('Username is empty');
 }
 
 // Username is empty
@@ -209,7 +209,7 @@ If one operand becomes a string during the operation, `+` performs concatenation
 
 ```javascript
 // A string causes + to perform string concatenation.
-console.log("5" + 2);
+console.log('5' + 2);
 // "52"
 ```
 
@@ -223,13 +223,13 @@ console.log(5 + 2);
 
 ```javascript
 // The number is converted to a string before concatenation.
-console.log(5 + "2");
+console.log(5 + '2');
 // "52"
 ```
 
 ```javascript
 // Both operands are strings, so concatenation occurs.
-console.log("5" + "2");
+console.log('5' + '2');
 // "52"
 ```
 
@@ -237,7 +237,7 @@ console.log("5" + "2");
 
 ```javascript
 // Evaluate each + expression according to operand types.
-console.log(1 + 2 + "3");
+console.log(1 + 2 + '3');
 // "33"
 ```
 
@@ -257,7 +257,7 @@ Another example:
 
 ```javascript
 // Left-to-right evaluation affects the result.
-console.log("1" + 2 + 3);
+console.log('1' + 2 + 3);
 // "123"
 ```
 
@@ -283,19 +283,19 @@ It attempts to convert operands into numbers.
 
 ```javascript
 // The string "5" is converted to the number 5.
-console.log("5" - 2);
+console.log('5' - 2);
 // 3
 ```
 
 ```javascript
 // Both strings are converted to numbers before subtraction.
-console.log("10" - "3");
+console.log('10' - '3');
 // 7
 ```
 
 ```javascript
 // A numeric string is converted before subtraction.
-console.log("10" - 2);
+console.log('10' - 2);
 // 8
 ```
 
@@ -303,7 +303,7 @@ If conversion fails:
 
 ```javascript
 // "hello" cannot be converted to a valid number.
-console.log("hello" - 2);
+console.log('hello' - 2);
 // NaN
 ```
 
@@ -311,11 +311,11 @@ console.log("hello" - 2);
 
 ```javascript
 // + can concatenate strings.
-console.log("5" + 2);
+console.log('5' + 2);
 // "52"
 
 // - converts strings to numbers.
-console.log("5" - 2);
+console.log('5' - 2);
 // 3
 ```
 
@@ -345,14 +345,14 @@ NaN
 
 ```javascript
 // These values are all falsy in Boolean contexts.
-console.log(Boolean(false));     // false
-console.log(Boolean(0));         // false
-console.log(Boolean(-0));        // false
-console.log(Boolean(0n));        // false
-console.log(Boolean(""));        // false
-console.log(Boolean(null));      // false
+console.log(Boolean(false)); // false
+console.log(Boolean(0)); // false
+console.log(Boolean(-0)); // false
+console.log(Boolean(0n)); // false
+console.log(Boolean('')); // false
+console.log(Boolean(null)); // false
 console.log(Boolean(undefined)); // false
-console.log(Boolean(NaN));       // false
+console.log(Boolean(NaN)); // false
 ```
 
 Everything else is generally truthy.
@@ -361,8 +361,8 @@ Examples:
 
 ```javascript
 // These values are truthy.
-console.log(Boolean("0")); // true
-console.log(Boolean("false")); // true
+console.log(Boolean('0')); // true
+console.log(Boolean('false')); // true
 console.log(Boolean([])); // true
 console.log(Boolean({})); // true
 ```
@@ -371,7 +371,7 @@ console.log(Boolean({})); // true
 
 ```javascript
 // A non-empty string is truthy, even when its contents look false.
-console.log(Boolean("false"));
+console.log(Boolean('false'));
 // true
 ```
 
@@ -461,10 +461,10 @@ console.log(String(undefined));
 
 # 11. `null` vs `undefined`
 
-| Value | Meaning | Boolean | Number |
-|---|---|---:|---:|
-| `null` | Intentional absence | `false` | `0` |
-| `undefined` | Missing/unassigned value | `false` | `NaN` |
+| Value       | Meaning                  | Boolean | Number |
+| ----------- | ------------------------ | ------: | -----: |
+| `null`      | Intentional absence      | `false` |    `0` |
+| `undefined` | Missing/unassigned value | `false` |  `NaN` |
 
 Example:
 
@@ -502,7 +502,7 @@ console.log(null === undefined);
 
 ```javascript
 // Invalid numeric conversion produces NaN.
-const result = Number("hello");
+const result = Number('hello');
 
 console.log(result);
 // NaN
@@ -530,7 +530,7 @@ Use `Number.isNaN()` to check for it:
 
 ```javascript
 // Number.isNaN() safely checks whether a value is NaN.
-const value = Number("hello");
+const value = Number('hello');
 
 console.log(Number.isNaN(value));
 // true
@@ -544,17 +544,17 @@ Prefer `Number.isNaN()` over the global `isNaN()` when you want to know whether 
 
 ```javascript
 // These examples demonstrate common JavaScript coercion rules.
-console.log("5" + 2);       // "52"
-console.log("5" - 2);       // 3
-console.log("5" * 2);       // 10
-console.log("5" / 2);       // 2.5
+console.log('5' + 2); // "52"
+console.log('5' - 2); // 3
+console.log('5' * 2); // 10
+console.log('5' / 2); // 2.5
 
-console.log(true + 1);      // 2
-console.log(false + 1);     // 1
+console.log(true + 1); // 2
+console.log(false + 1); // 1
 
-console.log(null + 1);      // 1
+console.log(null + 1); // 1
 console.log(undefined + 1); // NaN
 
-console.log("" + 10);       // "10"
-console.log("" - 10);       // -10
+console.log('' + 10); // "10"
+console.log('' - 10); // -10
 ```

@@ -16,7 +16,7 @@ For objects and arrays, JavaScript does not automatically make them immutable. I
 ```javascript
 // Create a new object instead of modifying the existing object.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   age: 25,
 };
 
@@ -25,7 +25,7 @@ const updatedUser = {
   age: 26,
 };
 
-console.log(user.age);        // 25
+console.log(user.age); // 25
 console.log(updatedUser.age); // 26
 ```
 
@@ -55,7 +55,7 @@ Mutation means directly changing an existing object or array.
 ```javascript
 // This directly changes the existing object.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   age: 25,
 };
 
@@ -85,7 +85,7 @@ For objects:
 
 ```javascript
 // Directly changing a property mutates the object.
-user.name = "Rahul";
+user.name = 'Rahul';
 ```
 
 ---
@@ -101,7 +101,7 @@ const numbers = [1, 2, 3];
 
 const updatedNumbers = [...numbers, 4];
 
-console.log(numbers);        // [1, 2, 3]
+console.log(numbers); // [1, 2, 3]
 console.log(updatedNumbers); // [1, 2, 3, 4]
 ```
 
@@ -138,7 +138,7 @@ React commonly uses **reference equality** to determine whether values have chan
 // Create a new object reference when updating state.
 const updatedUser = {
   ...user,
-  name: "Ravi",
+  name: 'Ravi',
 };
 ```
 
@@ -154,7 +154,7 @@ If you mutate the original object:
 
 ```javascript
 // Mutation keeps the same object reference.
-user.name = "Ravi";
+user.name = 'Ravi';
 
 console.log(user === user);
 // true
@@ -216,7 +216,7 @@ The most common technique is the **spread operator (`...`)**.
 ```javascript
 // Create a new object with an updated age.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   age: 25,
 };
 
@@ -239,7 +239,7 @@ console.log(user);
 ```javascript
 // Create a new object with an additional property.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
 };
 
 const updatedUser = {
@@ -260,9 +260,9 @@ Use object destructuring.
 ```javascript
 // Create a new object without the password property.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   age: 25,
-  password: "secret",
+  password: 'secret',
 };
 
 const { password, ...safeUser } = user;
@@ -282,10 +282,10 @@ Suppose you have:
 ```javascript
 // Define an object with nested state.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   address: {
-    city: "Bhubaneswar",
-    country: "India",
+    city: 'Bhubaneswar',
+    country: 'India',
   },
 };
 ```
@@ -294,7 +294,7 @@ You should not do:
 
 ```javascript
 // This mutates the nested address object.
-user.address.city = "Visakhapatnam";
+user.address.city = 'Visakhapatnam';
 ```
 
 Instead:
@@ -305,7 +305,7 @@ const updatedUser = {
   ...user,
   address: {
     ...user.address,
-    city: "Visakhapatnam",
+    city: 'Visakhapatnam',
   },
 };
 ```
@@ -349,9 +349,9 @@ Use methods that return new arrays.
 
 ```javascript
 // Create a new array by adding an item to the end.
-const users = ["Ravi", "Rahul"];
+const users = ['Ravi', 'Rahul'];
 
-const updatedUsers = [...users, "Anil"];
+const updatedUsers = [...users, 'Anil'];
 
 console.log(users);
 // ["Ravi", "Rahul"]
@@ -366,9 +366,9 @@ console.log(updatedUsers);
 
 ```javascript
 // Create a new array by adding an item at the beginning.
-const users = ["Rahul", "Anil"];
+const users = ['Rahul', 'Anil'];
 
-const updatedUsers = ["Ravi", ...users];
+const updatedUsers = ['Ravi', ...users];
 
 console.log(updatedUsers);
 // ["Ravi", "Rahul", "Anil"]
@@ -382,11 +382,9 @@ Use `filter()`.
 
 ```javascript
 // Create a new array without the user named Rahul.
-const users = ["Ravi", "Rahul", "Anil"];
+const users = ['Ravi', 'Rahul', 'Anil'];
 
-const updatedUsers = users.filter(
-  (user) => user !== "Rahul"
-);
+const updatedUsers = users.filter((user) => user !== 'Rahul');
 
 console.log(updatedUsers);
 // ["Ravi", "Anil"]
@@ -403,15 +401,11 @@ Use `map()`.
 ```javascript
 // Create a new array with Ravi's age updated.
 const users = [
-  { id: 1, name: "Ravi", age: 25 },
-  { id: 2, name: "Rahul", age: 28 },
+  { id: 1, name: 'Ravi', age: 25 },
+  { id: 2, name: 'Rahul', age: 28 },
 ];
 
-const updatedUsers = users.map((user) =>
-  user.id === 1
-    ? { ...user, age: 26 }
-    : user
-);
+const updatedUsers = users.map((user) => (user.id === 1 ? { ...user, age: 26 } : user));
 
 console.log(updatedUsers);
 ```
@@ -420,9 +414,7 @@ The important pattern is:
 
 ```javascript
 // Create a new object only for the item that changed.
-user.id === 1
-  ? { ...user, age: 26 }
-  : user;
+user.id === 1 ? { ...user, age: 26 } : user;
 ```
 
 The unchanged items can keep their existing references.
@@ -436,14 +428,12 @@ Use `filter()`.
 ```javascript
 // Remove the user with ID 2 without mutating the original array.
 const users = [
-  { id: 1, name: "Ravi" },
-  { id: 2, name: "Rahul" },
-  { id: 3, name: "Anil" },
+  { id: 1, name: 'Ravi' },
+  { id: 2, name: 'Rahul' },
+  { id: 3, name: 'Anil' },
 ];
 
-const updatedUsers = users.filter(
-  (user) => user.id !== 2
-);
+const updatedUsers = users.filter((user) => user.id !== 2);
 ```
 
 ---
@@ -505,7 +495,7 @@ This is one of the most important practical uses.
 ```javascript
 // Do not mutate React state directly.
 const [user, setUser] = useState({
-  name: "Ravi",
+  name: 'Ravi',
   age: 25,
 });
 
@@ -526,19 +516,14 @@ For arrays:
 
 ```javascript
 // Add a new item without mutating the existing state array.
-setUsers((previousUsers) => [
-  ...previousUsers,
-  newUser,
-]);
+setUsers((previousUsers) => [...previousUsers, newUser]);
 ```
 
 Remove:
 
 ```javascript
 // Remove an item by creating a new filtered array.
-setUsers((previousUsers) =>
-  previousUsers.filter((user) => user.id !== userId)
-);
+setUsers((previousUsers) => previousUsers.filter((user) => user.id !== userId));
 ```
 
 Update:
@@ -546,11 +531,7 @@ Update:
 ```javascript
 // Update one item while preserving the other items.
 setUsers((previousUsers) =>
-  previousUsers.map((user) =>
-    user.id === userId
-      ? { ...user, name: "Updated Name" }
-      : user
-  )
+  previousUsers.map((user) => (user.id === userId ? { ...user, name: 'Updated Name' } : user)),
 );
 ```
 
@@ -563,9 +544,9 @@ This is a common interview trap.
 ```javascript
 // Spread only copies the top-level object.
 const user = {
-  name: "Ravi",
+  name: 'Ravi',
   address: {
-    city: "Bhubaneswar",
+    city: 'Bhubaneswar',
   },
 };
 
@@ -590,7 +571,7 @@ const updatedUser = {
   ...user,
   address: {
     ...user.address,
-    city: "Visakhapatnam",
+    city: 'Visakhapatnam',
   },
 };
 ```

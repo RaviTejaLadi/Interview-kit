@@ -3,7 +3,12 @@ import { BookOpenTextIcon, SearchIcon } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
 import type { TopicGroup } from '@/lib/content-index';
-import { KIT_DESCRIPTIONS, KIT_DESKS, KIT_ICON_BY_KEY, sortKitsByDisplayOrder } from '@/lib/kit-meta';
+import {
+  KIT_DESCRIPTIONS,
+  KIT_DESKS,
+  KIT_ICON_BY_KEY,
+  sortKitsByDisplayOrder,
+} from '@/lib/kit-meta';
 import { cn } from '@/lib/utils';
 
 type KitGalleryProps = {
@@ -174,7 +179,6 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
               className="border-line-strong h-10 bg-transparent pl-9 font-sans"
             />
           </div>
-
         </section>
 
         <section id="all-kits" className="scroll-mt-6 pt-20">
@@ -216,12 +220,20 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
                     <span className="flex items-start justify-between gap-3">
                       <span className="flex size-12 shrink-0 items-center justify-center">
                         {icon ? (
-                          <img src={icon} alt="" aria-hidden="true" className="size-12 object-contain" />
+                          <img
+                            src={icon}
+                            alt=""
+                            aria-hidden="true"
+                            className="size-12 object-contain"
+                          />
                         ) : (
                           <BookOpenTextIcon className="size-6 text-foreground" />
                         )}
                       </span>
-                      <span className="hud-label px-2 py-1 font-bold text-black" style={{ backgroundColor: tile }}>
+                      <span
+                        className="hud-label px-2 py-1 font-bold text-black"
+                        style={{ backgroundColor: tile }}
+                      >
                         {padIndex(index)}
                       </span>
                     </span>

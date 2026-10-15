@@ -343,10 +343,7 @@ function App() {
   const headerActions = (
     <>
       <FullscreenButton />
-      <ThemeToggle
-        theme={theme}
-        onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      />
+      <ThemeToggle theme={theme} onToggle={() => setTheme(theme === 'dark' ? 'light' : 'dark')} />
     </>
   );
 

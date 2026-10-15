@@ -10,8 +10,7 @@ import { cn } from '@/lib/utils';
 
 type Theme = 'light' | 'dark';
 
-const CODE_FONT =
-  '"Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+const CODE_FONT = '"Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
 
 function inferLanguage(language: string | undefined, code: string) {
   const normalized = language?.toLowerCase();
@@ -74,9 +73,7 @@ function CodeBlock({
         onClick={handleCopy}
         className={cn(
           'group-hover:opacity-100 opacity-0 absolute top-2 right-2 rounded px-1.5 py-1 text-[11px] font-medium transition-colors',
-          copied
-            ? 'text-accent-ink'
-            : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+          copied ? 'text-accent-ink' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
         )}
         aria-label="Copy code"
       >
@@ -289,9 +286,7 @@ function createMarkdownComponents(
       );
     },
     table: ({ className, ...props }) => (
-      <div
-        className={cn('my-3 overflow-x-auto ml-0 sm:ml-4 lg:ml-6 border border-border bg-card')}
-      >
+      <div className={cn('my-3 overflow-x-auto ml-0 sm:ml-4 lg:ml-6 border border-border bg-card')}>
         <table className={cn('w-full min-w-0 border-collapse text-[13px]', className)} {...props} />
       </div>
     ),
@@ -345,7 +340,7 @@ function createMarkdownComponents(
       const isBlock = Boolean(language || codeText.includes('\n'));
 
       if (isBlock) {
-        return <CodeBlock codeText={codeText} language={language} isDarkTheme={isDarkTheme} />;
+        return <CodeBlock codeText={codeText} language={language} isDarkTheme={isDarkTheme} {...props} />;
       }
 
       return (
@@ -372,6 +367,7 @@ function createMarkdownComponents(
               fontFamily: CODE_FONT,
             },
           }}
+          {...props}
         >
           {codeText}
         </SyntaxHighlighter>

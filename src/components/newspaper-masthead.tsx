@@ -35,7 +35,12 @@ export function SiteHeader({
         <>
           <span className="hidden h-4 w-px shrink-0 bg-border sm:block" aria-hidden="true" />
           {kitIcon ? (
-            <img src={kitIcon} alt="" aria-hidden="true" className="size-5 shrink-0 object-contain" />
+            <img
+              src={kitIcon}
+              alt=""
+              aria-hidden="true"
+              className="size-5 shrink-0 object-contain"
+            />
           ) : null}
           <p className="font-display truncate text-lg leading-none text-foreground sm:text-xl">
             {kitLabel}

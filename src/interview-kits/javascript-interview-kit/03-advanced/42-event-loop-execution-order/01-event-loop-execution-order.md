@@ -42,13 +42,13 @@ Asynchronous callbacks are scheduled for later execution.
 
 ```javascript
 // Synchronous code executes before the timer callback.
-console.log("A");
+console.log('A');
 
 setTimeout(() => {
-  console.log("B");
+  console.log('B');
 }, 0);
 
-console.log("C");
+console.log('C');
 
 // Output:
 // A
@@ -88,13 +88,13 @@ Common microtasks include:
 
 ```javascript
 // Promise callbacks are placed into the microtask queue.
-console.log("A");
+console.log('A');
 
 Promise.resolve().then(() => {
-  console.log("B");
+  console.log('B');
 });
 
-console.log("C");
+console.log('C');
 
 // Output:
 // A
@@ -119,13 +119,13 @@ Common examples include:
 
 ```javascript
 // Timer callback runs as a later task.
-console.log("Start");
+console.log('Start');
 
 setTimeout(() => {
-  console.log("Timer");
+  console.log('Timer');
 }, 0);
 
-console.log("End");
+console.log('End');
 
 // Output:
 // Start
@@ -153,17 +153,17 @@ For example:
 
 ```javascript
 // This demonstrates synchronous code → microtask → timer.
-console.log("1");
+console.log('1');
 
 setTimeout(() => {
-  console.log("2");
+  console.log('2');
 }, 0);
 
 Promise.resolve().then(() => {
-  console.log("3");
+  console.log('3');
 });
 
-console.log("4");
+console.log('4');
 
 // Output:
 // 1
@@ -199,15 +199,15 @@ The event loop continues processing microtasks until the **microtask queue becom
 ```javascript
 // Newly created microtasks run before the timer task.
 Promise.resolve().then(() => {
-  console.log("A");
+  console.log('A');
 
   Promise.resolve().then(() => {
-    console.log("B");
+    console.log('B');
   });
 });
 
 setTimeout(() => {
-  console.log("C");
+  console.log('C');
 }, 0);
 
 // Output:
@@ -240,15 +240,15 @@ After a timer callback finishes, newly created microtasks are processed before t
 ```javascript
 // Microtasks created inside a timer run before the next task.
 setTimeout(() => {
-  console.log("Timer");
+  console.log('Timer');
 
   Promise.resolve().then(() => {
-    console.log("Promise");
+    console.log('Promise');
   });
 }, 0);
 
 setTimeout(() => {
-  console.log("Second Timer");
+  console.log('Second Timer');
 }, 0);
 
 // Typical output:
@@ -276,13 +276,13 @@ Next task
 
 ```javascript
 // queueMicrotask() schedules work after synchronous code.
-console.log("A");
+console.log('A');
 
 queueMicrotask(() => {
-  console.log("B");
+  console.log('B');
 });
 
-console.log("C");
+console.log('C');
 
 // Output:
 // A
@@ -306,11 +306,11 @@ Therefore, Promise callbacks normally execute first.
 ```javascript
 // Promise microtasks run before timer tasks.
 setTimeout(() => {
-  console.log("setTimeout");
+  console.log('setTimeout');
 }, 0);
 
 Promise.resolve().then(() => {
-  console.log("Promise");
+  console.log('Promise');
 });
 
 // Output:
@@ -366,17 +366,17 @@ It runs before normal Promise microtasks.
 
 ```javascript
 // process.nextTick() runs before Promise microtasks in Node.js.
-console.log("Start");
+console.log('Start');
 
 Promise.resolve().then(() => {
-  console.log("Promise");
+  console.log('Promise');
 });
 
 process.nextTick(() => {
-  console.log("nextTick");
+  console.log('nextTick');
 });
 
-console.log("End");
+console.log('End');
 
 // Output:
 // Start
@@ -406,11 +406,11 @@ In Node.js:
 ```javascript
 // This demonstrates Node.js microtask priority.
 Promise.resolve().then(() => {
-  console.log("Promise");
+  console.log('Promise');
 });
 
 process.nextTick(() => {
-  console.log("nextTick");
+  console.log('nextTick');
 });
 
 // Output:
@@ -439,15 +439,15 @@ However, inside an I/O callback, `setImmediate()` is generally executed before a
 
 ```javascript
 // Inside an I/O callback, setImmediate() runs before setTimeout(0).
-const fs = require("node:fs");
+const fs = require('node:fs');
 
 fs.readFile(__filename, () => {
   setTimeout(() => {
-    console.log("setTimeout");
+    console.log('setTimeout');
   }, 0);
 
   setImmediate(() => {
-    console.log("setImmediate");
+    console.log('setImmediate');
   });
 });
 
@@ -466,18 +466,18 @@ fs.readFile(__filename, () => {
 ```javascript
 // await resumes the async function through the microtask queue.
 async function test() {
-  console.log("A");
+  console.log('A');
 
   await Promise.resolve();
 
-  console.log("B");
+  console.log('B');
 }
 
-console.log("C");
+console.log('C');
 
 test();
 
-console.log("D");
+console.log('D');
 
 // Output:
 // C
@@ -510,39 +510,39 @@ B
 
 ```javascript
 // This example combines synchronous code, nextTick, Promise, timers, and setImmediate.
-const fs = require("node:fs");
+const fs = require('node:fs');
 
-console.log("1");
+console.log('1');
 
 setTimeout(() => {
-  console.log("2 - setTimeout");
+  console.log('2 - setTimeout');
 }, 0);
 
 setImmediate(() => {
-  console.log("3 - setImmediate");
+  console.log('3 - setImmediate');
 });
 
 Promise.resolve().then(() => {
-  console.log("4 - Promise");
+  console.log('4 - Promise');
 });
 
 process.nextTick(() => {
-  console.log("5 - nextTick");
+  console.log('5 - nextTick');
 });
 
 fs.readFile(__filename, () => {
-  console.log("6 - I/O");
+  console.log('6 - I/O');
 
   setTimeout(() => {
-    console.log("7 - I/O setTimeout");
+    console.log('7 - I/O setTimeout');
   }, 0);
 
   setImmediate(() => {
-    console.log("8 - I/O setImmediate");
+    console.log('8 - I/O setImmediate');
   });
 });
 
-console.log("9");
+console.log('9');
 ```
 
 The important guaranteed part is:
@@ -584,7 +584,7 @@ function loop() {
 loop();
 
 setTimeout(() => {
-  console.log("Timer");
+  console.log('Timer');
 }, 0);
 ```
 

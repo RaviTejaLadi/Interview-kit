@@ -380,9 +380,7 @@ export function AppSidebar({
             <BookOpenTextIcon className="size-4 shrink-0 text-sidebar-primary" />
           )}
           <div className="grid min-w-0 flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="font-display truncate text-sm">
-              {activeKit?.label ?? 'Kit'}
-            </span>
+            <span className="font-display truncate text-sm">{activeKit?.label ?? 'Kit'}</span>
             <span className="hud-label truncate text-faint">Topics</span>
           </div>
         </div>

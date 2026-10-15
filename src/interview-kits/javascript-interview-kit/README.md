@@ -510,12 +510,6 @@ You should understand how these methods work internally.
 2. Implement `apply()`.
 3. Implement `bind()`.
 
-Also understand:
-
-- How `this` is passed.
-- Why `bind()` returns a new function.
-- Difference between the three methods.
-
 ---
 
 ## 33. Closure Problems ⭐⭐⭐⭐⭐
@@ -538,9 +532,6 @@ Also understand:
 3. Implement `Promise.race()`.
 4. Implement `Promise.allSettled()`.
 5. Implement `Promise.any()`.
-
-### Also Practice
-
 6. Promise chaining.
 7. Promise error handling.
 8. Sequential Promise execution.

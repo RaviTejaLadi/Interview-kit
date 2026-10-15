@@ -4,7 +4,7 @@
 
 ```javascript
 // + performs string concatenation when a string is involved.
-console.log("5" + 5);
+console.log('5' + 5);
 // "55"
 ```
 
@@ -12,7 +12,7 @@ console.log("5" + 5);
 
 ```javascript
 // - converts the string to a number.
-console.log("5" - 5);
+console.log('5' - 5);
 // 0
 ```
 

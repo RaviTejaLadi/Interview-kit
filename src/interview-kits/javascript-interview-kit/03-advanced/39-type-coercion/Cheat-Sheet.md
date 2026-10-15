@@ -1,19 +1,19 @@
 # Cheat Sheet
 
-| Expression | Result | Why |
-|---|---:|---|
-| `"5" + 2` | `"52"` | String concatenation |
-| `"5" - 2` | `3` | Numeric conversion |
-| `"5" * 2` | `10` | Numeric conversion |
-| `"5" / 2` | `2.5` | Numeric conversion |
-| `true + 1` | `2` | `true → 1` |
-| `false + 1` | `1` | `false → 0` |
-| `null + 1` | `1` | `null → 0` |
-| `undefined + 1` | `NaN` | `undefined → NaN` |
-| `5 == "5"` | `true` | Coercion |
-| `5 === "5"` | `false` | Different types |
-| `null == undefined` | `true` | Special equality rule |
-| `null === undefined` | `false` | Different types |
+| Expression           |  Result | Why                   |
+| -------------------- | ------: | --------------------- |
+| `"5" + 2`            |  `"52"` | String concatenation  |
+| `"5" - 2`            |     `3` | Numeric conversion    |
+| `"5" * 2`            |    `10` | Numeric conversion    |
+| `"5" / 2`            |   `2.5` | Numeric conversion    |
+| `true + 1`           |     `2` | `true → 1`            |
+| `false + 1`          |     `1` | `false → 0`           |
+| `null + 1`           |     `1` | `null → 0`            |
+| `undefined + 1`      |   `NaN` | `undefined → NaN`     |
+| `5 == "5"`           |  `true` | Coercion              |
+| `5 === "5"`          | `false` | Different types       |
+| `null == undefined`  |  `true` | Special equality rule |
+| `null === undefined` | `false` | Different types       |
 
 ---
 
