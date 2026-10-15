@@ -63,6 +63,6 @@ Explanation:
 3. Advance the corresponding pointer.
 4. Append any remaining elements.
 
-Complexity: Built-in approach: \\(O((n+m)\log(n+m))\\). Manual approach: \\(O(n+m)\\).
+Complexity: Built-in approach: (O((n+m)\log(n+m))). Manual approach: (O(n+m)).
 
 Interview tip: The two-pointer solution is preferred because both input arrays are already sorted.

@@ -69,4 +69,4 @@ Explanation: Check whether each element appears again later. If it does, add it 
 
 The order differs between the two implementations because they use different discovery rules. Both correctly identify the duplicated values.
 
-Complexity: Built-in approach: typically \\(O(n)\\) time. Manual approach: \\(O(n^2)\\) time.
+Complexity: Built-in approach: typically (O(n)) time. Manual approach: (O(n^2)) time.

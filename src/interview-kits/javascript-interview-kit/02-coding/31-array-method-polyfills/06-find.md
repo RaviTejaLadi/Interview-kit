@@ -77,8 +77,8 @@ console.log(user);
 
 ### Time complexity
 
-- Best case: \\(O(1)\\), if the first element matches.
-- Worst case: \\(O(n)\\), if the match is last or no match exists.
-- Extra space: \\(O(1)\\).
+- Best case: (O(1)), if the first element matches.
+- Worst case: (O(n)), if the match is last or no match exists.
+- Extra space: (O(1)).
 
 Interview takeaway: Use `find()` when you need one matching element, not all matching elements.

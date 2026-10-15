@@ -47,4 +47,4 @@ console.log(flattenArray([1, [2, [3, 4]], 5]));
 
 Explanation: If an element is an array, process its contents recursively. Otherwise, append the element to the result.
 
-Complexity: \\(O(n)\\) time and \\(O(n)\\) output space, where \\(n\\) is the total number of elements across all nesting levels. Recursive calls also use stack space.
+Complexity: (O(n)) time and (O(n)) output space, where (n) is the total number of elements across all nesting levels. Recursive calls also use stack space.

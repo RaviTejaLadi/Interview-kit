@@ -49,4 +49,4 @@ console.log(removeDuplicates([1, 2, 2, 3, 4, 4, 5]));
 
 Explanation: For each element, check whether it already exists in the result. Add it only if it does not.
 
-Complexity: Built-in approach: typically \\(O(n)\\) time. Manual approach: \\(O(n^2)\\) time.
+Complexity: Built-in approach: typically (O(n)) time. Manual approach: (O(n^2)) time.

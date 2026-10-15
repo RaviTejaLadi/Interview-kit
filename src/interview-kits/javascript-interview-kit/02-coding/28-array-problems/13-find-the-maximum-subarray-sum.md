@@ -65,6 +65,6 @@ console.log(maxSubarraySum([-2, 1, -3, 4, -1, 2, 1, -5, 4]));
 
 Explanation: This implements Kadane's algorithm without `Math.max()`. If extending the current subarray is worse than starting fresh, reset the current sum to the current element.
 
-Complexity: Both approaches take \\(O(n)\\) time and \\(O(1)\\) extra space.
+Complexity: Both approaches take (O(n)) time and (O(1)) extra space.
 
 Interview tip: Initialize both sums with the first element, not `0`. This correctly handles arrays containing only negative numbers.

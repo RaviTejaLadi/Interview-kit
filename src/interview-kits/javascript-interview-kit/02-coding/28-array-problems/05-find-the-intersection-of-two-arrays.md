@@ -61,4 +61,4 @@ console.log(intersection([1, 2, 3, 4], [3, 4, 5, 6]));
 
 Explanation: Check whether each element of the first array exists in the second array. Add it only if it hasn't already been added.
 
-Complexity: Built-in approach: typically \\(O(n+m)\\). Manual approach: \\(O(nm)\\) time, where \\(n\\) and \\(m\\) are the array lengths.
+Complexity: Built-in approach: typically (O(n+m)). Manual approach: (O(nm)) time, where (n) and (m) are the array lengths.

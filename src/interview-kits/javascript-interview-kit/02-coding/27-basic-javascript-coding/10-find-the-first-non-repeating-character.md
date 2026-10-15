@@ -62,4 +62,4 @@ Explanation:
 - If the matching count is `1`, the character is unique.
 - `?? null` provides a fallback when no character matches.
 
-Interview tip: The first solution is more efficient: \\(O(n)\\) time on average, compared with \\(O(n^2)\\) for the second solution.
+Interview tip: The first solution is more efficient: (O(n)) time on average, compared with (O(n^2)) for the second solution.

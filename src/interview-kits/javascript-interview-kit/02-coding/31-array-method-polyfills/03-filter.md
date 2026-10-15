@@ -76,7 +76,7 @@ console.log(numbers.myFilter((n) => n > 2));
 
 ### Time complexity
 
-- Time: \\(O(n)\\)
-- Extra space: \\(O(k)\\), where \\(k\\) is the number of matching elements.
+- Time: (O(n))
+- Extra space: (O(k)), where (k) is the number of matching elements.
 
 Interview takeaway: Use `filter()` to select elements. It does not transform the selected elements.

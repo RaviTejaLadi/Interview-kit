@@ -1,12 +1,12 @@
 # Find the factorial of a number
 
-The factorial of a non-negative integer \\(n\\) is the product of all positive integers from `1` to `n`.
+The factorial of a non-negative integer (n) is the product of all positive integers from `1` to `n`.
 
 For example:
 
-\\[ 5! = 5 \times 4 \times 3 \times 2 \times 1 = 120 \\]
+[ 5! = 5 \times 4 \times 3 \times 2 \times 1 = 120 ]
 
-By definition, \\(0! = 1\\).
+By definition, (0! = 1).
 
 ### Without built-in methods
 

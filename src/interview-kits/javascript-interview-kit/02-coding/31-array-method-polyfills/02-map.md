@@ -89,7 +89,7 @@ The callback receives three arguments:
 
 ### Time complexity
 
-- Time: \\(O(n)\\)
-- Extra space: \\(O(n)\\)
+- Time: (O(n))
+- Extra space: (O(n))
 
 Interview takeaway: Use `map()` when you want to transform every element and collect the results.

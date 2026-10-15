@@ -62,4 +62,4 @@ Explanation:
 - `sort((a, b) => b - a)` sorts numbers in descending order.
 - Index `1` contains the second-largest value.
 
-Note: The first solution is \\(O(n)\\) time. The built-in solution is typically \\(O(n \log n)\\) due to sorting.
+Note: The first solution is (O(n)) time. The built-in solution is typically (O(n \log n)) due to sorting.

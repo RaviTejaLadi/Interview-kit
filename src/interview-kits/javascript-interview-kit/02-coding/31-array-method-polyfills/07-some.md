@@ -68,8 +68,8 @@ console.log(result); // false
 
 ### Time complexity
 
-- Best case: \\(O(1)\\).
-- Worst case: \\(O(n)\\).
-- Extra space: \\(O(1)\\).
+- Best case: (O(1)).
+- Worst case: (O(n)).
+- Extra space: (O(1)).
 
 Interview takeaway: Use `some()` when you need to know whether at least one element satisfies a condition.

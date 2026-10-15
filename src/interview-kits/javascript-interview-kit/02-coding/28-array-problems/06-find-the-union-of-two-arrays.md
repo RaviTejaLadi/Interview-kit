@@ -71,4 +71,4 @@ console.log(union([1, 2, 3], [3, 4, 5]));
 
 Explanation: Copy the first array, append the second array's elements, and manually remove repeated values.
 
-Complexity: Built-in approach: typically \\(O(n+m)\\). Manual approach: \\(O((n+m)^2)\\) time.
+Complexity: Built-in approach: typically (O(n+m)). Manual approach: (O((n+m)^2)) time.

@@ -146,7 +146,12 @@ export function TopicAccordion({
         </div>
       </div>
 
-      <Accordion multiple value={openItems} onValueChange={handleOpenChange} className="w-full">
+      <Accordion
+        multiple
+        value={openItems}
+        onValueChange={handleOpenChange}
+        className="w-full gap-3"
+      >
         {topics.map((topic) => {
           const hasContent = hasOwn(contentById, topic.id);
           const content = contentById[topic.id] ?? '';
@@ -157,14 +162,14 @@ export function TopicAccordion({
               key={topic.id}
               id={`topic-accordion-${topic.id}`}
               value={topic.id}
-              className="scroll-mt-24 border-border mb-1 last:mb-0"
+              className="scroll-mt-24 overflow-hidden border border-border"
             >
-              <AccordionTrigger className="rounded-none border-l-2 border-l-accent-ink bg-muted/60 px-3 py-3 hover:bg-muted hover:no-underline">
+              <AccordionTrigger className="rounded-none px-4 py-3.5 hover:bg-muted/40 hover:no-underline data-panel-open:bg-muted/30">
                 <span className="font-display min-w-0 flex-1 text-lg leading-tight text-foreground">
                   {topic.title}
                 </span>
               </AccordionTrigger>
-              <AccordionContent className="px-1">
+              <AccordionContent className="border-t border-border px-4 pt-4 sm:px-5 [&_.markdown-body>div]:ml-0 [&_.markdown-body_h1]:pl-0 [&_.markdown-body_h2]:pl-0 [&_.markdown-body_h3]:pl-0 [&_.markdown-body_h4]:pl-0 [&_.markdown-body_h5]:pl-0 [&_.markdown-body_h6]:pl-0 [&_.markdown-body_p]:pl-0">
                 {shouldRender ? (
                   isLoading && !hasContent ? (
                     <p className="text-sm text-muted-foreground">Loading…</p>

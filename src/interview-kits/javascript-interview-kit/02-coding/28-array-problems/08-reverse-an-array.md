@@ -38,4 +38,4 @@ console.log(reverseArray([1, 2, 3, 4, 5]));
 
 Explanation: Traverse the array from the last index to the first and copy each element into a new array.
 
-Complexity: Both approaches take \\(O(n)\\) time. The examples use \\(O(n)\\) extra space.
+Complexity: Both approaches take (O(n)) time. The examples use (O(n)) extra space.

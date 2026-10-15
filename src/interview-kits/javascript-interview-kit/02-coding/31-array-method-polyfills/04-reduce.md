@@ -138,7 +138,7 @@ Checking `initialValue === undefined` would not correctly distinguish these case
 
 ### Time complexity
 
-- Time: \\(O(n)\\)
-- Extra space: \\(O(1)\\), excluding allocations made inside the callback.
+- Time: (O(n))
+- Extra space: (O(1)), excluding allocations made inside the callback.
 
 Interview takeaway: Use `reduce()` when you want to accumulate values. The initial-value check is one of its most important edge cases.

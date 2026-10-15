@@ -80,8 +80,8 @@ Because there is no element that violates the condition. This is called vacuous 
 
 ### Time complexity
 
-- Best case: \\(O(1)\\), if the first element fails.
-- Worst case: \\(O(n)\\).
-- Extra space: \\(O(1)\\).
+- Best case: (O(1)), if the first element fails.
+- Worst case: (O(n)).
+- Extra space: (O(1)).
 
 Interview takeaway: Use `every()` when you need to verify that all elements satisfy a condition.

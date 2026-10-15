@@ -21,7 +21,7 @@ console.log(findMissingNumber([1, 2, 4, 5, 6], 6));
 // 3
 ```
 
-Explanation: The sum of numbers from `1` to `n` is \\(n(n+1)/2\\). Subtract the actual sum to get the missing number.
+Explanation: The sum of numbers from `1` to `n` is (n(n+1)/2). Subtract the actual sum to get the missing number.
 
 ### Without built-in methods
 
@@ -48,6 +48,6 @@ console.log(findMissingNumber([1, 2, 4, 5, 6], 6));
 
 Explanation: Calculate the expected sum and actual sum manually, then subtract them.
 
-Complexity: Both approaches take \\(O(n)\\) time and \\(O(1)\\) extra space, excluding input storage.
+Complexity: Both approaches take (O(n)) time and (O(1)) extra space, excluding input storage.
 
 Interview tip: Clarify whether the sequence starts at `0` or `1`, and whether one or multiple numbers can be missing.

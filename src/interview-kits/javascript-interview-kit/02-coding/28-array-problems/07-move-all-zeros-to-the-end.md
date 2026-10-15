@@ -52,6 +52,6 @@ console.log(moveZeros([0, 1, 0, 3, 12]));
 
 Explanation: Copy non-zero values first. Fill all remaining positions with zeros.
 
-Complexity: Both approaches take \\(O(n)\\) time and \\(O(n)\\) extra space.
+Complexity: Both approaches take (O(n)) time and (O(n)) extra space.
 
-Interview tip: You can also solve this in place with a write pointer, using \\(O(1)\\) extra space.
+Interview tip: You can also solve this in place with a write pointer, using (O(1)) extra space.

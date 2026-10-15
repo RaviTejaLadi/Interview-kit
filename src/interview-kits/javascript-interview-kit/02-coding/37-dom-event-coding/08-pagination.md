@@ -6,7 +6,7 @@ For example, displaying 10 users per page from a list of 100 users.
 
 The key formula is:
 
-\\[ \text{startIndex}=(\text{currentPage}-1)\times\text{pageSize} \\]
+[ \text{startIndex}=(\text{currentPage}-1)\times\text{pageSize} ]
 
 // JavaScript: Implement previous and next pagination controls.
 

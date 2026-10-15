@@ -78,4 +78,4 @@ Explanation:
 - The first two values are `0` and `1`.
 - Every later value is calculated by adding the two preceding values.
 
-This version uses the built-in array method `push()`. Both solutions use \\(O(n)\\) time and \\(O(n)\\) space to return the sequence.
+This version uses the built-in array method `push()`. Both solutions use (O(n)) time and (O(n)) space to return the sequence.

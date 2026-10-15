@@ -67,7 +67,7 @@ No. You cannot use `break` to exit the `forEach()` callback's iteration. Use a r
 
 ### Time complexity
 
-- Time: \\(O(n)\\)
-- Extra space: \\(O(1)\\), excluding callback allocations.
+- Time: (O(n))
+- Extra space: (O(1)), excluding callback allocations.
 
 Interview takeaway: Use `forEach()` to perform an action for each element, not to build a result array.

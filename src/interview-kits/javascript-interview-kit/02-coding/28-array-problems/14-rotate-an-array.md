@@ -50,6 +50,6 @@ console.log(rotateArray([1, 2, 3, 4, 5, 6, 7], 3));
 
 Explanation: Move each element from index `i` to index `(i + k) % n`. The modulo operator wraps elements around to the beginning.
 
-Complexity: Both approaches take \\(O(n)\\) time and \\(O(n)\\) extra space.
+Complexity: Both approaches take (O(n)) time and (O(n)) extra space.
 
 Gotcha: The examples return a new array and do not mutate the input. They also support negative `k` values, which represent left rotations.

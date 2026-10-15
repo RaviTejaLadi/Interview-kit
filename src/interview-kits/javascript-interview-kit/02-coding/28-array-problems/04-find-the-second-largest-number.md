@@ -52,4 +52,4 @@ console.log(secondLargest([10, 5, 20, 8, 20, 15]));
 
 Explanation: Maintain two variables. When a new maximum appears, move the previous maximum into `second`. Otherwise, update `second` when the current number falls between the two values.
 
-Complexity: Built-in approach: \\(O(n \log n)\\) time. Manual approach: \\(O(n)\\) time.
+Complexity: Built-in approach: (O(n \log n)) time. Manual approach: (O(n)) time.

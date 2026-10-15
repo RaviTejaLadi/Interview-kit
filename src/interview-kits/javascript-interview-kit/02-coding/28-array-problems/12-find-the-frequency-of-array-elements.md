@@ -49,6 +49,6 @@ console.log(frequencyCount([1, 2, 2, 3, 1, 1, 4]));
 
 Explanation: Visit each element. Initialize its count to `1` if it hasn't appeared before; otherwise, increment the existing count.
 
-Complexity: Both approaches take \\(O(n)\\) expected time and \\(O(k)\\) space, where \\(k\\) is the number of distinct values.
+Complexity: Both approaches take (O(n)) expected time and (O(k)) space, where (k) is the number of distinct values.
 
 Gotcha: These object-based solutions are intended for primitive values such as numbers and strings. Object keys are strings, so different types may collide (for example, numeric `1` and string `"1"`). Use a `Map` when you need type-aware keys.

@@ -61,6 +61,6 @@ Suppose the user types `laptop`.
 3. `filter()` returns products whose names contain the search term.
 4. The UI displays the matching results.
 
-Time complexity: For \\(n\\) products with average name length \\(m\\), a search is approximately \\(O(nm)\\) in the worst case.
+Time complexity: For (n) products with average name length (m), a search is approximately (O(nm)) in the worst case.
 
 Gotcha: For large datasets or API-driven search, consider debouncing requests to avoid making an API call on every keystroke.

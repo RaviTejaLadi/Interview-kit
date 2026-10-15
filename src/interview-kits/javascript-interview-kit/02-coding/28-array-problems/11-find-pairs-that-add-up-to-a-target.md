@@ -74,4 +74,4 @@ console.log(findPairs([2, 4, 3, 5, 7, 8, 1], 9));
 
 Explanation: Compare every pair of elements. If their sum equals the target, add the normalized pair only if it hasn't been recorded already.
 
-Complexity: Built-in approach: typically \\(O(n)\\) time for set operations. Manual approach: \\(O(n^2)\\) time.
+Complexity: Built-in approach: typically (O(n)) time for set operations. Manual approach: (O(n^2)) time.

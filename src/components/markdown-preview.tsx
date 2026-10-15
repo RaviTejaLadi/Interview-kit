@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type CSSProperties } from 'react';
 import { Check, Copy } from 'lucide-react';
 import rehypeRaw from 'rehype-raw';
 import ReactMarkdown, { type Components } from 'react-markdown';
@@ -11,6 +11,12 @@ import { cn } from '@/lib/utils';
 type Theme = 'light' | 'dark';
 
 const CODE_FONT = '"Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+
+type HighlighterStyle = { [key: string]: CSSProperties };
+
+function themeStyle(isDarkTheme: boolean): HighlighterStyle {
+  return (isDarkTheme ? oneDark : oneLight) as HighlighterStyle;
+}
 
 function inferLanguage(language: string | undefined, code: string) {
   const normalized = language?.toLowerCase();
@@ -83,7 +89,7 @@ function CodeBlock({
       <SyntaxHighlighter
         language={inferLanguage(language, codeText)}
         PreTag="div"
-        style={isDarkTheme ? oneDark : oneLight}
+        style={themeStyle(isDarkTheme)}
         wrapLongLines
         showLineNumbers={false}
         customStyle={{
@@ -333,20 +339,20 @@ function createMarkdownComponents(
       </span>
     ),
     pre: ({ children }) => <>{children}</>,
-    code: ({ className, children, ...props }) => {
+    code: ({ className, children }) => {
       const codeText = String(children).replace(/\n$/, '');
       const languageMatch = /language-([\w-]+)/.exec(className ?? '');
       const language = languageMatch?.[1];
       const isBlock = Boolean(language || codeText.includes('\n'));
 
       if (isBlock) {
-        return <CodeBlock codeText={codeText} language={language} isDarkTheme={isDarkTheme} {...props} />;
+        return <CodeBlock codeText={codeText} language={language} isDarkTheme={isDarkTheme} />;
       }
 
       return (
         <SyntaxHighlighter
           language={inferLanguage(language, codeText)}
-          style={isDarkTheme ? oneDark : oneLight}
+          style={themeStyle(isDarkTheme)}
           PreTag="span"
           customStyle={{
             display: 'inline',
@@ -367,7 +373,6 @@ function createMarkdownComponents(
               fontFamily: CODE_FONT,
             },
           }}
-          {...props}
         >
           {codeText}
         </SyntaxHighlighter>
