@@ -1,0 +1,5 @@
+- Debounce: Execute after events stop for a specified duration.
+- Throttle: Limit how often a function executes during repeated events.
+- Search box: Usually debounce.
+- Scroll handler: Usually throttle or `requestAnimationFrame`.
+- Main difference: Debounce waits for inactivity; throttle controls execution frequency.
