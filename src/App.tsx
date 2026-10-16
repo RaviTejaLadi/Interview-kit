@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { CheckCircle2Icon, CircleIcon, StarIcon } from 'lucide-react';
 
 import { AppSidebar } from '@/components/app-sidebar';
 import { KitGallery } from '@/components/kit-gallery';
@@ -13,8 +14,10 @@ import {
   TopicNavigator,
   TopicStepButtons,
 } from '@/components/topic-navigator';
+import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { useTopicProgress, type TopicProgressMap } from '@/hooks/use-topic-progress';
 import {
   useAdjacentTopics,
   useFooterInView,
@@ -35,6 +38,7 @@ import {
   type Topic,
   type TopicGroup,
 } from '@/lib/content-index';
+import { cn } from '@/lib/utils';
 
 let allTopics: Topic[] = [];
 let groups: TopicGroup[] = [];
@@ -85,6 +89,17 @@ function getNavSubtitle(nav: KitNavItem) {
   return nav.section;
 }
 
+function countProgressByTopicIds(
+  topicIds: string[],
+  topicProgressById: TopicProgressMap,
+  field: keyof TopicProgressMap[string],
+) {
+  return topicIds.reduce(
+    (count, topicId) => count + (topicProgressById[topicId]?.[field] ? 1 : 0),
+    0,
+  );
+}
+
 function App() {
   const [searchValue, setSearchValue] = useState('');
   const [selectedKitId, setSelectedKitId] = useState<string | null>(() => getKitIdFromHash());
@@ -94,20 +109,32 @@ function App() {
   const [isLoadingTopic, setIsLoadingTopic] = useState(false);
   const [topicLoadError, setTopicLoadError] = useState('');
   const [theme, setTheme] = useState<Theme>(() => getInitialTheme());
+  const {
+    topicProgressById,
+    getTopicProgress,
+    toggleTopicCompleted,
+    toggleTopicImportant,
+    setManyTopicsCompleted,
+    setManyTopicsImportant,
+  } = useTopicProgress();
+
+  const selectedKitGroups = useMemo<TopicGroup[]>(
+    () => (selectedKitId ? groups.filter((group) => group.id === selectedKitId) : []),
+    [selectedKitId],
+  );
 
   const filteredGroups = useMemo<TopicGroup[]>(() => {
-    if (!selectedKitId) {
+    if (selectedKitGroups.length === 0) {
       return [];
     }
 
-    const kitGroups = groups.filter((group) => group.id === selectedKitId);
     const query = searchValue.trim().toLowerCase();
 
     if (!query) {
-      return kitGroups;
+      return selectedKitGroups;
     }
 
-    return kitGroups.map((group) => ({
+    return selectedKitGroups.map((group) => ({
       ...group,
       topics: group.topics.filter((topic) => {
         const haystack =
@@ -115,7 +142,20 @@ function App() {
         return haystack.includes(query);
       }),
     }));
-  }, [searchValue, selectedKitId]);
+  }, [searchValue, selectedKitGroups]);
+
+  const selectedKitTopicIds = useMemo(
+    () => selectedKitGroups.flatMap((group) => group.topics.map((topic) => topic.id)),
+    [selectedKitGroups],
+  );
+  const selectedKitCompletedCount = useMemo(
+    () => countProgressByTopicIds(selectedKitTopicIds, topicProgressById, 'completed'),
+    [selectedKitTopicIds, topicProgressById],
+  );
+  const selectedKitImportantCount = useMemo(
+    () => countProgressByTopicIds(selectedKitTopicIds, topicProgressById, 'important'),
+    [selectedKitTopicIds, topicProgressById],
+  );
 
   const navigationItems = useMemo(() => {
     return buildKitMenus(filteredGroups).flatMap(getKitNavItems);
@@ -149,6 +189,9 @@ function App() {
   const selectedTopicIcon = selectedNav ? KIT_ICON_BY_KEY[selectedNav.kitKey] : null;
   const selectedSingleTopic =
     selectedNav?.kind === 'topic' ? (selectedNav.topics[0] ?? null) : null;
+  const selectedSingleTopicProgress = selectedSingleTopic
+    ? getTopicProgress(selectedSingleTopic.id)
+    : null;
 
   const closeKit = useCallback(() => {
     setSelectedKitId(null);
@@ -352,7 +395,11 @@ function App() {
       <div className="theme flex h-svh flex-col bg-background">
         <SiteHeader actions={headerActions} />
         <ScrollArea className="min-h-0 flex-1">
-          <KitGallery groups={groups} onSelectKit={(kitId) => openKit(kitId)} />
+          <KitGallery
+            groups={groups}
+            topicProgressById={topicProgressById}
+            onSelectKit={(kitId) => openKit(kitId)}
+          />
         </ScrollArea>
       </div>
     );
@@ -375,6 +422,10 @@ function App() {
         groups={filteredGroups}
         searchValue={searchValue}
         selectedNavId={selectedNav?.id ?? null}
+        topicProgressById={topicProgressById}
+        totalTopicCount={selectedKitTopicIds.length}
+        completedTopicCount={selectedKitCompletedCount}
+        importantTopicCount={selectedKitImportantCount}
         onSearchChange={setSearchValue}
         onSelectNav={handleSelectNav}
         onBackToKits={closeKit}
@@ -417,14 +468,72 @@ function App() {
                     isLoading={isLoadingTopic}
                     theme={theme}
                     focusedTopicId={focusedTopicId}
+                    topicProgressById={topicProgressById}
                     previousTopic={previousTopic}
                     nextTopic={nextTopic}
+                    onToggleTopicCompleted={toggleTopicCompleted}
+                    onToggleTopicImportant={toggleTopicImportant}
+                    onSetAllTopicsCompleted={setManyTopicsCompleted}
+                    onSetAllTopicsImportant={setManyTopicsImportant}
                     onSelectTopic={handleSelectNav}
                     onInternalLink={handleInternalLink}
                   />
                 ) : (
                   <div className="border border-border bg-card p-4 sm:p-5 lg:p-8">
-                    <div className="mb-4 flex justify-end">
+                    <div className="mb-4 flex items-center justify-end gap-2">
+                      {selectedSingleTopic && selectedSingleTopicProgress ? (
+                        <div className="flex items-center gap-1 border border-border bg-background p-1">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-xs"
+                            onClick={() => toggleTopicCompleted(selectedSingleTopic.id)}
+                            aria-pressed={selectedSingleTopicProgress.completed}
+                            aria-label={
+                              selectedSingleTopicProgress.completed
+                                ? 'Mark topic as unread'
+                                : 'Mark topic as read'
+                            }
+                            title={
+                              selectedSingleTopicProgress.completed
+                                ? 'Read'
+                                : 'Mark as read'
+                            }
+                          >
+                            {selectedSingleTopicProgress.completed ? (
+                              <CheckCircle2Icon className="size-3.5 text-emerald-500" />
+                            ) : (
+                              <CircleIcon className="size-3.5 text-muted-foreground" />
+                            )}
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-xs"
+                            onClick={() => toggleTopicImportant(selectedSingleTopic.id)}
+                            aria-pressed={selectedSingleTopicProgress.important}
+                            aria-label={
+                              selectedSingleTopicProgress.important
+                                ? 'Remove topic from important'
+                                : 'Mark topic as important'
+                            }
+                            title={
+                              selectedSingleTopicProgress.important
+                                ? 'Marked important'
+                                : 'Mark as important'
+                            }
+                          >
+                            <StarIcon
+                              className={cn(
+                                'size-3.5',
+                                selectedSingleTopicProgress.important
+                                  ? 'fill-amber-400 text-amber-500'
+                                  : 'text-muted-foreground',
+                              )}
+                            />
+                          </Button>
+                        </div>
+                      ) : null}
                       <TopicStepButtons
                         previousTopic={previousTopic}
                         nextTopic={nextTopic}

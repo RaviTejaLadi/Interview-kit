@@ -3,14 +3,17 @@ import {
   ArrowLeftIcon,
   BookIcon,
   BookOpenTextIcon,
+  CheckCircle2Icon,
   ChevronRightIcon,
   Code2Icon,
   FolderIcon,
   ListTreeIcon,
   SparklesIcon,
   SearchIcon,
+  StarIcon,
 } from 'lucide-react';
 
+import type { TopicProgressMap } from '@/hooks/use-topic-progress';
 import type { Topic, TopicGroup } from '@/lib/content-index';
 import { KIT_ICON_BY_KEY, kitIconToneClass } from '@/lib/kit-meta';
 import {
@@ -40,6 +43,10 @@ type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
   groups: TopicGroup[];
   searchValue: string;
   selectedNavId: string | null;
+  topicProgressById: TopicProgressMap;
+  totalTopicCount: number;
+  completedTopicCount: number;
+  importantTopicCount: number;
   onSearchChange: (value: string) => void;
   onSelectNav: (navId: string) => void;
   onBackToKits: () => void;
@@ -164,27 +171,40 @@ function StarRatingDot({ rating }: { rating: number }) {
 function TopicNavButton({
   topic,
   isActive,
+  topicProgressById,
   onSelect,
 }: {
   topic: Topic;
   isActive: boolean;
+  topicProgressById: TopicProgressMap;
   onSelect: (navId: string) => void;
 }) {
   const RootTopicIcon = getRootTopicIcon(topic.title);
+  const topicProgress = topicProgressById[topic.id];
+  const isCompleted = topicProgress?.completed === true;
+  const isImportant = topicProgress?.important === true;
 
   return (
     <SidebarMenuButton
       size="sm"
       isActive={isActive}
       onClick={() => onSelect(getTopicNavId(topic.id))}
-      className="h-auto w-full rounded-none py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
+      className="h-auto w-full rounded-none border-l-2 border-transparent py-1.5 text-[13px] text-sidebar-foreground/95 data-active:border-sky-500 data-active:bg-sky-500/15 data-active:text-sky-700 dark:data-active:text-sky-300"
     >
       {topic.starRating && !topic.topicTitle ? (
         <StarRatingDot rating={topic.starRating} />
       ) : RootTopicIcon ? (
         <RootTopicIcon.Icon className={cn('mt-0.5 shrink-0', RootTopicIcon.className)} />
       ) : null}
-      <span className="line-clamp-2 leading-tight">{topic.title}</span>
+      <span className="line-clamp-2 min-w-0 flex-1 leading-tight">{topic.title}</span>
+      <span className="ml-auto inline-flex shrink-0 items-center gap-1">
+        {isImportant ? (
+          <StarIcon className="size-3 text-amber-500 fill-amber-400" aria-label="Important topic" />
+        ) : null}
+        {isCompleted ? (
+          <CheckCircle2Icon className="size-3 text-emerald-500" aria-label="Completed topic" />
+        ) : null}
+      </span>
     </SidebarMenuButton>
   );
 }
@@ -193,11 +213,13 @@ function KitTopicTree({
   kit,
   selectedNavId,
   hasSearchQuery,
+  topicProgressById,
   onSelectNav,
 }: {
   kit: KitMenu;
   selectedNavId: string | null;
   hasSearchQuery: boolean;
+  topicProgressById: TopicProgressMap;
   onSelectNav: (navId: string) => void;
 }) {
   const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({});
@@ -228,6 +250,7 @@ function KitTopicTree({
               key={topic.id}
               topic={topic}
               isActive={selectedNavId === getTopicNavId(topic.id)}
+              topicProgressById={topicProgressById}
               onSelect={onSelectNav}
             />
           ))}
@@ -265,7 +288,7 @@ function KitTopicTree({
                   size="sm"
                   tooltip={section.label}
                   isActive={sectionHasSelectedTopic}
-                  className="hud-label h-7 text-muted-foreground data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
+                  className="hud-label h-7 border-l-2 border-transparent text-muted-foreground data-active:border-sky-500 data-active:bg-sky-500/15 data-active:text-sky-700 dark:data-active:text-sky-300"
                 />
               }
             >
@@ -280,12 +303,21 @@ function KitTopicTree({
                     key={topic.id}
                     topic={topic}
                     isActive={selectedNavId === getTopicNavId(topic.id)}
+                    topicProgressById={topicProgressById}
                     onSelect={onSelectNav}
                   />
                 ))}
                 {section.folders.map((folder) => {
                   const folderNavId = getFolderNavId(kit.id, section.id, folder.id);
                   const isActive = selectedNavId === folderNavId;
+                  const completedCount = folder.questions.reduce(
+                    (count, topic) => count + (topicProgressById[topic.id]?.completed ? 1 : 0),
+                    0,
+                  );
+                  const importantCount = folder.questions.reduce(
+                    (count, topic) => count + (topicProgressById[topic.id]?.important ? 1 : 0),
+                    0,
+                  );
 
                   return (
                     <SidebarMenuButton
@@ -294,17 +326,28 @@ function KitTopicTree({
                       tooltip={folder.label}
                       isActive={isActive}
                       onClick={() => onSelectNav(folderNavId)}
-                      className="h-auto rounded-none py-1.5 text-[13px] text-sidebar-foreground/95 data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground"
+                      className="h-auto rounded-none border-l-2 border-transparent py-1.5 text-[13px] text-sidebar-foreground/95 data-active:border-sky-500 data-active:bg-sky-500/15 data-active:text-sky-700 dark:data-active:text-sky-300"
                     >
                       {folder.starRating ? (
                         <StarRatingDot rating={folder.starRating} />
                       ) : (
                         <FolderIcon className="mt-0.5 size-3.5 shrink-0" />
                       )}
-                      <span className="line-clamp-2 leading-tight">{folder.label}</span>
-                      <span className="ml-auto shrink-0 text-[11px] text-sidebar-foreground/65">
-                        {folder.questions.length}
+                      <span className="line-clamp-2 min-w-0 flex-1 leading-tight">{folder.label}</span>
+                      <span
+                        className="ml-auto shrink-0 text-[11px] text-sidebar-foreground/65"
+                        title={`${completedCount} of ${folder.questions.length} completed`}
+                      >
+                        {completedCount}/{folder.questions.length}
                       </span>
+                      {importantCount > 0 ? (
+                        <span
+                          className="shrink-0 text-[11px] text-amber-500"
+                          title={`${importantCount} marked important`}
+                        >
+                          <StarIcon className="size-3 fill-amber-400" />
+                        </span>
+                      ) : null}
                     </SidebarMenuButton>
                   );
                 })}
@@ -321,6 +364,10 @@ export function AppSidebar({
   groups,
   searchValue,
   selectedNavId,
+  topicProgressById,
+  totalTopicCount,
+  completedTopicCount,
+  importantTopicCount,
   onSearchChange,
   onSelectNav,
   onBackToKits,
@@ -328,7 +375,6 @@ export function AppSidebar({
   ...props
 }: AppSidebarProps) {
   const { isMobile, setOpenMobile } = useSidebar();
-  const totalTopics = groups.reduce((count, group) => count + group.topics.length, 0);
   const kitMenus = React.useMemo(() => buildKitMenus(groups), [groups]);
   const activeKit = kitMenus[0] ?? null;
   const kitIcon = activeKit ? KIT_ICON_BY_KEY[activeKit.id] : null;
@@ -410,6 +456,7 @@ export function AppSidebar({
                 kit={activeKit}
                 selectedNavId={selectedNavId}
                 hasSearchQuery={hasSearchQuery}
+                topicProgressById={topicProgressById}
                 onSelectNav={handleSelectNav}
               />
             </div>
@@ -417,8 +464,18 @@ export function AppSidebar({
         )}
       </SidebarContent>
       <SidebarFooter className="border-t border-sidebar-border bg-sidebar px-4 py-3 group-data-[collapsible=icon]:hidden">
-        <p className="hud-label text-faint">{totalTopics} questions</p>
+        <p className="hud-label text-faint">
+          {completedTopicCount}/{totalTopicCount} completed
+        </p>
         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-sidebar-foreground/72">
+          <span className="inline-flex items-center gap-1.5">
+            <CheckCircle2Icon className="size-3 text-emerald-500" aria-hidden="true" />
+            Progress saved locally
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <StarIcon className="size-3 text-amber-500 fill-amber-400" aria-hidden="true" />
+            {importantTopicCount} important
+          </span>
           <span className="inline-flex items-center gap-1.5">
             <span className="size-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
             Must know

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { BookOpenTextIcon, SearchIcon } from 'lucide-react';
 
 import { Input } from '@/components/ui/input';
+import type { TopicProgressMap } from '@/hooks/use-topic-progress';
 import type { TopicGroup } from '@/lib/content-index';
 import {
   KIT_DESCRIPTIONS,
@@ -14,6 +15,7 @@ import { cn } from '@/lib/utils';
 
 type KitGalleryProps = {
   groups: TopicGroup[];
+  topicProgressById: TopicProgressMap;
   onSelectKit: (kitId: string) => void;
 };
 
@@ -100,7 +102,7 @@ function scrollToSection(id: string) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
+export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGalleryProps) {
   const [searchValue, setSearchValue] = useState('');
   const query = searchValue.trim().toLowerCase();
 
@@ -201,10 +203,14 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
                 const tile = KIT_TILE[group.id] ?? '#2f7bf5';
                 const description =
                   KIT_DESCRIPTIONS[group.id] ?? 'Interview questions and practice topics.';
-                const countLabel =
-                  query && matchCount > 0
-                    ? `${matchCount} matching`
-                    : `${group.topics.length} question${group.topics.length === 1 ? '' : 's'}`;
+                const totalQuestions = group.topics.length;
+                const completedCount = group.topics.reduce(
+                  (count, topic) => count + (topicProgressById[topic.id]?.completed ? 1 : 0),
+                  0,
+                );
+                const progressLabel = `${completedCount}/${totalQuestions} completed`;
+                const countLabel = `${totalQuestions} question${totalQuestions === 1 ? '' : 's'}`;
+                const matchLabel = query && matchCount > 0 ? `${matchCount} matching` : null;
 
                 return (
                   <button
@@ -240,7 +246,13 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
                       {description}
                     </span>
                     <span className="mt-5 flex items-end justify-between gap-3">
-                      <span className="hud-label text-faint">{countLabel}</span>
+                      <span className="grid gap-0.5 text-left">
+                        <span className="hud-label text-faint">{countLabel}</span>
+                        <span className="hud-label text-emerald-600 dark:text-emerald-400">
+                          {progressLabel}
+                        </span>
+                        {matchLabel ? <span className="hud-label text-faint">{matchLabel}</span> : null}
+                      </span>
                       <span className="shrink-0 font-mono text-[11px] font-bold tracking-[0.12em] text-foreground uppercase">
                         Open
                       </span>
