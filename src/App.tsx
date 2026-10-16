@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CheckCircle2Icon, CircleIcon, StarIcon } from 'lucide-react';
 
 import { AppSidebar } from '@/components/app-sidebar';
+import { GuideReader } from '@/components/guide-reader';
+import { GuidesGallery } from '@/components/guides-gallery';
 import { KitGallery } from '@/components/kit-gallery';
 import { MarkdownPreview } from '@/components/markdown-preview';
 import { SiteHeader } from '@/components/newspaper-masthead';
@@ -17,13 +19,15 @@ import {
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { useTopicProgress, type TopicProgressMap } from '@/hooks/use-topic-progress';
+import { useGuideProgress, type GuideProgressMap } from '@/hooks/use-guide-progress';
 import {
   useAdjacentTopics,
   useFooterInView,
   useReadingSession,
   useTopicHotkeys,
 } from '@/hooks/use-topic-navigation';
+import { useTopicProgress, type TopicProgressMap } from '@/hooks/use-topic-progress';
+import { buildGuidesIndex, type Guide } from '@/lib/guides-index';
 import { KIT_ICON_BY_KEY } from '@/lib/kit-meta';
 import {
   buildKitMenus,
@@ -42,6 +46,7 @@ import { cn } from '@/lib/utils';
 
 let allTopics: Topic[] = [];
 let groups: TopicGroup[] = [];
+let allGuides: Guide[] = [];
 
 try {
   const topicIndex = buildTopicIndex();
@@ -51,11 +56,18 @@ try {
   console.error('Failed to build topic index:', error);
 }
 
+try {
+  allGuides = buildGuidesIndex();
+} catch (error) {
+  console.error('Failed to build guides index:', error);
+}
+
 function hasOwn(obj: Record<string, string>, key: string) {
   return Object.prototype.hasOwnProperty.call(obj, key);
 }
 
 type Theme = 'light' | 'dark';
+type HomeView = 'kits' | 'guides';
 
 const THEME_STORAGE_KEY = 'interview-kit-theme';
 
@@ -100,14 +112,30 @@ function countProgressByTopicIds(
   );
 }
 
+function countProgressByGuideIds(
+  guideIds: string[],
+  guideProgressById: GuideProgressMap,
+  field: keyof GuideProgressMap[string],
+) {
+  return guideIds.reduce(
+    (count, guideId) => count + (guideProgressById[guideId]?.[field] ? 1 : 0),
+    0,
+  );
+}
+
 function App() {
   const [searchValue, setSearchValue] = useState('');
+  const [homeView, setHomeView] = useState<HomeView>('kits');
   const [selectedKitId, setSelectedKitId] = useState<string | null>(() => getKitIdFromHash());
   const [selectedNavId, setSelectedNavId] = useState<string | null>(null);
   const [focusedTopicId, setFocusedTopicId] = useState<string | null>(null);
+  const [selectedGuideId, setSelectedGuideId] = useState<string | null>(null);
   const [topicContentById, setTopicContentById] = useState<Record<string, string>>({});
+  const [guideContentById, setGuideContentById] = useState<Record<string, string>>({});
   const [isLoadingTopic, setIsLoadingTopic] = useState(false);
+  const [isLoadingGuide, setIsLoadingGuide] = useState(false);
   const [topicLoadError, setTopicLoadError] = useState('');
+  const [guideLoadError, setGuideLoadError] = useState('');
   const [theme, setTheme] = useState<Theme>(() => getInitialTheme());
   const {
     topicProgressById,
@@ -117,6 +145,19 @@ function App() {
     setManyTopicsCompleted,
     setManyTopicsImportant,
   } = useTopicProgress();
+  const {
+    guideProgressById,
+    getGuideProgress,
+    toggleGuideRead,
+    toggleGuideStarred,
+  } = useGuideProgress();
+
+  const selectedGuide = useMemo(
+    () => allGuides.find((guide) => guide.id === selectedGuideId) ?? null,
+    [selectedGuideId],
+  );
+  const selectedGuideProgress = selectedGuide ? getGuideProgress(selectedGuide.id) : null;
+  const selectedGuideContent = selectedGuide ? (guideContentById[selectedGuide.id] ?? '') : '';
 
   const selectedKitGroups = useMemo<TopicGroup[]>(
     () => (selectedKitId ? groups.filter((group) => group.id === selectedKitId) : []),
@@ -129,7 +170,6 @@ function App() {
     }
 
     const query = searchValue.trim().toLowerCase();
-
     if (!query) {
       return selectedKitGroups;
     }
@@ -155,6 +195,20 @@ function App() {
   const selectedKitImportantCount = useMemo(
     () => countProgressByTopicIds(selectedKitTopicIds, topicProgressById, 'important'),
     [selectedKitTopicIds, topicProgressById],
+  );
+
+  const guideIds = useMemo(() => allGuides.map((guide) => guide.id), []);
+  const guidesReadCount = useMemo(
+    () => countProgressByGuideIds(guideIds, guideProgressById, 'read'),
+    [guideIds, guideProgressById],
+  );
+  const guidesStarredCount = useMemo(
+    () => countProgressByGuideIds(guideIds, guideProgressById, 'starred'),
+    [guideIds, guideProgressById],
+  );
+  const guideNavItems = useMemo(
+    () => allGuides.map((guide) => ({ id: guide.id, title: guide.title })),
+    [],
   );
 
   const navigationItems = useMemo(() => {
@@ -186,6 +240,7 @@ function App() {
 
     return navigationItems[0] ?? null;
   }, [focusedTopicId, navigationItems, searchValue, selectedKitId, selectedNavId]);
+
   const selectedTopicIcon = selectedNav ? KIT_ICON_BY_KEY[selectedNav.kitKey] : null;
   const selectedSingleTopic =
     selectedNav?.kind === 'topic' ? (selectedNav.topics[0] ?? null) : null;
@@ -205,6 +260,8 @@ function App() {
   }, []);
 
   const openKit = useCallback((kitId: string, topicId?: string) => {
+    setHomeView('kits');
+    setSelectedGuideId(null);
     setSelectedKitId(kitId);
     setSearchValue('');
 
@@ -223,6 +280,24 @@ function App() {
     if (window.location.hash !== `#${kitId}`) {
       window.history.pushState({ kitId }, '', `#${kitId}`);
     }
+  }, []);
+
+  const openGuide = useCallback((guideId: string) => {
+    setHomeView('guides');
+    setSelectedKitId(null);
+    setSelectedNavId(null);
+    setFocusedTopicId(null);
+    setSearchValue('');
+    setSelectedGuideId(guideId);
+
+    if (window.location.hash) {
+      window.history.pushState({}, '', `${window.location.pathname}${window.location.search}`);
+    }
+  }, []);
+
+  const closeGuide = useCallback(() => {
+    setSelectedGuideId(null);
+    setHomeView('guides');
   }, []);
 
   const handleSelectNav = useCallback((navId: string) => {
@@ -257,6 +332,10 @@ function App() {
     navigationItems,
     selectedNav?.id ?? null,
   );
+  const {
+    previousTopic: previousGuide,
+    nextTopic: nextGuide,
+  } = useAdjacentTopics(guideNavItems, selectedGuideId);
   const { scrolled, scrollToTop } = useReadingSession(scrollRef, selectedNav?.id ?? null);
   const footerInView = useFooterInView(contentEndRef, scrollRef, selectedNav?.id ?? null);
 
@@ -264,6 +343,11 @@ function App() {
     previousTopic,
     nextTopic,
     onSelect: handleSelectNav,
+  });
+  useTopicHotkeys({
+    previousTopic: selectedGuide ? previousGuide : null,
+    nextTopic: selectedGuide ? nextGuide : null,
+    onSelect: openGuide,
   });
 
   useEffect(() => {
@@ -276,9 +360,11 @@ function App() {
     function syncKitFromLocation() {
       const kitId = getKitIdFromHash();
       setSelectedKitId(kitId);
+      setSelectedGuideId(null);
       setSelectedNavId(null);
       setFocusedTopicId(null);
       setSearchValue('');
+      setHomeView('kits');
     }
 
     window.addEventListener('popstate', syncKitFromLocation);
@@ -291,7 +377,7 @@ function App() {
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key !== 'Escape' || !selectedKitId) {
+      if (event.key !== 'Escape') {
         return;
       }
 
@@ -307,13 +393,21 @@ function App() {
         return;
       }
 
-      event.preventDefault();
-      closeKit();
+      if (selectedKitId) {
+        event.preventDefault();
+        closeKit();
+        return;
+      }
+
+      if (selectedGuideId) {
+        event.preventDefault();
+        closeGuide();
+      }
     }
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [closeKit, selectedKitId]);
+  }, [closeGuide, closeKit, selectedGuideId, selectedKitId]);
 
   useEffect(() => {
     let ignore = false;
@@ -377,11 +471,68 @@ function App() {
   }, [selectedNav, topicContentById]);
 
   useEffect(() => {
+    let ignore = false;
+
+    async function loadGuideContent() {
+      if (!selectedGuide) {
+        return;
+      }
+
+      if (hasOwn(guideContentById, selectedGuide.id)) {
+        return;
+      }
+
+      setIsLoadingGuide(true);
+      setGuideLoadError('');
+
+      try {
+        const markdown = await selectedGuide.loadContent();
+        if (ignore) {
+          return;
+        }
+
+        setGuideContentById((current) => ({
+          ...current,
+          [selectedGuide.id]: markdown,
+        }));
+      } catch {
+        if (!ignore) {
+          setGuideLoadError('Could not load this guide.');
+        }
+      } finally {
+        if (!ignore) {
+          setIsLoadingGuide(false);
+        }
+      }
+    }
+
+    loadGuideContent();
+    return () => {
+      ignore = true;
+    };
+  }, [guideContentById, selectedGuide]);
+
+  useEffect(() => {
     const root = document.documentElement;
     root.classList.toggle('dark', theme === 'dark');
     root.style.colorScheme = theme;
     window.localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
+
+  const relatedGuides = useMemo(() => {
+    if (!selectedGuide) {
+      return [];
+    }
+
+    return allGuides
+      .filter(
+        (guide) =>
+          guide.id !== selectedGuide.id &&
+          (guide.topic === selectedGuide.topic ||
+            guide.tags.some((tag) => selectedGuide.tags.includes(tag))),
+      )
+      .slice(0, 2);
+  }, [selectedGuide]);
 
   const headerActions = (
     <>
@@ -390,16 +541,85 @@ function App() {
     </>
   );
 
+  if (selectedGuide && selectedGuideProgress) {
+    return (
+      <div className="theme flex h-svh flex-col bg-background">
+        <SiteHeader
+          actions={headerActions}
+          onBrandClick={closeGuide}
+          kitLabel="Guides"
+          detail={`${guidesReadCount}/${allGuides.length} read · ${guidesStarredCount} starred`}
+        />
+        <ScrollArea className="min-h-0 flex-1">
+          <GuideReader
+            guide={selectedGuide}
+            content={selectedGuideContent}
+            isLoading={isLoadingGuide}
+            loadError={guideLoadError}
+            theme={theme}
+            progress={selectedGuideProgress}
+            previousGuide={previousGuide}
+            nextGuide={nextGuide}
+            onBack={closeGuide}
+            onOpenGuide={openGuide}
+            onToggleRead={() => toggleGuideRead(selectedGuide.id)}
+            onToggleStarred={() => toggleGuideStarred(selectedGuide.id)}
+            relatedGuides={relatedGuides}
+          />
+        </ScrollArea>
+      </div>
+    );
+  }
+
   if (!selectedKitId) {
     return (
       <div className="theme flex h-svh flex-col bg-background">
         <SiteHeader actions={headerActions} />
         <ScrollArea className="min-h-0 flex-1">
-          <KitGallery
-            groups={groups}
-            topicProgressById={topicProgressById}
-            onSelectKit={(kitId) => openKit(kitId)}
-          />
+          <div className="border-b border-border bg-background px-5 py-3 sm:px-8">
+            <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3">
+              <div className="inline-flex items-center gap-2 border border-border bg-card p-1">
+                <Button
+                  type="button"
+                  variant={homeView === 'kits' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setHomeView('kits')}
+                >
+                  Interview Kits
+                </Button>
+                <Button
+                  type="button"
+                  variant={homeView === 'guides' ? 'default' : 'ghost'}
+                  size="sm"
+                  onClick={() => setHomeView('guides')}
+                >
+                  Guides
+                </Button>
+              </div>
+              <p className="hud-label text-faint hidden sm:block">
+                {homeView === 'kits'
+                  ? `${groups.length} kits available`
+                  : `${guidesReadCount}/${allGuides.length} guides read · ${guidesStarredCount} starred`}
+              </p>
+            </div>
+          </div>
+          {homeView === 'kits' ? (
+            <KitGallery
+              groups={groups}
+              topicProgressById={topicProgressById}
+              onSelectKit={(kitId) => openKit(kitId)}
+            />
+          ) : (
+            <GuidesGallery
+              guides={allGuides}
+              guideProgressById={guideProgressById}
+              readGuideCount={guidesReadCount}
+              starredGuideCount={guidesStarredCount}
+              onOpenGuide={openGuide}
+              onToggleGuideRead={toggleGuideRead}
+              onToggleGuideStarred={toggleGuideStarred}
+            />
+          )}
         </ScrollArea>
       </div>
     );
@@ -494,11 +714,7 @@ function App() {
                                 ? 'Mark topic as unread'
                                 : 'Mark topic as read'
                             }
-                            title={
-                              selectedSingleTopicProgress.completed
-                                ? 'Read'
-                                : 'Mark as read'
-                            }
+                            title={selectedSingleTopicProgress.completed ? 'Read' : 'Mark as read'}
                           >
                             {selectedSingleTopicProgress.completed ? (
                               <CheckCircle2Icon className="size-3.5 text-emerald-500" />
@@ -541,7 +757,7 @@ function App() {
                       />
                     </div>
                     {isLoadingTopic && !hasSelectedTopicContent ? (
-                      <p className="text-sm text-muted-foreground">Loading…</p>
+                      <p className="text-sm text-muted-foreground">Loading...</p>
                     ) : topicLoadError ? (
                       <p className="text-sm text-destructive">
                         Could not load this file. {topicLoadError}
