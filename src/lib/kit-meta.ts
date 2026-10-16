@@ -12,6 +12,9 @@ import redisKitIcon from '../../assets/kits-svgs/redis.svg';
 import dockerKitIcon from '../../assets/kits-svgs/docker.svg';
 import testingKitIcon from '../../assets/kits-svgs/testing.svg';
 import dsaKitIcon from '../../assets/kits-svgs/algorithm.svg';
+import expressKitIcon from '../../assets/kits-svgs/express.svg';
+import apiKitIcon from '../../assets/kits-svgs/api.svg';
+import frontendPackagesKitIcon from '../../assets/kits-svgs/npm.svg';
 
 export const KIT_DISPLAY_ORDER = [
   'html-interview-kit',
@@ -21,7 +24,10 @@ export const KIT_DISPLAY_ORDER = [
   'dsa-interview-kit',
   'react-interview-kit',
   'next-js-interview-kit',
+  'most-used-frontend-packages-interview-kit',
   'node-js-interview-kit',
+  'express-js-interview-kit',
+  'api-development-interview-kit',
   'mongo-db-interview-kit',
   'git-interview-kit',
   'docker-devops-interview-kit',
@@ -45,6 +51,9 @@ export const KIT_ICON_BY_KEY: Record<string, string> = {
   'redis-interview-kit': redisKitIcon,
   'docker-devops-interview-kit': dockerKitIcon,
   'testing-interview-kit': testingKitIcon,
+  'most-used-frontend-packages-interview-kit': frontendPackagesKitIcon,
+  'express-js-interview-kit': expressKitIcon,
+  'api-development-interview-kit': apiKitIcon,
 };
 
 export const KIT_DESCRIPTIONS: Record<string, string> = {
@@ -55,7 +64,11 @@ export const KIT_DESCRIPTIONS: Record<string, string> = {
   'dsa-interview-kit': 'Most-asked DSA patterns, problem solving strategy, and coding drills.',
   'react-interview-kit': 'Components, hooks, rendering, and interview-style React problems.',
   'next-js-interview-kit': 'App Router, server components, caching, and data mutations.',
+  'most-used-frontend-packages-interview-kit':
+    'React Router, state, data fetching, forms, and the packages interviews expect.',
   'node-js-interview-kit': 'Runtime internals, APIs, streams, and backend interview problems.',
+  'express-js-interview-kit': 'Middleware, routing, auth, and Express server patterns.',
+  'api-development-interview-kit': 'REST design, auth, status codes, and production API practices.',
   'mongo-db-interview-kit': 'Schema design, indexing, aggregation, and database operations.',
   'git-interview-kit': 'Version control workflows, branching, and recovery commands.',
   'docker-devops-interview-kit':
@@ -73,7 +86,10 @@ export const KIT_DESKS: Record<string, string> = {
   'dsa-interview-kit': 'Algorithms desk',
   'react-interview-kit': 'Interface desk',
   'next-js-interview-kit': 'Framework desk',
+  'most-used-frontend-packages-interview-kit': 'Packages desk',
   'node-js-interview-kit': 'Runtime desk',
+  'express-js-interview-kit': 'Server desk',
+  'api-development-interview-kit': 'API desk',
   'mongo-db-interview-kit': 'Data desk',
   'git-interview-kit': 'Version desk',
   'docker-devops-interview-kit': 'Platform desk',
@@ -117,9 +133,21 @@ export const KIT_CARD_ACCENT: Record<
     iconWrap: 'bg-slate-100 dark:bg-slate-400/10',
     hover: 'hover:border-slate-400/50 hover:shadow-slate-500/10',
   },
+  'most-used-frontend-packages-interview-kit': {
+    iconWrap: 'bg-red-50 dark:bg-red-400/10',
+    hover: 'hover:border-red-400/50 hover:shadow-red-500/10',
+  },
   'node-js-interview-kit': {
     iconWrap: 'bg-emerald-50 dark:bg-emerald-400/10',
     hover: 'hover:border-emerald-400/50 hover:shadow-emerald-500/10',
+  },
+  'express-js-interview-kit': {
+    iconWrap: 'bg-neutral-100 dark:bg-neutral-400/10',
+    hover: 'hover:border-neutral-400/50 hover:shadow-neutral-500/10',
+  },
+  'api-development-interview-kit': {
+    iconWrap: 'bg-blue-50 dark:bg-blue-400/10',
+    hover: 'hover:border-blue-400/50 hover:shadow-blue-500/10',
   },
   'mongo-db-interview-kit': {
     iconWrap: 'bg-green-50 dark:bg-green-400/10',
@@ -134,6 +162,10 @@ export const KIT_CARD_ACCENT: Record<
     hover: 'hover:border-violet-400/50 hover:shadow-violet-500/10',
   },
 };
+
+export function kitIconToneClass(kitId: string | null | undefined) {
+  return kitId === 'express-js-interview-kit' ? 'dark:invert' : '';
+}
 
 export function sortKitsByDisplayOrder<T extends { id: string }>(kits: T[]) {
   return [...kits].sort((a, b) => {

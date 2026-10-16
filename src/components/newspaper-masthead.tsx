@@ -1,9 +1,13 @@
 import type { ReactNode } from 'react';
 
+import { kitIconToneClass } from '@/lib/kit-meta';
+import { cn } from '@/lib/utils';
+
 type SiteHeaderProps = {
   actions?: ReactNode;
   leading?: ReactNode;
   kitLabel?: string;
+  kitKey?: string | null;
   kitIcon?: string | null;
   detail?: string;
   onBrandClick?: () => void;
@@ -13,6 +17,7 @@ export function SiteHeader({
   actions,
   leading,
   kitLabel,
+  kitKey,
   kitIcon,
   detail,
   onBrandClick,
@@ -39,7 +44,7 @@ export function SiteHeader({
               src={kitIcon}
               alt=""
               aria-hidden="true"
-              className="size-5 shrink-0 object-contain"
+              className={cn('size-5 shrink-0 object-contain', kitIconToneClass(kitKey))}
             />
           ) : null}
           <p className="font-display truncate text-lg leading-none text-foreground sm:text-xl">

@@ -384,6 +384,7 @@ function App() {
           actions={headerActions}
           onBrandClick={closeKit}
           kitLabel={selectedNav?.kitLabel}
+          kitKey={selectedNav?.kitKey}
           kitIcon={selectedTopicIcon}
           detail={editionSubtitle}
           leading={

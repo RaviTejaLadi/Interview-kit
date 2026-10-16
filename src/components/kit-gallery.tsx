@@ -7,6 +7,7 @@ import {
   KIT_DESCRIPTIONS,
   KIT_DESKS,
   KIT_ICON_BY_KEY,
+  kitIconToneClass,
   sortKitsByDisplayOrder,
 } from '@/lib/kit-meta';
 import { cn } from '@/lib/utils';
@@ -53,7 +54,10 @@ const KIT_TILE: Record<string, string> = {
   'dsa-interview-kit': '#7c5cbf',
   'react-interview-kit': '#00b4d8',
   'next-js-interview-kit': '#111111',
+  'most-used-frontend-packages-interview-kit': '#cb3837',
   'node-js-interview-kit': '#3c9d4e',
+  'express-js-interview-kit': '#68a063',
+  'api-development-interview-kit': '#4d8dff',
   'mongo-db-interview-kit': '#10aa50',
   'git-interview-kit': '#f05033',
   'docker-devops-interview-kit': '#2496ed',
@@ -148,27 +152,19 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
     <div className="craft-scan relative">
       <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 sm:py-14 lg:pr-28">
         <section id="kits" className="scroll-mt-6">
-          <div className="flex items-end justify-between gap-6 border-b border-border pb-4">
-            <p className="hud-label text-muted-foreground">01 / Interview Kits</p>
-            <div className="min-w-0 text-right">
-              <p className="hud-label text-faint mb-2 hidden sm:block">
+          <div className="border-b border-border pb-6">
+            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+              <p className="hud-label text-muted-foreground shrink-0">01 / Interview Kits</p>
+              <p className="hud-label text-faint ml-auto shrink-0 whitespace-nowrap">
                 {groups.length} kits · {totalTopics} questions
               </p>
-              <p className="font-display text-foreground text-4xl leading-none sm:text-6xl">
-                Prepare
-              </p>
             </div>
+            <h1 className="font-display text-foreground mt-4 max-w-4xl text-4xl leading-[1.02] sm:text-5xl md:text-6xl">
+              {kitCountLabel} for every <span className="text-accent-ink">interview</span>.
+            </h1>
           </div>
 
-          <h1 className="font-display text-foreground mt-10 max-w-4xl text-4xl leading-[1.02] sm:text-5xl md:text-6xl">
-            {kitCountLabel} for every <span className="text-accent-ink">interview</span>.
-          </h1>
-          <p className="text-muted-foreground mt-5 max-w-xl text-base leading-7">
-            Theory, coding, and the questions hiring teams ask across the stack. Read them on your
-            machine, one kit at a time.
-          </p>
-
-          <div className="relative mt-8 max-w-xl">
+          <div className="relative mt-6 max-w-xl">
             <SearchIcon className="text-faint pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
             <Input
               id="kit-search"
@@ -224,7 +220,7 @@ export function KitGallery({ groups, onSelectKit }: KitGalleryProps) {
                             src={icon}
                             alt=""
                             aria-hidden="true"
-                            className="size-12 object-contain"
+                            className={cn('size-12 object-contain', kitIconToneClass(group.id))}
                           />
                         ) : (
                           <BookOpenTextIcon className="size-6 text-foreground" />

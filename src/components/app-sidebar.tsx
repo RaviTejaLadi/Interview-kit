@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 import type { Topic, TopicGroup } from '@/lib/content-index';
-import { KIT_ICON_BY_KEY } from '@/lib/kit-meta';
+import { KIT_ICON_BY_KEY, kitIconToneClass } from '@/lib/kit-meta';
 import {
   buildKitMenus,
   getFolderNavId,
@@ -374,7 +374,7 @@ export function AppSidebar({
               src={kitIcon}
               alt=""
               aria-hidden="true"
-              className="size-4 shrink-0 object-contain"
+              className={cn('size-4 shrink-0 object-contain', kitIconToneClass(activeKit?.id))}
             />
           ) : (
             <BookOpenTextIcon className="size-4 shrink-0 text-sidebar-primary" />

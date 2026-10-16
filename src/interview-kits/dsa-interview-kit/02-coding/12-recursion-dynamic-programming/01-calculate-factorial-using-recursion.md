@@ -1,0 +1,1 @@
+# Calculate factorial using recursion.
