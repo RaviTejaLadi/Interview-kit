@@ -19,8 +19,8 @@ type NavTarget = {
 };
 
 const headerIconButtonClassName = {
-  paper: 'border-line-strong bg-transparent hover:bg-muted',
-  ink: 'border-line-strong bg-transparent text-foreground hover:bg-muted',
+  paper: 'border-border bg-card hover:bg-muted',
+  ink: 'border-border bg-card text-foreground hover:bg-muted',
 };
 
 type ButtonTone = keyof typeof headerIconButtonClassName;
@@ -49,8 +49,8 @@ function TopicSideButton({
       disabled={!topic}
       onClick={() => topic && onSelect(topic.id)}
       className={cn(
-        'size-7 rounded-none border-border bg-card',
-        'hover:bg-muted dark:border-border dark:bg-card',
+        'size-8 border-border bg-card',
+        'hover:bg-muted',
       )}
       aria-label={
         topic
@@ -125,7 +125,7 @@ export function TopicDock({
     >
       <div
         className={cn(
-          'pointer-events-auto mx-auto flex max-w-6xl items-center gap-2 border border-border bg-card p-2',
+          'pointer-events-auto mx-auto flex max-w-7xl items-center gap-2 rounded-[var(--radius-card)] border border-border bg-card p-2 shadow-[var(--shadow-card)]',
           'dark:border-border dark:bg-card',
           !visible && 'pointer-events-none',
         )}
@@ -134,7 +134,7 @@ export function TopicDock({
           type="button"
           variant="outline"
           size="sm"
-          className="min-w-0 flex-1 justify-start rounded-none border-border bg-card dark:border-border dark:bg-card"
+          className="min-w-0 flex-1 justify-start border-border bg-card"
           disabled={!previousTopic}
           onClick={() => previousTopic && onSelect(previousTopic.id)}
           aria-label={
@@ -163,7 +163,7 @@ export function TopicDock({
           type="button"
           variant="outline"
           size="icon-sm"
-          className="rounded-none border-border bg-card lg:hidden dark:border-border dark:bg-card"
+          className="border-border bg-card lg:hidden"
           onClick={onBackToTop}
           aria-label="Back to top"
           title="Back to top"
@@ -175,7 +175,7 @@ export function TopicDock({
           type="button"
           variant="outline"
           size="sm"
-          className="min-w-0 flex-1 justify-end rounded-none border-border bg-card dark:border-border dark:bg-card"
+          className="min-w-0 flex-1 justify-end border-border bg-card"
           disabled={!nextTopic}
           onClick={() => nextTopic && onSelect(nextTopic.id)}
           aria-label={nextTopic ? `Next topic: ${nextTopic.title}` : 'No next topic'}
@@ -203,8 +203,8 @@ export function ScrollToTopButton({
       variant="outline"
       size="icon"
       className={cn(
-        'absolute z-20 size-9 rounded-none border border-border bg-card transition-all duration-200',
-        'hover:bg-muted dark:border-border dark:bg-card',
+        'absolute z-20 size-10 border border-border bg-card transition-all duration-200',
+        'hover:bg-muted',
         dockVisible ? 'right-3 bottom-20 sm:right-5' : 'right-3 bottom-3 sm:right-5 sm:bottom-5',
         visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-2 opacity-0',
       )}

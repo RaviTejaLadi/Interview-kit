@@ -1,16 +1,18 @@
 import { useMemo, useState } from 'react';
-import { BookOpenTextIcon, SearchIcon } from 'lucide-react';
+import {
+  ArrowRightIcon,
+  BookOpenTextIcon,
+  FlameIcon,
+  Layers3Icon,
+  ListChecksIcon,
+  SearchIcon,
+} from 'lucide-react';
 
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import type { TopicProgressMap } from '@/hooks/use-topic-progress';
 import type { TopicGroup } from '@/lib/content-index';
-import {
-  KIT_DESCRIPTIONS,
-  KIT_DESKS,
-  KIT_ICON_BY_KEY,
-  kitIconToneClass,
-  sortKitsByDisplayOrder,
-} from '@/lib/kit-meta';
+import { KIT_DESCRIPTIONS, KIT_ICON_BY_KEY, kitIconToneClass, sortKitsByDisplayOrder } from '@/lib/kit-meta';
 import { cn } from '@/lib/utils';
 
 type KitGalleryProps = {
@@ -24,83 +26,20 @@ type VisibleKit = {
   matchCount: number;
 };
 
-const COUNT_WORDS = [
-  'Zero',
-  'One',
-  'Two',
-  'Three',
-  'Four',
-  'Five',
-  'Six',
-  'Seven',
-  'Eight',
-  'Nine',
-  'Ten',
-  'Eleven',
-  'Twelve',
-  'Thirteen',
-  'Fourteen',
-  'Fifteen',
-  'Sixteen',
-  'Seventeen',
-  'Eighteen',
-  'Nineteen',
-  'Twenty',
-];
-
-const KIT_TILE: Record<string, string> = {
-  'html-interview-kit': '#e4572e',
-  'css-interview-kit': '#2f7bf5',
-  'tailwind-interview-kit': '#14b8a6',
-  'javascript-interview-kit': '#f5b301',
-  'dsa-interview-kit': '#7c5cbf',
-  'react-interview-kit': '#00b4d8',
-  'next-js-interview-kit': '#111111',
-  'most-used-frontend-packages-interview-kit': '#cb3837',
-  'node-js-interview-kit': '#3c9d4e',
-  'express-js-interview-kit': '#68a063',
-  'api-development-interview-kit': '#4d8dff',
-  'mongo-db-interview-kit': '#10aa50',
-  'git-interview-kit': '#f05033',
-  'docker-devops-interview-kit': '#2496ed',
-  'hr-interview-kit': '#e84d8a',
-  'redis-interview-kit': '#d82c20',
-  'testing-interview-kit': '#8b5cf6',
-};
-
 const PRINCIPLES = [
   {
-    index: '01',
-    title: 'On your machine',
-    body: 'Every question is a markdown file in this project. Nothing is fetched from a server between you and the page.',
+    title: 'Theory + coding, together',
+    body: 'Study concepts and practice interview-style coding in the same flow so revision stays structured.',
   },
   {
-    index: '02',
-    title: 'One kit at a time',
-    body: 'Open a kit, then move through its topics. The arrow keys jump to the previous and next item.',
+    title: 'Progress you can trust',
+    body: 'Mark topics complete or important to quickly return to weak areas during revision cycles.',
   },
   {
-    index: '03',
-    title: 'Familiar from the first page',
-    body: 'Theory, coding drills, and the traps interviews actually use, in the order you would study them.',
+    title: 'Built for consistency',
+    body: 'Every kit follows a predictable layout so you can focus on preparation instead of navigation.',
   },
 ];
-
-function countWord(count: number) {
-  return COUNT_WORDS[count] ?? String(count);
-}
-
-function getDesk(kitId: string) {
-  return KIT_DESKS[kitId] ?? 'Interview kit';
-}
-
-function padIndex(index: number) {
-  return String(index + 1).padStart(2, '0');
-}
-
-function scrollToSection(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
 
 export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGalleryProps) {
   const [searchValue, setSearchValue] = useState('');
@@ -108,6 +47,12 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
 
   const orderedGroups = useMemo(() => sortKitsByDisplayOrder(groups), [groups]);
   const totalTopics = groups.reduce((count, group) => count + group.topics.length, 0);
+  const totalCompleted = groups.reduce(
+    (count, group) =>
+      count + group.topics.reduce((sum, topic) => sum + (topicProgressById[topic.id]?.completed ? 1 : 0), 0),
+    0,
+  );
+  const completionRate = totalTopics > 0 ? Math.round((totalCompleted / totalTopics) * 100) : 0;
 
   const visibleKits = useMemo(() => {
     if (!query) {
@@ -120,11 +65,9 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
     return orderedGroups
       .map((group) => {
         const description = KIT_DESCRIPTIONS[group.id] ?? '';
-        const desk = getDesk(group.id);
         const kitMatches =
           group.label.toLowerCase().includes(query) ||
-          description.toLowerCase().includes(query) ||
-          desk.toLowerCase().includes(query);
+          description.toLowerCase().includes(query);
         const matchCount = group.topics.filter((topic) => {
           const haystack =
             `${topic.title} ${topic.topicTitle ?? ''} ${topic.section} ${topic.kitLabel}`.toLowerCase();
@@ -148,59 +91,96 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
       });
   }, [orderedGroups, query]);
 
-  const kitCountLabel = `${countWord(groups.length)} kit${groups.length === 1 ? '' : 's'}`;
-
   return (
-    <div className="craft-scan relative">
-      <div className="mx-auto w-full max-w-6xl px-5 py-10 sm:px-8 sm:py-14 lg:pr-28">
+    <div className="bg-background">
+      <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
         <section id="kits" className="scroll-mt-6">
-          <div className="border-b border-border pb-6">
-            <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-              <p className="hud-label text-muted-foreground shrink-0">01 / Interview Kits</p>
-              <p className="hud-label text-faint ml-auto shrink-0 whitespace-nowrap">
-                {groups.length} kits · {totalTopics} questions
-              </p>
+          <div className="rounded-[var(--radius-panel)] border border-border bg-card p-4 shadow-[var(--shadow-card)] sm:p-5 lg:p-6">
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)] lg:items-start">
+              <div className="lg:pr-4">
+                <h1 className="max-w-3xl text-2xl text-foreground sm:text-3xl lg:text-4xl">
+                  Structured interview kits for focused preparation.
+                </h1>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
+                  Practice by topic, track solved questions, and revise weak areas faster.
+                </p>
+              </div>
+
+              <div className="grid gap-2 sm:grid-cols-2 lg:justify-self-end">
+                <Card>
+                  <CardHeader className="p-3 pb-1.5">
+                    <CardTitle className="text-xs font-medium text-muted-foreground">Total Kits</CardTitle>
+                  </CardHeader>
+                  <CardContent className="px-3 pb-3">
+                    <p className="text-lg font-semibold leading-none text-foreground">{groups.length}</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="p-3 pb-1.5">
+                    <CardTitle className="text-xs font-medium text-muted-foreground">Questions</CardTitle>
+                  </CardHeader>
+                  <CardContent className="px-3 pb-3">
+                    <p className="text-lg font-semibold leading-none text-foreground">{totalTopics}</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="p-3 pb-1.5">
+                    <CardTitle className="text-xs font-medium text-muted-foreground">Solved</CardTitle>
+                  </CardHeader>
+                  <CardContent className="px-3 pb-3">
+                    <p className="text-lg font-semibold leading-none text-emerald-600">{totalCompleted}</p>
+                  </CardContent>
+                </Card>
+                <Card>
+                  <CardHeader className="p-3 pb-1.5">
+                    <CardTitle className="text-xs font-medium text-muted-foreground">Completion</CardTitle>
+                  </CardHeader>
+                  <CardContent className="px-3 pb-3">
+                    <p className="text-lg font-semibold leading-none text-primary">{completionRate}%</p>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
-            <h1 className="font-display text-foreground mt-4 max-w-4xl text-4xl leading-[1.02] sm:text-5xl md:text-6xl">
-              {kitCountLabel} for every <span className="text-accent-ink">interview</span>.
-            </h1>
           </div>
 
-          <div className="relative mt-6 max-w-xl">
-            <SearchIcon className="text-faint pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
+          <div className="relative mt-5 max-w-xl">
+            <SearchIcon className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
             <Input
               id="kit-search"
               value={searchValue}
               onChange={(event) => setSearchValue(event.target.value)}
               aria-label="Search kits"
               placeholder="Search kits, topics, or questions"
-              className="border-line-strong h-10 bg-transparent pl-9 font-sans"
+              className="h-11 border-input bg-card pl-9"
             />
           </div>
         </section>
 
-        <section id="all-kits" className="scroll-mt-6 pt-20">
-          <div className="flex items-end justify-between gap-6 border-b border-border pb-4">
-            <p className="hud-label text-muted-foreground">02 / All kits</p>
-            <div className="text-right">
-              <p className="hud-label text-faint mb-2 hidden sm:block">Choose a kit to study</p>
-              <p className="font-display text-foreground text-4xl leading-none sm:text-6xl">Kits</p>
+        <section id="all-kits" className="scroll-mt-6 pt-8 sm:pt-10">
+          <div className="mb-5 flex items-end justify-between gap-4">
+            <div>
+              <h2 className="text-2xl text-foreground sm:text-3xl">Interview Categories</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {visibleKits.length} of {groups.length} kits shown
+              </p>
             </div>
+            <p className="hidden text-sm text-muted-foreground sm:block">
+              {totalCompleted}/{totalTopics} completed
+            </p>
           </div>
 
           {visibleKits.length === 0 ? (
-            <div className="border-b border-border py-16 text-center">
-              <p className="hud-label text-muted-foreground">No kits</p>
-              <p className="text-foreground mt-3 text-sm">
+            <Card className="p-10 text-center">
+              <p className="text-sm font-medium text-muted-foreground">No kits found</p>
+              <p className="mt-2 text-sm text-foreground">
                 Nothing matches “{searchValue.trim()}”.
               </p>
-            </div>
+            </Card>
           ) : (
-            <div className="grid gap-4 pt-8 sm:grid-cols-2 lg:grid-cols-3">
-              {visibleKits.map((item, index) => {
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+              {visibleKits.map((item) => {
                 const { group, matchCount } = item;
                 const icon = KIT_ICON_BY_KEY[group.id];
-                const tile = KIT_TILE[group.id] ?? '#2f7bf5';
                 const description =
                   KIT_DESCRIPTIONS[group.id] ?? 'Interview questions and practice topics.';
                 const totalQuestions = group.topics.length;
@@ -208,6 +188,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                   (count, topic) => count + (topicProgressById[topic.id]?.completed ? 1 : 0),
                   0,
                 );
+                const progress = totalQuestions > 0 ? Math.round((completedCount / totalQuestions) * 100) : 0;
                 const progressLabel = `${completedCount}/${totalQuestions} completed`;
                 const countLabel = `${totalQuestions} question${totalQuestions === 1 ? '' : 's'}`;
                 const matchLabel = query && matchCount > 0 ? `${matchCount} matching` : null;
@@ -217,45 +198,55 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                     key={group.id}
                     type="button"
                     onClick={() => onSelectKit(group.id)}
-                    className="group flex h-full flex-col border border-border bg-card p-5 text-left transition-colors hover:border-line-strong"
+                    className="group flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-card p-4 text-left shadow-[var(--shadow-card)] transition-all hover:border-primary/35 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
                   >
                     <span className="flex items-start justify-between gap-3">
-                      <span className="flex size-12 shrink-0 items-center justify-center">
+                      <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted">
                         {icon ? (
                           <img
                             src={icon}
                             alt=""
                             aria-hidden="true"
-                            className={cn('size-12 object-contain', kitIconToneClass(group.id))}
+                            className={cn('size-6 object-contain', kitIconToneClass(group.id))}
                           />
                         ) : (
-                          <BookOpenTextIcon className="size-6 text-foreground" />
+                          <BookOpenTextIcon className="size-5 text-foreground" />
                         )}
                       </span>
-                      <span
-                        className="hud-label px-2 py-1 font-bold text-black"
-                        style={{ backgroundColor: tile }}
-                      >
-                        {padIndex(index)}
+                      <span className="rounded-full border border-border bg-muted px-2 py-1 text-xs font-medium text-muted-foreground">
+                        {countLabel}
                       </span>
                     </span>
-                    <span className="font-display text-foreground mt-5 block text-2xl leading-none">
+                    <span className="font-display mt-3 block text-lg leading-tight text-foreground">
                       {group.label}
                     </span>
-                    <span className="text-muted-foreground mt-3 block flex-1 text-sm leading-6">
+                    <span
+                      className={cn(
+                        'mt-1.5 block flex-1 text-sm leading-6 text-muted-foreground',
+                        '[display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] overflow-hidden',
+                      )}
+                    >
                       {description}
                     </span>
-                    <span className="mt-5 flex items-end justify-between gap-3">
-                      <span className="grid gap-0.5 text-left">
-                        <span className="hud-label text-faint">{countLabel}</span>
-                        <span className="hud-label text-emerald-600 dark:text-emerald-400">
-                          {progressLabel}
-                        </span>
-                        {matchLabel ? <span className="hud-label text-faint">{matchLabel}</span> : null}
+                    <span className="mt-3.5">
+                      <span className="mb-2 flex items-center justify-between text-xs">
+                        <span className="text-muted-foreground">{progressLabel}</span>
+                        <span className="font-medium text-foreground">{progress}%</span>
                       </span>
-                      <span className="shrink-0 font-mono text-[11px] font-bold tracking-[0.12em] text-foreground uppercase">
-                        Open
+                      <span className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                        <span
+                          className={cn(
+                            'block h-full rounded-full',
+                            progress >= 100 ? 'bg-emerald-500' : 'bg-primary',
+                          )}
+                          style={{ width: `${progress}%` }}
+                        />
                       </span>
+                      {matchLabel ? <span className="mt-2 block text-xs text-muted-foreground">{matchLabel}</span> : null}
+                    </span>
+                    <span className="mt-3.5 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                      Open kit
+                      <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
                     </span>
                   </button>
                 );
@@ -264,127 +255,36 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
           )}
         </section>
 
-        <section id="how-to-study" className="scroll-mt-6 pt-20">
-          <div className="flex items-end justify-between gap-6 border-b border-border pb-4">
-            <p className="hud-label text-muted-foreground">03 / How to study</p>
-            <p className="font-display text-foreground text-4xl leading-none sm:text-6xl">Read</p>
+        <section id="how-to-study" className="scroll-mt-6 pt-8 sm:pt-10">
+          <div className="mb-5">
+            <h2 className="text-2xl text-foreground sm:text-3xl">How to use this effectively</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Keep progress moving with short, repeatable preparation loops.
+            </p>
           </div>
-          <div className="grid gap-10 py-10 md:grid-cols-3">
-            {PRINCIPLES.map((principle) => (
-              <div key={principle.index}>
-                <p className="hud-label text-accent-ink">{principle.index}</p>
-                <h2 className="font-display text-foreground mt-3 text-2xl leading-tight">
-                  {principle.title}
-                </h2>
-                <p className="text-muted-foreground mt-3 text-sm leading-6">{principle.body}</p>
-              </div>
+          <div className="grid gap-3 md:grid-cols-3">
+            {PRINCIPLES.map((principle, index) => (
+              <Card key={principle.title}>
+                <CardHeader className="pb-2">
+                  <CardTitle className="flex items-center gap-2 text-base">
+                    {index === 0 ? <Layers3Icon className="size-4 text-primary" /> : null}
+                    {index === 1 ? <ListChecksIcon className="size-4 text-emerald-600" /> : null}
+                    {index === 2 ? <FlameIcon className="size-4 text-amber-500" /> : null}
+                    {principle.title}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm leading-6 text-muted-foreground">{principle.body}</p>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </section>
 
-        <footer className="mt-8 border-t border-border pt-10 pb-12">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            <div>
-              <p className="font-display text-foreground text-lg">Interview Kits</p>
-              <p className="text-muted-foreground mt-3 max-w-xs text-sm leading-6">
-                Questions for the full stack, set locally and free to read.
-              </p>
-            </div>
-            <div>
-              <p className="hud-label text-faint">Kits</p>
-              <ul className="mt-3 space-y-2">
-                {orderedGroups.slice(0, 7).map((group) => (
-                  <li key={group.id}>
-                    <button
-                      type="button"
-                      onClick={() => onSelectKit(group.id)}
-                      className="text-muted-foreground hover:text-foreground text-sm"
-                    >
-                      {group.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="hud-label text-faint">More</p>
-              <ul className="mt-3 space-y-2">
-                {orderedGroups.slice(7).map((group) => (
-                  <li key={group.id}>
-                    <button
-                      type="button"
-                      onClick={() => onSelectKit(group.id)}
-                      className="text-muted-foreground hover:text-foreground text-sm"
-                    >
-                      {group.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <p className="hud-label text-faint">On this page</p>
-              <ul className="mt-3 space-y-2">
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection('kits')}
-                    className="text-muted-foreground hover:text-foreground text-sm"
-                  >
-                    Prepare
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection('all-kits')}
-                    className="text-muted-foreground hover:text-foreground text-sm"
-                  >
-                    All kits
-                  </button>
-                </li>
-                <li>
-                  <button
-                    type="button"
-                    onClick={() => scrollToSection('how-to-study')}
-                    className="text-muted-foreground hover:text-foreground text-sm"
-                  >
-                    How to study
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-4">
-            <p className="hud-label text-faint">© {new Date().getFullYear()} Interview Kits</p>
-            <p className="hud-label text-faint">Made for candidates</p>
-          </div>
-        </footer>
-      </div>
-
-      <nav
-        aria-label="Page sections"
-        className="pointer-events-none absolute inset-y-0 right-3 hidden lg:block"
-      >
-        <div className="pointer-events-auto sticky top-[32vh] flex flex-col items-end gap-4">
-          {[
-            ['kits', 'Prepare'],
-            ['all-kits', 'Kits'],
-            ['how-to-study', 'Study'],
-          ].map(([id, label]) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => scrollToSection(id)}
-              className={cn(
-                'hud-label text-faint hover:text-foreground [writing-mode:vertical-rl] rotate-180',
-              )}
-            >
-              {label}
-            </button>
-          ))}
+        <div className="mt-10 border-t border-border pt-4 text-xs text-muted-foreground">
+          © {new Date().getFullYear()} Interview Kits
         </div>
-      </nav>
+      </div>
     </div>
   );
 }

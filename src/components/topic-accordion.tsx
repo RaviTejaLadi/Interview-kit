@@ -148,16 +148,16 @@ export function TopicAccordion({
   };
 
   return (
-    <div className="bg-card p-4 sm:p-5 lg:p-8">
-      <div className="mb-4 flex flex-col gap-3 border-b border-border pb-4 sm:flex-row sm:items-start sm:justify-between">
+    <div className="rounded-[var(--radius-card)] border border-border bg-card p-5 shadow-[var(--shadow-card)] sm:p-6 lg:p-8">
+      <div className="mb-5 flex flex-col gap-3 border-b border-border pb-5 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
-          <p className="hud-label text-muted-foreground">{section}</p>
+          <p className="text-sm font-medium text-muted-foreground">{section}</p>
           <h1 className="font-display mt-1 text-2xl text-foreground sm:text-3xl">{title}</h1>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
             {topics.length} question{topics.length === 1 ? '' : 's'}. Open any item, or expand the
             whole page.
           </p>
-          <p className="hud-label mt-2 text-faint">
+          <p className="mt-2 text-sm text-muted-foreground">
             {completedCount}/{topics.length} completed · {importantCount} important
           </p>
         </div>
@@ -172,7 +172,7 @@ export function TopicAccordion({
             variant="outline"
             size="sm"
             onClick={() => onSetAllTopicsCompleted(topicIds, !allCompleted)}
-            className="border-line-strong bg-transparent font-mono text-[11px] font-bold tracking-[0.12em] uppercase"
+            className="border-border bg-card text-xs font-medium"
             title={allCompleted ? 'Mark entire section as unread' : 'Mark entire section as read'}
           >
             {allCompleted ? 'Mark all unread' : 'Mark all read'}
@@ -182,7 +182,7 @@ export function TopicAccordion({
             variant="outline"
             size="sm"
             onClick={() => onSetAllTopicsImportant(topicIds, !allImportant)}
-            className="border-line-strong bg-transparent font-mono text-[11px] font-bold tracking-[0.12em] uppercase"
+            className="border-border bg-card text-xs font-medium"
             title={allImportant ? 'Remove important flag from all topics' : 'Mark all as important'}
           >
             {allImportant ? 'Unstar all' : 'Star all'}
@@ -193,7 +193,7 @@ export function TopicAccordion({
             size="sm"
             onClick={handleToggleAll}
             className={cn(
-              'border-line-strong bg-transparent font-mono text-[11px] font-bold tracking-[0.12em] uppercase opacity-0 transition-opacity duration-150',
+              'border-border bg-card text-xs font-medium opacity-0 transition-opacity duration-150',
               'group-hover/reader:opacity-100 group-focus-within/reader:opacity-100',
               '[@media(hover:none)]:opacity-100',
             )}
@@ -223,10 +223,10 @@ export function TopicAccordion({
               key={topic.id}
               id={`topic-accordion-${topic.id}`}
               value={topic.id}
-              className="scroll-mt-24 overflow-hidden border border-border"
+              className="scroll-mt-24 overflow-hidden rounded-[var(--radius-control)] border border-border"
             >
               <div className="flex items-stretch border-b border-border bg-muted/10">
-                <AccordionTrigger className="rounded-none border-0 px-4 py-3.5 hover:bg-muted/40 hover:no-underline data-panel-open:bg-muted/30">
+                <AccordionTrigger className="border-0 px-4 py-3.5 hover:bg-muted/40 hover:no-underline data-panel-open:bg-muted/30">
                   <span className="font-display min-w-0 flex-1 text-lg leading-tight text-foreground">
                     {topic.title}
                   </span>

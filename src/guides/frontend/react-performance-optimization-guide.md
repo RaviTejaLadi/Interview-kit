@@ -1,3 +1,18 @@
+---
+title: React Performance Optimization Guide
+summary: A practical sequence to identify rendering bottlenecks, reduce bundle cost, and improve interaction speed.
+topic: Frontend
+difficulty: Intermediate
+readTimeMinutes: 12
+publishedAt: 2026-10-12
+tags:
+  - React
+  - Performance
+  - Web Vitals
+  - Frontend
+  - Important
+---
+
 # React Performance Optimization Guide
 
 ## Why this guide exists
@@ -122,4 +137,3 @@ When asked "How do you optimize React performance?" answer in this order:
 4. Split code and reduce critical bundle
 5. Improve data fetching and caching
 6. Re-measure and verify accessibility
-

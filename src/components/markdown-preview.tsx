@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 
 type Theme = 'light' | 'dark';
 
-const CODE_FONT = '"Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+const CODE_FONT = '"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
 
 type HighlighterStyle = { [key: string]: CSSProperties };
 
@@ -40,10 +40,10 @@ function inferLanguage(language: string | undefined, code: string) {
 }
 
 const markdownHierarchy = {
-  section: 'pl-1.5 sm:pl-2.5 lg:pl-3',
-  subsection: 'pl-2.5 sm:pl-4 lg:pl-5',
-  body: 'pl-3 sm:pl-5 lg:pl-6',
-  nestedList: 'pl-6 sm:pl-8 lg:pl-9',
+  section: '',
+  subsection: '',
+  body: '',
+  nestedList: 'pl-5',
 };
 
 function CodeBlock({
@@ -70,16 +70,15 @@ function CodeBlock({
   return (
     <div
       className={cn(
-        'my-3 overflow-hidden group relative border border-border',
-        'ml-0 sm:ml-4 lg:ml-6',
+        'group relative my-4 overflow-hidden rounded-[var(--radius-control)] border border-slate-800 bg-[#0b1220]',
       )}
     >
       <button
         type="button"
         onClick={handleCopy}
         className={cn(
-          'group-hover:opacity-100 opacity-0 absolute top-2 right-2 rounded px-1.5 py-1 text-[11px] font-medium transition-colors',
-          copied ? 'text-accent-ink' : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+          'absolute top-2 right-2 rounded-md bg-slate-900/80 px-2 py-1 text-[11px] font-medium text-slate-300 transition-colors hover:bg-slate-800',
+          copied && 'text-emerald-300',
         )}
         aria-label="Copy code"
       >
@@ -95,10 +94,10 @@ function CodeBlock({
         customStyle={{
           margin: 0,
           borderRadius: 0,
-          padding: '0.85rem 1rem',
-          fontSize: '13px',
+          padding: '1rem',
+          fontSize: '13.5px',
           lineHeight: '1.6',
-          background: isDarkTheme ? '#101014' : '#faf9f7',
+          background: '#0b1220',
         }}
         codeTagProps={{
           style: {
@@ -113,16 +112,14 @@ function CodeBlock({
 }
 
 function createMarkdownComponents(
-  theme: Theme,
+  _theme: Theme,
   onInternalLink?: (href: string) => boolean,
 ): Components {
-  const isDarkTheme = theme === 'dark';
-
   return {
     h1: ({ className, ...props }) => (
       <h1
         className={cn(
-          'font-display mt-1 mb-3 scroll-m-20 border-b border-border pb-2 text-2xl text-foreground first:mt-0 sm:text-3xl',
+          'font-display mt-1 mb-4 scroll-m-20 border-b border-border pb-2 text-2xl text-foreground first:mt-0 sm:text-3xl',
           className,
         )}
         {...props}
@@ -131,7 +128,7 @@ function createMarkdownComponents(
     h2: ({ className, ...props }) => (
       <h2
         className={cn(
-          'font-display mt-5 mb-2 scroll-m-20 border-b border-border pb-1 text-xl text-foreground first:mt-0',
+          'font-display mt-8 mb-3 scroll-m-20 border-b border-border pb-2 text-xl text-foreground first:mt-0 sm:text-2xl',
           markdownHierarchy.section,
           className,
         )}
@@ -141,7 +138,7 @@ function createMarkdownComponents(
     h3: ({ className, ...props }) => (
       <h3
         className={cn(
-          'font-heading mt-4 mb-1.5 scroll-m-20 text-base font-semibold tracking-tight text-foreground',
+          'font-heading mt-6 mb-2 scroll-m-20 text-lg font-semibold tracking-tight text-foreground',
           markdownHierarchy.subsection,
           className,
         )}
@@ -151,7 +148,7 @@ function createMarkdownComponents(
     h4: ({ className, ...props }) => (
       <h4
         className={cn(
-          'font-heading mt-3 mb-1.5 scroll-m-20 text-sm font-semibold text-foreground',
+          'font-heading mt-4 mb-1.5 scroll-m-20 text-base font-semibold text-foreground',
           markdownHierarchy.body,
           className,
         )}
@@ -161,7 +158,7 @@ function createMarkdownComponents(
     h5: ({ className, ...props }) => (
       <h5
         className={cn(
-          'font-heading mt-2.5 mb-1 scroll-m-20 text-[13px] font-semibold text-foreground/95',
+          'font-heading mt-3 mb-1 scroll-m-20 text-sm font-semibold text-foreground/95',
           markdownHierarchy.body,
           className,
         )}
@@ -171,7 +168,7 @@ function createMarkdownComponents(
     h6: ({ className, ...props }) => (
       <h6
         className={cn(
-          'hud-label mt-2 mb-1 scroll-m-20 text-accent-ink',
+          'mt-2 mb-1 scroll-m-20 text-sm font-semibold text-primary',
           markdownHierarchy.body,
           className,
         )}
@@ -181,7 +178,7 @@ function createMarkdownComponents(
     p: ({ className, ...props }) => (
       <p
         className={cn(
-          'not-first:mt-2 text-[13.5px] leading-6 text-foreground/90',
+          'not-first:mt-3 text-[15px] leading-7 text-foreground/95',
           markdownHierarchy.body,
           className,
         )}
@@ -200,7 +197,7 @@ function createMarkdownComponents(
     ul: ({ className, ...props }) => (
       <ul
         className={cn(
-          'my-2 list-disc space-y-1 text-[13.5px] leading-6 text-foreground/90 marker:text-accent-ink',
+          'my-3 list-disc space-y-1.5 text-[15px] leading-7 text-foreground/95 marker:text-primary',
           markdownHierarchy.nestedList,
           '[&_ul]:mt-1 [&_ul]:list-[circle] [&_ul]:pl-5 [&_ul]:marker:text-foreground/70 [&_ol]:mt-1 [&_ol]:pl-5',
           className,
@@ -211,7 +208,7 @@ function createMarkdownComponents(
     ol: ({ className, ...props }) => (
       <ol
         className={cn(
-          'my-2 list-decimal space-y-1 text-[13.5px] leading-6 text-foreground/90 marker:font-semibold marker:text-accent-ink',
+          'my-3 list-decimal space-y-1.5 text-[15px] leading-7 text-foreground/95 marker:font-semibold marker:text-primary',
           markdownHierarchy.nestedList,
           '[&_ol]:mt-1 [&_ol]:pl-5 [&_ul]:mt-1 [&_ul]:list-[circle] [&_ul]:pl-5 [&_ul]:marker:text-foreground/70',
           className,
@@ -249,7 +246,7 @@ function createMarkdownComponents(
     blockquote: ({ className, ...props }) => (
       <blockquote
         className={cn(
-          'my-4 border-l-2 border-accent-ink px-4 py-1 text-[13.5px] leading-6 text-foreground/85 italic',
+          'my-4 rounded-r-[var(--radius-control)] border-l-2 border-primary bg-indigo-50/60 px-4 py-2 text-[14px] leading-6 text-foreground/90 italic dark:bg-indigo-500/10',
           '[&>p]:not-first:mt-1 [&>p]:pl-0',
           markdownHierarchy.body,
           className,
@@ -273,7 +270,7 @@ function createMarkdownComponents(
           target={isAnchorLink || !isExternalLink ? target : (target ?? '_blank')}
           rel={isAnchorLink || !isExternalLink ? rel : (rel ?? 'noreferrer noopener')}
           className={cn(
-            'font-medium text-accent-ink underline decoration-accent-ink/40 underline-offset-2 transition-colors hover:text-foreground hover:decoration-foreground',
+            'font-medium text-primary underline decoration-primary/40 underline-offset-2 transition-colors hover:text-[var(--primary-hover)] hover:decoration-[var(--primary-hover)]',
             className,
           )}
           onClick={(event) => {
@@ -292,7 +289,7 @@ function createMarkdownComponents(
       );
     },
     table: ({ className, ...props }) => (
-      <div className={cn('my-3 overflow-x-auto ml-0 sm:ml-4 lg:ml-6 border border-border bg-card')}>
+      <div className={cn('my-4 overflow-x-auto rounded-[var(--radius-control)] border border-border bg-card')}>
         <table className={cn('w-full min-w-0 border-collapse text-[13px]', className)} {...props} />
       </div>
     ),
@@ -304,7 +301,7 @@ function createMarkdownComponents(
     ),
     tr: ({ className, ...props }) => (
       <tr
-        className={cn('transition-colors even:bg-muted/30 hover:bg-foreground/5', className)}
+        className={cn('transition-colors even:bg-muted/20 hover:bg-muted/50', className)}
         {...props}
       />
     ),
@@ -328,7 +325,7 @@ function createMarkdownComponents(
     img: ({ className, alt, ...props }) => (
       <span className={cn('my-3 block', markdownHierarchy.body)}>
         <img
-          className={cn('max-w-full border border-border', className)}
+          className={cn('max-w-full rounded-[var(--radius-control)] border border-border', className)}
           alt={alt ?? 'Markdown image'}
           loading="lazy"
           {...props}
@@ -346,26 +343,24 @@ function createMarkdownComponents(
       const isBlock = Boolean(language || codeText.includes('\n'));
 
       if (isBlock) {
-        return <CodeBlock codeText={codeText} language={language} isDarkTheme={isDarkTheme} />;
+        return <CodeBlock codeText={codeText} language={language} isDarkTheme />;
       }
 
       return (
         <SyntaxHighlighter
           language={inferLanguage(language, codeText)}
-          style={themeStyle(isDarkTheme)}
+          style={themeStyle(false)}
           PreTag="span"
           customStyle={{
             display: 'inline',
             margin: 0,
-            padding: '0.05rem 0.35rem',
-            borderRadius: 0,
+            padding: '0.1rem 0.4rem',
+            borderRadius: 6,
             fontSize: '12px',
             lineHeight: '1.45',
             verticalAlign: 'baseline',
-            background: isDarkTheme ? '#101014' : '#e9e8e4',
-            border: isDarkTheme
-              ? '1px solid rgba(242, 241, 238, 0.16)'
-              : '1px solid rgba(16, 16, 20, 0.16)',
+            background: '#f3f4f6',
+            border: '1px solid #e5e7eb',
           }}
           codeTagProps={{
             style: {

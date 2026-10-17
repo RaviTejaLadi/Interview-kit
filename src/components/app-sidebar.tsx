@@ -15,7 +15,6 @@ import {
 
 import type { TopicProgressMap } from '@/hooks/use-topic-progress';
 import type { Topic, TopicGroup } from '@/lib/content-index';
-import { KIT_ICON_BY_KEY, kitIconToneClass } from '@/lib/kit-meta';
 import {
   buildKitMenus,
   getFolderNavId,
@@ -63,14 +62,14 @@ function getRootTopicIcon(title: string): SidebarGlyph | null {
   if (normalizedTitle === 'overview') {
     return {
       Icon: BookIcon,
-      className: 'text-sky-500 dark:text-sky-400',
+      className: 'text-sky-600',
     };
   }
 
   if (normalizedTitle === 'topics') {
     return {
       Icon: ListTreeIcon,
-      className: 'text-violet-500 dark:text-violet-400',
+      className: 'text-indigo-600',
     };
   }
 
@@ -189,7 +188,7 @@ function TopicNavButton({
       size="sm"
       isActive={isActive}
       onClick={() => onSelect(getTopicNavId(topic.id))}
-      className="h-auto w-full rounded-none border-l-2 border-transparent py-1.5 text-[13px] text-sidebar-foreground/95 data-active:border-sky-500 data-active:bg-sky-500/15 data-active:text-sky-700 dark:data-active:text-sky-300"
+      className="h-auto w-full rounded-[var(--radius-control)] border border-transparent py-2 text-[13px] text-sidebar-foreground/95 data-active:border-primary data-active:bg-primary/10 data-active:text-primary"
     >
       {topic.starRating && !topic.topicTitle ? (
         <StarRatingDot rating={topic.starRating} />
@@ -288,7 +287,7 @@ function KitTopicTree({
                   size="sm"
                   tooltip={section.label}
                   isActive={sectionHasSelectedTopic}
-                  className="hud-label h-7 border-l-2 border-transparent text-muted-foreground data-active:border-sky-500 data-active:bg-sky-500/15 data-active:text-sky-700 dark:data-active:text-sky-300"
+                  className="h-8 border border-transparent text-xs font-semibold text-muted-foreground data-active:border-primary data-active:bg-primary/10 data-active:text-primary"
                 />
               }
             >
@@ -326,7 +325,7 @@ function KitTopicTree({
                       tooltip={folder.label}
                       isActive={isActive}
                       onClick={() => onSelectNav(folderNavId)}
-                      className="h-auto rounded-none border-l-2 border-transparent py-1.5 text-[13px] text-sidebar-foreground/95 data-active:border-sky-500 data-active:bg-sky-500/15 data-active:text-sky-700 dark:data-active:text-sky-300"
+                      className="h-auto rounded-[var(--radius-control)] border border-transparent py-2 text-[13px] text-sidebar-foreground/95 data-active:border-primary data-active:bg-primary/10 data-active:text-primary"
                     >
                       {folder.starRating ? (
                         <StarRatingDot rating={folder.starRating} />
@@ -377,7 +376,6 @@ export function AppSidebar({
   const { isMobile, setOpenMobile } = useSidebar();
   const kitMenus = React.useMemo(() => buildKitMenus(groups), [groups]);
   const activeKit = kitMenus[0] ?? null;
-  const kitIcon = activeKit ? KIT_ICON_BY_KEY[activeKit.id] : null;
   const hasSearchQuery = searchValue.trim().length > 0;
 
   const handleSelectNav = React.useCallback(
@@ -403,33 +401,17 @@ export function AppSidebar({
       className={cn('border-r border-sidebar-border bg-sidebar', className)}
       {...props}
     >
-      <SidebarHeader className="gap-3 border-b border-sidebar-border bg-sidebar px-2 pt-2 pb-3">
+      <SidebarHeader className="gap-3 border-b border-sidebar-border bg-sidebar px-3 pt-3 pb-4">
         <Button
           type="button"
           variant="ghost"
           size="sm"
           onClick={handleBackToKits}
-          className="hud-label h-8 w-full justify-start px-2 text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
+          className="h-9 w-full justify-start px-2 text-sm text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0"
         >
           <ArrowLeftIcon className="size-4" />
           <span className="group-data-[collapsible=icon]:hidden">All kits</span>
         </Button>
-        <div className="flex items-center gap-2 border border-sidebar-border px-2.5 py-2">
-          {kitIcon ? (
-            <img
-              src={kitIcon}
-              alt=""
-              aria-hidden="true"
-              className={cn('size-4 shrink-0 object-contain', kitIconToneClass(activeKit?.id))}
-            />
-          ) : (
-            <BookOpenTextIcon className="size-4 shrink-0 text-sidebar-primary" />
-          )}
-          <div className="grid min-w-0 flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden">
-            <span className="font-display truncate text-sm">{activeKit?.label ?? 'Kit'}</span>
-            <span className="hud-label truncate text-faint">Topics</span>
-          </div>
-        </div>
         <div className="px-2 group-data-[collapsible=icon]:hidden">
           <div className="relative">
             <SearchIcon className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 text-sidebar-foreground/75" />
@@ -438,7 +420,7 @@ export function AppSidebar({
               onChange={(event) => onSearchChange(event.target.value)}
               aria-label="Search topics"
               placeholder="Search this kit"
-              className="h-9 rounded-none border-sidebar-border bg-card pl-8 shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring"
+              className="h-10 rounded-[var(--radius-control)] border-sidebar-border bg-card pl-8 shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring"
             />
           </div>
         </div>
@@ -450,7 +432,7 @@ export function AppSidebar({
           </div>
         ) : (
           <SidebarGroup className="py-1.5">
-            <SidebarGroupLabel className="hud-label px-2 text-faint">Contents</SidebarGroupLabel>
+            <SidebarGroupLabel className="px-2 text-xs text-muted-foreground">Contents</SidebarGroupLabel>
             <div className="px-1">
               <KitTopicTree
                 kit={activeKit}
@@ -464,7 +446,7 @@ export function AppSidebar({
         )}
       </SidebarContent>
       <SidebarFooter className="border-t border-sidebar-border bg-sidebar px-4 py-3 group-data-[collapsible=icon]:hidden">
-        <p className="hud-label text-faint">
+        <p className="text-xs text-muted-foreground">
           {completedTopicCount}/{totalTopicCount} completed
         </p>
         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-sidebar-foreground/72">

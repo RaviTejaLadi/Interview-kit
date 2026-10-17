@@ -11,6 +11,7 @@ type SiteHeaderProps = {
   kitIcon?: string | null;
   detail?: string;
   onBrandClick?: () => void;
+  showBrand?: boolean;
 };
 
 export function SiteHeader({
@@ -21,24 +22,27 @@ export function SiteHeader({
   kitIcon,
   detail,
   onBrandClick,
+  showBrand = true,
 }: SiteHeaderProps) {
   return (
-    <header className="flex min-h-12 shrink-0 items-center gap-3 border-b border-border bg-background px-3 py-2 sm:px-5">
+    <header className="flex min-h-14 shrink-0 items-center gap-3 border-b border-border bg-background px-4 py-2.5 sm:px-6">
       {leading}
-      {onBrandClick ? (
-        <button
-          type="button"
-          onClick={onBrandClick}
-          className="font-display shrink-0 text-sm text-foreground"
-        >
-          Interview Kits
-        </button>
-      ) : (
-        <p className="font-display shrink-0 text-sm text-foreground">Interview Kits</p>
-      )}
+      {showBrand
+        ? (onBrandClick ? (
+            <button
+              type="button"
+              onClick={onBrandClick}
+              className="font-display shrink-0 text-base text-foreground transition-colors hover:text-primary"
+            >
+              Interview Kits
+            </button>
+          ) : (
+            <p className="font-display shrink-0 text-base text-foreground">Interview Kits</p>
+          ))
+        : null}
       {kitLabel ? (
         <>
-          <span className="hidden h-4 w-px shrink-0 bg-border sm:block" aria-hidden="true" />
+          <span className="hidden h-5 w-px shrink-0 bg-border sm:block" aria-hidden="true" />
           {kitIcon ? (
             <img
               src={kitIcon}
@@ -53,9 +57,9 @@ export function SiteHeader({
         </>
       ) : null}
       {detail ? (
-        <p className="hud-label hidden min-w-0 truncate text-faint lg:block">{detail}</p>
+        <p className="hidden min-w-0 truncate text-sm text-muted-foreground lg:block">{detail}</p>
       ) : null}
-      {actions ? <div className="ml-auto flex shrink-0 items-center gap-1.5">{actions}</div> : null}
+      {actions ? <div className="ml-auto flex shrink-0 items-center gap-2">{actions}</div> : null}
     </header>
   );
 }

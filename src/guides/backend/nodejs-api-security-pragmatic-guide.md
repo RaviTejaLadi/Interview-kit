@@ -1,3 +1,18 @@
+---
+title: Node.js API Security Pragmatic Guide
+summary: Production-focused API hardening checklist covering validation, auth, rate limiting, secrets, and monitoring.
+topic: Backend
+difficulty: Intermediate
+readTimeMinutes: 10
+publishedAt: 2026-10-13
+tags:
+  - Node.js
+  - API Security
+  - Backend
+  - Auth
+  - Important
+---
+
 # Node.js API Security Pragmatic Guide
 
 ## Goal
@@ -138,4 +153,3 @@ When asked "How do you secure a Node.js API?" structure your response:
 3. Add abuse controls and secure headers
 4. Protect secrets and dependencies
 5. Verify with tests and monitoring
-
