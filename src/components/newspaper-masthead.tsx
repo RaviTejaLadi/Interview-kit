@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 
 import { kitIconToneClass } from '@/lib/kit-meta';
 import { cn } from '@/lib/utils';
@@ -14,6 +14,14 @@ type SiteHeaderProps = {
   showBrand?: boolean;
 };
 
+function formatDigitalTime(date: Date) {
+  return new Intl.DateTimeFormat(undefined, {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+  }).format(date);
+}
+
 export function SiteHeader({
   actions,
   leading,
@@ -24,6 +32,18 @@ export function SiteHeader({
   onBrandClick,
   showBrand = true,
 }: SiteHeaderProps) {
+  const [localTime, setLocalTime] = useState(() => formatDigitalTime(new Date()));
+
+  useEffect(() => {
+    const updateTime = () => {
+      setLocalTime(formatDigitalTime(new Date()));
+    };
+
+    updateTime();
+    const timer = window.setInterval(updateTime, 1_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
   return (
     <header className="flex min-h-14 shrink-0 items-center gap-3 border-b border-border bg-background px-4 py-2.5 sm:px-6">
       {leading}
@@ -59,7 +79,12 @@ export function SiteHeader({
       {detail ? (
         <p className="hidden min-w-0 truncate text-sm text-muted-foreground lg:block">{detail}</p>
       ) : null}
-      {actions ? <div className="ml-auto flex shrink-0 items-center gap-2">{actions}</div> : null}
+      <div className="ml-auto flex shrink-0 items-center gap-2">
+        <p className="hidden rounded-[var(--radius-control)] border border-border bg-card px-2.5 py-1 font-mono text-xs font-semibold tracking-wide text-foreground tabular-nums shadow-[var(--shadow-card)] sm:block">
+          {localTime}
+        </p>
+        {actions}
+      </div>
     </header>
   );
 }
