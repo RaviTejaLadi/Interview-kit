@@ -1,64 +1,231 @@
 <p align="center">
-  <img src="./assets/interview-kit.png" alt="Full-Stack Engineering Must-Know Interview Questions Compendium" width="100%" style="border-radius: 6px;" />
+  <img src="./assets/interview-kit.png" alt="Interview Kit" width="100%" style="border-radius: 6px;" />
 </p>
 
----
+# Interview Kit Website
 
-## 📊 Global Rating System
+A developer-focused interview preparation website for:
 
-| Rating     | Importance                                    |
-| ---------- | --------------------------------------------- |
-| ⭐⭐⭐⭐⭐ | 🔥 Must Know — very commonly asked            |
-| ⭐⭐⭐⭐   | Important — commonly asked                    |
-| ⭐⭐⭐     | Good to Know — useful for stronger interviews |
+- topic-wise interview kits
+- markdown-based theory + practical questions
+- guide reading and revision
+- progress tracking (read/completed/important/starred)
+- clean, production-style UI with reusable design tokens
 
----
-
-## 📚 Technology Guide Index
-
-| Technology          | Guide File                                                                                      | Key Theory Sections                                                                                       | Key Coding / Practical Sections                                                                      |
-| :------------------ | :---------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------- |
-| **🟨 JavaScript**   | [`javascript-interview-kit/README.md`](./src/interview-kits/javascript-interview-kit/README.md) | Fundamentals, Scope, Hoisting/TDZ, Closures, `this`, Prototypes, Event Loop, Promises                     | Array/String problems, Polyfills (`map`, `filter`, `reduce`), `call/apply/bind`, `debounce/throttle` |
-| **⚛️ React**        | [`react-interview-kit/README.md`](./src/interview-kits/react-interview-kit/README.md)           | Virtual DOM, Hooks & Linked Lists, Fiber Reconciliation, React 18 Batching, Context Pitfalls              | Custom hooks (`useFetch`, `useDebounce`), Compound Components (`<Tabs>`), Modals with Portals        |
-| **🌐 HTML5**        | [`html-interview-kit/README.md`](./src/interview-kits/html-interview-kit/README.md)             | Semantic HTML, Accessibility & ARIA, Script loading (`async`/`defer`), Web Storage, Media                 | Accessible forms with live regions, Responsive `<picture>`, Native `<dialog>` modal API              |
-| **🎨 CSS3**         | [`css-interview-kit/README.md`](./src/interview-kits/css-interview-kit/README.md)               | Box Model, Specificity `(A,B,C,D)`, Stacking Context & BFC, Flexbox vs Grid, Reflow/Repaint               | 3 centering methods, Responsive Holy Grail grid, Text truncation & multi-line clamping               |
-| **💨 Tailwind CSS** | [`tailwind-interview-kit/README.md`](./src/interview-kits/tailwind-interview-kit/README.md)     | Utility-first paradigm, JIT engine regex scanning, Theme tokens, Class merging, Breakpoints               | `cn(...)` utility, Reusable CVA Button variants, Responsive Cards with dark mode                     |
-| **🚀 Next.js**      | [`next-js-interview-kit/README.md`](./src/interview-kits/next-js-interview-kit/README.md)       | App Router vs Pages Router, Server vs Client Components, SSR/SSG/ISR/PPR, 4 Caching Tiers                 | ISR Dynamic Routes, Authenticated Zod Route Handler, Server Actions with `useOptimistic`             |
-| **🟢 Node.js**      | [`node-js-interview-kit/README.md`](./src/interview-kits/node-js-interview-kit/README.md)       | V8 vs Libuv, 6 Event Loop Phases, Streams & Backpressure, Cluster vs Workers, Graceful Shutdown           | Large file Transform streams, In-memory rate limiter, Production server shutdown handling            |
-| **🍃 MongoDB**      | [`mongo-db-interview-kit/README.md`](./src/interview-kits/mongo-db-interview-kit/README.md)     | BSON vs JSON, Embedding vs Referencing, ESR Indexing Rule, Aggregation Stages, Replication                | Complex analytics aggregation, Mongoose pre-save hooks & schemas, Multi-doc ACID transactions        |
-| **🐙 Git**          | [`git-interview-kit/README.md`](./src/interview-kits/git-interview-kit/README.md)               | Object Store (Blobs, Trees, Commits), Merge vs Rebase, Reset (`--soft/mixed/hard`) vs Revert              | Interactive Rebase (`-i`), Merge conflict resolution, Disaster recovery with `git reflog`            |
-| **🤝 HR Round**     | [`hr-interview-kit/README.md`](./src/interview-kits/hr-interview-kit/README.md)                 | Tell me about yourself, Company fit, Strengths/weaknesses, STAR behavioral scenarios, Conflict resolution | 90-second intro script, Salary negotiation, Notice period, Questions to ask HR                       |
+This project is file-driven: add or update markdown content and the UI auto-indexes it.
 
 ---
 
-## 🏆 Master 30-Day Preparation Blueprint
+## Tech Stack
 
-| Week       | Days  | Focus                                   | Topics                                                         |
-| :--------- | :---- | :-------------------------------------- | :------------------------------------------------------------- |
-| **Week 1** | 1–3   | Foundations                             | HTML & Accessibility Landmarks                                 |
-|            | 4–7   |                                         | CSS (Box Model, Specificity, Flexbox & Grid) + Tailwind CSS    |
-| **Week 2** | 8–10  | Core JavaScript Mastery                 | JS Scope, Closures, Execution Context & `this`                 |
-|            | 11–12 |                                         | Event Loop, Microtasks & Promises                              |
-|            | 13–14 |                                         | JS Coding: Array/String Algorithms & Polyfills                 |
-| **Week 3** | 15–18 | Frontend Frameworks                     | React (Fiber, Hooks, Reconciliation & Performance)             |
-|            | 19–21 |                                         | Next.js (App Router, Server Components, ISR & Caching)         |
-| **Week 4** | 22–24 | Backend, Database, Version Control & HR | Node.js (Libuv, Event Loop Phases & Streams)                   |
-|            | 25–27 |                                         | MongoDB (Schema Design, ESR Indexing & Aggregations)           |
-|            | 28–29 |                                         | Git (Internals, Merge vs Rebase, Disaster Recovery)            |
-|            | 30    |                                         | HR Round (STAR stories, salary negotiation, closing questions) |
+- React 18 + TypeScript + Vite
+- Tailwind CSS v4 + shadcn-style UI components
+- Zustand for app-level state
+- Markdown rendering with `react-markdown`
 
-## How to use
+---
 
-1. Open the kit that matches the round you are preparing for.
-2. Read that folder’s README for the topic map and suggested study order.
-3. Open `TOPICS.md` inside that kit and fill in the matching topic file.
-4. Practice out loud. Write answers in the topic file, then compare them with the notes in the kit README.
+## Quick Start
 
-## Contributing
+```bash
+npm install
+npm run dev
+```
 
-Questions, fixes, and new topics are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+Open `http://localhost:5173`.
 
-This project is governed by the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
+### Available Scripts
+
+- `npm run dev` - start local development server
+- `npm run lint` - run ESLint
+- `npm run typecheck` - run TypeScript checks
+- `npm run build` - production build
+- `npm run preview` - preview built app
+
+---
+
+## Project Structure
+
+```text
+src/
+  App.tsx
+  components/
+  features/
+    interview-app/
+      store/
+      hooks/
+      views/
+      components/
+      lib/
+      catalog.ts
+  interview-kits/
+    <kit-name>-interview-kit/
+      README.md
+      TOPICS.md
+      <section>/
+        <topic-group>/
+          <question>.md
+  guides/
+    frontend/
+    backend/
+    specific/
+  lib/
+    content-index.ts
+    guides-index.ts
+    important-guide-topics.ts
+```
+
+---
+
+## How Content Is Indexed
+
+### Interview kits (`content-index`)
+
+- Reads from: `src/interview-kits/*-interview-kit/**/*.md`
+- Builds kit/topic navigation automatically from file paths.
+- Topic titles are generated from file names.
+- Ordering/labels are controlled in `src/lib/content-index.ts` and `src/lib/kit-meta.ts`.
+
+### Guides (`guides-index`)
+
+- Reads from: `src/guides/**/*.md`
+- Requires frontmatter metadata (title, summary, topic, difficulty, etc.).
+- Guide cards and reader pages are generated from these files.
+
+---
+
+## Add a Specific Topic (Interview Kit)
+
+Use this when you want to add one new interview question/topic inside an existing kit.
+
+### 1) Pick a kit folder
+
+Example: `src/interview-kits/react-interview-kit/`
+
+### 2) Add the markdown file in section/topic structure
+
+Example:
+
+```text
+src/interview-kits/react-interview-kit/01-theory/03-hooks/07-usememo-vs-usecallback.md
+```
+
+Tips:
+
+- Keep numeric prefixes for stable ordering (`01-`, `02-`, ...).
+- Use kebab-case file names.
+- One file = one question/topic.
+
+### 3) Write the content
+
+Use your preferred question/answer format in markdown. The app renders it automatically.
+
+### 4) Update supporting docs (recommended)
+
+- Add entry in that kit's `TOPICS.md`
+- Update kit `README.md` map if needed
+
+### 5) Validate
+
+```bash
+npm run lint
+npm run typecheck
+npm run build
+```
+
+---
+
+## Add a Specific Guide
+
+Create a new file under one of:
+
+- `src/guides/frontend/`
+- `src/guides/backend/`
+- `src/guides/specific/`
+
+### 1) Create a markdown file
+
+Example:
+
+```text
+src/guides/backend/api-idempotency-and-retries.md
+```
+
+### 2) Add required frontmatter
+
+```md
+---
+title: API Idempotency and Retries
+summary: How to design retry-safe APIs with idempotency keys and delivery guarantees.
+topic: Backend
+difficulty: Intermediate
+readTimeMinutes: 12
+publishedAt: 2026-10-17
+tags:
+  - Important
+  - API
+  - Backend
+---
+```
+
+Allowed values:
+
+- `topic`: `Frontend` | `Backend` | `Specific`
+- `difficulty`: `Beginner` | `Intermediate` | `Advanced`
+
+### 3) Add guide body content below frontmatter
+
+The guide appears automatically in the guides UI after save/reload.
+
+### 4) (Optional) Add to important topics list
+
+If you want it included in curated important-topic placeholders, update:
+
+- `src/lib/important-guide-topics.ts`
+
+---
+
+## Add a New Kit (Optional)
+
+If creating a new technology kit (not just one topic), also update:
+
+- `src/lib/content-index.ts`
+  - `KIT_ORDER`
+  - `KIT_LABELS`
+- `src/lib/kit-meta.ts`
+  - `KIT_DISPLAY_ORDER`
+  - `KIT_ICON_BY_KEY`
+  - `KIT_DESCRIPTIONS` (and optional accent maps)
+
+Also add icon asset in `assets/kits-svgs/` and map it in `kit-meta.ts`.
+
+---
+
+## UI + Architecture Notes
+
+- App state is centralized with Zustand in:
+  - `src/features/interview-app/store/use-interview-app-store.ts`
+- Main flow is split by feature:
+  - controller hook
+  - route-level screens (home, guide reader, kit reader)
+  - reusable feature components
+- Reusable design tokens/components are already in the `ui` layer; avoid duplicating styles.
+
+---
+
+## Contribution
+
+1. Create a branch.
+2. Add or update topics/guides.
+3. Run lint, typecheck, build.
+4. Open PR with clear summary.
+
+Please follow:
+
+- [CONTRIBUTING.md](CONTRIBUTING.md)
+- [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)
+
+---
 
 ## License
 
