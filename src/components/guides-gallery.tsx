@@ -1,12 +1,31 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ChevronDownIcon,
   CheckCircle2Icon,
   CircleIcon,
+  LayoutGridIcon,
+  ListIcon,
   SearchIcon,
   StarIcon,
 } from 'lucide-react';
 
+import apiIcon from '../../assets/kits-svgs/api.svg';
+import algorithmIcon from '../../assets/kits-svgs/algorithm.svg';
+import cssIcon from '../../assets/kits-svgs/css.svg';
+import dockerIcon from '../../assets/kits-svgs/docker.svg';
+import expressIcon from '../../assets/kits-svgs/express.svg';
+import gitIcon from '../../assets/kits-svgs/git.svg';
+import hrIcon from '../../assets/kits-svgs/hr.svg';
+import htmlIcon from '../../assets/kits-svgs/html.svg';
+import javascriptIcon from '../../assets/kits-svgs/javascript.svg';
+import mongodbIcon from '../../assets/kits-svgs/mongodb.svg';
+import nextjsIcon from '../../assets/kits-svgs/nextjs.svg';
+import nodejsIcon from '../../assets/kits-svgs/nodejs.svg';
+import npmIcon from '../../assets/kits-svgs/npm.svg';
+import reactIcon from '../../assets/kits-svgs/react.svg';
+import redisIcon from '../../assets/kits-svgs/redis.svg';
+import tailwindIcon from '../../assets/kits-svgs/tailwind.svg';
+import testingIcon from '../../assets/kits-svgs/testing.svg';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import {
@@ -36,6 +55,7 @@ type StatusFilter = 'all' | 'read' | 'unread' | 'starred';
 type SortMode = 'featured' | 'latest' | 'read-time' | 'title';
 type CategoryFilter = 'all' | GuideTopic;
 type SubjectFilter = 'all' | string;
+type GuidesViewMode = 'grid' | 'list';
 type DisplayGuideCard = {
   id: string;
   title: string;
@@ -70,6 +90,59 @@ const SORT_LABEL: Record<SortMode, string> = {
   'read-time': 'Read time',
   title: 'Title',
 };
+
+const GUIDES_VIEW_STORAGE_KEY = 'interview-kit-guides-view-mode-v1';
+
+const SUBJECT_ICON_SRC: Record<string, string> = {
+  api: apiIcon,
+  auth: apiIcon,
+  authorization: apiIcon,
+  aws: apiIcon,
+  azure: apiIcon,
+  cloud: apiIcon,
+  communication: hrIcon,
+  css: cssIcon,
+  database: mongodbIcon,
+  ddd: nodejsIcon,
+  debugging: testingIcon,
+  'design-system': tailwindIcon,
+  devops: dockerIcon,
+  docker: dockerIcon,
+  engineering: nodejsIcon,
+  'event-driven': nodejsIcon,
+  express: expressIcon,
+  forms: reactIcon,
+  gcp: apiIcon,
+  git: gitIcon,
+  html: htmlIcon,
+  iac: dockerIcon,
+  interview: hrIcon,
+  javascript: javascriptIcon,
+  kubernetes: dockerIcon,
+  microservices: nodejsIcon,
+  mongodb: mongodbIcon,
+  nextjs: nextjsIcon,
+  nodejs: nodejsIcon,
+  nosql: mongodbIcon,
+  react: reactIcon,
+  redis: redisIcon,
+  sql: mongodbIcon,
+  testing: testingIcon,
+  typescript: javascriptIcon,
+  career: hrIcon,
+  offer: hrIcon,
+  dsa: algorithmIcon,
+};
+
+function getSubjectIconSrc(subject: string) {
+  const normalized = subject.trim().toLowerCase();
+  return SUBJECT_ICON_SRC[normalized] ?? npmIcon;
+}
+
+function getSubjectIconClass(subject: string) {
+  const normalized = subject.trim().toLowerCase();
+  return normalized === 'express' || normalized === 'nextjs' ? 'dark:invert' : '';
+}
 
 function toSubjectSlug(value: string) {
   return value
@@ -132,8 +205,24 @@ export function GuidesGallery({
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all');
   const [subjectFilter, setSubjectFilter] = useState<SubjectFilter>('all');
   const [sortMode, setSortMode] = useState<SortMode>('featured');
+  const [viewMode, setViewMode] = useState<GuidesViewMode>(() => {
+    if (typeof window === 'undefined') {
+      return 'list';
+    }
+
+    const stored = window.localStorage.getItem(GUIDES_VIEW_STORAGE_KEY);
+    return stored === 'grid' ? 'grid' : 'list';
+  });
 
   const queryValue = query.trim().toLowerCase();
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    window.localStorage.setItem(GUIDES_VIEW_STORAGE_KEY, viewMode);
+  }, [viewMode]);
   const topicMetaByTitle = useMemo(
     () =>
       new Map(
@@ -362,6 +451,15 @@ export function GuidesGallery({
                 )}
               >
                 <span>
+                  <img
+                    src={subjectFilter === 'all' ? npmIcon : getSubjectIconSrc(subjectFilter)}
+                    alt=""
+                    aria-hidden="true"
+                    className={cn(
+                      'mr-1.5 inline-block size-3.5 align-[-2px] object-contain',
+                      subjectFilter === 'all' ? '' : getSubjectIconClass(subjectFilter),
+                    )}
+                  />
                   Topic:{' '}
                   {subjectFilter === 'all' ? 'All topics' : formatSubjectLabel(subjectFilter)}
                 </span>
@@ -373,15 +471,52 @@ export function GuidesGallery({
                 className="max-h-80 w-64 overflow-y-auto"
               >
                 <DropdownMenuRadioGroup value={subjectFilter} onValueChange={setSubjectFilter}>
-                  <DropdownMenuRadioItem value="all">All topics</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="all">
+                    <span className="inline-flex items-center gap-2">
+                      <img src={npmIcon} alt="" aria-hidden="true" className="size-3.5 object-contain" />
+                      All topics
+                    </span>
+                  </DropdownMenuRadioItem>
                   {subjects.map((subject) => (
                     <DropdownMenuRadioItem key={subject} value={subject}>
-                      {formatSubjectLabel(subject)}
+                      <span className="inline-flex items-center gap-2">
+                        <img
+                          src={getSubjectIconSrc(subject)}
+                          alt=""
+                          aria-hidden="true"
+                          className={cn('size-3.5 object-contain', getSubjectIconClass(subject))}
+                        />
+                        {formatSubjectLabel(subject)}
+                      </span>
                     </DropdownMenuRadioItem>
                   ))}
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
+          </div>
+          <div className="mt-3 flex justify-end">
+            <div className="inline-flex items-center gap-1 rounded-[var(--radius-control)] border border-border bg-card p-1">
+              <Button
+                type="button"
+                variant={viewMode === 'list' ? 'default' : 'ghost'}
+                size="icon-xs"
+                aria-label="List view"
+                title="List view"
+                onClick={() => setViewMode('list')}
+              >
+                <ListIcon className="size-4" />
+              </Button>
+              <Button
+                type="button"
+                variant={viewMode === 'grid' ? 'default' : 'ghost'}
+                size="icon-xs"
+                aria-label="Grid view"
+                title="Grid view"
+                onClick={() => setViewMode('grid')}
+              >
+                <LayoutGridIcon className="size-4" />
+              </Button>
+            </div>
           </div>
         </section>
 
@@ -391,6 +526,102 @@ export function GuidesGallery({
               <p className="text-sm font-medium text-muted-foreground">No guides found</p>
               <p className="text-muted-foreground mt-2 text-sm">Try changing search or filters.</p>
             </Card>
+          ) : viewMode === 'grid' ? (
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+              {visibleGuides.map((guide) => {
+                const guideProgress = guideProgressById[guide.id];
+                const isRead = guide.isPlaceholder ? false : guideProgress?.read === true;
+                const isStarred = guide.isPlaceholder ? false : guideProgress?.starred === true;
+                const canOpen = !guide.isPlaceholder;
+
+                return (
+                  <div
+                    key={guide.id}
+                    role={canOpen ? 'button' : undefined}
+                    tabIndex={canOpen ? 0 : undefined}
+                    onClick={canOpen ? () => onOpenGuide(guide.id) : undefined}
+                    onKeyDown={
+                      canOpen
+                        ? (event) => {
+                            if (event.key === 'Enter' || event.key === ' ') {
+                              event.preventDefault();
+                              onOpenGuide(guide.id);
+                            }
+                          }
+                        : undefined
+                    }
+                    className={cn(
+                      'group flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-card p-4 shadow-[var(--shadow-card)] transition-all hover:border-primary/35 hover:shadow-[var(--shadow-card-hover)]',
+                      canOpen && 'cursor-pointer',
+                    )}
+                  >
+                    <p className="line-clamp-2 text-sm font-semibold text-foreground">{guide.title}</p>
+                    <p className="mt-2 line-clamp-2 text-xs leading-5 text-muted-foreground">
+                      {guide.summary}
+                    </p>
+                    <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
+                      <img
+                        src={getSubjectIconSrc(guide.subject)}
+                        alt=""
+                        aria-hidden="true"
+                        className={cn('size-3.5 object-contain', getSubjectIconClass(guide.subject))}
+                      />
+                      <span>{formatSubjectLabel(guide.subject)}</span>
+                      <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
+                      <span>{guide.readTimeMinutes} min</span>
+                    </div>
+                    <div className="mt-auto pt-3">
+                      {guide.isPlaceholder ? (
+                        <span className="text-xs text-muted-foreground">Pending content</span>
+                      ) : (
+                        <div className="flex items-center justify-between gap-2">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-xs"
+                            aria-pressed={isStarred}
+                            aria-label={isStarred ? 'Unstar guide' : 'Star guide'}
+                            title={isStarred ? 'Starred' : 'Star guide'}
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              onToggleGuideStarred(guide.id);
+                            }}
+                          >
+                            <StarIcon
+                              className={cn(
+                                'size-4',
+                                isStarred ? 'fill-amber-400 text-amber-500' : 'text-muted-foreground',
+                              )}
+                            />
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              onToggleGuideRead(guide.id);
+                            }}
+                          >
+                            {isRead ? (
+                              <>
+                                <CheckCircle2Icon className="size-4 text-emerald-500" />
+                                Unread
+                              </>
+                            ) : (
+                              <>
+                                <CircleIcon className="size-4 text-muted-foreground" />
+                                Read
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           ) : (
             <div className="overflow-hidden rounded-[var(--radius-card)] border border-border bg-card shadow-[var(--shadow-card)]">
               {visibleGuides.map((guide) => {
@@ -420,7 +651,22 @@ export function GuidesGallery({
                       canOpen && 'cursor-pointer',
                     )}
                   >
-                    <p className="min-w-0 flex-1 truncate text-sm font-medium text-foreground">{guide.title}</p>
+                    <div className="min-w-0 flex flex-1 items-center gap-2">
+                      <span className="flex size-6 shrink-0 items-center justify-center rounded bg-muted/70">
+                        <img
+                          src={getSubjectIconSrc(guide.subject)}
+                          alt=""
+                          aria-hidden="true"
+                          className={cn('size-3.5 object-contain', getSubjectIconClass(guide.subject))}
+                        />
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-foreground">{guide.title}</p>
+                        <p className="truncate text-xs text-muted-foreground">
+                          {formatSubjectLabel(guide.subject)}
+                        </p>
+                      </div>
+                    </div>
                     <div className="ml-auto flex items-center gap-1.5">
                       {guide.isPlaceholder ? (
                         <span className="text-xs text-muted-foreground">Pending content</span>

@@ -1,13 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ArrowRightIcon,
   BookOpenTextIcon,
   FlameIcon,
+  LayoutGridIcon,
   Layers3Icon,
+  ListIcon,
   ListChecksIcon,
   SearchIcon,
 } from 'lucide-react';
 
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import type { TopicProgressMap } from '@/hooks/use-topic-progress';
@@ -26,6 +29,10 @@ type VisibleKit = {
   matchCount: number;
 };
 
+type KitsViewMode = 'grid' | 'list';
+
+const KITS_VIEW_STORAGE_KEY = 'interview-kit-kits-view-mode-v1';
+
 const PRINCIPLES = [
   {
     title: 'Theory + coding, together',
@@ -43,7 +50,23 @@ const PRINCIPLES = [
 
 export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGalleryProps) {
   const [searchValue, setSearchValue] = useState('');
+  const [viewMode, setViewMode] = useState<KitsViewMode>(() => {
+    if (typeof window === 'undefined') {
+      return 'grid';
+    }
+
+    const stored = window.localStorage.getItem(KITS_VIEW_STORAGE_KEY);
+    return stored === 'list' ? 'list' : 'grid';
+  });
   const query = searchValue.trim().toLowerCase();
+
+  useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    window.localStorage.setItem(KITS_VIEW_STORAGE_KEY, viewMode);
+  }, [viewMode]);
 
   const orderedGroups = useMemo(() => sortKitsByDisplayOrder(groups), [groups]);
   const totalTopics = groups.reduce((count, group) => count + group.topics.length, 0);
@@ -157,16 +180,40 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
         </section>
 
         <section id="all-kits" className="scroll-mt-6 pt-8 sm:pt-10">
-          <div className="mb-5 flex items-end justify-between gap-4">
+          <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
             <div>
               <h2 className="text-2xl text-foreground sm:text-3xl">Interview Categories</h2>
               <p className="mt-1 text-sm text-muted-foreground">
                 {visibleKits.length} of {groups.length} kits shown
               </p>
             </div>
-            <p className="hidden text-sm text-muted-foreground sm:block">
-              {totalCompleted}/{totalTopics} completed
-            </p>
+            <div className="ml-auto flex items-center gap-2">
+              <p className="hidden text-sm text-muted-foreground sm:block">
+                {totalCompleted}/{totalTopics} completed
+              </p>
+              <div className="inline-flex items-center gap-1 rounded-[var(--radius-control)] border border-border bg-card p-1">
+                <Button
+                  type="button"
+                  variant={viewMode === 'grid' ? 'default' : 'ghost'}
+                  size="icon-xs"
+                  aria-label="Grid view"
+                  title="Grid view"
+                  onClick={() => setViewMode('grid')}
+                >
+                  <LayoutGridIcon className="size-4" />
+                </Button>
+                <Button
+                  type="button"
+                  variant={viewMode === 'list' ? 'default' : 'ghost'}
+                  size="icon-xs"
+                  aria-label="List view"
+                  title="List view"
+                  onClick={() => setViewMode('list')}
+                >
+                  <ListIcon className="size-4" />
+                </Button>
+              </div>
+            </div>
           </div>
 
           {visibleKits.length === 0 ? (
@@ -176,6 +223,59 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                 Nothing matches “{searchValue.trim()}”.
               </p>
             </Card>
+          ) : viewMode === 'list' ? (
+            <div className="overflow-hidden rounded-[var(--radius-card)] border border-border bg-card shadow-[var(--shadow-card)]">
+              {visibleKits.map((item) => {
+                const { group, matchCount } = item;
+                const icon = KIT_ICON_BY_KEY[group.id];
+                const description =
+                  KIT_DESCRIPTIONS[group.id] ?? 'Interview questions and practice topics.';
+                const totalQuestions = group.topics.length;
+                const completedCount = group.topics.reduce(
+                  (count, topic) => count + (topicProgressById[topic.id]?.completed ? 1 : 0),
+                  0,
+                );
+                const progress = totalQuestions > 0 ? Math.round((completedCount / totalQuestions) * 100) : 0;
+                const progressLabel = `${completedCount}/${totalQuestions} completed`;
+                const countLabel = `${totalQuestions} question${totalQuestions === 1 ? '' : 's'}`;
+                const matchLabel = query && matchCount > 0 ? `${matchCount} matching` : null;
+
+                return (
+                  <button
+                    key={group.id}
+                    type="button"
+                    onClick={() => onSelectKit(group.id)}
+                    className="group flex w-full items-center gap-3 border-b border-border px-4 py-3 text-left last:border-b-0 hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                  >
+                    <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted">
+                      {icon ? (
+                        <img
+                          src={icon}
+                          alt=""
+                          aria-hidden="true"
+                          className={cn('size-5 object-contain', kitIconToneClass(group.id))}
+                        />
+                      ) : (
+                        <BookOpenTextIcon className="size-4.5 text-foreground" />
+                      )}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-sm font-medium text-foreground">{group.label}</p>
+                      <p className="mt-0.5 truncate text-xs text-muted-foreground">{description}</p>
+                    </div>
+                    <div className="hidden items-end gap-2 text-xs sm:flex">
+                      <span className="rounded-full border border-border bg-muted px-2 py-1 font-medium text-muted-foreground">
+                        {countLabel}
+                      </span>
+                      <span className="text-muted-foreground">{progressLabel}</span>
+                      <span className="font-medium text-foreground">{progress}%</span>
+                      {matchLabel ? <span className="text-muted-foreground">{matchLabel}</span> : null}
+                    </div>
+                    <ArrowRightIcon className="size-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5" />
+                  </button>
+                );
+              })}
+            </div>
           ) : (
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
               {visibleKits.map((item) => {
