@@ -148,7 +148,7 @@ export function TopicAccordion({
   };
 
   return (
-    <div className="rounded-[var(--radius-card)] border border-border bg-card p-5 shadow-[var(--shadow-card)] sm:p-6 lg:p-8">
+    <div className="rounded-[var(--radius-card)] bg-card p-5 shadow-[var(--shadow-card)] sm:p-6 lg:p-8">
       <div className="mb-5 flex flex-col gap-3 border-b border-border pb-5 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <p className="text-sm font-medium text-muted-foreground">{section}</p>
