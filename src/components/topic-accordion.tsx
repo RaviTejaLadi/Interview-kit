@@ -226,7 +226,7 @@ export function TopicAccordion({
               className="scroll-mt-24 overflow-hidden rounded-[var(--radius-control)] border border-border"
             >
               <div className="flex items-stretch border-b border-border bg-muted/10">
-                <AccordionTrigger className="border-0 px-4 py-3.5 hover:bg-muted/40 hover:no-underline data-panel-open:bg-muted/30">
+                <AccordionTrigger className="border-0 px-4 py-3.5 hover:bg-transparent hover:no-underline data-panel-open:bg-transparent">
                   <span className="font-display min-w-0 flex-1 text-lg leading-tight text-foreground">
                     {topic.title}
                   </span>
