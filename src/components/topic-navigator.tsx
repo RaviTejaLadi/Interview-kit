@@ -19,8 +19,8 @@ type NavTarget = {
 };
 
 const headerIconButtonClassName = {
-  paper: 'border-border bg-card hover:bg-muted',
-  ink: 'border-border bg-card text-foreground hover:bg-muted',
+  paper: 'border-border bg-card text-foreground hover:bg-muted hover:text-foreground',
+  ink: 'border-border bg-card text-foreground hover:bg-muted hover:text-foreground',
 };
 
 type ButtonTone = keyof typeof headerIconButtonClassName;
@@ -45,13 +45,10 @@ function TopicSideButton({
     <Button
       type="button"
       variant="outline"
-      size="icon-sm"
+      size="icon-xs"
       disabled={!topic}
       onClick={() => topic && onSelect(topic.id)}
-      className={cn(
-        'size-8 border-border bg-card',
-        'hover:bg-muted',
-      )}
+      className="border-border bg-card hover:bg-muted"
       aria-label={
         topic
           ? `${isPrevious ? 'Previous' : 'Next'} topic: ${topic.title}`
@@ -162,7 +159,7 @@ export function TopicDock({
         <Button
           type="button"
           variant="outline"
-          size="icon-sm"
+          size="icon-xs"
           className="border-border bg-card lg:hidden"
           onClick={onBackToTop}
           aria-label="Back to top"
@@ -235,7 +232,7 @@ export function FullscreenButton({ tone = 'paper' }: { tone?: ButtonTone }) {
     <Button
       type="button"
       variant="outline"
-      size="icon-sm"
+      size="icon-xs"
       className={headerIconButtonClassName[tone]}
       onClick={async () => {
         try {
@@ -271,7 +268,7 @@ export function ThemeToggle({
     <Button
       type="button"
       variant="outline"
-      size="icon-sm"
+      size="icon-xs"
       className={headerIconButtonClassName[tone]}
       onClick={onToggle}
       aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}

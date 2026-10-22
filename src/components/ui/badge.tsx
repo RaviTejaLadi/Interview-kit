@@ -15,7 +15,7 @@ const badgeVariants = cva(
         warning: 'border-amber-200 bg-amber-50 text-amber-700',
         destructive: 'border-red-200 bg-red-50 text-red-700',
         info: 'border-sky-200 bg-sky-50 text-sky-700',
-        progress: 'border-[#04AA6D]/30 bg-[#D9EEE1] text-[#046C45]',
+        progress: 'border-primary/30 bg-[var(--color-note)] text-[var(--color-note-foreground)]',
       },
     },
     defaultVariants: {

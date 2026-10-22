@@ -45,7 +45,7 @@ export function TopicDetailPanel({
   onInternalLink,
 }: TopicDetailPanelProps) {
   return (
-    <div className="rounded-[var(--radius-card)] bg-card p-4 shadow-[var(--shadow-card)] sm:p-5 lg:p-8">
+    <div className="bg-background p-4 sm:p-5 lg:p-6">
       <div className="mb-4 flex items-center justify-end gap-2">
         {selectedTopic && selectedTopicProgress ? (
           <div className="flex items-center gap-1 rounded-[var(--radius-control)] border border-border bg-background p-1">

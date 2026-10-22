@@ -420,7 +420,7 @@ export function AppSidebar({
               onChange={(event) => onSearchChange(event.target.value)}
               aria-label="Search topics"
               placeholder="Search this kit"
-              className="h-10 rounded-[var(--radius-control)] border-sidebar-border bg-card pl-8 shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring"
+              className="h-8 rounded-[var(--radius-control)] border-sidebar-border bg-card pl-7 text-xs shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring"
             />
           </div>
         </div>

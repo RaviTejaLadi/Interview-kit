@@ -367,7 +367,7 @@ export function GuidesGallery({
                 onChange={(event) => setQuery(event.target.value)}
                 aria-label="Search guides"
                 placeholder="Search guides, topics, or tags"
-                className="h-11 border-input bg-card pl-9"
+                className="h-8 border-input bg-card pl-8 text-xs"
               />
             </div>
             <DropdownMenu>
@@ -375,7 +375,7 @@ export function GuidesGallery({
                 aria-label="Sort guides"
                 className={cn(
                   buttonVariants({ variant: 'outline' }),
-                  'h-11 w-full justify-between bg-card px-3 text-sm lg:w-auto',
+                  'h-8 w-full justify-between bg-card px-2.5 text-xs lg:w-auto',
                 )}
               >
                 <span>Sort: {SORT_LABEL[sortMode]}</span>
@@ -399,7 +399,7 @@ export function GuidesGallery({
                 aria-label="Guide category filter"
                 className={cn(
                   buttonVariants({ variant: 'outline' }),
-                  'h-11 w-full justify-between bg-card px-3 text-sm lg:w-auto',
+                  'h-8 w-full justify-between bg-card px-2.5 text-xs lg:w-auto',
                 )}
               >
                 <span>{CATEGORY_LABEL[categoryFilter]}</span>
@@ -423,7 +423,7 @@ export function GuidesGallery({
                 aria-label="Guide status filter"
                 className={cn(
                   buttonVariants({ variant: 'outline' }),
-                  'h-11 w-full justify-between bg-card px-3 text-sm lg:w-auto',
+                  'h-8 w-full justify-between bg-card px-2.5 text-xs lg:w-auto',
                 )}
               >
                 <span>{STATUS_LABEL[statusFilter]}</span>
@@ -447,7 +447,7 @@ export function GuidesGallery({
                 aria-label="Guide topic filter"
                 className={cn(
                   buttonVariants({ variant: 'outline' }),
-                  'h-11 w-full justify-between bg-card px-3 text-sm lg:w-auto',
+                  'h-8 w-full justify-between bg-card px-2.5 text-xs lg:w-auto',
                 )}
               >
                 <span>

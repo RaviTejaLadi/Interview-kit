@@ -52,24 +52,24 @@ export function SiteHeader({
   }, []);
 
   return (
-    <header className="flex min-h-14 shrink-0 items-center gap-3 border-b border-black/20 bg-[var(--color-header)] px-4 py-2.5 text-[var(--color-header-foreground)] sm:px-6">
+    <header className="flex min-h-12 shrink-0 items-center gap-3 border-b border-border bg-[var(--color-header)] px-4 py-2 text-[var(--color-header-foreground)] sm:px-6">
       {leading}
       {showBrand
         ? (onBrandClick ? (
             <button
               type="button"
               onClick={onBrandClick}
-              className="font-display shrink-0 text-base text-[var(--color-header-foreground)] transition-colors hover:text-primary"
+              className="shrink-0 text-sm font-semibold text-[var(--color-header-foreground)] transition-colors hover:text-primary"
             >
               Interview Kits
             </button>
           ) : (
-            <p className="font-display shrink-0 text-base text-[var(--color-header-foreground)]">Interview Kits</p>
+            <p className="shrink-0 text-sm font-semibold text-[var(--color-header-foreground)]">Interview Kits</p>
           ))
         : null}
       {kitLabel ? (
         <>
-          <span className="hidden h-5 w-px shrink-0 bg-white/25 sm:block" aria-hidden="true" />
+          <span className="hidden h-4 w-px shrink-0 bg-border sm:block" aria-hidden="true" />
           {kitIcon ? (
             <img
               src={kitIcon}
@@ -78,16 +78,16 @@ export function SiteHeader({
               className={cn('size-5 shrink-0 object-contain', kitIconToneClass(kitKey))}
             />
           ) : null}
-          <p className="font-display truncate text-lg leading-none text-[var(--color-header-foreground)] sm:text-xl">
+          <p className="truncate text-sm font-semibold leading-none text-[var(--color-header-foreground)]">
             {kitLabel}
           </p>
         </>
       ) : null}
       {detail ? (
-        <p className="hidden min-w-0 truncate text-sm text-[var(--color-header-muted)] lg:block">{detail}</p>
+        <p className="hidden min-w-0 truncate text-xs text-[var(--color-header-muted)] lg:block">{detail}</p>
       ) : null}
       <div className="ml-auto flex shrink-0 items-center gap-2">
-        <p className="hidden whitespace-nowrap rounded-[var(--radius-control)] border border-white/20 bg-black/20 px-2.5 py-1 font-mono text-xs font-semibold tracking-wide text-[var(--color-header-foreground)] tabular-nums sm:block">
+        <p className="hidden whitespace-nowrap rounded-[var(--radius-control)] border border-border bg-muted px-2 py-1 font-mono text-[11px] font-medium tracking-wide text-[var(--color-header-foreground)] tabular-nums sm:block">
           {localTime}
         </p>
         {actions}

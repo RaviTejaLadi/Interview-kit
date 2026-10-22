@@ -56,11 +56,11 @@ export function KitReaderScreen() {
           kitIcon={controller.selectedTopicIcon}
           detail={editionSubtitle}
           leading={
-            <SidebarTrigger className="-ml-0.5 border border-border bg-card hover:bg-muted sm:-ml-1" />
+            <SidebarTrigger className="-ml-0.5 border border-border bg-card text-foreground hover:bg-muted hover:text-foreground sm:-ml-1" />
           }
         />
         <ScrollArea
-          className="group/reader min-h-0 flex-1"
+          className="group/reader min-h-0 flex-1 bg-background"
           viewportRef={controller.scrollRef}
           viewportClassName="[overflow-anchor:none]"
         >

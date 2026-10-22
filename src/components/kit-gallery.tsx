@@ -174,7 +174,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
               onChange={(event) => setSearchValue(event.target.value)}
               aria-label="Search kits"
               placeholder="Search kits, topics, or questions"
-              className="h-11 border-input bg-card pl-9"
+              className="h-8 border-input bg-card pl-8 text-xs"
             />
           </div>
         </section>

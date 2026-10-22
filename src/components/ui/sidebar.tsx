@@ -303,7 +303,7 @@ function SidebarTrigger({ className, onClick, ...props }: React.ComponentProps<t
       data-sidebar="trigger"
       data-slot="sidebar-trigger"
       variant="ghost"
-      size="icon-sm"
+      size="icon-xs"
       className={cn(className)}
       onClick={(event) => {
         onClick?.(event);
@@ -425,7 +425,7 @@ function SidebarInput({ className, ...props }: React.ComponentProps<typeof Input
     <Input
       data-slot="sidebar-input"
       data-sidebar="input"
-      className={cn('h-10 w-full bg-background shadow-none', className)}
+      className={cn('h-8 w-full bg-background text-xs shadow-none', className)}
       {...props}
     />
   );
@@ -580,9 +580,9 @@ const sidebarMenuButtonVariants = cva(
           'bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_var(--sidebar-accent)]',
       },
       size: {
-        default: 'h-8 text-sm',
-        sm: 'h-7 text-xs',
-        lg: 'h-12 text-sm group-data-[collapsible=icon]:p-0!',
+        default: 'h-7 text-xs',
+        sm: 'h-6 text-xs',
+        lg: 'h-8 text-xs group-data-[collapsible=icon]:p-0!',
       },
     },
     defaultVariants: {

@@ -3,6 +3,8 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
+@custom-variant dark (&:is(.dark *));
+
 @theme inline {
   --font-sans: Verdana, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
   --font-heading: Verdana, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
@@ -82,10 +84,11 @@
     --spacing-16: 64px;
     --shadow-card: none;
     --shadow-card-hover: 0 1px 0 rgb(40 42 53 / 8%);
-    --color-header: #282a35;
-    --color-header-foreground: #ffffff;
-    --color-header-muted: #e7e9eb;
+    --color-header: #ffffff;
+    --color-header-foreground: #282a35;
+    --color-header-muted: #616161;
     --color-note: #d9eee1;
+    --color-note-foreground: #143028;
 
     /* Compatibility layer for existing utilities */
     --bg: var(--color-background);
@@ -221,6 +224,7 @@
     --color-header-foreground: #ffffff;
     --color-header-muted: #e7e9eb;
     --color-note: #1f3d32;
+    --color-note-foreground: #e7f6ef;
   }
 
   html {
