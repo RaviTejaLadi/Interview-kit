@@ -246,7 +246,7 @@ function createMarkdownComponents(
     blockquote: ({ className, ...props }) => (
       <blockquote
         className={cn(
-          'my-4 rounded-r-[var(--radius-control)] border-l-2 border-primary bg-indigo-50/60 px-4 py-2 text-[14px] leading-6 text-foreground/90 italic dark:bg-indigo-500/10',
+          'my-4 rounded-r-[var(--radius-control)] border-l-4 border-primary bg-[#D9EEE1] px-4 py-2 text-[14px] leading-6 text-foreground dark:bg-[#1f3d32]',
           '[&>p]:not-first:mt-1 [&>p]:pl-0',
           markdownHierarchy.body,
           className,

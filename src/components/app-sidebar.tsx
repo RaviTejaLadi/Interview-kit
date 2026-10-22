@@ -188,7 +188,7 @@ function TopicNavButton({
       size="sm"
       isActive={isActive}
       onClick={() => onSelect(getTopicNavId(topic.id))}
-      className="h-auto w-full rounded-[var(--radius-control)] border border-transparent py-2 text-[13px] text-sidebar-foreground/95 data-active:border-primary data-active:bg-primary/10 data-active:text-primary"
+      className="h-auto w-full rounded-[var(--radius-control)] border border-transparent py-2 text-[13px] text-sidebar-foreground/95 data-active:border-primary data-active:bg-primary data-active:text-primary-foreground"
     >
       {topic.starRating && !topic.topicTitle ? (
         <StarRatingDot rating={topic.starRating} />
@@ -287,7 +287,7 @@ function KitTopicTree({
                   size="sm"
                   tooltip={section.label}
                   isActive={sectionHasSelectedTopic}
-                  className="h-8 border border-transparent text-xs font-semibold text-muted-foreground data-active:border-primary data-active:bg-primary/10 data-active:text-primary"
+                  className="h-8 border border-transparent text-xs font-semibold text-muted-foreground data-active:border-primary data-active:bg-primary data-active:text-primary-foreground"
                 />
               }
             >
@@ -325,7 +325,7 @@ function KitTopicTree({
                       tooltip={folder.label}
                       isActive={isActive}
                       onClick={() => onSelectNav(folderNavId)}
-                      className="h-auto rounded-[var(--radius-control)] border border-transparent py-2 text-[13px] text-sidebar-foreground/95 data-active:border-primary data-active:bg-primary/10 data-active:text-primary"
+                      className="h-auto rounded-[var(--radius-control)] border border-transparent py-2 text-[13px] text-sidebar-foreground/95 data-active:border-primary data-active:bg-primary data-active:text-primary-foreground"
                     >
                       {folder.starRating ? (
                         <StarRatingDot rating={folder.starRating} />
