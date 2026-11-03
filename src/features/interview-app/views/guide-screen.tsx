@@ -15,7 +15,9 @@ export function GuideScreen() {
   return (
     <div className="theme flex h-svh flex-col bg-background">
       <SiteHeader
-        actions={<AppHeaderActions theme={controller.theme} onToggleTheme={controller.toggleTheme} />}
+        actions={
+          <AppHeaderActions theme={controller.theme} onToggleTheme={controller.toggleTheme} />
+        }
         onBrandClick={controller.closeGuide}
         kitLabel="Guides"
         detail={`${controller.guidesReadCount}/${controller.allGuides.length} read · ${controller.guidesStarredCount} starred`}

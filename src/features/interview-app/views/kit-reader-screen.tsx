@@ -1,10 +1,6 @@
 import { AppSidebar } from '@/components/app-sidebar';
 import { SiteHeader } from '@/components/newspaper-masthead';
-import {
-  ScrollToTopButton,
-  TopicDock,
-  TopicNavigator,
-} from '@/components/topic-navigator';
+import { ScrollToTopButton, TopicDock, TopicNavigator } from '@/components/topic-navigator';
 import { TopicAccordion } from '@/components/topic-accordion';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
@@ -22,9 +18,7 @@ export function KitReaderScreen() {
         controller.selectedNav.title === controller.selectedNav.kitLabel
           ? null
           : controller.selectedNav.title,
-        controller.selectedNav.kind === 'folder'
-          ? getNavSubtitle(controller.selectedNav)
-          : null,
+        controller.selectedNav.kind === 'folder' ? getNavSubtitle(controller.selectedNav) : null,
         controller.currentIndex >= 0 && controller.totalCount > 0
           ? `${controller.currentIndex + 1} / ${controller.totalCount}`
           : null,
@@ -49,7 +43,9 @@ export function KitReaderScreen() {
       />
       <SidebarInset className="bg-background">
         <SiteHeader
-          actions={<AppHeaderActions theme={controller.theme} onToggleTheme={controller.toggleTheme} />}
+          actions={
+            <AppHeaderActions theme={controller.theme} onToggleTheme={controller.toggleTheme} />
+          }
           onBrandClick={controller.closeKit}
           kitLabel={controller.selectedNav?.kitLabel}
           kitKey={controller.selectedNav?.kitKey}
@@ -110,7 +106,10 @@ export function KitReaderScreen() {
                     content={controller.selectedTopicContent}
                     theme={controller.theme}
                     onInternalLink={(href) =>
-                      controller.handleInternalLink(controller.selectedSingleTopic?.path ?? '', href)
+                      controller.handleInternalLink(
+                        controller.selectedSingleTopic?.path ?? '',
+                        href,
+                      )
                     }
                   />
                 )}

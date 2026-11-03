@@ -69,7 +69,11 @@ export function GuideReader({
               Back to guides
             </Button>
             <div className="flex items-center gap-2">
-              <TopicStepButtons previousTopic={previousGuide} nextTopic={nextGuide} onSelect={onOpenGuide} />
+              <TopicStepButtons
+                previousTopic={previousGuide}
+                nextTopic={nextGuide}
+                onSelect={onOpenGuide}
+              />
               <div className="flex items-center gap-1 rounded-[var(--radius-control)] border border-border bg-background p-1">
                 <Button
                   type="button"
@@ -107,10 +111,13 @@ export function GuideReader({
           </div>
 
           <p className="mt-4 text-sm text-muted-foreground">
-            {guide.topic} · {guide.readTimeMinutes} min read · {formatPublishedDate(guide.publishedAt)}
+            {guide.topic} · {guide.readTimeMinutes} min read ·{' '}
+            {formatPublishedDate(guide.publishedAt)}
           </p>
           <h1 className="mt-2 text-2xl text-foreground sm:text-3xl lg:text-4xl">{guide.title}</h1>
-          <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base">{guide.summary}</p>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base">
+            {guide.summary}
+          </p>
         </div>
         <CardContent className="p-4 sm:p-5 lg:p-6">
           {isLoading && !content ? (

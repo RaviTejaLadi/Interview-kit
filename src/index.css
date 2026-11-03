@@ -6,8 +6,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: Verdana, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
-  --font-heading: Verdana, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: Verdana, 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
+  --font-heading: Verdana, 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
@@ -155,9 +155,9 @@
   }
 
   .theme {
-    --font-heading: Verdana, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
-    --font-sans: Verdana, "Segoe UI", ui-sans-serif, system-ui, sans-serif;
-    --font-mono: Consolas, "Courier New", ui-monospace, monospace;
+    --font-heading: Verdana, 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
+    --font-sans: Verdana, 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: Consolas, 'Courier New', ui-monospace, monospace;
   }
 
   :where(h1, h2, h3, h4, h5, h6) {
@@ -253,6 +253,28 @@
 
 .markdown-body {
   @apply font-sans text-foreground;
+}
+
+.markdown-body .math-display {
+  display: block;
+  max-width: 100%;
+  margin: 0.75rem 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  text-align: center;
+}
+
+.markdown-body .math-display .katex-display {
+  margin: 0;
+}
+
+.markdown-body .math-inline {
+  display: inline;
+}
+
+.markdown-body .katex {
+  color: inherit;
+  font-size: 1.05em;
 }
 
 #root {

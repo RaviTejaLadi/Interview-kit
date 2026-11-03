@@ -33,14 +33,10 @@ type InterviewAppActions = {
   setFocusedTopicId: (value: string | null) => void;
   setSelectedGuideId: (value: string | null) => void;
   setTopicContentById: (
-    value:
-      | Record<string, string>
-      | ((current: Record<string, string>) => Record<string, string>),
+    value: Record<string, string> | ((current: Record<string, string>) => Record<string, string>),
   ) => void;
   setGuideContentById: (
-    value:
-      | Record<string, string>
-      | ((current: Record<string, string>) => Record<string, string>),
+    value: Record<string, string> | ((current: Record<string, string>) => Record<string, string>),
   ) => void;
   setIsLoadingTopic: (value: boolean) => void;
   setIsLoadingGuide: (value: boolean) => void;

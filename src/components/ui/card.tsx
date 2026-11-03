@@ -47,7 +47,10 @@ function CardFooter({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       data-slot="card-footer"
-      className={cn('flex items-center justify-between gap-2 border-t border-border px-6 py-4', className)}
+      className={cn(
+        'flex items-center justify-between gap-2 border-t border-border px-6 py-4',
+        className,
+      )}
       {...props}
     />
   );

@@ -54,19 +54,21 @@ export function SiteHeader({
   return (
     <header className="flex min-h-12 shrink-0 items-center gap-3 border-b border-border bg-[var(--color-header)] px-4 py-2 text-[var(--color-header-foreground)] sm:px-6">
       {leading}
-      {showBrand
-        ? (onBrandClick ? (
-            <button
-              type="button"
-              onClick={onBrandClick}
-              className="shrink-0 text-sm font-semibold text-[var(--color-header-foreground)] transition-colors hover:text-primary"
-            >
-              Interview Kits
-            </button>
-          ) : (
-            <p className="shrink-0 text-sm font-semibold text-[var(--color-header-foreground)]">Interview Kits</p>
-          ))
-        : null}
+      {showBrand ? (
+        onBrandClick ? (
+          <button
+            type="button"
+            onClick={onBrandClick}
+            className="shrink-0 text-sm font-semibold text-[var(--color-header-foreground)] transition-colors hover:text-primary"
+          >
+            Interview Kits
+          </button>
+        ) : (
+          <p className="shrink-0 text-sm font-semibold text-[var(--color-header-foreground)]">
+            Interview Kits
+          </p>
+        )
+      ) : null}
       {kitLabel ? (
         <>
           <span className="hidden h-4 w-px shrink-0 bg-border sm:block" aria-hidden="true" />
@@ -84,7 +86,9 @@ export function SiteHeader({
         </>
       ) : null}
       {detail ? (
-        <p className="hidden min-w-0 truncate text-xs text-[var(--color-header-muted)] lg:block">{detail}</p>
+        <p className="hidden min-w-0 truncate text-xs text-[var(--color-header-muted)] lg:block">
+          {detail}
+        </p>
       ) : null}
       <div className="ml-auto flex shrink-0 items-center gap-2">
         <p className="hidden whitespace-nowrap rounded-[var(--radius-control)] border border-border bg-muted px-2 py-1 font-mono text-[11px] font-medium tracking-wide text-[var(--color-header-foreground)] tabular-nums sm:block">

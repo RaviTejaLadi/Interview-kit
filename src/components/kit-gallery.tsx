@@ -15,7 +15,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import type { TopicProgressMap } from '@/hooks/use-topic-progress';
 import type { TopicGroup } from '@/lib/content-index';
-import { KIT_DESCRIPTIONS, KIT_ICON_BY_KEY, kitIconToneClass, sortKitsByDisplayOrder } from '@/lib/kit-meta';
+import {
+  KIT_DESCRIPTIONS,
+  KIT_ICON_BY_KEY,
+  kitIconToneClass,
+  sortKitsByDisplayOrder,
+} from '@/lib/kit-meta';
 import { cn } from '@/lib/utils';
 
 type KitGalleryProps = {
@@ -72,7 +77,11 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
   const totalTopics = groups.reduce((count, group) => count + group.topics.length, 0);
   const totalCompleted = groups.reduce(
     (count, group) =>
-      count + group.topics.reduce((sum, topic) => sum + (topicProgressById[topic.id]?.completed ? 1 : 0), 0),
+      count +
+      group.topics.reduce(
+        (sum, topic) => sum + (topicProgressById[topic.id]?.completed ? 1 : 0),
+        0,
+      ),
     0,
   );
   const completionRate = totalTopics > 0 ? Math.round((totalCompleted / totalTopics) * 100) : 0;
@@ -89,8 +98,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
       .map((group) => {
         const description = KIT_DESCRIPTIONS[group.id] ?? '';
         const kitMatches =
-          group.label.toLowerCase().includes(query) ||
-          description.toLowerCase().includes(query);
+          group.label.toLowerCase().includes(query) || description.toLowerCase().includes(query);
         const matchCount = group.topics.filter((topic) => {
           const haystack =
             `${topic.title} ${topic.topicTitle ?? ''} ${topic.section} ${topic.kitLabel}`.toLowerCase();
@@ -132,34 +140,50 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
               <div className="grid gap-2 sm:grid-cols-2 lg:justify-self-end">
                 <Card>
                   <CardHeader className="p-3 pb-1.5">
-                    <CardTitle className="text-xs font-medium text-muted-foreground">Total Kits</CardTitle>
+                    <CardTitle className="text-xs font-medium text-muted-foreground">
+                      Total Kits
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="px-3 pb-3">
-                    <p className="text-lg font-semibold leading-none text-foreground">{groups.length}</p>
+                    <p className="text-lg font-semibold leading-none text-foreground">
+                      {groups.length}
+                    </p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="p-3 pb-1.5">
-                    <CardTitle className="text-xs font-medium text-muted-foreground">Questions</CardTitle>
+                    <CardTitle className="text-xs font-medium text-muted-foreground">
+                      Questions
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="px-3 pb-3">
-                    <p className="text-lg font-semibold leading-none text-foreground">{totalTopics}</p>
+                    <p className="text-lg font-semibold leading-none text-foreground">
+                      {totalTopics}
+                    </p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="p-3 pb-1.5">
-                    <CardTitle className="text-xs font-medium text-muted-foreground">Solved</CardTitle>
+                    <CardTitle className="text-xs font-medium text-muted-foreground">
+                      Solved
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="px-3 pb-3">
-                    <p className="text-lg font-semibold leading-none text-emerald-600">{totalCompleted}</p>
+                    <p className="text-lg font-semibold leading-none text-emerald-600">
+                      {totalCompleted}
+                    </p>
                   </CardContent>
                 </Card>
                 <Card>
                   <CardHeader className="p-3 pb-1.5">
-                    <CardTitle className="text-xs font-medium text-muted-foreground">Completion</CardTitle>
+                    <CardTitle className="text-xs font-medium text-muted-foreground">
+                      Completion
+                    </CardTitle>
                   </CardHeader>
                   <CardContent className="px-3 pb-3">
-                    <p className="text-lg font-semibold leading-none text-primary">{completionRate}%</p>
+                    <p className="text-lg font-semibold leading-none text-primary">
+                      {completionRate}%
+                    </p>
                   </CardContent>
                 </Card>
               </div>
@@ -235,7 +259,8 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                   (count, topic) => count + (topicProgressById[topic.id]?.completed ? 1 : 0),
                   0,
                 );
-                const progress = totalQuestions > 0 ? Math.round((completedCount / totalQuestions) * 100) : 0;
+                const progress =
+                  totalQuestions > 0 ? Math.round((completedCount / totalQuestions) * 100) : 0;
                 const progressLabel = `${completedCount}/${totalQuestions} completed`;
                 const countLabel = `${totalQuestions} question${totalQuestions === 1 ? '' : 's'}`;
                 const matchLabel = query && matchCount > 0 ? `${matchCount} matching` : null;
@@ -269,7 +294,9 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                       </span>
                       <span className="text-muted-foreground">{progressLabel}</span>
                       <span className="font-medium text-foreground">{progress}%</span>
-                      {matchLabel ? <span className="text-muted-foreground">{matchLabel}</span> : null}
+                      {matchLabel ? (
+                        <span className="text-muted-foreground">{matchLabel}</span>
+                      ) : null}
                     </div>
                     <ArrowRightIcon className="size-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5" />
                   </button>
@@ -288,7 +315,8 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                   (count, topic) => count + (topicProgressById[topic.id]?.completed ? 1 : 0),
                   0,
                 );
-                const progress = totalQuestions > 0 ? Math.round((completedCount / totalQuestions) * 100) : 0;
+                const progress =
+                  totalQuestions > 0 ? Math.round((completedCount / totalQuestions) * 100) : 0;
                 const progressLabel = `${completedCount}/${totalQuestions} completed`;
                 const countLabel = `${totalQuestions} question${totalQuestions === 1 ? '' : 's'}`;
                 const matchLabel = query && matchCount > 0 ? `${matchCount} matching` : null;
@@ -342,7 +370,11 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                           style={{ width: `${progress}%` }}
                         />
                       </span>
-                      {matchLabel ? <span className="mt-2 block text-xs text-muted-foreground">{matchLabel}</span> : null}
+                      {matchLabel ? (
+                        <span className="mt-2 block text-xs text-muted-foreground">
+                          {matchLabel}
+                        </span>
+                      ) : null}
                     </span>
                     <span className="mt-3.5 inline-flex items-center gap-1 text-sm font-medium text-primary">
                       Open kit

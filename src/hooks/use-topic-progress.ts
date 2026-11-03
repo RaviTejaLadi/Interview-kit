@@ -80,10 +80,7 @@ function updateTopicProgress(
     important: patch.important ?? existing.important,
   };
 
-  if (
-    nextEntry.completed === existing.completed &&
-    nextEntry.important === existing.important
-  ) {
+  if (nextEntry.completed === existing.completed && nextEntry.important === existing.important) {
     return current;
   }
 

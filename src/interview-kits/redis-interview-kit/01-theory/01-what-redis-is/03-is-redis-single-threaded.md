@@ -1,12 +1,33 @@
 # Is Redis single-threaded?
 
-**Definition:**
-Historically Redis executed commands on one main thread, which makes each command atomic and the model simple. I/O threads and some modules/commands can use more threads in modern Redis, but you still reason about the data as if commands are serialized. Blocking commands (`KEYS`, huge `HGETALL`) stall everyone.
+Yes, Redis primarily processes commands on a single main thread, but Redis is not entirely single-threaded.
 
-**Key points:**
+Redis uses an event loop to handle many client connections efficiently. It processes commands sequentially on the main execution thread, which avoids much of the coordination overhead associated with concurrent command execution.
 
-- Atomicity of a single command is a key mental model.
-- Multi/exec and Lua scripts run atomically too.
-- Do not run `KEYS *` in production; use `SCAN`.
-- Horizontal scale: clustering / sharding, not more command threads on one dataset.
-- I/O threads do not make `LRANGE` of 10M items cheap.
+However, Redis can use additional threads for tasks such as background I/O and, in supported configurations, client socket reads and writes. Persistence and other background operations can also involve separate processes or threads.&#x20;
+
+### How does it work?
+
+Imagine a restaurant with one chef and many customers. The chef takes orders from different customers and prepares each dish quickly, one at a time. Customers don't need a dedicated chef each.
+
+Redis follows a similar model for command execution.
+
+Client A: `GET user:1`
+
+Client B: `SET count 10`
+
+Client C: `INCR count`
+
+Redis event loop
+
+Processes commands sequentially
+
+Returns responses to clients
+
+### What is the disadvantage?
+
+A slow command can delay other clients because the main thread cannot process their commands until the slow operation finishes.
+
+For example, avoid running `KEYS *` on a large production dataset. It scans the keyspace in one operation and can block other commands. Use `SCAN` for incremental iteration instead.&#x20;
+
+Interview takeaway: Redis is fast not because it executes all commands in parallel, but because it minimizes per-command overhead and handles requests efficiently.

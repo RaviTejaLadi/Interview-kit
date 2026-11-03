@@ -332,7 +332,9 @@ function KitTopicTree({
                       ) : (
                         <FolderIcon className="mt-0.5 size-3.5 shrink-0" />
                       )}
-                      <span className="line-clamp-2 min-w-0 flex-1 leading-tight">{folder.label}</span>
+                      <span className="line-clamp-2 min-w-0 flex-1 leading-tight">
+                        {folder.label}
+                      </span>
                       <span
                         className="ml-auto shrink-0 text-[11px] text-sidebar-foreground/65"
                         title={`${completedCount} of ${folder.questions.length} completed`}
@@ -432,7 +434,9 @@ export function AppSidebar({
           </div>
         ) : (
           <SidebarGroup className="py-1.5">
-            <SidebarGroupLabel className="px-2 text-xs text-muted-foreground">Contents</SidebarGroupLabel>
+            <SidebarGroupLabel className="px-2 text-xs text-muted-foreground">
+              Contents
+            </SidebarGroupLabel>
             <div className="px-1">
               <KitTopicTree
                 kit={activeKit}

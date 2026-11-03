@@ -55,7 +55,9 @@ export function TopicDetailPanel({
               size="icon-xs"
               onClick={() => onToggleTopicCompleted(selectedTopic.id)}
               aria-pressed={selectedTopicProgress.completed}
-              aria-label={selectedTopicProgress.completed ? 'Mark topic as unread' : 'Mark topic as read'}
+              aria-label={
+                selectedTopicProgress.completed ? 'Mark topic as unread' : 'Mark topic as read'
+              }
               title={selectedTopicProgress.completed ? 'Read' : 'Mark as read'}
             >
               {selectedTopicProgress.completed ? (

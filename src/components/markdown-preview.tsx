@@ -1,16 +1,19 @@
-import { useMemo, useState, type CSSProperties } from 'react';
+import { useMemo, useState, type CSSProperties, type ReactNode } from 'react';
 import { Check, Copy } from 'lucide-react';
+import 'katex/dist/katex.min.css';
 import rehypeRaw from 'rehype-raw';
 import ReactMarkdown, { type Components } from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 
+import { remarkRenderMath, renderLatex } from '@/lib/markdown-math';
 import { cn } from '@/lib/utils';
 
 type Theme = 'light' | 'dark';
 
-const CODE_FONT = '"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
+const CODE_FONT =
+  '"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace';
 
 type HighlighterStyle = { [key: string]: CSSProperties };
 
@@ -45,6 +48,54 @@ const markdownHierarchy = {
   body: '',
   nestedList: 'pl-5',
 };
+
+function readRenderedMath(
+  props: {
+    className?: string;
+    'data-latex'?: string;
+    'data-display'?: string;
+  },
+  children: ReactNode,
+) {
+  const className = typeof props.className === 'string' ? props.className : '';
+  const encoded =
+    props['data-latex'] ??
+    (className.split(/\s+/).includes('math-src') && typeof children === 'string'
+      ? children
+      : undefined);
+
+  if (!encoded) {
+    return null;
+  }
+
+  try {
+    const expression = decodeURIComponent(encoded).trim();
+    if (!expression) {
+      return null;
+    }
+
+    return {
+      expression,
+      display: props['data-display'] === 'block',
+    };
+  } catch {
+    return null;
+  }
+}
+
+function MarkdownMath({ expression, display }: { expression: string; display: boolean }) {
+  const html = renderLatex(expression, display);
+  if (!html) {
+    return <span className="math-fallback">{expression}</span>;
+  }
+
+  return (
+    <span
+      className={display ? 'math-display' : 'math-inline'}
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+}
 
 function CodeBlock({
   codeText,
@@ -289,7 +340,11 @@ function createMarkdownComponents(
       );
     },
     table: ({ className, ...props }) => (
-      <div className={cn('my-4 overflow-x-auto rounded-[var(--radius-control)] border border-border bg-card')}>
+      <div
+        className={cn(
+          'my-4 overflow-x-auto rounded-[var(--radius-control)] border border-border bg-card',
+        )}
+      >
         <table className={cn('w-full min-w-0 border-collapse text-[13px]', className)} {...props} />
       </div>
     ),
@@ -325,7 +380,10 @@ function createMarkdownComponents(
     img: ({ className, alt, ...props }) => (
       <span className={cn('my-3 block', markdownHierarchy.body)}>
         <img
-          className={cn('max-w-full rounded-[var(--radius-control)] border border-border', className)}
+          className={cn(
+            'max-w-full rounded-[var(--radius-control)] border border-border',
+            className,
+          )}
           alt={alt ?? 'Markdown image'}
           loading="lazy"
           {...props}
@@ -335,6 +393,18 @@ function createMarkdownComponents(
         ) : null}
       </span>
     ),
+    span: ({ className, children, ...props }) => {
+      const math = readRenderedMath({ className, ...props }, children);
+      if (math) {
+        return <MarkdownMath expression={math.expression} display={math.display} />;
+      }
+
+      return (
+        <span className={className} {...props}>
+          {children}
+        </span>
+      );
+    },
     pre: ({ children }) => <>{children}</>,
     code: ({ className, children }) => {
       const codeText = String(children).replace(/\n$/, '');
@@ -392,7 +462,7 @@ export function MarkdownPreview({ content, theme, onInternalLink }: MarkdownPrev
     <div className="markdown-body markdown-preview max-w-none font-sans wrap-break-word">
       <ReactMarkdown
         rehypePlugins={[rehypeRaw]}
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[remarkGfm, remarkRenderMath]}
         components={markdownComponents}
       >
         {content}

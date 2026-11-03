@@ -311,7 +311,8 @@ export function GuidesGallery({
         return true;
       }
 
-      const haystack = `${guide.title} ${guide.summary} ${guide.topic} ${guide.subject}`.toLowerCase();
+      const haystack =
+        `${guide.title} ${guide.summary} ${guide.topic} ${guide.subject}`.toLowerCase();
       return haystack.includes(queryValue);
     });
 
@@ -328,14 +329,22 @@ export function GuidesGallery({
         return a.readTimeMinutes - b.readTimeMinutes || a.title.localeCompare(b.title);
       }
 
-      const starA = a.isPlaceholder ? 0 : (guideProgressById[a.id]?.starred ? 1 : 0);
-      const starB = b.isPlaceholder ? 0 : (guideProgressById[b.id]?.starred ? 1 : 0);
+      const starA = a.isPlaceholder ? 0 : guideProgressById[a.id]?.starred ? 1 : 0;
+      const starB = b.isPlaceholder ? 0 : guideProgressById[b.id]?.starred ? 1 : 0;
       if (starA !== starB) {
         return starB - starA;
       }
       return b.publishedAt.localeCompare(a.publishedAt);
     });
-  }, [categoryFilter, guideProgressById, mergedGuides, queryValue, sortMode, statusFilter, subjectFilter]);
+  }, [
+    categoryFilter,
+    guideProgressById,
+    mergedGuides,
+    queryValue,
+    sortMode,
+    statusFilter,
+    subjectFilter,
+  ]);
 
   return (
     <div className="bg-background">
@@ -473,7 +482,12 @@ export function GuidesGallery({
                 <DropdownMenuRadioGroup value={subjectFilter} onValueChange={setSubjectFilter}>
                   <DropdownMenuRadioItem value="all">
                     <span className="inline-flex items-center gap-2">
-                      <img src={npmIcon} alt="" aria-hidden="true" className="size-3.5 object-contain" />
+                      <img
+                        src={npmIcon}
+                        alt=""
+                        aria-hidden="true"
+                        className="size-3.5 object-contain"
+                      />
                       All topics
                     </span>
                   </DropdownMenuRadioItem>
@@ -555,7 +569,9 @@ export function GuidesGallery({
                       canOpen && 'cursor-pointer',
                     )}
                   >
-                    <p className="line-clamp-2 text-sm font-semibold text-foreground">{guide.title}</p>
+                    <p className="line-clamp-2 text-sm font-semibold text-foreground">
+                      {guide.title}
+                    </p>
                     <p className="mt-2 line-clamp-2 text-xs leading-5 text-muted-foreground">
                       {guide.summary}
                     </p>
@@ -564,7 +580,10 @@ export function GuidesGallery({
                         src={getSubjectIconSrc(guide.subject)}
                         alt=""
                         aria-hidden="true"
-                        className={cn('size-3.5 object-contain', getSubjectIconClass(guide.subject))}
+                        className={cn(
+                          'size-3.5 object-contain',
+                          getSubjectIconClass(guide.subject),
+                        )}
                       />
                       <span>{formatSubjectLabel(guide.subject)}</span>
                       <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
@@ -590,7 +609,9 @@ export function GuidesGallery({
                             <StarIcon
                               className={cn(
                                 'size-4',
-                                isStarred ? 'fill-amber-400 text-amber-500' : 'text-muted-foreground',
+                                isStarred
+                                  ? 'fill-amber-400 text-amber-500'
+                                  : 'text-muted-foreground',
                               )}
                             />
                           </Button>
@@ -657,11 +678,16 @@ export function GuidesGallery({
                           src={getSubjectIconSrc(guide.subject)}
                           alt=""
                           aria-hidden="true"
-                          className={cn('size-3.5 object-contain', getSubjectIconClass(guide.subject))}
+                          className={cn(
+                            'size-3.5 object-contain',
+                            getSubjectIconClass(guide.subject),
+                          )}
                         />
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-medium text-foreground">{guide.title}</p>
+                        <p className="truncate text-sm font-medium text-foreground">
+                          {guide.title}
+                        </p>
                         <p className="truncate text-xs text-muted-foreground">
                           {formatSubjectLabel(guide.subject)}
                         </p>
@@ -687,7 +713,9 @@ export function GuidesGallery({
                             <StarIcon
                               className={cn(
                                 'size-4',
-                                isStarred ? 'fill-amber-400 text-amber-500' : 'text-muted-foreground',
+                                isStarred
+                                  ? 'fill-amber-400 text-amber-500'
+                                  : 'text-muted-foreground',
                               )}
                             />
                           </Button>

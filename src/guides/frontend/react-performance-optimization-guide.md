@@ -85,7 +85,7 @@ Interview language:
 - Keep above-the-fold UI small and fast.
 
 ```tsx
-const AnalyticsPanel = React.lazy(() => import("./AnalyticsPanel"));
+const AnalyticsPanel = React.lazy(() => import('./AnalyticsPanel'));
 ```
 
 - Preload likely-next routes when user intent is clear.

@@ -70,12 +70,8 @@ export function useInterviewAppController() {
     setManyTopicsCompleted,
     setManyTopicsImportant,
   } = useTopicProgress();
-  const {
-    guideProgressById,
-    getGuideProgress,
-    toggleGuideRead,
-    toggleGuideStarred,
-  } = useGuideProgress();
+  const { guideProgressById, getGuideProgress, toggleGuideRead, toggleGuideStarred } =
+    useGuideProgress();
 
   const selectedGuide = useMemo(
     () => allGuides.find((guide) => guide.id === selectedGuideId) ?? null,
@@ -313,10 +309,10 @@ export function useInterviewAppController() {
     navigationItems,
     selectedNav?.id ?? null,
   );
-  const {
-    previousTopic: previousGuide,
-    nextTopic: nextGuide,
-  } = useAdjacentTopics(guideNavItems, selectedGuideId);
+  const { previousTopic: previousGuide, nextTopic: nextGuide } = useAdjacentTopics(
+    guideNavItems,
+    selectedGuideId,
+  );
   const { scrolled, scrollToTop } = useReadingSession(scrollRef, selectedNav?.id ?? null);
   const footerInView = useFooterInView(contentEndRef, scrollRef, selectedNav?.id ?? null);
 
@@ -466,13 +462,7 @@ export function useInterviewAppController() {
     return () => {
       ignore = true;
     };
-  }, [
-    selectedNav,
-    setIsLoadingTopic,
-    setTopicContentById,
-    setTopicLoadError,
-    topicContentById,
-  ]);
+  }, [selectedNav, setIsLoadingTopic, setTopicContentById, setTopicLoadError, topicContentById]);
 
   useEffect(() => {
     let ignore = false;
@@ -514,13 +504,7 @@ export function useInterviewAppController() {
     return () => {
       ignore = true;
     };
-  }, [
-    guideContentById,
-    selectedGuide,
-    setGuideContentById,
-    setGuideLoadError,
-    setIsLoadingGuide,
-  ]);
+  }, [guideContentById, selectedGuide, setGuideContentById, setGuideLoadError, setIsLoadingGuide]);
 
   useEffect(() => {
     const root = document.documentElement;

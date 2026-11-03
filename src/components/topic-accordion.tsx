@@ -102,18 +102,12 @@ export function TopicAccordion({
   const allOpen = openItems.length === topicIds.length && topicIds.length > 0;
   const completedCount = useMemo(
     () =>
-      topics.reduce(
-        (count, topic) => count + (topicProgressById[topic.id]?.completed ? 1 : 0),
-        0,
-      ),
+      topics.reduce((count, topic) => count + (topicProgressById[topic.id]?.completed ? 1 : 0), 0),
     [topicProgressById, topics],
   );
   const importantCount = useMemo(
     () =>
-      topics.reduce(
-        (count, topic) => count + (topicProgressById[topic.id]?.important ? 1 : 0),
-        0,
-      ),
+      topics.reduce((count, topic) => count + (topicProgressById[topic.id]?.important ? 1 : 0), 0),
     [topicProgressById, topics],
   );
   const allCompleted = topics.length > 0 && completedCount === topics.length;
@@ -242,7 +236,11 @@ export function TopicAccordion({
                     title={isCompleted ? 'Read' : 'Mark as read'}
                     className={cn(isCompleted ? 'text-emerald-500' : 'text-muted-foreground')}
                   >
-                    {isCompleted ? <CheckCircle2Icon className="size-3.5" /> : <CircleIcon className="size-3.5" />}
+                    {isCompleted ? (
+                      <CheckCircle2Icon className="size-3.5" />
+                    ) : (
+                      <CircleIcon className="size-3.5" />
+                    )}
                   </Button>
                   <Button
                     type="button"
@@ -250,11 +248,11 @@ export function TopicAccordion({
                     size="icon-xs"
                     onClick={() => onToggleTopicImportant(topic.id)}
                     aria-pressed={isImportant}
-                    aria-label={isImportant ? 'Remove topic from important' : 'Mark topic as important'}
+                    aria-label={
+                      isImportant ? 'Remove topic from important' : 'Mark topic as important'
+                    }
                     title={isImportant ? 'Marked important' : 'Mark as important'}
-                    className={cn(
-                      isImportant ? 'text-amber-500' : 'text-muted-foreground',
-                    )}
+                    className={cn(isImportant ? 'text-amber-500' : 'text-muted-foreground')}
                   >
                     <StarIcon className={cn('size-3.5', isImportant && 'fill-amber-400')} />
                   </Button>
