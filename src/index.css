@@ -6,8 +6,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: Verdana, 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
-  --font-heading: Verdana, 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
+  --font-heading: Inter, ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
@@ -155,8 +155,8 @@
   }
 
   .theme {
-    --font-heading: Verdana, 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
-    --font-sans: Verdana, 'Segoe UI', ui-sans-serif, system-ui, sans-serif;
+    --font-heading: Inter, ui-sans-serif, system-ui, sans-serif;
+    --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
     --font-mono: Consolas, 'Courier New', ui-monospace, monospace;
   }
 
