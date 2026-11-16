@@ -2,6 +2,7 @@ import { GithubIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { useOAuthProviders } from '@/features/auth/hooks/use-oauth-providers';
+import { BASE_URL } from '@/utils/urls';
 
 function GoogleMark() {
   return (
@@ -26,41 +27,44 @@ function GoogleMark() {
   );
 }
 
-function startProviderLogin(url: string) {
-  window.location.assign(url);
+function startProviderLogin(provider: 'google' | 'github') {
+  const base = import.meta.env.DEV ? '/api/v1' : BASE_URL;
+  const target = new URL(`${base}/auth/${provider}`, window.location.origin);
+  target.searchParams.set('returnTo', window.location.origin);
+  window.location.assign(target.toString());
 }
 
 export function OAuthButtons() {
   const providers = useOAuthProviders();
-  const googleUrl = providers.data?.google ? providers.data.googleUrl : '';
-  const githubUrl = providers.data?.github ? providers.data.githubUrl : '';
+  const googleReady = Boolean(providers.data?.google);
+  const githubReady = Boolean(providers.data?.github);
 
-  if (!googleUrl && !githubUrl) {
+  if (!googleReady && !githubReady) {
     return null;
   }
 
   return (
     <div className="space-y-4">
       <div className="grid gap-2">
-        {googleUrl ? (
+        {googleReady ? (
           <Button
             type="button"
             variant="outline"
             size="lg"
             className="w-full"
-            onClick={() => startProviderLogin(googleUrl)}
+            onClick={() => startProviderLogin('google')}
           >
             <GoogleMark />
             Continue with Google
           </Button>
         ) : null}
-        {githubUrl ? (
+        {githubReady ? (
           <Button
             type="button"
             variant="outline"
             size="lg"
             className="w-full"
-            onClick={() => startProviderLogin(githubUrl)}
+            onClick={() => startProviderLogin('github')}
           >
             <GithubIcon />
             Continue with GitHub

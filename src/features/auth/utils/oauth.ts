@@ -27,7 +27,7 @@ export function consumeOAuthCallback() {
     );
   }
 
-  window.history.replaceState(null, '', '/');
+  window.history.replaceState(null, '', '/kits');
 }
 
 export function readOAuthError() {
