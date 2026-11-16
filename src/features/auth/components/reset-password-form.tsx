@@ -77,7 +77,12 @@ export function ResetPasswordForm() {
         error={errors.confirmPassword}
         onChange={(event) => setConfirmPassword(event.target.value)}
       />
-      <Button type="submit" size="lg" className="w-full" disabled={resetPassword.isPending || !resetToken}>
+      <Button
+        type="submit"
+        size="lg"
+        className="w-full"
+        disabled={resetPassword.isPending || !resetToken}
+      >
         <KeyRoundIcon className="size-4" />
         {resetPassword.isPending ? 'Updating password…' : 'Update password'}
       </Button>

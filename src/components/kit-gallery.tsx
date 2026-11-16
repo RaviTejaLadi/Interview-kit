@@ -292,7 +292,9 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                       <span className="rounded-full border border-border bg-muted px-2 py-1 font-medium text-muted-foreground">
                         {countLabel}
                       </span>
-                      <span className="hidden text-muted-foreground lg:inline">{progressLabel}</span>
+                      <span className="hidden text-muted-foreground lg:inline">
+                        {progressLabel}
+                      </span>
                       <span className="font-medium text-foreground">{progress}%</span>
                       {matchLabel ? (
                         <span className="hidden text-muted-foreground xl:inline">{matchLabel}</span>

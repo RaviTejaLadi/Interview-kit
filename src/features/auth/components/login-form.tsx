@@ -47,7 +47,9 @@ export function LoginForm() {
       />
       <AuthFormError
         message={
-          login.error ? getApiErrorMessage(login.error, 'Could not sign in. Try again.') : oauthError
+          login.error
+            ? getApiErrorMessage(login.error, 'Could not sign in. Try again.')
+            : oauthError
         }
       />
       <OAuthButtons />

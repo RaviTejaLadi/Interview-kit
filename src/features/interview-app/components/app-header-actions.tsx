@@ -1,5 +1,12 @@
 import { useEffect, useState } from 'react';
-import { LogOutIcon, Maximize2Icon, Minimize2Icon, MoonIcon, SettingsIcon, SunIcon } from 'lucide-react';
+import {
+  LogOutIcon,
+  Maximize2Icon,
+  Minimize2Icon,
+  MoonIcon,
+  SettingsIcon,
+  SunIcon,
+} from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -41,7 +48,11 @@ function AccountAvatar({ user, className }: { user: AuthUser; className?: string
   );
 }
 
-export function AppHeaderActions({ theme, onToggleTheme, showGuestFullscreen = true }: AppHeaderActionsProps) {
+export function AppHeaderActions({
+  theme,
+  onToggleTheme,
+  showGuestFullscreen = true,
+}: AppHeaderActionsProps) {
   const user = useCurrentUser().data;
   const logout = useLogout();
   const setIsProfileOpen = useInterviewAppStore((state) => state.setIsProfileOpen);
@@ -105,7 +116,10 @@ export function AppHeaderActions({ theme, onToggleTheme, showGuestFullscreen = t
                 <SettingsIcon strokeWidth={1.75} />
                 Settings
               </DropdownMenuItem>
-              <DropdownMenuItem className={accountMenuItemClassName} onClick={() => void toggleFullscreen()}>
+              <DropdownMenuItem
+                className={accountMenuItemClassName}
+                onClick={() => void toggleFullscreen()}
+              >
                 {isFullscreen ? (
                   <Minimize2Icon strokeWidth={1.75} />
                 ) : (
@@ -114,7 +128,11 @@ export function AppHeaderActions({ theme, onToggleTheme, showGuestFullscreen = t
                 {isFullscreen ? 'Exit full screen' : 'Enter full screen'}
               </DropdownMenuItem>
               <DropdownMenuItem className={accountMenuItemClassName} onClick={onToggleTheme}>
-                {theme === 'dark' ? <SunIcon strokeWidth={1.75} /> : <MoonIcon strokeWidth={1.75} />}
+                {theme === 'dark' ? (
+                  <SunIcon strokeWidth={1.75} />
+                ) : (
+                  <MoonIcon strokeWidth={1.75} />
+                )}
                 Switch to {theme === 'dark' ? 'light' : 'dark'} mode
               </DropdownMenuItem>
             </div>

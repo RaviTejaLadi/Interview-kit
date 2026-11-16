@@ -13,7 +13,16 @@ type AuthFieldProps = {
   className?: string;
 } & Omit<ComponentProps<typeof Input>, 'className'>;
 
-export function AuthField({ label, error, hint, icon, className, id, children, ...props }: AuthFieldProps) {
+export function AuthField({
+  label,
+  error,
+  hint,
+  icon,
+  className,
+  id,
+  children,
+  ...props
+}: AuthFieldProps) {
   const fieldId = id ?? props.name;
   const isRequired = Boolean(props.required);
 

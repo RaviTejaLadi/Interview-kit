@@ -346,7 +346,10 @@ function createMarkdownComponents(
           'my-4 max-w-full overflow-x-auto rounded-[var(--radius-control)] border border-border bg-card',
         )}
       >
-        <table className={cn('w-full min-w-[36rem] border-collapse text-[13px]', className)} {...props} />
+        <table
+          className={cn('w-full min-w-[36rem] border-collapse text-[13px]', className)}
+          {...props}
+        />
       </div>
     ),
     thead: ({ className, ...props }) => (

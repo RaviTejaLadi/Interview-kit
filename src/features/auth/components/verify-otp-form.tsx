@@ -55,7 +55,9 @@ export function VerifyOtpForm() {
       />
       <AuthFormError
         message={
-          verifyOtp.error ? getApiErrorMessage(verifyOtp.error, 'Could not verify the code. Try again.') : ''
+          verifyOtp.error
+            ? getApiErrorMessage(verifyOtp.error, 'Could not verify the code. Try again.')
+            : ''
         }
       />
       <AuthField

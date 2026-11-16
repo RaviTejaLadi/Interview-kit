@@ -78,7 +78,9 @@ export function SignUpForm() {
       <OAuthButtons />
       <AuthFormError
         message={
-          register.error ? getApiErrorMessage(register.error, 'Could not create the account. Try again.') : ''
+          register.error
+            ? getApiErrorMessage(register.error, 'Could not create the account. Try again.')
+            : ''
         }
       />
       <div className="grid gap-4 sm:grid-cols-2">
@@ -170,13 +172,7 @@ export function SignUpForm() {
           onChange={(event) => setDob(event.target.value)}
         />
       </div>
-      <AuthField
-        label="Bio"
-        name="bio"
-        hint="2 to 250 characters."
-        value={bio}
-        error={errors.bio}
-      >
+      <AuthField label="Bio" name="bio" hint="2 to 250 characters." value={bio} error={errors.bio}>
         <div className="relative">
           <span className="pointer-events-none absolute top-2.5 left-2.5 inline-flex items-center text-muted-foreground">
             <FileTextIcon className="size-4" />

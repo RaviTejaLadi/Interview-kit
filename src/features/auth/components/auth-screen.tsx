@@ -27,13 +27,15 @@ const authIllustrations = [
     src: learningIllustration,
     alt: 'Person learning from study material',
     title: 'Structured preparation',
-    description: 'Theory and coding are organized together so revision feels simple and repeatable.',
+    description:
+      'Theory and coding are organized together so revision feels simple and repeatable.',
   },
   {
     src: workTimeIllustration,
     alt: 'Person planning study time',
     title: 'Build momentum',
-    description: 'Set a routine, complete more questions, and improve confidence one session at a time.',
+    description:
+      'Set a routine, complete more questions, and improve confidence one session at a time.',
   },
 ];
 
@@ -119,11 +121,11 @@ export function AuthScreen() {
               {authSwitchAction.button}
             </Button>
 
-          <AppHeaderActions
-            theme={theme}
-            showGuestFullscreen={false}
-            onToggleTheme={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
-          />
+            <AppHeaderActions
+              theme={theme}
+              showGuestFullscreen={false}
+              onToggleTheme={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
+            />
           </div>
         </div>
       </div>

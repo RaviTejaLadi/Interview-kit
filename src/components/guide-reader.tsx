@@ -114,7 +114,9 @@ export function GuideReader({
             {guide.topic} · {guide.readTimeMinutes} min read ·{' '}
             {formatPublishedDate(guide.publishedAt)}
           </p>
-          <h1 className="mt-2 text-2xl break-words text-foreground sm:text-3xl lg:text-4xl">{guide.title}</h1>
+          <h1 className="mt-2 text-2xl break-words text-foreground sm:text-3xl lg:text-4xl">
+            {guide.title}
+          </h1>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base">
             {guide.summary}
           </p>

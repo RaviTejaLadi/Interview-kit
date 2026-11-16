@@ -1,6 +1,11 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 
-import { clearSession, readAccessToken, readRefreshToken, writeSession } from '@/features/auth/utils/session';
+import {
+  clearSession,
+  readAccessToken,
+  readRefreshToken,
+  writeSession,
+} from '@/features/auth/utils/session';
 import { apiUrls } from '@/utils/urls';
 
 type RetryConfig = InternalAxiosRequestConfig & {
@@ -36,7 +41,8 @@ function refreshAccessToken() {
     refreshRequest = api
       .post(apiUrls.refresh, { refreshToken }, { skipAuth: true, skipRefresh: true })
       .then((response) => {
-        const data = response.data?.data as { accessToken?: string; refreshToken?: string } | undefined;
+        const data = response.data?.data as
+          { accessToken?: string; refreshToken?: string } | undefined;
         if (!data?.accessToken || !data.refreshToken) {
           clearSession();
           return null;
@@ -72,7 +78,13 @@ api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     const config = error.config as RetryConfig | undefined;
-    if (!config || config.skipAuth || config.skipRefresh || config._retry || error.response?.status !== 401) {
+    if (
+      !config ||
+      config.skipAuth ||
+      config.skipRefresh ||
+      config._retry ||
+      error.response?.status !== 401
+    ) {
       return Promise.reject(error);
     }
 

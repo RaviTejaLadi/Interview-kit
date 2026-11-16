@@ -95,7 +95,13 @@ export function ProfileScreen() {
             </div>
           </div>
           {isEditing ? null : (
-            <Button type="button" variant="outline" size="lg" className="shrink-0" onClick={() => setIsEditing(true)}>
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              className="shrink-0"
+              onClick={() => setIsEditing(true)}
+            >
               <PencilLineIcon className="size-4" />
               Edit profile
             </Button>
@@ -118,7 +124,10 @@ export function ProfileScreen() {
               <dl>
                 <ProfileRow label="Email" value={user.email} />
                 <ProfileRow label="Phone" value={user.phoneNumber || 'Not set'} />
-                <ProfileRow label="Date of birth" value={user.dob ? formatProfileDate(user.dob) : 'Not set'} />
+                <ProfileRow
+                  label="Date of birth"
+                  value={user.dob ? formatProfileDate(user.dob) : 'Not set'}
+                />
                 <ProfileRow label="Bio" value={user.bio?.trim() || 'No bio yet'} />
                 <ProfileRow label="Sign-in" value={signInMethods(user)} />
                 <ProfileRow label="Role" value={user.role} />

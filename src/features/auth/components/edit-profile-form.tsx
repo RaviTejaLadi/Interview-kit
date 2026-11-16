@@ -1,12 +1,24 @@
 import { useState, type FormEvent } from 'react';
-import { AtSignIcon, CalendarDaysIcon, FileTextIcon, PhoneIcon, SaveIcon, UserIcon, XIcon } from 'lucide-react';
+import {
+  AtSignIcon,
+  CalendarDaysIcon,
+  FileTextIcon,
+  PhoneIcon,
+  SaveIcon,
+  UserIcon,
+  XIcon,
+} from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { AuthField, AuthFormError } from '@/features/auth/components/auth-field';
 import { useUpdateProfile } from '@/features/auth/hooks/use-update-profile';
 import type { AuthUser } from '@/features/auth/types/auth';
-import { profileChanges, validateProfile, type ProfileFormInput } from '@/features/auth/utils/validation';
+import {
+  profileChanges,
+  validateProfile,
+  type ProfileFormInput,
+} from '@/features/auth/utils/validation';
 import { getApiErrorMessage } from '@/utils/axios';
 
 type EditProfileFormProps = {
@@ -153,7 +165,13 @@ export function EditProfileForm({ user, onCancel, onSaved }: EditProfileFormProp
         </div>
       </AuthField>
       <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
-        <Button type="button" variant="outline" size="lg" onClick={onCancel} disabled={updateProfile.isPending}>
+        <Button
+          type="button"
+          variant="outline"
+          size="lg"
+          onClick={onCancel}
+          disabled={updateProfile.isPending}
+        >
           <XIcon className="size-4" />
           Cancel
         </Button>

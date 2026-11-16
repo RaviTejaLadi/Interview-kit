@@ -1,4 +1,3 @@
-
 interface IHttpResponse<T> {
   data: T;
   status: string;

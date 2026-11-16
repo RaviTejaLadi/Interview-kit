@@ -45,8 +45,8 @@ export function ChangePasswordForm() {
           Change password
         </h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          Google and GitHub accounts that have never set a password can create one from Forgot password on the
-          sign-in screen.
+          Google and GitHub accounts that have never set a password can create one from Forgot
+          password on the sign-in screen.
         </p>
       </div>
       <AuthFormError

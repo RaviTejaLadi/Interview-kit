@@ -3,7 +3,12 @@ import {
   EMAIL_PATTERN,
   PHONE_PATTERN,
 } from '@/features/auth/constants/auth.constants';
-import type { AuthUser, LoginInput, RegisterInput, UpdateProfileInput } from '@/features/auth/types/auth';
+import type {
+  AuthUser,
+  LoginInput,
+  RegisterInput,
+  UpdateProfileInput,
+} from '@/features/auth/types/auth';
 import { z } from 'zod';
 
 export type FieldErrors<T extends string> = Partial<Record<T, string>>;
@@ -100,7 +105,14 @@ export function validateProfile(
   const result = profileSchema.safeParse(input);
   const errors = result.success
     ? ({} as FieldErrors<keyof ProfileFormInput>)
-    : toFieldErrors(result.error, ['firstName', 'lastName', 'userName', 'phoneNumber', 'dob', 'bio']);
+    : toFieldErrors(result.error, [
+        'firstName',
+        'lastName',
+        'userName',
+        'phoneNumber',
+        'dob',
+        'bio',
+      ]);
 
   const phoneNumber = input.phoneNumber.trim();
   const dob = input.dob.trim();
@@ -124,27 +136,51 @@ export function validateProfile(
 const firstNameSchema = z
   .string()
   .trim()
-  .min(AUTH_FIELD_LIMITS.nameMin, `First name must be ${AUTH_FIELD_LIMITS.nameMin} to ${AUTH_FIELD_LIMITS.nameMax} characters.`)
-  .max(AUTH_FIELD_LIMITS.nameMax, `First name must be ${AUTH_FIELD_LIMITS.nameMin} to ${AUTH_FIELD_LIMITS.nameMax} characters.`);
+  .min(
+    AUTH_FIELD_LIMITS.nameMin,
+    `First name must be ${AUTH_FIELD_LIMITS.nameMin} to ${AUTH_FIELD_LIMITS.nameMax} characters.`,
+  )
+  .max(
+    AUTH_FIELD_LIMITS.nameMax,
+    `First name must be ${AUTH_FIELD_LIMITS.nameMin} to ${AUTH_FIELD_LIMITS.nameMax} characters.`,
+  );
 
 const lastNameSchema = z
   .string()
   .trim()
-  .min(AUTH_FIELD_LIMITS.nameMin, `Last name must be ${AUTH_FIELD_LIMITS.nameMin} to ${AUTH_FIELD_LIMITS.nameMax} characters.`)
-  .max(AUTH_FIELD_LIMITS.nameMax, `Last name must be ${AUTH_FIELD_LIMITS.nameMin} to ${AUTH_FIELD_LIMITS.nameMax} characters.`);
+  .min(
+    AUTH_FIELD_LIMITS.nameMin,
+    `Last name must be ${AUTH_FIELD_LIMITS.nameMin} to ${AUTH_FIELD_LIMITS.nameMax} characters.`,
+  )
+  .max(
+    AUTH_FIELD_LIMITS.nameMax,
+    `Last name must be ${AUTH_FIELD_LIMITS.nameMin} to ${AUTH_FIELD_LIMITS.nameMax} characters.`,
+  );
 
 const userNameSchema = z
   .string()
   .trim()
-  .min(AUTH_FIELD_LIMITS.userNameMin, `Username must be ${AUTH_FIELD_LIMITS.userNameMin} to ${AUTH_FIELD_LIMITS.userNameMax} characters.`)
-  .max(AUTH_FIELD_LIMITS.userNameMax, `Username must be ${AUTH_FIELD_LIMITS.userNameMin} to ${AUTH_FIELD_LIMITS.userNameMax} characters.`);
+  .min(
+    AUTH_FIELD_LIMITS.userNameMin,
+    `Username must be ${AUTH_FIELD_LIMITS.userNameMin} to ${AUTH_FIELD_LIMITS.userNameMax} characters.`,
+  )
+  .max(
+    AUTH_FIELD_LIMITS.userNameMax,
+    `Username must be ${AUTH_FIELD_LIMITS.userNameMin} to ${AUTH_FIELD_LIMITS.userNameMax} characters.`,
+  );
 
 const emailSchema = z.string().trim().regex(EMAIL_PATTERN, 'Enter a valid email address.');
 
 const passwordSchema = z
   .string()
-  .min(AUTH_FIELD_LIMITS.passwordMin, `Password must be ${AUTH_FIELD_LIMITS.passwordMin} to ${AUTH_FIELD_LIMITS.passwordMax} characters.`)
-  .max(AUTH_FIELD_LIMITS.passwordMax, `Password must be ${AUTH_FIELD_LIMITS.passwordMin} to ${AUTH_FIELD_LIMITS.passwordMax} characters.`);
+  .min(
+    AUTH_FIELD_LIMITS.passwordMin,
+    `Password must be ${AUTH_FIELD_LIMITS.passwordMin} to ${AUTH_FIELD_LIMITS.passwordMax} characters.`,
+  )
+  .max(
+    AUTH_FIELD_LIMITS.passwordMax,
+    `Password must be ${AUTH_FIELD_LIMITS.passwordMin} to ${AUTH_FIELD_LIMITS.passwordMax} characters.`,
+  );
 
 const loginSchema = z.object({
   email: emailSchema,
@@ -159,7 +195,10 @@ const registerSchema = z
     email: emailSchema,
     password: passwordSchema,
     confirmPassword: z.string().min(1, 'Confirm password is required.'),
-    phoneNumber: z.string().trim().regex(PHONE_PATTERN, 'Enter a 10-digit phone number starting with 6, 7, 8, or 9.'),
+    phoneNumber: z
+      .string()
+      .trim()
+      .regex(PHONE_PATTERN, 'Enter a 10-digit phone number starting with 6, 7, 8, or 9.'),
     dob: z.string().trim().refine(isValidDate, 'Enter a valid date of birth.'),
     bio: z.string().trim(),
   })
@@ -172,7 +211,10 @@ const registerSchema = z
       });
     }
 
-    if (value.bio && (value.bio.length < AUTH_FIELD_LIMITS.bioMin || value.bio.length > AUTH_FIELD_LIMITS.bioMax)) {
+    if (
+      value.bio &&
+      (value.bio.length < AUTH_FIELD_LIMITS.bioMin || value.bio.length > AUTH_FIELD_LIMITS.bioMax)
+    ) {
       ctx.addIssue({
         code: 'custom',
         path: ['bio'],
@@ -186,7 +228,10 @@ const forgotPasswordSchema = z.object({
 });
 
 const otpSchema = z.object({
-  otp: z.string().trim().regex(/^\d{6}$/, 'Enter the 6-digit code from your email.'),
+  otp: z
+    .string()
+    .trim()
+    .regex(/^\d{6}$/, 'Enter the 6-digit code from your email.'),
 });
 
 const resetPasswordSchema = z
@@ -254,7 +299,10 @@ const profileSchema = z
       });
     }
 
-    if (value.bio && (value.bio.length < AUTH_FIELD_LIMITS.bioMin || value.bio.length > AUTH_FIELD_LIMITS.bioMax)) {
+    if (
+      value.bio &&
+      (value.bio.length < AUTH_FIELD_LIMITS.bioMin || value.bio.length > AUTH_FIELD_LIMITS.bioMax)
+    ) {
       ctx.addIssue({
         code: 'custom',
         path: ['bio'],
