@@ -1,4 +1,14 @@
-import type { AuthSession, AuthUser, LoginInput, RegisterInput } from '@/features/auth/types/auth';
+import type {
+  AuthSession,
+  AuthUser,
+  ChangePasswordInput,
+  LoginInput,
+  OAuthProviders,
+  RegisterInput,
+  ResetPasswordInput,
+  UpdateProfileInput,
+  VerifyOtpInput,
+} from '@/features/auth/types/auth';
 import { api } from '@/utils/axios';
 import type { IHttpResponse } from '@/types/http-response';
 import withApiBoundary from '@/utils/apiErrorBoundary';
@@ -21,15 +31,40 @@ export async function registerRequest(input: RegisterInput) {
 }
 
 export async function forgotPasswordRequest(email: string) {
-  return withApiBoundary(
+  const body = await withApiBoundary(
     () =>
-      api.post<IHttpResponse<{ email: string }>>(
+      api.post<IHttpResponse<{ otp?: string } | null>>(
         apiUrls.forgotPassword,
         { email },
         { skipAuth: true },
       ),
-    'Could not start password reset. Try again.',
+    'Could not send the reset code. Try again.',
   );
+  const otp = body.data && typeof body.data.otp === 'string' ? body.data.otp : undefined;
+  return { message: body.message, otp };
+}
+
+export async function verifyOtpRequest(input: VerifyOtpInput) {
+  const body = await withApiBoundary(
+    () =>
+      api.post<IHttpResponse<{ resetToken: string }>>(apiUrls.verifyOtp, input, { skipAuth: true }),
+    'Could not verify the code. Try again.',
+  );
+  return body.data;
+}
+
+export async function resetPasswordRequest(input: ResetPasswordInput) {
+  return withApiBoundary(
+    () => api.post<IHttpResponse<null>>(apiUrls.resetPassword, input, { skipAuth: true }),
+    'Could not reset the password. Try again.',
+  );
+}
+
+export async function oauthProvidersRequest() {
+  const response = await api.get<IHttpResponse<OAuthProviders>>(apiUrls.oauthProviders, {
+    skipAuth: true,
+  });
+  return response.data.data;
 }
 
 export async function currentUserRequest() {
@@ -39,6 +74,21 @@ export async function currentUserRequest() {
     { silentSuccess: true },
   );
   return body.data.user;
+}
+
+export async function updateProfileRequest(input: UpdateProfileInput) {
+  const body = await withApiBoundary(
+    () => api.patch<IHttpResponse<{ user: AuthUser }>>(apiUrls.me, input),
+    'Could not update your profile. Try again.',
+  );
+  return body.data.user;
+}
+
+export async function changePasswordRequest(input: ChangePasswordInput) {
+  return withApiBoundary(
+    () => api.put<IHttpResponse<null>>(apiUrls.changePassword, input),
+    'Could not change your password. Try again.',
+  );
 }
 
 export async function logoutRequest() {

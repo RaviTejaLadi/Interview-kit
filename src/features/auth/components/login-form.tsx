@@ -1,9 +1,11 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useState, type FormEvent } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { AuthField, AuthFormError } from '@/features/auth/components/auth-field';
+import { OAuthButtons } from '@/features/auth/components/oauth-buttons';
 import { useLogin } from '@/features/auth/hooks/use-login';
 import { useAuthStore } from '@/features/auth/hooks/use-auth-store';
+import { clearOAuthError, readOAuthError } from '@/features/auth/utils/oauth';
 import { validateLogin } from '@/features/auth/utils/validation';
 import { getApiErrorMessage } from '@/utils/axios';
 
@@ -13,6 +15,13 @@ export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<ReturnType<typeof validateLogin>>({});
+  const [oauthError] = useState(readOAuthError);
+
+  useEffect(() => {
+    if (oauthError) {
+      clearOAuthError();
+    }
+  }, [oauthError]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -31,10 +40,15 @@ export function LoginForm() {
       <div>
         <h1 className="text-2xl text-foreground">Sign in</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Use the email and password for your Interview Kits account.
+          Use your email and password, or continue with Google or GitHub.
         </p>
       </div>
-      <AuthFormError message={login.error ? getApiErrorMessage(login.error, 'Could not sign in. Try again.') : ''} />
+      <AuthFormError
+        message={
+          login.error ? getApiErrorMessage(login.error, 'Could not sign in. Try again.') : oauthError
+        }
+      />
+      <OAuthButtons />
       <AuthField
         label="Email"
         name="email"

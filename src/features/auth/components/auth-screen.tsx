@@ -4,7 +4,9 @@ import { SiteHeader } from '@/components/newspaper-masthead';
 import { Card, CardContent } from '@/components/ui/card';
 import { ForgotPasswordForm } from '@/features/auth/components/forgot-password-form';
 import { LoginForm } from '@/features/auth/components/login-form';
+import { ResetPasswordForm } from '@/features/auth/components/reset-password-form';
 import { SignUpForm } from '@/features/auth/components/signup-form';
+import { VerifyOtpForm } from '@/features/auth/components/verify-otp-form';
 import { useAuthStore } from '@/features/auth/hooks/use-auth-store';
 import { AppHeaderActions } from '@/features/interview-app/components/app-header-actions';
 import { THEME_STORAGE_KEY } from '@/features/interview-app/lib/navigation';
@@ -38,6 +40,8 @@ export function AuthScreen() {
           <CardContent className="px-5 py-6 sm:px-6">
             {screen === 'signup' ? <SignUpForm /> : null}
             {screen === 'forgot' ? <ForgotPasswordForm /> : null}
+            {screen === 'verify-otp' ? <VerifyOtpForm /> : null}
+            {screen === 'reset-password' ? <ResetPasswordForm /> : null}
             {screen === 'login' ? <LoginForm /> : null}
           </CardContent>
         </Card>

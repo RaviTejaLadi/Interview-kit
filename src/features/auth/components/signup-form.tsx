@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { AuthField, AuthFormError } from '@/features/auth/components/auth-field';
+import { OAuthButtons } from '@/features/auth/components/oauth-buttons';
 import { useRegister } from '@/features/auth/hooks/use-register';
 import { useAuthStore } from '@/features/auth/hooks/use-auth-store';
 import { validateRegister } from '@/features/auth/utils/validation';
@@ -60,9 +61,11 @@ export function SignUpForm() {
       <div>
         <h1 className="text-2xl text-foreground">Create account</h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Register with the Interview Kits API. You will be signed in after the account is created.
+          Register with email, or continue with Google or GitHub. You will be signed in after the account is
+          created.
         </p>
       </div>
+      <OAuthButtons />
       <AuthFormError
         message={
           register.error ? getApiErrorMessage(register.error, 'Could not create the account. Try again.') : ''

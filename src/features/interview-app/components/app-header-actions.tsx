@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { LogOutIcon, Maximize2Icon, Minimize2Icon, MoonIcon, SettingsIcon, SunIcon } from 'lucide-react';
 
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,6 +32,7 @@ function initials(user: AuthUser) {
 function AccountAvatar({ user, className }: { user: AuthUser; className?: string }) {
   return (
     <Avatar className={cn('size-9 after:border-border', className)}>
+      {user.avatar ? <AvatarImage src={user.avatar} alt="" /> : null}
       <AvatarFallback className="bg-primary/15 text-xs font-semibold text-primary">
         {initials(user)}
       </AvatarFallback>

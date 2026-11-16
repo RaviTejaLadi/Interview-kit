@@ -1,8 +1,11 @@
 export const ACCESS_TOKEN_KEY = 'interview-kit-access-token';
 export const REFRESH_TOKEN_KEY = 'interview-kit-refresh-token';
+export const OAUTH_ERROR_KEY = 'interview-kit-oauth-error';
+export const OAUTH_CALLBACK_PATH = '/oauth/callback';
 
 export const authQueryKeys = {
   me: ['auth', 'me'] as const,
+  oauthProviders: ['auth', 'oauth-providers'] as const,
 };
 
 export const AUTH_FIELD_LIMITS = {
