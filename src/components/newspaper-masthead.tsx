@@ -52,46 +52,48 @@ export function SiteHeader({
   }, []);
 
   return (
-    <header className="flex min-h-12 shrink-0 items-center gap-3 border-b border-border bg-[var(--color-header)] px-4 py-2 text-[var(--color-header-foreground)] sm:px-6">
-      {leading}
-      {showBrand ? (
-        onBrandClick ? (
-          <button
-            type="button"
-            onClick={onBrandClick}
-            className="shrink-0 text-sm font-semibold text-[var(--color-header-foreground)] transition-colors hover:text-primary"
-          >
-            Interview Kits
-          </button>
-        ) : (
-          <p className="shrink-0 text-sm font-semibold text-[var(--color-header-foreground)]">
-            Interview Kits
+    <header className="flex min-h-12 shrink-0 items-center gap-2 border-b border-border bg-[var(--color-header)] px-3 py-2 text-[var(--color-header-foreground)] sm:gap-3 sm:px-4 lg:px-6">
+      <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
+        {leading}
+        {showBrand ? (
+          onBrandClick ? (
+            <button
+              type="button"
+              onClick={onBrandClick}
+              className="shrink-0 text-sm font-semibold text-[var(--color-header-foreground)] transition-colors hover:text-primary"
+            >
+              Interview Kits
+            </button>
+          ) : (
+            <p className="shrink-0 text-sm font-semibold text-[var(--color-header-foreground)]">
+              Interview Kits
+            </p>
+          )
+        ) : null}
+        {kitLabel ? (
+          <div className="flex min-w-0 items-center gap-2">
+            <span className="hidden h-4 w-px shrink-0 bg-border md:block" aria-hidden="true" />
+            {kitIcon ? (
+              <img
+                src={kitIcon}
+                alt=""
+                aria-hidden="true"
+                className={cn('size-5 shrink-0 object-contain', kitIconToneClass(kitKey))}
+              />
+            ) : null}
+            <p className="truncate text-sm font-semibold leading-none text-[var(--color-header-foreground)]">
+              {kitLabel}
+            </p>
+          </div>
+        ) : null}
+        {detail ? (
+          <p className="hidden min-w-0 truncate text-xs text-[var(--color-header-muted)] xl:block">
+            {detail}
           </p>
-        )
-      ) : null}
-      {kitLabel ? (
-        <>
-          <span className="hidden h-4 w-px shrink-0 bg-border sm:block" aria-hidden="true" />
-          {kitIcon ? (
-            <img
-              src={kitIcon}
-              alt=""
-              aria-hidden="true"
-              className={cn('size-5 shrink-0 object-contain', kitIconToneClass(kitKey))}
-            />
-          ) : null}
-          <p className="truncate text-sm font-semibold leading-none text-[var(--color-header-foreground)]">
-            {kitLabel}
-          </p>
-        </>
-      ) : null}
-      {detail ? (
-        <p className="hidden min-w-0 truncate text-xs text-[var(--color-header-muted)] lg:block">
-          {detail}
-        </p>
-      ) : null}
-      <div className="ml-auto flex shrink-0 items-center gap-2">
-        <p className="hidden whitespace-nowrap rounded-[var(--radius-control)] border border-border bg-muted px-2 py-1 font-mono text-[11px] font-medium tracking-wide text-[var(--color-header-foreground)] tabular-nums sm:block">
+        ) : null}
+      </div>
+      <div className="flex shrink-0 items-center gap-2">
+        <p className="hidden whitespace-nowrap rounded-[var(--radius-control)] border border-border bg-muted px-2 py-1 font-mono text-[11px] font-medium tracking-wide text-[var(--color-header-foreground)] tabular-nums lg:block">
           {localTime}
         </p>
         {actions}

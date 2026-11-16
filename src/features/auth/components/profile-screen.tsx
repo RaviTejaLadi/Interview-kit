@@ -78,8 +78,8 @@ export function ProfileScreen() {
           />
         }
       />
-      <main className="mx-auto flex w-full max-w-2xl flex-1 flex-col gap-6 overflow-y-auto px-4 py-8 sm:px-6">
-        <div className="flex items-center justify-between gap-4">
+      <main className="mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 overflow-y-auto px-4 py-6 sm:px-6 sm:py-8 lg:max-w-4xl lg:px-8">
+        <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex min-w-0 items-center gap-4">
             <Avatar size="lg" className="size-14">
               {user.avatar ? <AvatarImage src={user.avatar} alt="" /> : null}
@@ -95,7 +95,7 @@ export function ProfileScreen() {
             </div>
           </div>
           {isEditing ? null : (
-            <Button type="button" variant="outline" size="lg" onClick={() => setIsEditing(true)}>
+            <Button type="button" variant="outline" size="lg" className="shrink-0" onClick={() => setIsEditing(true)}>
               <PencilLineIcon className="size-4" />
               Edit profile
             </Button>

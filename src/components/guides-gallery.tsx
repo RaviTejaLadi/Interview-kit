@@ -368,8 +368,8 @@ export function GuidesGallery({
         </section>
 
         <section className="pt-8">
-          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto_auto_auto_auto]">
-            <div className="relative">
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_auto_auto_auto_auto]">
+            <div className="relative md:col-span-2 xl:col-span-1">
               <SearchIcon className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 value={query}
@@ -384,11 +384,11 @@ export function GuidesGallery({
                 aria-label="Sort guides"
                 className={cn(
                   buttonVariants({ variant: 'outline' }),
-                  'h-8 w-full justify-between bg-card px-2.5 text-xs lg:w-auto',
+                  'h-8 w-full min-w-0 justify-between bg-card px-2.5 text-xs xl:w-auto',
                 )}
               >
-                <span>Sort: {SORT_LABEL[sortMode]}</span>
-                <ChevronDownIcon className="size-4" />
+                <span className="min-w-0 truncate">Sort: {SORT_LABEL[sortMode]}</span>
+                <ChevronDownIcon className="size-4 shrink-0" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" sideOffset={6}>
                 <DropdownMenuRadioGroup
@@ -408,11 +408,11 @@ export function GuidesGallery({
                 aria-label="Guide category filter"
                 className={cn(
                   buttonVariants({ variant: 'outline' }),
-                  'h-8 w-full justify-between bg-card px-2.5 text-xs lg:w-auto',
+                  'h-8 w-full min-w-0 justify-between bg-card px-2.5 text-xs xl:w-auto',
                 )}
               >
-                <span>{CATEGORY_LABEL[categoryFilter]}</span>
-                <ChevronDownIcon className="size-4" />
+                <span className="min-w-0 truncate">{CATEGORY_LABEL[categoryFilter]}</span>
+                <ChevronDownIcon className="size-4 shrink-0" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" sideOffset={6}>
                 <DropdownMenuRadioGroup
@@ -432,11 +432,11 @@ export function GuidesGallery({
                 aria-label="Guide status filter"
                 className={cn(
                   buttonVariants({ variant: 'outline' }),
-                  'h-8 w-full justify-between bg-card px-2.5 text-xs lg:w-auto',
+                  'h-8 w-full min-w-0 justify-between bg-card px-2.5 text-xs xl:w-auto',
                 )}
               >
-                <span>{STATUS_LABEL[statusFilter]}</span>
-                <ChevronDownIcon className="size-4" />
+                <span className="min-w-0 truncate">{STATUS_LABEL[statusFilter]}</span>
+                <ChevronDownIcon className="size-4 shrink-0" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" sideOffset={6}>
                 <DropdownMenuRadioGroup
@@ -456,10 +456,10 @@ export function GuidesGallery({
                 aria-label="Guide topic filter"
                 className={cn(
                   buttonVariants({ variant: 'outline' }),
-                  'h-8 w-full justify-between bg-card px-2.5 text-xs lg:w-auto',
+                  'h-8 w-full min-w-0 justify-between bg-card px-2.5 text-xs xl:w-auto',
                 )}
               >
-                <span>
+                <span className="min-w-0 truncate">
                   <img
                     src={subjectFilter === 'all' ? npmIcon : getSubjectIconSrc(subjectFilter)}
                     alt=""
@@ -472,7 +472,7 @@ export function GuidesGallery({
                   Topic:{' '}
                   {subjectFilter === 'all' ? 'All topics' : formatSubjectLabel(subjectFilter)}
                 </span>
-                <ChevronDownIcon className="size-4" />
+                <ChevronDownIcon className="size-4 shrink-0" />
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 align="end"
@@ -541,7 +541,7 @@ export function GuidesGallery({
               <p className="text-muted-foreground mt-2 text-sm">Try changing search or filters.</p>
             </Card>
           ) : viewMode === 'grid' ? (
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {visibleGuides.map((guide) => {
                 const guideProgress = guideProgressById[guide.id];
                 const isRead = guide.isPlaceholder ? false : guideProgress?.read === true;
@@ -693,7 +693,7 @@ export function GuidesGallery({
                         </p>
                       </div>
                     </div>
-                    <div className="ml-auto flex items-center gap-1.5">
+                    <div className="ml-auto flex shrink-0 items-center gap-1.5">
                       {guide.isPlaceholder ? (
                         <span className="text-xs text-muted-foreground">Pending content</span>
                       ) : (

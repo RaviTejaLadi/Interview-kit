@@ -45,7 +45,7 @@ export function OAuthButtons() {
 
   return (
     <div className="space-y-3.5">
-      <div className={hasBothProviders ? 'grid grid-cols-2 gap-2' : 'grid gap-2'}>
+      <div className={hasBothProviders ? 'grid grid-cols-1 gap-2 sm:grid-cols-2' : 'grid gap-2'}>
         {providers.isPending ? (
           <Button type="button" variant="outline" size="lg" className="w-full" disabled>
             <LoaderCircleIcon className="size-4 animate-spin" />
@@ -57,7 +57,7 @@ export function OAuthButtons() {
             type="button"
             variant="outline"
             size="lg"
-            className="w-full justify-center"
+            className="h-auto min-h-9 w-full min-w-0 justify-center px-3 whitespace-normal"
             onClick={() => startProviderLogin('google')}
           >
             <GoogleMark />
@@ -69,7 +69,7 @@ export function OAuthButtons() {
             type="button"
             variant="outline"
             size="lg"
-            className="w-full justify-center"
+            className="h-auto min-h-9 w-full min-w-0 justify-center px-3 whitespace-normal"
             onClick={() => startProviderLogin('github')}
           >
             <GithubIcon />

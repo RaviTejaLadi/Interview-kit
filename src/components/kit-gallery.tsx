@@ -127,7 +127,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
       <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
         <section id="kits" className="scroll-mt-6">
           <div className="rounded-[var(--radius-panel)] border border-border bg-card p-4 shadow-[var(--shadow-card)] sm:p-5 lg:p-6">
-            <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,520px)] lg:items-start">
+            <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(16rem,22rem)] md:items-start lg:grid-cols-[minmax(0,1fr)_minmax(18rem,32rem)]">
               <div className="lg:pr-4">
                 <h1 className="max-w-3xl text-2xl text-foreground sm:text-3xl lg:text-4xl">
                   Structured interview kits for focused preparation.
@@ -137,7 +137,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                 </p>
               </div>
 
-              <div className="grid gap-2 sm:grid-cols-2 lg:justify-self-end">
+              <div className="grid grid-cols-2 gap-2 md:justify-self-end">
                 <Card>
                   <CardHeader className="p-3 pb-1.5">
                     <CardTitle className="text-xs font-medium text-muted-foreground">
@@ -288,14 +288,14 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                       <p className="truncate text-sm font-medium text-foreground">{group.label}</p>
                       <p className="mt-0.5 truncate text-xs text-muted-foreground">{description}</p>
                     </div>
-                    <div className="hidden items-end gap-2 text-xs sm:flex">
+                    <div className="hidden shrink-0 items-center gap-2 text-xs md:flex">
                       <span className="rounded-full border border-border bg-muted px-2 py-1 font-medium text-muted-foreground">
                         {countLabel}
                       </span>
-                      <span className="text-muted-foreground">{progressLabel}</span>
+                      <span className="hidden text-muted-foreground lg:inline">{progressLabel}</span>
                       <span className="font-medium text-foreground">{progress}%</span>
                       {matchLabel ? (
-                        <span className="text-muted-foreground">{matchLabel}</span>
+                        <span className="hidden text-muted-foreground xl:inline">{matchLabel}</span>
                       ) : null}
                     </div>
                     <ArrowRightIcon className="size-4 shrink-0 text-primary transition-transform group-hover:translate-x-0.5" />
@@ -304,7 +304,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
               })}
             </div>
           ) : (
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {visibleKits.map((item) => {
                 const { group, matchCount } = item;
                 const icon = KIT_ICON_BY_KEY[group.id];

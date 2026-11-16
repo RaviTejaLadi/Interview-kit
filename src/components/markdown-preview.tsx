@@ -121,7 +121,7 @@ function CodeBlock({
   return (
     <div
       className={cn(
-        'group relative my-4 overflow-hidden rounded-[var(--radius-control)] border border-slate-800 bg-[#0b1220]',
+        'group relative my-4 max-w-full overflow-x-auto rounded-[var(--radius-control)] border border-slate-800 bg-[#0b1220]',
       )}
     >
       <button
@@ -140,10 +140,11 @@ function CodeBlock({
         language={inferLanguage(language, codeText)}
         PreTag="div"
         style={themeStyle(isDarkTheme)}
-        wrapLongLines
         showLineNumbers={false}
         customStyle={{
           margin: 0,
+          maxWidth: '100%',
+          overflowX: 'auto',
           borderRadius: 0,
           padding: '1rem',
           fontSize: '13.5px',
@@ -342,10 +343,10 @@ function createMarkdownComponents(
     table: ({ className, ...props }) => (
       <div
         className={cn(
-          'my-4 overflow-x-auto rounded-[var(--radius-control)] border border-border bg-card',
+          'my-4 max-w-full overflow-x-auto rounded-[var(--radius-control)] border border-border bg-card',
         )}
       >
-        <table className={cn('w-full min-w-0 border-collapse text-[13px]', className)} {...props} />
+        <table className={cn('w-full min-w-[36rem] border-collapse text-[13px]', className)} {...props} />
       </div>
     ),
     thead: ({ className, ...props }) => (
@@ -381,7 +382,7 @@ function createMarkdownComponents(
       <span className={cn('my-3 block', markdownHierarchy.body)}>
         <img
           className={cn(
-            'max-w-full rounded-[var(--radius-control)] border border-border',
+            'h-auto max-w-full rounded-[var(--radius-control)] border border-border',
             className,
           )}
           alt={alt ?? 'Markdown image'}
@@ -459,7 +460,7 @@ export function MarkdownPreview({ content, theme, onInternalLink }: MarkdownPrev
   );
 
   return (
-    <div className="markdown-body markdown-preview max-w-none font-sans wrap-break-word">
+    <div className="markdown-body markdown-preview mx-auto w-full max-w-5xl font-sans wrap-break-word">
       <ReactMarkdown
         rehypePlugins={[rehypeRaw]}
         remarkPlugins={[remarkGfm, remarkRenderMath]}

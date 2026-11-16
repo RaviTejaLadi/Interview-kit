@@ -372,6 +372,21 @@
 
 .markdown-body {
   @apply font-sans text-foreground;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.markdown-body img,
+.markdown-body video,
+.markdown-body svg,
+.markdown-body canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+.markdown-body pre,
+.markdown-body table {
+  max-width: 100%;
 }
 
 .markdown-body .math-display {

@@ -88,13 +88,15 @@ export function AuthScreen() {
         className="pointer-events-none absolute right-10 bottom-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl"
       />
 
-      <div className="relative px-4 py-3 sm:px-6">
+      <div className="relative px-4 py-3 sm:px-6 lg:px-8">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3">
-          <p className="text-base font-semibold tracking-wide text-foreground">Interview Kits</p>
+          <p className="min-w-0 truncate text-base font-semibold tracking-wide text-foreground">
+            Interview Kits
+          </p>
 
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             {showSwitchAction ? (
-              <p className="hidden items-center gap-2 text-xs text-muted-foreground sm:flex">
+              <p className="hidden items-center gap-2 text-xs text-muted-foreground md:flex">
                 {authSwitchAction.text}
                 <button
                   type="button"
@@ -111,7 +113,7 @@ export function AuthScreen() {
               type="button"
               variant="ghost"
               size="sm"
-              className="inline-flex text-xs sm:hidden"
+              className="inline-flex text-xs md:hidden"
               onClick={authSwitchAction.onClick}
             >
               {authSwitchAction.button}
@@ -125,9 +127,9 @@ export function AuthScreen() {
           </div>
         </div>
       </div>
-      <main className="relative flex flex-1 overflow-y-auto px-4 pb-8 sm:px-6 sm:pb-10">
-        <div className="mx-auto grid w-full max-w-6xl items-center gap-6 lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)]">
-          <section className="mx-auto w-full max-w-xl px-6 py-7 sm:px-7 md:mx-0">
+      <main className="relative flex flex-1 overflow-y-auto px-4 pb-8 sm:px-6 sm:pb-10 lg:px-8">
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-8 py-6 lg:grid-cols-[minmax(0,34rem)_minmax(0,1fr)] lg:gap-12 lg:py-8 xl:gap-16">
+          <section className="mx-auto w-full max-w-xl lg:mx-0">
             {screen === 'signup' ? <SignUpForm /> : null}
             {screen === 'forgot' ? <ForgotPasswordForm /> : null}
             {screen === 'verify-otp' ? <VerifyOtpForm /> : null}
@@ -135,9 +137,9 @@ export function AuthScreen() {
             {screen === 'login' ? <LoginForm /> : null}
           </section>
 
-          <aside className="hidden lg:block">
+          <aside className="mx-auto hidden w-full max-w-lg lg:block">
             <div className="space-y-4">
-              <div className="relative h-[356px] overflow-hidden">
+              <div className="relative h-64 overflow-hidden xl:h-[356px]">
                 {authIllustrations.map((item, index) => (
                   <div
                     key={item.title}
