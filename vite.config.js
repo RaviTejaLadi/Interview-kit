@@ -18,6 +18,7 @@ export default defineConfig({
   },
   server: {
     open: true,
+    port: 1010,
     proxy: {
       '/api': {
         target: new URL(BASE_URL).origin,
