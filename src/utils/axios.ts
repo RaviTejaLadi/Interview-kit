@@ -58,12 +58,6 @@ function refreshAccessToken() {
 }
 
 api.interceptors.request.use((config: RetryConfig) => {
-  if (import.meta.env.DEV && config.url?.startsWith('http')) {
-    const url = new URL(config.url);
-    config.baseURL = '';
-    config.url = `${url.pathname}${url.search}`;
-  }
-
   if (!config.skipAuth) {
     const accessToken = readAccessToken();
     if (accessToken) {

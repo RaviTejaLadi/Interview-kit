@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from 'react';
+import { AtSignIcon, CalendarDaysIcon, FileTextIcon, PhoneIcon, SaveIcon, UserIcon, XIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
 import { AuthField, AuthFormError } from '@/features/auth/components/auth-field';
 import { useUpdateProfile } from '@/features/auth/hooks/use-update-profile';
 import type { AuthUser } from '@/features/auth/types/auth';
@@ -60,7 +62,7 @@ export function EditProfileForm({ user, onCancel, onSaved }: EditProfileFormProp
   }
 
   return (
-    <form className="space-y-4 py-4" onSubmit={handleSubmit} noValidate>
+    <form className="space-y-5 py-4" onSubmit={handleSubmit} noValidate>
       <AuthFormError
         message={
           formError ||
@@ -73,63 +75,90 @@ export function EditProfileForm({ user, onCancel, onSaved }: EditProfileFormProp
         <AuthField
           label="First name"
           name="firstName"
+          required
           autoComplete="given-name"
           value={form.firstName}
           error={errors.firstName}
+          icon={<UserIcon className="size-4" />}
           onChange={(event) => updateField('firstName', event.target.value)}
         />
         <AuthField
           label="Last name"
           name="lastName"
+          required
           autoComplete="family-name"
           value={form.lastName}
           error={errors.lastName}
+          icon={<UserIcon className="size-4" />}
           onChange={(event) => updateField('lastName', event.target.value)}
         />
       </div>
       <AuthField
         label="Username"
         name="userName"
+        required
         autoComplete="username"
         value={form.userName}
         error={errors.userName}
+        icon={<AtSignIcon className="size-4" />}
         onChange={(event) => updateField('userName', event.target.value)}
       />
       <div className="grid gap-4 sm:grid-cols-2">
         <AuthField
           label="Phone number"
           name="phoneNumber"
+          required={Boolean(user.phoneNumber)}
           type="tel"
           inputMode="numeric"
           autoComplete="tel"
           placeholder="9876543210"
           value={form.phoneNumber}
           error={errors.phoneNumber}
+          icon={<PhoneIcon className="size-4" />}
           onChange={(event) => updateField('phoneNumber', event.target.value)}
         />
         <AuthField
           label="Date of birth"
           name="dob"
+          required={Boolean(user.dob)}
           type="date"
           autoComplete="bday"
           value={form.dob}
           error={errors.dob}
+          icon={<CalendarDaysIcon className="size-4" />}
           onChange={(event) => updateField('dob', event.target.value)}
         />
       </div>
       <AuthField
         label="Bio"
         name="bio"
-        hint="Optional. 2 to 250 characters."
+        required={Boolean(user.bio)}
+        hint={user.bio ? '2 to 250 characters.' : 'Optional. 2 to 250 characters.'}
         value={form.bio}
         error={errors.bio}
-        onChange={(event) => updateField('bio', event.target.value)}
-      />
+      >
+        <div className="relative">
+          <span className="pointer-events-none absolute top-2.5 left-2.5 inline-flex items-center text-muted-foreground">
+            <FileTextIcon className="size-4" />
+          </span>
+          <Textarea
+            id="bio"
+            name="bio"
+            rows={3}
+            value={form.bio}
+            aria-invalid={errors.bio ? true : undefined}
+            className="pl-8"
+            onChange={(event) => updateField('bio', event.target.value)}
+          />
+        </div>
+      </AuthField>
       <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
         <Button type="button" variant="outline" size="lg" onClick={onCancel} disabled={updateProfile.isPending}>
+          <XIcon className="size-4" />
           Cancel
         </Button>
         <Button type="submit" size="lg" disabled={updateProfile.isPending}>
+          <SaveIcon className="size-4" />
           {updateProfile.isPending ? 'Saving…' : 'Save profile'}
         </Button>
       </div>

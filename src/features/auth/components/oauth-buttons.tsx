@@ -1,4 +1,4 @@
-import { GithubIcon } from 'lucide-react';
+import { GithubIcon, LoaderCircleIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { useOAuthProviders } from '@/features/auth/hooks/use-oauth-providers';
@@ -28,8 +28,7 @@ function GoogleMark() {
 }
 
 function startProviderLogin(provider: 'google' | 'github') {
-  const base = import.meta.env.DEV ? '/api/v1' : BASE_URL;
-  const target = new URL(`${base}/auth/${provider}`, window.location.origin);
+  const target = new URL(`${BASE_URL}/auth/${provider}`);
   target.searchParams.set('returnTo', window.location.origin);
   window.location.assign(target.toString());
 }
@@ -38,20 +37,27 @@ export function OAuthButtons() {
   const providers = useOAuthProviders();
   const googleReady = Boolean(providers.data?.google);
   const githubReady = Boolean(providers.data?.github);
+  const hasBothProviders = googleReady && githubReady;
 
-  if (!googleReady && !githubReady) {
+  if (!googleReady && !githubReady && !providers.isPending) {
     return null;
   }
 
   return (
-    <div className="space-y-4">
-      <div className="grid gap-2">
+    <div className="space-y-3.5">
+      <div className={hasBothProviders ? 'grid grid-cols-2 gap-2' : 'grid gap-2'}>
+        {providers.isPending ? (
+          <Button type="button" variant="outline" size="lg" className="w-full" disabled>
+            <LoaderCircleIcon className="size-4 animate-spin" />
+            Loading providers…
+          </Button>
+        ) : null}
         {googleReady ? (
           <Button
             type="button"
             variant="outline"
             size="lg"
-            className="w-full"
+            className="w-full justify-center"
             onClick={() => startProviderLogin('google')}
           >
             <GoogleMark />
@@ -63,7 +69,7 @@ export function OAuthButtons() {
             type="button"
             variant="outline"
             size="lg"
-            className="w-full"
+            className="w-full justify-center"
             onClick={() => startProviderLogin('github')}
           >
             <GithubIcon />

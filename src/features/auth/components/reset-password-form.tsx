@@ -1,7 +1,10 @@
 import { useEffect, useState, type FormEvent } from 'react';
+import { KeyRoundIcon, RefreshCcwIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { AuthField, AuthFormError } from '@/features/auth/components/auth-field';
+import { AuthFormError } from '@/features/auth/components/auth-field';
+import { AuthFormHeading } from '@/features/auth/components/auth-form-heading';
+import { AuthPasswordField } from '@/features/auth/components/auth-password-field';
 import { useResetPassword } from '@/features/auth/hooks/use-reset-password';
 import { useAuthStore } from '@/features/auth/hooks/use-auth-store';
 import { validateResetPassword } from '@/features/auth/utils/validation';
@@ -43,13 +46,12 @@ export function ResetPasswordForm() {
   }
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit} noValidate>
-      <div>
-        <h1 className="text-2xl text-foreground">Choose a new password</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          This replaces the password for {email || 'your account'}. You will sign in with it next.
-        </p>
-      </div>
+    <form className="space-y-5" onSubmit={handleSubmit} noValidate>
+      <AuthFormHeading
+        icon={KeyRoundIcon}
+        title="Choose a new password"
+        description={`This replaces the password for ${email || 'your account'}. You will sign in with it next.`}
+      />
       <AuthFormError
         message={
           resetPassword.error
@@ -57,29 +59,31 @@ export function ResetPasswordForm() {
             : ''
         }
       />
-      <AuthField
+      <AuthPasswordField
         label="New password"
         name="newPassword"
-        type="password"
+        required
         autoComplete="new-password"
         value={newPassword}
         error={errors.newPassword}
         onChange={(event) => setNewPassword(event.target.value)}
       />
-      <AuthField
+      <AuthPasswordField
         label="Confirm password"
         name="confirmPassword"
-        type="password"
+        required
         autoComplete="new-password"
         value={confirmPassword}
         error={errors.confirmPassword}
         onChange={(event) => setConfirmPassword(event.target.value)}
       />
       <Button type="submit" size="lg" className="w-full" disabled={resetPassword.isPending || !resetToken}>
+        <KeyRoundIcon className="size-4" />
         {resetPassword.isPending ? 'Updating password…' : 'Update password'}
       </Button>
       <p className="text-center text-sm text-muted-foreground">
         <Button type="button" variant="link" size="sm" onClick={backToForgot}>
+          <RefreshCcwIcon className="size-4" />
           Request a new code
         </Button>
       </p>

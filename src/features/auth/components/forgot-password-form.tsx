@@ -1,7 +1,9 @@
 import { useState, type FormEvent } from 'react';
+import { ArrowLeftIcon, MailIcon, SendIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { AuthField, AuthFormError } from '@/features/auth/components/auth-field';
+import { AuthFormHeading } from '@/features/auth/components/auth-form-heading';
 import { useForgotPassword } from '@/features/auth/hooks/use-forgot-password';
 import { useAuthStore } from '@/features/auth/hooks/use-auth-store';
 import { validateForgotPassword } from '@/features/auth/utils/validation';
@@ -33,13 +35,12 @@ export function ForgotPasswordForm() {
   }
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit} noValidate>
-      <div>
-        <h1 className="text-2xl text-foreground">Forgot password</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Enter the email on your account. We will send a 6-digit code you can use to choose a new password.
-        </p>
-      </div>
+    <form className="space-y-5" onSubmit={handleSubmit} noValidate>
+      <AuthFormHeading
+        icon={SendIcon}
+        title="Forgot password"
+        description="Enter your account email. We will send a 6-digit code so you can choose a new password."
+      />
       <AuthFormError
         message={
           forgotPassword.error
@@ -50,17 +51,21 @@ export function ForgotPasswordForm() {
       <AuthField
         label="Email"
         name="email"
+        required
         type="email"
         autoComplete="email"
         value={email}
         error={error}
+        icon={<MailIcon className="size-4" />}
         onChange={(event) => setEmail(event.target.value)}
       />
       <Button type="submit" size="lg" className="w-full" disabled={forgotPassword.isPending}>
+        <SendIcon className="size-4" />
         {forgotPassword.isPending ? 'Sending…' : 'Send reset code'}
       </Button>
       <p className="text-center text-sm text-muted-foreground">
         <Button type="button" variant="link" size="sm" onClick={() => setScreen('login')}>
+          <ArrowLeftIcon className="size-4" />
           Back to sign in
         </Button>
       </p>

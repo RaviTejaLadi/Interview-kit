@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { PencilLineIcon, ShieldCheckIcon, UserCircle2Icon } from 'lucide-react';
 
 import { SiteHeader } from '@/components/newspaper-masthead';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -95,12 +96,17 @@ export function ProfileScreen() {
           </div>
           {isEditing ? null : (
             <Button type="button" variant="outline" size="lg" onClick={() => setIsEditing(true)}>
+              <PencilLineIcon className="size-4" />
               Edit profile
             </Button>
           )}
         </div>
         <Card>
           <CardContent className="px-5 py-2 sm:px-6">
+            <h2 className="flex items-center gap-2 py-4 text-sm font-medium text-foreground">
+              <UserCircle2Icon className="size-4 text-primary" />
+              Account details
+            </h2>
             {isEditing ? (
               <EditProfileForm
                 key={user.updatedAt}
@@ -123,6 +129,10 @@ export function ProfileScreen() {
         </Card>
         <Card>
           <CardContent className="px-5 py-6 sm:px-6">
+            <h2 className="mb-4 flex items-center gap-2 text-sm font-medium text-foreground">
+              <ShieldCheckIcon className="size-4 text-primary" />
+              Security
+            </h2>
             <ChangePasswordForm />
           </CardContent>
         </Card>

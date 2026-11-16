@@ -20,6 +20,7 @@ import { cn } from '@/lib/utils';
 type AppHeaderActionsProps = {
   theme: Theme;
   onToggleTheme: () => void;
+  showGuestFullscreen?: boolean;
 };
 
 const accountMenuItemClassName =
@@ -40,7 +41,7 @@ function AccountAvatar({ user, className }: { user: AuthUser; className?: string
   );
 }
 
-export function AppHeaderActions({ theme, onToggleTheme }: AppHeaderActionsProps) {
+export function AppHeaderActions({ theme, onToggleTheme, showGuestFullscreen = true }: AppHeaderActionsProps) {
   const user = useCurrentUser().data;
   const logout = useLogout();
   const setIsProfileOpen = useInterviewAppStore((state) => state.setIsProfileOpen);
@@ -132,7 +133,7 @@ export function AppHeaderActions({ theme, onToggleTheme }: AppHeaderActionsProps
         </DropdownMenu>
       ) : (
         <>
-          <FullscreenButton />
+          {showGuestFullscreen ? <FullscreenButton /> : null}
           <ThemeToggle theme={theme} onToggle={onToggleTheme} />
         </>
       )}

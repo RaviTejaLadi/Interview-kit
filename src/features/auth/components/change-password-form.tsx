@@ -1,7 +1,9 @@
 import { useState, type FormEvent } from 'react';
+import { KeyRoundIcon, ShieldCheckIcon } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
-import { AuthField, AuthFormError } from '@/features/auth/components/auth-field';
+import { AuthFormError } from '@/features/auth/components/auth-field';
+import { AuthPasswordField } from '@/features/auth/components/auth-password-field';
 import { useChangePassword } from '@/features/auth/hooks/use-change-password';
 import { validateChangePassword } from '@/features/auth/utils/validation';
 import { getApiErrorMessage } from '@/utils/axios';
@@ -36,9 +38,12 @@ export function ChangePasswordForm() {
   }
 
   return (
-    <form className="space-y-4" onSubmit={handleSubmit} noValidate>
+    <form className="space-y-5" onSubmit={handleSubmit} noValidate>
       <div>
-        <h2 className="text-lg text-foreground">Change password</h2>
+        <h2 className="flex items-center gap-2 text-lg text-foreground">
+          <ShieldCheckIcon className="size-4 text-primary" />
+          Change password
+        </h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Google and GitHub accounts that have never set a password can create one from Forgot password on the
           sign-in screen.
@@ -51,29 +56,29 @@ export function ChangePasswordForm() {
             : ''
         }
       />
-      <AuthField
+      <AuthPasswordField
         label="Current password"
         name="currentPassword"
-        type="password"
+        required
         autoComplete="current-password"
         value={currentPassword}
         error={errors.currentPassword}
         onChange={(event) => setCurrentPassword(event.target.value)}
       />
       <div className="grid gap-4 sm:grid-cols-2">
-        <AuthField
+        <AuthPasswordField
           label="New password"
           name="newPassword"
-          type="password"
+          required
           autoComplete="new-password"
           value={newPassword}
           error={errors.newPassword}
           onChange={(event) => setNewPassword(event.target.value)}
         />
-        <AuthField
+        <AuthPasswordField
           label="Confirm password"
           name="confirmPassword"
-          type="password"
+          required
           autoComplete="new-password"
           value={confirmPassword}
           error={errors.confirmPassword}
@@ -81,6 +86,7 @@ export function ChangePasswordForm() {
         />
       </div>
       <Button type="submit" size="lg" disabled={changePassword.isPending}>
+        <KeyRoundIcon className="size-4" />
         {changePassword.isPending ? 'Updating…' : 'Update password'}
       </Button>
     </form>

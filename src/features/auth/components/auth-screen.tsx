@@ -1,7 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { ArrowRightIcon } from 'lucide-react';
 
-import { SiteHeader } from '@/components/newspaper-masthead';
-import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import learningIllustration from '@/assets/Learning-bro.svg';
+import resumeIllustration from '@/assets/Resume-bro.svg';
+import workTimeIllustration from '@/assets/Work time-cuate.svg';
 import { ForgotPasswordForm } from '@/features/auth/components/forgot-password-form';
 import { LoginForm } from '@/features/auth/components/login-form';
 import { ResetPasswordForm } from '@/features/auth/components/reset-password-form';
@@ -11,11 +14,38 @@ import { useAuthStore } from '@/features/auth/hooks/use-auth-store';
 import { AppHeaderActions } from '@/features/interview-app/components/app-header-actions';
 import { THEME_STORAGE_KEY } from '@/features/interview-app/lib/navigation';
 import { useInterviewAppStore } from '@/features/interview-app/store/use-interview-app-store';
+import { cn } from '@/lib/utils';
+
+const authIllustrations = [
+  {
+    src: resumeIllustration,
+    alt: 'Person preparing for job interviews',
+    title: 'Interview-ready learning',
+    description: 'Practice daily, track progress, and stay consistent with focused interview kits.',
+  },
+  {
+    src: learningIllustration,
+    alt: 'Person learning from study material',
+    title: 'Structured preparation',
+    description: 'Theory and coding are organized together so revision feels simple and repeatable.',
+  },
+  {
+    src: workTimeIllustration,
+    alt: 'Person planning study time',
+    title: 'Build momentum',
+    description: 'Set a routine, complete more questions, and improve confidence one session at a time.',
+  },
+];
+
+const ILLUSTRATION_ROTATION_MS = 4500;
 
 export function AuthScreen() {
   const screen = useAuthStore((state) => state.screen);
+  const setScreen = useAuthStore((state) => state.setScreen);
   const theme = useInterviewAppStore((state) => state.theme);
   const setTheme = useInterviewAppStore((state) => state.setTheme);
+  const [illustrationIndex, setIllustrationIndex] = useState(0);
+  const illustration = authIllustrations[illustrationIndex];
 
   useEffect(() => {
     const root = document.documentElement;
@@ -24,27 +54,137 @@ export function AuthScreen() {
     window.localStorage.setItem(THEME_STORAGE_KEY, theme);
   }, [theme]);
 
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setIllustrationIndex((current) => (current + 1) % authIllustrations.length);
+    }, ILLUSTRATION_ROTATION_MS);
+
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const authSwitchAction =
+    screen === 'login'
+      ? {
+          text: "Don't have an account?",
+          button: 'Sign up',
+          onClick: () => setScreen('signup'),
+        }
+      : {
+          text: 'Already have an account?',
+          button: 'Sign in',
+          onClick: () => setScreen('login'),
+        };
+
+  const showSwitchAction = screen === 'login' || screen === 'signup';
+
   return (
-    <div className="theme flex min-h-svh flex-col bg-background">
-      <SiteHeader
-        showBrand
-        actions={
+    <div className="theme relative flex h-svh flex-col overflow-hidden bg-background">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 left-10 h-64 w-64 rounded-full bg-primary/10 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute right-10 bottom-0 h-72 w-72 rounded-full bg-primary/10 blur-3xl"
+      />
+
+      <div className="relative px-4 py-3 sm:px-6">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3">
+          <p className="text-base font-semibold tracking-wide text-foreground">Interview Kits</p>
+
+          <div className="flex items-center gap-2 sm:gap-3">
+            {showSwitchAction ? (
+              <p className="hidden items-center gap-2 text-xs text-muted-foreground sm:flex">
+                {authSwitchAction.text}
+                <button
+                  type="button"
+                  onClick={authSwitchAction.onClick}
+                  className="inline-flex items-center gap-1 font-medium text-primary transition-colors hover:text-primary/80"
+                >
+                  {authSwitchAction.button}
+                  <ArrowRightIcon className="size-3.5" />
+                </button>
+              </p>
+            ) : null}
+
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="inline-flex text-xs sm:hidden"
+              onClick={authSwitchAction.onClick}
+            >
+              {authSwitchAction.button}
+            </Button>
+
           <AppHeaderActions
             theme={theme}
+            showGuestFullscreen={false}
             onToggleTheme={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
           />
-        }
-      />
-      <main className="flex flex-1 items-start justify-center px-4 py-8 sm:items-center sm:py-12">
-        <Card className="w-full max-w-lg">
-          <CardContent className="px-5 py-6 sm:px-6">
+          </div>
+        </div>
+      </div>
+      <main className="relative flex flex-1 overflow-y-auto px-4 pb-8 sm:px-6 sm:pb-10">
+        <div className="mx-auto grid w-full max-w-6xl items-center gap-6 lg:grid-cols-[minmax(0,560px)_minmax(0,1fr)]">
+          <section className="mx-auto w-full max-w-xl px-6 py-7 sm:px-7 md:mx-0">
             {screen === 'signup' ? <SignUpForm /> : null}
             {screen === 'forgot' ? <ForgotPasswordForm /> : null}
             {screen === 'verify-otp' ? <VerifyOtpForm /> : null}
             {screen === 'reset-password' ? <ResetPasswordForm /> : null}
             {screen === 'login' ? <LoginForm /> : null}
-          </CardContent>
-        </Card>
+          </section>
+
+          <aside className="hidden lg:block">
+            <div className="space-y-4">
+              <div className="relative h-[356px] overflow-hidden">
+                {authIllustrations.map((item, index) => (
+                  <div
+                    key={item.title}
+                    className={cn(
+                      'absolute inset-0 transition-opacity duration-700 ease-in-out',
+                      index === illustrationIndex ? 'opacity-100' : 'pointer-events-none opacity-0',
+                    )}
+                  >
+                    <img src={item.src} alt={item.alt} className="h-full w-full object-contain" />
+                  </div>
+                ))}
+              </div>
+
+              <div className="relative h-[118px]">
+                {authIllustrations.map((item, index) => (
+                  <div
+                    key={`${item.title}-caption`}
+                    className={cn(
+                      'absolute inset-0 space-y-1.5 transition-opacity duration-700 ease-in-out',
+                      index === illustrationIndex ? 'opacity-100' : 'pointer-events-none opacity-0',
+                    )}
+                  >
+                    <p className="text-lg font-semibold text-foreground">{item.title}</p>
+                    <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex items-center gap-2">
+                {authIllustrations.map((item, index) => (
+                  <span
+                    key={`${item.title}-dot`}
+                    className={
+                      index === illustrationIndex
+                        ? 'h-1.5 w-6 rounded-full bg-primary transition-all duration-500'
+                        : 'h-1.5 w-1.5 rounded-full bg-muted-foreground/40 transition-all duration-500'
+                    }
+                  />
+                ))}
+              </div>
+              <div className="sr-only" aria-live="polite">
+                {illustration.title}
+                <span>{illustration.description}</span>
+              </div>
+            </div>
+          </aside>
+        </div>
       </main>
     </div>
   );

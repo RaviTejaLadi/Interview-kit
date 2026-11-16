@@ -34,6 +34,7 @@ function InterviewApp() {
 function App() {
   const currentUser = useCurrentUser();
   const theme = useInterviewAppStore((state) => state.theme);
+  const hasSession = hasStoredSession();
 
   useEffect(() => {
     const root = document.documentElement;
@@ -43,13 +44,13 @@ function App() {
   }, [theme]);
 
   let screen = <InterviewApp />;
-  if (hasStoredSession() && currentUser.isLoading) {
+  if (hasSession && currentUser.isLoading) {
     screen = (
       <div className="theme grid min-h-svh place-items-center bg-background text-sm text-muted-foreground">
         Checking your session…
       </div>
     );
-  } else if (!currentUser.data) {
+  } else if (!hasSession || !currentUser.data) {
     screen = <AuthScreen />;
   }
 

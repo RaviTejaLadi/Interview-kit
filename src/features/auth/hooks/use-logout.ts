@@ -12,7 +12,7 @@ export function useLogout() {
     mutationFn: logoutRequest,
     onSettled: () => {
       clearSession();
-      queryClient.removeQueries({ queryKey: authQueryKeys.me });
+      queryClient.removeQueries({ queryKey: authQueryKeys.me, exact: true });
       useInterviewAppStore.getState().setIsProfileOpen(false);
     },
   });
