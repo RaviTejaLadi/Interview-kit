@@ -89,12 +89,12 @@ export function AppHeaderActions({
             aria-label="Account menu"
             className="rounded-full outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
-            <AccountAvatar user={user} className="size-8 ring-2 ring-primary" />
+            <AccountAvatar user={user} className="size-8 ring-1 ring-inherit  hover:ring-primary" />
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"
             sideOffset={10}
-            className="!w-[228px] !min-w-[228px] overflow-hidden !rounded-[14px] border-border bg-popover p-0 text-popover-foreground shadow-lg"
+            className="w-57! min-w-57! overflow-hidden rounded-[14px]! border-border bg-popover p-0 text-popover-foreground shadow-lg"
           >
             <div className="flex items-center gap-3 px-3.5 py-3">
               <AccountAvatar user={user} />

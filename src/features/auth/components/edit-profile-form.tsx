@@ -168,14 +168,14 @@ export function EditProfileForm({ user, onCancel, onSaved }: EditProfileFormProp
         <Button
           type="button"
           variant="outline"
-          size="lg"
+          size="sm"
           onClick={onCancel}
           disabled={updateProfile.isPending}
         >
           <XIcon className="size-4" />
           Cancel
         </Button>
-        <Button type="submit" size="lg" disabled={updateProfile.isPending}>
+        <Button type="submit" size="sm" disabled={updateProfile.isPending}>
           <SaveIcon className="size-4" />
           {updateProfile.isPending ? 'Saving…' : 'Save profile'}
         </Button>

@@ -5,9 +5,10 @@ import ReactDOM from 'react-dom/client';
 import { consumeOAuthCallback } from '@/features/auth/utils/oauth';
 
 import App from './App';
-import { TooltipProvider } from './components/ui/tooltip';
+
 import { queryClient } from './utils/query-client';
 import './index.css';
+import { TooltipProvider } from './components/ui/tooltip';
 
 consumeOAuthCallback();
 

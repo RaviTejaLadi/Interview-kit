@@ -72,7 +72,7 @@ export function VerifyOtpForm() {
         icon={<ShieldCheckIcon className="size-4" />}
         onChange={(event) => setOtp(event.target.value.replace(/\D/g, '').slice(0, 6))}
       />
-      <Button type="submit" size="lg" className="w-full" disabled={verifyOtp.isPending || !email}>
+      <Button type="submit" size="sm" className="w-full" disabled={verifyOtp.isPending || !email}>
         <ShieldCheckIcon className="size-4" />
         {verifyOtp.isPending ? 'Checking code…' : 'Verify code'}
       </Button>

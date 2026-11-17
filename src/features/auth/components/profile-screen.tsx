@@ -8,6 +8,7 @@ import { ChangePasswordForm } from '@/features/auth/components/change-password-f
 import { EditProfileForm } from '@/features/auth/components/edit-profile-form';
 import { useCurrentUser } from '@/features/auth/hooks/use-current-user';
 import type { AuthUser } from '@/features/auth/types/auth';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
 function formatProfileDate(value: string) {
   const dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(value) ? `${value}T00:00:00` : value;
@@ -65,7 +66,7 @@ export function ProfileSettingsPanel() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex min-w-0 items-center gap-4">
-          <Avatar size="lg" className="size-14">
+          <Avatar size="sm" className="size-14">
             {user.avatar ? <AvatarImage src={user.avatar} alt="" /> : null}
             <AvatarFallback className="bg-primary/15 text-base font-semibold text-primary">
               {initials(user)}
@@ -79,16 +80,22 @@ export function ProfileSettingsPanel() {
           </div>
         </div>
         {isEditing ? null : (
-          <Button
-            type="button"
-            variant="outline"
-            size="lg"
-            className="shrink-0"
-            onClick={() => setIsEditing(true)}
-          >
-            <PencilLineIcon className="size-4" />
-            Edit profile
-          </Button>
+          <Tooltip>
+            <TooltipTrigger>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="shrink-0"
+                onClick={() => setIsEditing(true)}
+              >
+                <PencilLineIcon className="size-4" />
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent side="bottom" align="center" alignOffset={10}>
+              <p className="text-sm bg-black text-white">Edit profile</p>
+            </TooltipContent>
+          </Tooltip>
         )}
       </div>
       <Card>

@@ -1,6 +1,7 @@
 export const BASE_URL = 'https://interview-kit-backend-pzqt.onrender.com/api/v1';
 
 export const apiUrls = {
+  // auth endpoints
   login: `${BASE_URL}/auth/login`,
   register: `${BASE_URL}/auth/register`,
   forgotPassword: `${BASE_URL}/auth/forgot-password`,
@@ -11,12 +12,20 @@ export const apiUrls = {
   refresh: `${BASE_URL}/auth/refresh`,
   me: `${BASE_URL}/auth/me`,
   logout: `${BASE_URL}/auth/logout`,
+
+  // feedback endpoints
   feedback: `${BASE_URL}/feedback`,
+
+  //admin endpoints
   adminRegister: `${BASE_URL}/admin/register`,
   adminUsers: `${BASE_URL}/admin/users`,
   adminFeedback: `${BASE_URL}/admin/feedback`,
+
+  // chat endpoints
   chat: `${BASE_URL}/chat`,
   chatUsage: `${BASE_URL}/chat/usage`,
+
+  // progress endpoints
   progress: `${BASE_URL}/progress`,
   progressSync: `${BASE_URL}/progress/sync`,
   progressTopics: `${BASE_URL}/progress/topics`,

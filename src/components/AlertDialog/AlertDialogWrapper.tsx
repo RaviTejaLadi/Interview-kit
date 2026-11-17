@@ -149,7 +149,7 @@ export function AlertDialogWrapper({ children }: AlertDialogWrapperProps) {
                     <Button
                       type="button"
                       variant="outline"
-                      size="lg"
+                      size="sm"
                       className="w-full sm:w-auto"
                       disabled={isLoading}
                     />
@@ -160,7 +160,7 @@ export function AlertDialogWrapper({ children }: AlertDialogWrapperProps) {
               ) : null}
 
               <Button
-                size="lg"
+                size="sm"
                 variant={isConfirmDestructive ? 'destructive' : 'default'}
                 className="w-full sm:w-auto"
                 onClick={handleConfirm}

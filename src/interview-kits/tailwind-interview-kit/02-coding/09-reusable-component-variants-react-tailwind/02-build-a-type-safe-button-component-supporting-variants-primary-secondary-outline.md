@@ -95,7 +95,7 @@ export function Button({ className, variant, size, ...props }: ButtonProps) {
   Delete
 </Button>
 
-<Button variant="outline" size="lg">
+<Button variant="outline" size="sm">
   Cancel
 </Button>
 

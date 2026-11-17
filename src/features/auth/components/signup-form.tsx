@@ -188,7 +188,7 @@ export function SignUpForm() {
           />
         </div>
       </AuthField>
-      <Button type="submit" size="lg" className="w-full" disabled={register.isPending}>
+      <Button type="submit" size="sm" className="w-full" disabled={register.isPending}>
         <UserPlusIcon className="size-4" />
         {register.isPending ? 'Creating account…' : 'Create account'}
       </Button>

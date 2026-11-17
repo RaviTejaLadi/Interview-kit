@@ -140,7 +140,7 @@ export function FeedbackPanel() {
               />
             </AuthField>
             <div className="flex justify-end">
-              <Button type="submit" size="lg" disabled={submitFeedback.isPending}>
+              <Button type="submit" size="sm" disabled={submitFeedback.isPending}>
                 <SendIcon className="size-4" />
                 {submitFeedback.isPending ? 'Submitting…' : 'Submit feedback'}
               </Button>

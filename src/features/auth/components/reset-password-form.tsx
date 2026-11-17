@@ -79,7 +79,7 @@ export function ResetPasswordForm() {
       />
       <Button
         type="submit"
-        size="lg"
+        size="sm"
         className="w-full"
         disabled={resetPassword.isPending || !resetToken}
       >

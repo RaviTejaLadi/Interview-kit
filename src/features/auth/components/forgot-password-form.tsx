@@ -59,7 +59,7 @@ export function ForgotPasswordForm() {
         icon={<MailIcon className="size-4" />}
         onChange={(event) => setEmail(event.target.value)}
       />
-      <Button type="submit" size="lg" className="w-full" disabled={forgotPassword.isPending}>
+      <Button type="submit" size="sm" className="w-full" disabled={forgotPassword.isPending}>
         <SendIcon className="size-4" />
         {forgotPassword.isPending ? 'Sending…' : 'Send reset code'}
       </Button>

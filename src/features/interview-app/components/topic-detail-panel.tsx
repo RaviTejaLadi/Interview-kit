@@ -52,7 +52,7 @@ export function TopicDetailPanel({
     <div className="bg-background p-4 sm:p-5 lg:p-6 xl:p-8">
       <div className="mb-4 flex flex-wrap items-center justify-end gap-2">
         {selectedTopic && selectedTopicProgress ? (
-          <div className="flex items-center gap-1 rounded-[var(--radius-control)] border border-border bg-background p-1">
+          <div className="flex items-center gap-1 rounded-(--radius-control) border border-border bg-background p-1">
             <Button
               type="button"
               variant="ghost"

@@ -78,7 +78,7 @@ export function LoginForm() {
           Forgot password?
         </Button>
       </div>
-      <Button type="submit" size="lg" className="w-full" disabled={login.isPending}>
+      <Button type="submit" size="sm" className="w-full" disabled={login.isPending}>
         <LogInIcon className="size-4" />
         {login.isPending ? 'Signing in…' : 'Sign in'}
       </Button>

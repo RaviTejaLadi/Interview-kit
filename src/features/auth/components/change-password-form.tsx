@@ -85,7 +85,7 @@ export function ChangePasswordForm() {
           onChange={(event) => setConfirmPassword(event.target.value)}
         />
       </div>
-      <Button type="submit" size="lg" disabled={changePassword.isPending}>
+      <Button type="submit" size="sm" disabled={changePassword.isPending}>
         <KeyRoundIcon className="size-4" />
         {changePassword.isPending ? 'Updating…' : 'Update password'}
       </Button>
