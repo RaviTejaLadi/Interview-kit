@@ -190,7 +190,7 @@ export function mergeTopicProgressMaps(
   remote: TopicProgressMap,
 ): TopicProgressMap {
   const ids = new Set([...Object.keys(local), ...Object.keys(remote)]);
-  let next: TopicProgressMap = {};
+  const next: TopicProgressMap = {};
 
   for (const id of ids) {
     const merged = {
@@ -210,7 +210,7 @@ export function mergeGuideProgressMaps(
   remote: GuideProgressMap,
 ): GuideProgressMap {
   const ids = new Set([...Object.keys(local), ...Object.keys(remote)]);
-  let next: GuideProgressMap = {};
+  const next: GuideProgressMap = {};
 
   for (const id of ids) {
     const merged = {
