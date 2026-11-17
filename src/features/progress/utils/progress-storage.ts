@@ -242,7 +242,5 @@ export function guideMapsEqual(a: GuideProgressMap, b: GuideProgressMap) {
   if (aKeys.length !== bKeys.length) {
     return false;
   }
-  return aKeys.every(
-    (key) => a[key]?.read === b[key]?.read && a[key]?.starred === b[key]?.starred,
-  );
+  return aKeys.every((key) => a[key]?.read === b[key]?.read && a[key]?.starred === b[key]?.starred);
 }

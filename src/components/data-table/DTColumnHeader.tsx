@@ -23,7 +23,9 @@ export function DTColumnHeader<TData, TValue>({
   className,
 }: DTColumnHeaderProps<TData, TValue>) {
   if (!column.getCanSort()) {
-    return <div className={cn('text-xs font-medium text-muted-foreground', className)}>{title}</div>;
+    return (
+      <div className={cn('text-xs font-medium text-muted-foreground', className)}>{title}</div>
+    );
   }
 
   return (

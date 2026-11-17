@@ -5,7 +5,10 @@ import {
   upsertTopicProgressRequest,
 } from '@/features/progress/apis/progress.api';
 import type { TopicProgressEntry, TopicProgressMap } from '@/features/progress/types/progress';
-import { hydrateProgressFromServer, subscribeProgressHydration } from '@/features/progress/utils/hydrate-progress';
+import {
+  hydrateProgressFromServer,
+  subscribeProgressHydration,
+} from '@/features/progress/utils/hydrate-progress';
 import {
   EMPTY_TOPIC_PROGRESS,
   readStoredTopicProgress,

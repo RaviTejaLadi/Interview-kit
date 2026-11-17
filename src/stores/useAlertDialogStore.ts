@@ -3,12 +3,7 @@ import { create } from 'zustand';
 
 import type { AlertVariantKey } from '@/components/AlertDialog/Icons';
 
-export type AlertDialogVariant =
-  | AlertVariantKey
-  | 'delete'
-  | 'failed'
-  | 'confirm'
-  | (string & {});
+export type AlertDialogVariant = AlertVariantKey | 'delete' | 'failed' | 'confirm' | (string & {});
 
 export type AlertDialogConfirmFn = (() => void | Promise<unknown>) | null;
 

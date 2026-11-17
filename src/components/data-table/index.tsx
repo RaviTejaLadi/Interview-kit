@@ -112,8 +112,7 @@ function DataTable<TData>({
       return null;
     }
 
-    const content =
-      typeof cellDef === 'function' ? cellDef(context) : flexRender(cellDef, context);
+    const content = typeof cellDef === 'function' ? cellDef(context) : flexRender(cellDef, context);
 
     if (!searchTerm.trim() || !shouldHighlightCell(cell)) {
       return content;

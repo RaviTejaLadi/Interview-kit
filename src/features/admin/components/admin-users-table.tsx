@@ -35,10 +35,7 @@ import { useAdminUsers } from '@/features/admin/hooks/use-admin-users';
 import { useDeleteAdminUser } from '@/features/admin/hooks/use-delete-admin-user';
 import { useUpdateAdminUser } from '@/features/admin/hooks/use-update-admin-user';
 import type { AdminUpdateUserInput, AdminUser } from '@/features/admin/types/admin';
-import {
-  validateAdminUserEdit,
-  type AdminUserEditInput,
-} from '@/features/admin/utils/validation';
+import { validateAdminUserEdit, type AdminUserEditInput } from '@/features/admin/utils/validation';
 import { AuthField, AuthFormError } from '@/features/auth/components/auth-field';
 import { useDataTable } from '@/hooks/useDataTable';
 import { cn } from '@/lib/utils';
@@ -436,7 +433,9 @@ export function AdminUsersTable() {
                 <DialogContent className="max-h-[calc(100%-2rem)] overflow-y-auto sm:max-w-lg">
                   <DialogHeader>
                     <DialogTitle>Edit user</DialogTitle>
-                    <DialogDescription>Update this account and save your changes.</DialogDescription>
+                    <DialogDescription>
+                      Update this account and save your changes.
+                    </DialogDescription>
                   </DialogHeader>
                   <AdminUserEditForm userId={editingUserId} />
                 </DialogContent>

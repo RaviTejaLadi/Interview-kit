@@ -1,7 +1,4 @@
-import {
-  getProgressRequest,
-  syncProgressRequest,
-} from '@/features/progress/apis/progress.api';
+import { getProgressRequest, syncProgressRequest } from '@/features/progress/apis/progress.api';
 import type {
   GuideProgressMap,
   ProgressSnapshot,

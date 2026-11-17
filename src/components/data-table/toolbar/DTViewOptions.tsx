@@ -91,13 +91,8 @@ export function DTViewOptions<TData>({
         View
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent
-        align="end"
-        className="w-[220px] border border-border bg-background"
-      >
-        <DropdownMenuLabel>
-          {enableColumnOrder ? 'Columns' : 'Toggle columns'}
-        </DropdownMenuLabel>
+      <DropdownMenuContent align="end" className="w-[220px] border border-border bg-background">
+        <DropdownMenuLabel>{enableColumnOrder ? 'Columns' : 'Toggle columns'}</DropdownMenuLabel>
         <DropdownMenuSeparator />
 
         {orderedColumns.map((column, index) => {

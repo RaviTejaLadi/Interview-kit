@@ -107,10 +107,7 @@ function highlightChild(child: ReactNode, searchTerm: string): ReactNode {
     );
   }
 
-  const nextProps = applyHighlightProps(
-    child.props as HighlightableProps,
-    searchTerm,
-  );
+  const nextProps = applyHighlightProps(child.props as HighlightableProps, searchTerm);
   if (nextProps && nextProps !== child.props) {
     return cloneElement(child as ReactElement, nextProps as Partial<unknown>);
   }

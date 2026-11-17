@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { Toaster } from 'sonner';
 
-
 import { AuthScreen } from '@/features/auth/components/auth-screen';
 import { SettingsScreen } from '@/features/auth/components/settings-screen';
 import { useCurrentUser } from '@/features/auth/hooks/use-current-user';

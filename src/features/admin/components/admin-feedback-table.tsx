@@ -259,7 +259,9 @@ export function AdminFeedbackTable() {
       {
         accessorKey: 'title',
         header: ({ column }) => <DTColumnHeader column={column} title="Title" />,
-        cell: ({ row }) => <span className="font-medium text-foreground">{row.original.title}</span>,
+        cell: ({ row }) => (
+          <span className="font-medium text-foreground">{row.original.title}</span>
+        ),
       },
       {
         accessorKey: 'status',

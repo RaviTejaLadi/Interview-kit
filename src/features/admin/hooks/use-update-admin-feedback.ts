@@ -9,13 +9,8 @@ export function useUpdateAdminFeedback() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      feedbackId,
-      input,
-    }: {
-      feedbackId: string;
-      input: AdminUpdateFeedbackInput;
-    }) => updateAdminFeedbackRequest(feedbackId, input),
+    mutationFn: ({ feedbackId, input }: { feedbackId: string; input: AdminUpdateFeedbackInput }) =>
+      updateAdminFeedbackRequest(feedbackId, input),
     onSuccess: (feedback) => {
       queryClient.setQueryData(adminQueryKeys.feedback(feedback.id), feedback);
       void queryClient.invalidateQueries({ queryKey: adminQueryKeys.feedbacks });

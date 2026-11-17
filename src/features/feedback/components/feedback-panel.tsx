@@ -167,7 +167,10 @@ export function FeedbackPanel() {
               {feedbackList.data?.map((item) => {
                 const status = item.status ?? 'open';
                 return (
-                  <li key={item.id} className="rounded-lg border border-border bg-background/80 p-4">
+                  <li
+                    key={item.id}
+                    className="rounded-lg border border-border bg-background/80 p-4"
+                  >
                     <div className="flex flex-wrap items-start justify-between gap-2">
                       <p className="text-sm font-medium text-foreground">{item.title}</p>
                       <div className="flex flex-wrap items-center gap-2">

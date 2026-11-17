@@ -2,7 +2,10 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { upsertGuideProgressRequest } from '@/features/progress/apis/progress.api';
 import type { GuideProgressEntry, GuideProgressMap } from '@/features/progress/types/progress';
-import { hydrateProgressFromServer, subscribeProgressHydration } from '@/features/progress/utils/hydrate-progress';
+import {
+  hydrateProgressFromServer,
+  subscribeProgressHydration,
+} from '@/features/progress/utils/hydrate-progress';
 import {
   EMPTY_GUIDE_PROGRESS,
   readStoredGuideProgress,

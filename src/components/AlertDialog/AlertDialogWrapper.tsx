@@ -13,10 +13,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { cn } from '@/lib/utils';
-import {
-  useAlertDialogStore,
-  type AlertDialogVariant,
-} from '@/stores/useAlertDialogStore';
+import { useAlertDialogStore, type AlertDialogVariant } from '@/stores/useAlertDialogStore';
 import { AlertVariantIcons, type AlertVariantKey } from './Icons';
 
 const variantAlias: Record<string, AlertVariantKey> = {
