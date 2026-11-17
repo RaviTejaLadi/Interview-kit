@@ -369,149 +369,149 @@ export function GuidesGallery({
         </section>
 
         <section className="pt-8">
-          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-[minmax(0,1fr)_auto_auto_auto_auto]">
-            <div className="relative md:col-span-2 xl:col-span-1">
+          <div className="mb-5 flex flex-wrap items-center gap-3">
+            <h2 className="shrink-0 text-2xl text-foreground sm:text-3xl">Guides</h2>
+            <div className="flex flex-wrap items-center gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  aria-label="Sort guides"
+                  className={cn(
+                    buttonVariants({ variant: 'outline' }),
+                    'h-8 min-w-0 justify-between bg-card px-2.5 text-xs',
+                  )}
+                >
+                  <span className="min-w-0 truncate">{SORT_LABEL[sortMode]}</span>
+                  <ChevronDownIcon className="size-4 shrink-0" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" sideOffset={6}>
+                  <DropdownMenuRadioGroup
+                    value={sortMode}
+                    onValueChange={(value) => setSortMode(value as SortMode)}
+                  >
+                    {Object.entries(SORT_LABEL).map(([value, label]) => (
+                      <DropdownMenuRadioItem key={value} value={value}>
+                        {label}
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  aria-label="Guide category filter"
+                  className={cn(
+                    buttonVariants({ variant: 'outline' }),
+                    'h-8 min-w-0 justify-between bg-card px-2.5 text-xs',
+                  )}
+                >
+                  <span className="min-w-0 truncate">{CATEGORY_LABEL[categoryFilter]}</span>
+                  <ChevronDownIcon className="size-4 shrink-0" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" sideOffset={6}>
+                  <DropdownMenuRadioGroup
+                    value={categoryFilter}
+                    onValueChange={(value) => setCategoryFilter(value as CategoryFilter)}
+                  >
+                    {Object.entries(CATEGORY_LABEL).map(([value, label]) => (
+                      <DropdownMenuRadioItem key={value} value={value}>
+                        {label}
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  aria-label="Guide status filter"
+                  className={cn(
+                    buttonVariants({ variant: 'outline' }),
+                    'h-8 min-w-0 justify-between bg-card px-2.5 text-xs',
+                  )}
+                >
+                  <span className="min-w-0 truncate">{STATUS_LABEL[statusFilter]}</span>
+                  <ChevronDownIcon className="size-4 shrink-0" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" sideOffset={6}>
+                  <DropdownMenuRadioGroup
+                    value={statusFilter}
+                    onValueChange={(value) => setStatusFilter(value as StatusFilter)}
+                  >
+                    {Object.entries(STATUS_LABEL).map(([value, label]) => (
+                      <DropdownMenuRadioItem key={value} value={value}>
+                        {label}
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger
+                  aria-label="Guide topic filter"
+                  className={cn(
+                    buttonVariants({ variant: 'outline' }),
+                    'h-8 min-w-0 justify-between bg-card px-2.5 text-xs',
+                  )}
+                >
+                  <span className="inline-flex min-w-0 items-center truncate">
+                    <img
+                      src={subjectFilter === 'all' ? npmIcon : getSubjectIconSrc(subjectFilter)}
+                      alt=""
+                      aria-hidden="true"
+                      className={cn(
+                        'mr-1.5 size-3.5 shrink-0 object-contain',
+                        subjectFilter === 'all' ? '' : getSubjectIconClass(subjectFilter),
+                      )}
+                    />
+                    {subjectFilter === 'all' ? 'All topics' : formatSubjectLabel(subjectFilter)}
+                  </span>
+                  <ChevronDownIcon className="size-4 shrink-0" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  align="start"
+                  sideOffset={6}
+                  className="max-h-80 w-64 overflow-y-auto"
+                >
+                  <DropdownMenuRadioGroup value={subjectFilter} onValueChange={setSubjectFilter}>
+                    <DropdownMenuRadioItem value="all">
+                      <span className="inline-flex items-center gap-2">
+                        <img
+                          src={npmIcon}
+                          alt=""
+                          aria-hidden="true"
+                          className="size-3.5 object-contain"
+                        />
+                        All topics
+                      </span>
+                    </DropdownMenuRadioItem>
+                    {subjects.map((subject) => (
+                      <DropdownMenuRadioItem key={subject} value={subject}>
+                        <span className="inline-flex items-center gap-2">
+                          <img
+                            src={getSubjectIconSrc(subject)}
+                            alt=""
+                            aria-hidden="true"
+                            className={cn('size-3.5 object-contain', getSubjectIconClass(subject))}
+                          />
+                          {formatSubjectLabel(subject)}
+                        </span>
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            <div className="relative ml-auto w-full max-w-xs sm:w-64">
               <SearchIcon className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 value={query}
                 onChange={(event) => setQuery(sanitizeSearchQuery(event.target.value))}
                 maxLength={SEARCH_QUERY_MAX}
                 aria-label="Search guides"
-                placeholder="Search guides, topics, or tags"
+                placeholder="Search guides…"
                 className="h-8 border-input bg-card pl-8 text-xs"
               />
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                aria-label="Sort guides"
-                className={cn(
-                  buttonVariants({ variant: 'outline' }),
-                  'h-8 w-full min-w-0 justify-between bg-card px-2.5 text-xs xl:w-auto',
-                )}
-              >
-                <span className="min-w-0 truncate">Sort: {SORT_LABEL[sortMode]}</span>
-                <ChevronDownIcon className="size-4 shrink-0" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" sideOffset={6}>
-                <DropdownMenuRadioGroup
-                  value={sortMode}
-                  onValueChange={(value) => setSortMode(value as SortMode)}
-                >
-                  {Object.entries(SORT_LABEL).map(([value, label]) => (
-                    <DropdownMenuRadioItem key={value} value={value}>
-                      {label}
-                    </DropdownMenuRadioItem>
-                  ))}
-                </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                aria-label="Guide category filter"
-                className={cn(
-                  buttonVariants({ variant: 'outline' }),
-                  'h-8 w-full min-w-0 justify-between bg-card px-2.5 text-xs xl:w-auto',
-                )}
-              >
-                <span className="min-w-0 truncate">{CATEGORY_LABEL[categoryFilter]}</span>
-                <ChevronDownIcon className="size-4 shrink-0" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" sideOffset={6}>
-                <DropdownMenuRadioGroup
-                  value={categoryFilter}
-                  onValueChange={(value) => setCategoryFilter(value as CategoryFilter)}
-                >
-                  {Object.entries(CATEGORY_LABEL).map(([value, label]) => (
-                    <DropdownMenuRadioItem key={value} value={value}>
-                      {label}
-                    </DropdownMenuRadioItem>
-                  ))}
-                </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                aria-label="Guide status filter"
-                className={cn(
-                  buttonVariants({ variant: 'outline' }),
-                  'h-8 w-full min-w-0 justify-between bg-card px-2.5 text-xs xl:w-auto',
-                )}
-              >
-                <span className="min-w-0 truncate">{STATUS_LABEL[statusFilter]}</span>
-                <ChevronDownIcon className="size-4 shrink-0" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" sideOffset={6}>
-                <DropdownMenuRadioGroup
-                  value={statusFilter}
-                  onValueChange={(value) => setStatusFilter(value as StatusFilter)}
-                >
-                  {Object.entries(STATUS_LABEL).map(([value, label]) => (
-                    <DropdownMenuRadioItem key={value} value={value}>
-                      {label}
-                    </DropdownMenuRadioItem>
-                  ))}
-                </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            <DropdownMenu>
-              <DropdownMenuTrigger
-                aria-label="Guide topic filter"
-                className={cn(
-                  buttonVariants({ variant: 'outline' }),
-                  'h-8 w-full min-w-0 justify-between bg-card px-2.5 text-xs xl:w-auto',
-                )}
-              >
-                <span className="min-w-0 truncate">
-                  <img
-                    src={subjectFilter === 'all' ? npmIcon : getSubjectIconSrc(subjectFilter)}
-                    alt=""
-                    aria-hidden="true"
-                    className={cn(
-                      'mr-1.5 inline-block size-3.5 align-[-2px] object-contain',
-                      subjectFilter === 'all' ? '' : getSubjectIconClass(subjectFilter),
-                    )}
-                  />
-                  Topic:{' '}
-                  {subjectFilter === 'all' ? 'All topics' : formatSubjectLabel(subjectFilter)}
-                </span>
-                <ChevronDownIcon className="size-4 shrink-0" />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                sideOffset={6}
-                className="max-h-80 w-64 overflow-y-auto"
-              >
-                <DropdownMenuRadioGroup value={subjectFilter} onValueChange={setSubjectFilter}>
-                  <DropdownMenuRadioItem value="all">
-                    <span className="inline-flex items-center gap-2">
-                      <img
-                        src={npmIcon}
-                        alt=""
-                        aria-hidden="true"
-                        className="size-3.5 object-contain"
-                      />
-                      All topics
-                    </span>
-                  </DropdownMenuRadioItem>
-                  {subjects.map((subject) => (
-                    <DropdownMenuRadioItem key={subject} value={subject}>
-                      <span className="inline-flex items-center gap-2">
-                        <img
-                          src={getSubjectIconSrc(subject)}
-                          alt=""
-                          aria-hidden="true"
-                          className={cn('size-3.5 object-contain', getSubjectIconClass(subject))}
-                        />
-                        {formatSubjectLabel(subject)}
-                      </span>
-                    </DropdownMenuRadioItem>
-                  ))}
-                </DropdownMenuRadioGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-          <div className="mt-3 flex justify-end">
-            <div className="inline-flex items-center gap-1 rounded-[var(--radius-control)] border border-border bg-card p-1">
+            <div className="inline-flex shrink-0 items-center gap-1 rounded-[var(--radius-control)] border border-border bg-card p-1">
               <Button
                 type="button"
                 variant={viewMode === 'list' ? 'default' : 'ghost'}
@@ -536,7 +536,7 @@ export function GuidesGallery({
           </div>
         </section>
 
-        <section className="pt-8">
+        <section>
           {visibleGuides.length === 0 ? (
             <Card className="p-8 text-center">
               <p className="text-sm font-medium text-muted-foreground">No guides found</p>

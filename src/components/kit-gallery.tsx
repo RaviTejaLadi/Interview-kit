@@ -190,55 +190,44 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
               </div>
             </div>
           </div>
-
-          <div className="relative mt-5 max-w-xl">
-            <SearchIcon className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              id="kit-search"
-              value={searchValue}
-              onChange={(event) => setSearchValue(sanitizeSearchQuery(event.target.value))}
-              maxLength={SEARCH_QUERY_MAX}
-              aria-label="Search kits"
-              placeholder="Search kits, topics, or questions"
-              className="h-8 border-input bg-card pl-8 text-xs"
-            />
-          </div>
         </section>
 
         <section id="all-kits" className="scroll-mt-6 pt-8 sm:pt-10">
-          <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <h2 className="text-2xl text-foreground sm:text-3xl">Interview Categories</h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {visibleKits.length} of {groups.length} kits shown
-              </p>
+          <div className="mb-5 flex flex-wrap items-center gap-3">
+            <h2 className="shrink-0 text-2xl text-foreground sm:text-3xl">Kits</h2>
+            <div className="relative ml-auto w-full max-w-xs sm:w-64">
+              <SearchIcon className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                id="kit-search"
+                value={searchValue}
+                onChange={(event) => setSearchValue(sanitizeSearchQuery(event.target.value))}
+                maxLength={SEARCH_QUERY_MAX}
+                aria-label="Search kits"
+                placeholder="Search kits…"
+                className="h-8 border-input bg-card pl-8 text-xs"
+              />
             </div>
-            <div className="ml-auto flex items-center gap-2">
-              <p className="hidden text-sm text-muted-foreground sm:block">
-                {totalCompleted}/{totalTopics} completed
-              </p>
-              <div className="inline-flex items-center gap-1 rounded-[var(--radius-control)] border border-border bg-card p-1">
-                <Button
-                  type="button"
-                  variant={viewMode === 'grid' ? 'default' : 'ghost'}
-                  size="icon-xs"
-                  aria-label="Grid view"
-                  title="Grid view"
-                  onClick={() => setViewMode('grid')}
-                >
-                  <LayoutGridIcon className="size-4" />
-                </Button>
-                <Button
-                  type="button"
-                  variant={viewMode === 'list' ? 'default' : 'ghost'}
-                  size="icon-xs"
-                  aria-label="List view"
-                  title="List view"
-                  onClick={() => setViewMode('list')}
-                >
-                  <ListIcon className="size-4" />
-                </Button>
-              </div>
+            <div className="inline-flex shrink-0 items-center gap-1 rounded-[var(--radius-control)] border border-border bg-card p-1">
+              <Button
+                type="button"
+                variant={viewMode === 'grid' ? 'default' : 'ghost'}
+                size="icon-xs"
+                aria-label="Grid view"
+                title="Grid view"
+                onClick={() => setViewMode('grid')}
+              >
+                <LayoutGridIcon className="size-4" />
+              </Button>
+              <Button
+                type="button"
+                variant={viewMode === 'list' ? 'default' : 'ghost'}
+                size="icon-xs"
+                aria-label="List view"
+                title="List view"
+                onClick={() => setViewMode('list')}
+              >
+                <ListIcon className="size-4" />
+              </Button>
             </div>
           </div>
 
@@ -360,18 +349,21 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                     >
                       {description}
                     </span>
-                    <span className="mt-3.5">
-                      <span className="mb-2 flex items-center justify-between text-xs">
-                        <span className="text-muted-foreground">{progressLabel}</span>
-                        <span className="font-medium text-foreground">{progress}%</span>
+                    <span className="mt-3.5 block">
+                      <span className="mb-2 flex items-center justify-between gap-2 text-xs leading-none">
+                        <span className="truncate text-muted-foreground">{progressLabel}</span>
+                        <span className="shrink-0 font-medium text-foreground">{progress}%</span>
                       </span>
-                      <span className="h-2 w-full overflow-hidden rounded-full bg-muted">
+                      <span
+                        className="block h-1.5 w-full overflow-hidden rounded-full bg-muted leading-none"
+                        aria-hidden="true"
+                      >
                         <span
                           className={cn(
-                            'block h-full rounded-full',
+                            'block h-full rounded-full transition-[width]',
                             progress >= 100 ? 'bg-emerald-500' : 'bg-primary',
                           )}
-                          style={{ width: `${progress}%` }}
+                          style={{ width: `${Math.max(progress, 0)}%` }}
                         />
                       </span>
                       {matchLabel ? (
