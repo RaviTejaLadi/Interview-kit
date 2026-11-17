@@ -1,136 +1,86 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-const TOPIC_PROGRESS_STORAGE_KEY = 'interview-kit-topic-progress-v1';
+import {
+  batchTopicProgressRequest,
+  upsertTopicProgressRequest,
+} from '@/features/progress/apis/progress.api';
+import type { TopicProgressEntry, TopicProgressMap } from '@/features/progress/types/progress';
+import { hydrateProgressFromServer, subscribeProgressHydration } from '@/features/progress/utils/hydrate-progress';
+import {
+  EMPTY_TOPIC_PROGRESS,
+  readStoredTopicProgress,
+  updateTopicProgress,
+  writeStoredTopicProgress,
+} from '@/features/progress/utils/progress-storage';
+import { hasStoredSession } from '@/features/auth/utils/session';
 
-export type TopicProgressEntry = {
-  completed: boolean;
-  important: boolean;
-};
-
-export type TopicProgressMap = Record<string, TopicProgressEntry>;
-
-const EMPTY_TOPIC_PROGRESS: TopicProgressEntry = Object.freeze({
-  completed: false,
-  important: false,
-});
-
-function sanitizeStoredProgress(value: unknown): TopicProgressMap {
-  const cleaned: TopicProgressMap = {};
-
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
-    return cleaned;
-  }
-
-  for (const [topicId, entry] of Object.entries(value as Record<string, unknown>)) {
-    if (!topicId || !entry || typeof entry !== 'object' || Array.isArray(entry)) {
-      continue;
-    }
-
-    const maybeEntry = entry as { completed?: unknown; important?: unknown };
-    const completed = maybeEntry.completed === true;
-    const important = maybeEntry.important === true;
-
-    if (!completed && !important) {
-      continue;
-    }
-
-    cleaned[topicId] = { completed, important };
-  }
-
-  return cleaned;
-}
-
-function readStoredProgress(): TopicProgressMap {
-  if (typeof window === 'undefined') {
-    return {};
-  }
-
-  try {
-    const raw = window.localStorage.getItem(TOPIC_PROGRESS_STORAGE_KEY);
-    if (!raw) {
-      return {};
-    }
-
-    return sanitizeStoredProgress(JSON.parse(raw));
-  } catch {
-    return {};
-  }
-}
-
-function writeStoredProgress(progress: TopicProgressMap) {
-  if (typeof window === 'undefined') {
-    return;
-  }
-
-  window.localStorage.setItem(TOPIC_PROGRESS_STORAGE_KEY, JSON.stringify(progress));
-}
-
-function updateTopicProgress(
-  current: TopicProgressMap,
-  topicId: string,
-  patch: Partial<TopicProgressEntry>,
-): TopicProgressMap {
-  if (!topicId) {
-    return current;
-  }
-
-  const existing = current[topicId] ?? EMPTY_TOPIC_PROGRESS;
-  const nextEntry: TopicProgressEntry = {
-    completed: patch.completed ?? existing.completed,
-    important: patch.important ?? existing.important,
-  };
-
-  if (nextEntry.completed === existing.completed && nextEntry.important === existing.important) {
-    return current;
-  }
-
-  if (!nextEntry.completed && !nextEntry.important) {
-    if (!Object.prototype.hasOwnProperty.call(current, topicId)) {
-      return current;
-    }
-
-    const rest = { ...current };
-    delete rest[topicId];
-    return rest;
-  }
-
-  return {
-    ...current,
-    [topicId]: nextEntry,
-  };
-}
+export type { TopicProgressEntry, TopicProgressMap };
 
 export function useTopicProgress() {
   const [topicProgressById, setTopicProgressById] = useState<TopicProgressMap>(() =>
-    readStoredProgress(),
+    readStoredTopicProgress(),
   );
 
   useEffect(() => {
-    writeStoredProgress(topicProgressById);
+    writeStoredTopicProgress(topicProgressById);
   }, [topicProgressById]);
 
+  useEffect(() => {
+    const unsubscribe = subscribeProgressHydration((progress) => {
+      setTopicProgressById(progress.topics);
+    });
+
+    if (hasStoredSession()) {
+      void hydrateProgressFromServer();
+    }
+
+    return unsubscribe;
+  }, []);
+
   const setTopicCompleted = useCallback((topicId: string, completed: boolean) => {
-    setTopicProgressById((current) => updateTopicProgress(current, topicId, { completed }));
+    setTopicProgressById((current) => {
+      const next = updateTopicProgress(current, topicId, { completed });
+      if (next === current) {
+        return current;
+      }
+      void upsertTopicProgressRequest({ id: topicId, completed });
+      return next;
+    });
   }, []);
 
   const setTopicImportant = useCallback((topicId: string, important: boolean) => {
-    setTopicProgressById((current) => updateTopicProgress(current, topicId, { important }));
+    setTopicProgressById((current) => {
+      const next = updateTopicProgress(current, topicId, { important });
+      if (next === current) {
+        return current;
+      }
+      void upsertTopicProgressRequest({ id: topicId, important });
+      return next;
+    });
   }, []);
 
   const toggleTopicCompleted = useCallback((topicId: string) => {
-    setTopicProgressById((current) =>
-      updateTopicProgress(current, topicId, {
-        completed: !(current[topicId]?.completed ?? false),
-      }),
-    );
+    setTopicProgressById((current) => {
+      const completed = !(current[topicId]?.completed ?? false);
+      const next = updateTopicProgress(current, topicId, { completed });
+      if (next === current) {
+        return current;
+      }
+      void upsertTopicProgressRequest({ id: topicId, completed });
+      return next;
+    });
   }, []);
 
   const toggleTopicImportant = useCallback((topicId: string) => {
-    setTopicProgressById((current) =>
-      updateTopicProgress(current, topicId, {
-        important: !(current[topicId]?.important ?? false),
-      }),
-    );
+    setTopicProgressById((current) => {
+      const important = !(current[topicId]?.important ?? false);
+      const next = updateTopicProgress(current, topicId, { important });
+      if (next === current) {
+        return current;
+      }
+      void upsertTopicProgressRequest({ id: topicId, important });
+      return next;
+    });
   }, []);
 
   const setManyTopicsCompleted = useCallback((topicIds: string[], completed: boolean) => {
@@ -146,7 +96,12 @@ export function useTopicProgress() {
         }
       }
 
-      return changed ? next : current;
+      if (!changed) {
+        return current;
+      }
+
+      void batchTopicProgressRequest({ ids: topicIds, completed });
+      return next;
     });
   }, []);
 
@@ -163,7 +118,12 @@ export function useTopicProgress() {
         }
       }
 
-      return changed ? next : current;
+      if (!changed) {
+        return current;
+      }
+
+      void batchTopicProgressRequest({ ids: topicIds, important });
+      return next;
     });
   }, []);
 

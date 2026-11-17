@@ -17,4 +17,9 @@ export const apiUrls = {
   adminFeedback: `${BASE_URL}/admin/feedback`,
   chat: `${BASE_URL}/chat`,
   chatUsage: `${BASE_URL}/chat/usage`,
+  progress: `${BASE_URL}/progress`,
+  progressSync: `${BASE_URL}/progress/sync`,
+  progressTopics: `${BASE_URL}/progress/topics`,
+  progressTopicsBatch: `${BASE_URL}/progress/topics/batch`,
+  progressGuides: `${BASE_URL}/progress/guides`,
 } as const;

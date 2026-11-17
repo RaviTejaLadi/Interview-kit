@@ -457,11 +457,7 @@ export function AppSidebar({
         </p>
         <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-sidebar-foreground/72">
           <span className="inline-flex items-center gap-1.5">
-            <CheckCircle2Icon className="size-3 text-emerald-500" aria-hidden="true" />
-            Progress saved locally
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <StarIcon className="size-3 text-amber-500 fill-amber-400" aria-hidden="true" />
+            <StarIcon className="size-3 fill-amber-400 text-amber-500" aria-hidden="true" />
             {importantTopicCount} important
           </span>
           <span className="inline-flex items-center gap-1.5">

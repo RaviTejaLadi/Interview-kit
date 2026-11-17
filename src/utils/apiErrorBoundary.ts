@@ -5,6 +5,7 @@ import type { AxiosResponse } from 'axios';
 
 type ApiBoundaryOptions = {
   silentSuccess?: boolean;
+  silentError?: boolean;
 };
 const notify = customToast();
 
@@ -21,7 +22,9 @@ export default async function withApiBoundary<T>(
     }
     return response.data;
   } catch (error) {
-    notify.error(getApiErrorMessage(error, fallbackError));
+    if (!options?.silentError) {
+      notify.error(getApiErrorMessage(error, fallbackError));
+    }
     throw error;
   }
 }
