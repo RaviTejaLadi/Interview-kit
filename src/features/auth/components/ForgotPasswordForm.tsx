@@ -1,16 +1,18 @@
 import { useState, type FormEvent } from 'react';
 import { ArrowLeftIcon, MailIcon, SendIcon } from 'lucide-react';
+import { useNavigate } from 'react-router';
 
 import { Button } from '@/components/ui/button';
 import { AuthField, AuthFormError } from '@/features/auth/components/AuthField';
 import { AuthFormHeading } from '@/features/auth/components/AuthFormHeading';
 import { useForgotPassword } from '@/features/auth/hooks/use-forgot-password';
 import { useAuthStore } from '@/features/auth/hooks/use-auth-store';
+import { paths } from '@/routes/paths';
 import { validateForgotPassword } from '@/features/auth/utils/validation';
 import { getApiErrorMessage } from '@/utils/axios';
 
 export function ForgotPasswordForm() {
-  const setScreen = useAuthStore((state) => state.setScreen);
+  const navigate = useNavigate();
   const beginReset = useAuthStore((state) => state.beginReset);
   const storedEmail = useAuthStore((state) => state.resetEmail);
   const forgotPassword = useForgotPassword();
@@ -30,6 +32,7 @@ export function ForgotPasswordForm() {
     forgotPassword.mutate(trimmedEmail, {
       onSuccess: (result) => {
         beginReset(trimmedEmail, result.otp);
+        navigate(paths.verifyOtp);
       },
     });
   }
@@ -64,7 +67,7 @@ export function ForgotPasswordForm() {
         {forgotPassword.isPending ? 'Sending…' : 'Send reset code'}
       </Button>
       <p className="text-center text-sm text-muted-foreground">
-        <Button type="button" variant="link" size="sm" onClick={() => setScreen('login')}>
+        <Button type="button" variant="link" size="sm" onClick={() => navigate(paths.login)}>
           <ArrowLeftIcon className="size-4" />
           Back to sign in
         </Button>

@@ -71,5 +71,3 @@ export type OAuthProviders = {
   googleUrl: string;
   githubUrl: string;
 };
-
-export type AuthScreen = 'login' | 'signup' | 'forgot' | 'verify-otp' | 'reset-password';

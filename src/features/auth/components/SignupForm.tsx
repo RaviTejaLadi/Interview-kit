@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { useNavigate } from 'react-router';
 import {
   AtSignIcon,
   CalendarDaysIcon,
@@ -16,7 +17,7 @@ import { AuthFormHeading } from '@/features/auth/components/AuthFormHeading';
 import { AuthPasswordField } from '@/features/auth/components/AuthPasswordField';
 import { OAuthButtons } from '@/features/auth/components/OauthButtons';
 import { useRegister } from '@/features/auth/hooks/use-register';
-import { useAuthStore } from '@/features/auth/hooks/use-auth-store';
+import { paths } from '@/routes/paths';
 import { validateRegister } from '@/features/auth/utils/validation';
 import { getApiErrorMessage } from '@/utils/axios';
 
@@ -24,7 +25,7 @@ const emptyErrors: ReturnType<typeof validateRegister> = {};
 
 export function SignUpForm() {
   const register = useRegister();
-  const setScreen = useAuthStore((state) => state.setScreen);
+  const navigate = useNavigate();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [userName, setUserName] = useState('');
@@ -194,7 +195,7 @@ export function SignUpForm() {
       </Button>
       <p className="text-center text-sm text-muted-foreground">
         Already have an account?{' '}
-        <Button type="button" variant="link" size="sm" onClick={() => setScreen('login')}>
+        <Button type="button" variant="link" size="sm" onClick={() => navigate(paths.login)}>
           Sign in
         </Button>
       </p>

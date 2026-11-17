@@ -1,5 +1,6 @@
 import { OAUTH_CALLBACK_PATH, OAUTH_ERROR_KEY } from '@/features/auth/constants/auth.constants';
 import { writeSession } from '@/features/auth/utils/session';
+import { paths } from '@/routes/paths';
 
 function callbackPathname() {
   const path = window.location.pathname.replace(/\/+$/, '') || '/';
@@ -20,14 +21,14 @@ export function consumeOAuthCallback() {
   if (accessToken && refreshToken) {
     writeSession(accessToken, refreshToken);
     window.sessionStorage.removeItem(OAUTH_ERROR_KEY);
-  } else {
-    window.sessionStorage.setItem(
-      OAUTH_ERROR_KEY,
-      error || 'Google or GitHub sign-in could not be completed. Try again.',
-    );
+    return paths.kits;
   }
 
-  window.history.replaceState(null, '', '/kits');
+  window.sessionStorage.setItem(
+    OAUTH_ERROR_KEY,
+    error || 'Google or GitHub sign-in could not be completed. Try again.',
+  );
+  return paths.login;
 }
 
 export function readOAuthError() {

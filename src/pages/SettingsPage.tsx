@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { NavLink, Outlet, useLocation, useNavigate } from 'react-router';
 import {
   ChevronDownIcon,
   MessageSquareTextIcon,
@@ -11,18 +12,12 @@ import {
 
 import { SiteHeader } from '@/components/NewspaperMasthead';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { AdminPanel, type AdminPanelSection } from '@/features/admin/components/AdminPanel';
-import { ProfileSettingsPanel } from '@/features/auth/components/ProfileScreen';
+import type { AdminPanelSection } from '@/features/admin/components/AdminPanel';
 import { useCurrentUser } from '@/features/auth/hooks/use-current-user';
-import { FeedbackPanel } from '@/features/feedback/components/FeedbackPanel';
 import { AppHeaderActions } from '@/features/interview-app/components/AppHeaderActions';
-import {
-  getSettingsPath,
-  leaveSettingsRoute,
-  openSettingsRoute,
-  type SettingsSection,
-} from '@/features/interview-app/lib/navigation';
+import type { SettingsSection } from '@/features/interview-app/lib/navigation';
 import { useInterviewAppStore } from '@/features/interview-app/store/use-interview-app-store';
+import { parseSettingsPathname, readSettingsReturnPath, settingsPath } from '@/routes/paths';
 import { cn } from '@/lib/utils';
 
 type SettingsNavItem = {
@@ -71,9 +66,9 @@ export function SettingsPage() {
   const isAdmin = user?.role === 'admin';
   const theme = useInterviewAppStore((state) => state.theme);
   const setTheme = useInterviewAppStore((state) => state.setTheme);
-  const homeView = useInterviewAppStore((state) => state.homeView);
-  const section = useInterviewAppStore((state) => state.settingsSection) ?? 'profile';
-  const setSettingsSection = useInterviewAppStore((state) => state.setSettingsSection);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const section = parseSettingsPathname(location.pathname)?.section ?? 'profile';
   const [isAdminExpanded, setIsAdminExpanded] = useState(() => isAdminSection(section));
 
   // Single unified list of nav items, built dynamically based on role.
@@ -81,48 +76,14 @@ export function SettingsPage() {
     return [profileNavItem, feedbackNavItem, ...(isAdmin ? adminNavItems : [])];
   }, [isAdmin]);
 
-  const activeItem = useMemo(() => {
-    return navItems.find((item) => item.id === section) ?? profileNavItem;
-  }, [navItems, section]);
-
   useEffect(() => {
     if (isAdminSection(section)) {
       setIsAdminExpanded(true);
     }
   }, [section]);
 
-  useEffect(() => {
-    if (isAdmin || !isAdminSection(section)) {
-      return;
-    }
-
-    window.history.replaceState(window.history.state, '', getSettingsPath('profile'));
-    setSettingsSection('profile');
-  }, [isAdmin, section, setSettingsSection]);
-
   function leaveSettings() {
-    const waitedForHistory = leaveSettingsRoute(homeView);
-    if (!waitedForHistory) {
-      setSettingsSection(null);
-    }
-  }
-
-  function selectSection(next: SettingsSection) {
-    if (next === section) {
-      return;
-    }
-
-    openSettingsRoute(next);
-    setSettingsSection(next);
-  }
-
-  function handleNavClick(event: React.MouseEvent<HTMLAnchorElement>, next: SettingsSection) {
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
-      return;
-    }
-
-    event.preventDefault();
-    selectSection(next);
+    navigate(readSettingsReturnPath(location.state));
   }
 
   const nonAdminItems = navItems.filter((item) => !isAdminSection(item.id));
@@ -152,21 +113,20 @@ export function SettingsPage() {
               const isActive = item.id === section;
 
               return (
-                <a
+                <NavLink
                   key={item.id}
-                  href={getSettingsPath(item.id)}
-                  aria-current={isActive ? 'page' : undefined}
+                  to={settingsPath(item.id)}
+                  state={location.state}
                   className={cn(
                     'flex min-w-44 items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors md:min-w-0',
                     isActive ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-muted',
                   )}
-                  onClick={(event) => handleNavClick(event, item.id)}
                 >
                   <Icon className="size-4 shrink-0" />
                   <span className="min-w-0">
                     <span className="block text-sm font-medium">{item.label}</span>
                   </span>
-                </a>
+                </NavLink>
               );
             })}
 
@@ -198,23 +158,22 @@ export function SettingsPage() {
                       const isActive = item.id === section;
 
                       return (
-                        <a
+                        <NavLink
                           key={item.id}
-                          href={getSettingsPath(item.id)}
-                          aria-current={isActive ? 'page' : undefined}
+                          to={settingsPath(item.id)}
+                          state={location.state}
                           className={cn(
                             'flex min-w-44 items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors md:min-w-0',
                             isActive
                               ? 'bg-primary/10 text-primary'
                               : 'text-foreground hover:bg-muted',
                           )}
-                          onClick={(event) => handleNavClick(event, item.id)}
                         >
                           <Icon className="size-4 shrink-0" />
                           <span className="min-w-0">
                             <span className="block text-sm font-medium">{item.label}</span>
                           </span>
-                        </a>
+                        </NavLink>
                       );
                     })}
                   </div>
@@ -225,11 +184,7 @@ export function SettingsPage() {
         </aside>
         <ScrollArea className="min-h-0 flex-1">
           <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:max-w-4xl lg:px-8">
-            {activeItem.id === 'profile' ? <ProfileSettingsPanel /> : null}
-            {activeItem.id === 'feedback' ? <FeedbackPanel /> : null}
-            {isAdminSection(activeItem.id) && isAdmin ? (
-              <AdminPanel section={activeItem.id} />
-            ) : null}
+            <Outlet />
           </div>
         </ScrollArea>
       </div>

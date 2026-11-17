@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router';
 
 import { interviewCatalog } from '@/features/interview-app/catalog';
 import {
@@ -6,8 +7,9 @@ import {
   countProgressByTopicIds,
   hasOwn,
 } from '@/features/interview-app/lib/helpers';
-import { THEME_STORAGE_KEY, getHomePathForView } from '@/features/interview-app/lib/navigation';
+import type { HomeView } from '@/features/interview-app/lib/navigation';
 import { useInterviewAppStore } from '@/features/interview-app/store/use-interview-app-store';
+import { guidePath, kitPath, paths } from '@/routes/paths';
 import { useGuideProgress } from '@/hooks/use-guide-progress';
 import {
   useAdjacentTopics,
@@ -28,13 +30,18 @@ import {
 const { allTopics, groups, allGuides } = interviewCatalog;
 
 export function useInterviewAppController() {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const params = useParams();
+  const [searchParams] = useSearchParams();
+  const homeView: HomeView = pathname.startsWith('/guides') ? 'guides' : 'kits';
+  const selectedKitId = params.kitId ?? null;
+  const selectedGuideId = params.guideId ?? null;
+  const topicParam = searchParams.get('topic');
   const {
     searchValue,
-    homeView,
-    selectedKitId,
     selectedNavId,
     focusedTopicId,
-    selectedGuideId,
     topicContentById,
     guideContentById,
     isLoadingTopic,
@@ -43,11 +50,8 @@ export function useInterviewAppController() {
     guideLoadError,
     theme,
     setSearchValue,
-    setHomeView,
-    setSelectedKitId,
     setSelectedNavId,
     setFocusedTopicId,
-    setSelectedGuideId,
     setTopicContentById,
     setGuideContentById,
     setIsLoadingTopic,
@@ -166,107 +170,38 @@ export function useInterviewAppController() {
     : null;
 
   const closeKit = useCallback(() => {
-    setSelectedKitId(null);
     setSelectedNavId(null);
     setFocusedTopicId(null);
     setSearchValue('');
-
-    const kitsPath = getHomePathForView('kits');
-    if (window.location.pathname !== kitsPath || window.location.hash) {
-      window.history.pushState({}, '', kitsPath);
-    }
-  }, [setFocusedTopicId, setSearchValue, setSelectedKitId, setSelectedNavId]);
+    navigate(paths.kits);
+  }, [navigate, setFocusedTopicId, setSearchValue, setSelectedNavId]);
 
   const openKit = useCallback(
     (kitId: string, topicId?: string) => {
-      setHomeView('kits');
-      setSelectedGuideId(null);
-      setSelectedKitId(kitId);
-      setSearchValue('');
-
-      if (topicId) {
-        const nav = findNavItemForTopicInGroups(
-          groups.filter((group) => group.id === kitId),
-          topicId,
-        );
-        setSelectedNavId(nav?.id ?? null);
-        setFocusedTopicId(topicId);
-      } else {
-        setSelectedNavId(null);
-        setFocusedTopicId(null);
-      }
-
-      const kitsPath = getHomePathForView('kits');
-      const targetUrl = `${kitsPath}#${kitId}`;
-      if (`${window.location.pathname}${window.location.hash}` !== targetUrl) {
-        window.history.pushState({ kitId }, '', targetUrl);
-      }
+      navigate(kitPath(kitId, topicId));
     },
-    [
-      setFocusedTopicId,
-      setHomeView,
-      setSearchValue,
-      setSelectedGuideId,
-      setSelectedKitId,
-      setSelectedNavId,
-    ],
+    [navigate],
   );
 
   const openGuide = useCallback(
     (guideId: string) => {
-      setHomeView('guides');
-      setSelectedKitId(null);
-      setSelectedNavId(null);
-      setFocusedTopicId(null);
-      setSearchValue('');
-      setSelectedGuideId(guideId);
-
-      const guidesPath = getHomePathForView('guides');
-      if (window.location.pathname !== guidesPath || window.location.hash) {
-        window.history.pushState({}, '', guidesPath);
-      }
+      navigate(guidePath(guideId));
     },
-    [
-      setFocusedTopicId,
-      setHomeView,
-      setSearchValue,
-      setSelectedGuideId,
-      setSelectedKitId,
-      setSelectedNavId,
-    ],
+    [navigate],
   );
 
   const closeGuide = useCallback(() => {
-    setSelectedGuideId(null);
-    setHomeView('guides');
-    const guidesPath = getHomePathForView('guides');
-    if (window.location.pathname !== guidesPath || window.location.hash) {
-      window.history.pushState({}, '', guidesPath);
-    }
-  }, [setHomeView, setSelectedGuideId]);
+    navigate(paths.guides);
+  }, [navigate]);
 
   const navigateHomeView = useCallback(
-    (view: 'kits' | 'guides') => {
-      setHomeView(view);
-      setSelectedGuideId(null);
-      setSelectedKitId(null);
+    (view: HomeView) => {
       setSelectedNavId(null);
       setFocusedTopicId(null);
       setSearchValue('');
-
-      const targetPath = getHomePathForView(view);
-      if (window.location.pathname !== targetPath || window.location.hash) {
-        window.history.pushState({}, '', targetPath);
-      }
+      navigate(view === 'guides' ? paths.guides : paths.kits);
     },
-    [
-      setFocusedTopicId,
-      setHomeView,
-      setSearchValue,
-      setSelectedGuideId,
-      setSelectedKitId,
-      setSelectedNavId,
-    ],
+    [navigate, setFocusedTopicId, setSearchValue, setSelectedNavId],
   );
 
   const handleSelectNav = useCallback(
@@ -321,6 +256,30 @@ export function useInterviewAppController() {
     nextTopic: selectedGuide ? nextGuide : null,
     onSelect: openGuide,
   });
+
+  const previousKitIdRef = useRef<string | null | undefined>(undefined);
+
+  useEffect(() => {
+    const kitChanged = previousKitIdRef.current !== selectedKitId;
+    previousKitIdRef.current = selectedKitId;
+
+    if (!selectedKitId) {
+      return;
+    }
+
+    if (kitChanged) {
+      setSearchValue('');
+      setSelectedNavId(null);
+      if (!topicParam) {
+        setFocusedTopicId(null);
+      }
+    }
+
+    if (topicParam) {
+      setSelectedNavId(null);
+      setFocusedTopicId(topicParam);
+    }
+  }, [selectedKitId, setFocusedTopicId, setSearchValue, setSelectedNavId, topicParam]);
 
   useEffect(() => {
     if (selectedNav && selectedNav.id !== selectedNavId) {
@@ -463,13 +422,6 @@ export function useInterviewAppController() {
       ignore = true;
     };
   }, [guideContentById, selectedGuide, setGuideContentById, setGuideLoadError, setIsLoadingGuide]);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    root.classList.toggle('dark', theme === 'dark');
-    root.style.colorScheme = theme;
-    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
-  }, [theme]);
 
   const toggleTheme = useCallback(() => {
     setTheme((current) => (current === 'dark' ? 'light' : 'dark'));

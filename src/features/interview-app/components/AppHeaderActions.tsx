@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router';
 import {
   LogOutIcon,
   Maximize2Icon,
@@ -20,8 +21,8 @@ import { FullscreenButton, ThemeToggle } from '@/components/TopicNavigator';
 import { useCurrentUser } from '@/features/auth/hooks/use-current-user';
 import { useLogout } from '@/features/auth/hooks/use-logout';
 import type { AuthUser } from '@/features/auth/types/auth';
-import { openSettingsRoute, type Theme } from '@/features/interview-app/lib/navigation';
-import { useInterviewAppStore } from '@/features/interview-app/store/use-interview-app-store';
+import type { Theme } from '@/features/interview-app/lib/navigation';
+import { paths, readSettingsReturnPath } from '@/routes/paths';
 import { cn } from '@/lib/utils';
 
 type AppHeaderActionsProps = {
@@ -55,7 +56,8 @@ export function AppHeaderActions({
 }: AppHeaderActionsProps) {
   const user = useCurrentUser().data;
   const logout = useLogout();
-  const setSettingsSection = useInterviewAppStore((state) => state.setSettingsSection);
+  const location = useLocation();
+  const navigate = useNavigate();
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
@@ -112,8 +114,11 @@ export function AppHeaderActions({
               <DropdownMenuItem
                 className={accountMenuItemClassName}
                 onClick={() => {
-                  openSettingsRoute('profile');
-                  setSettingsSection('profile');
+                  const here = `${location.pathname}${location.search}${location.hash}`;
+                  const from = location.pathname.startsWith('/settings')
+                    ? readSettingsReturnPath(location.state)
+                    : here;
+                  navigate(paths.settings.profile, { state: { from } });
                 }}
               >
                 <SettingsIcon strokeWidth={1.75} />

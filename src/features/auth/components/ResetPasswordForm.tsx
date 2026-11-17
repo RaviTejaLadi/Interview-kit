@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { KeyRoundIcon, RefreshCcwIcon } from 'lucide-react';
+import { useNavigate } from 'react-router';
 
 import { Button } from '@/components/ui/button';
 import { AuthFormError } from '@/features/auth/components/AuthField';
@@ -7,10 +8,12 @@ import { AuthFormHeading } from '@/features/auth/components/AuthFormHeading';
 import { AuthPasswordField } from '@/features/auth/components/AuthPasswordField';
 import { useResetPassword } from '@/features/auth/hooks/use-reset-password';
 import { useAuthStore } from '@/features/auth/hooks/use-auth-store';
+import { paths } from '@/routes/paths';
 import { validateResetPassword } from '@/features/auth/utils/validation';
 import { getApiErrorMessage } from '@/utils/axios';
 
 export function ResetPasswordForm() {
+  const navigate = useNavigate();
   const email = useAuthStore((state) => state.resetEmail);
   const resetToken = useAuthStore((state) => state.resetToken);
   const backToForgot = useAuthStore((state) => state.backToForgot);
@@ -23,8 +26,9 @@ export function ResetPasswordForm() {
   useEffect(() => {
     if (!email || !resetToken) {
       backToForgot();
+      navigate(paths.forgotPassword, { replace: true });
     }
-  }, [backToForgot, email, resetToken]);
+  }, [backToForgot, email, navigate, resetToken]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -40,6 +44,7 @@ export function ResetPasswordForm() {
       {
         onSuccess: () => {
           clearReset();
+          navigate(paths.login, { replace: true });
         },
       },
     );
@@ -87,7 +92,15 @@ export function ResetPasswordForm() {
         {resetPassword.isPending ? 'Updating password…' : 'Update password'}
       </Button>
       <p className="text-center text-sm text-muted-foreground">
-        <Button type="button" variant="link" size="sm" onClick={backToForgot}>
+        <Button
+          type="button"
+          variant="link"
+          size="sm"
+          onClick={() => {
+            backToForgot();
+            navigate(paths.forgotPassword);
+          }}
+        >
           <RefreshCcwIcon className="size-4" />
           Request a new code
         </Button>

@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { LogInIcon, MailIcon } from 'lucide-react';
+import { useNavigate } from 'react-router';
 
 import { Button } from '@/components/ui/button';
 import { AuthField, AuthFormError } from '@/features/auth/components/AuthField';
@@ -7,14 +8,14 @@ import { AuthFormHeading } from '@/features/auth/components/AuthFormHeading';
 import { AuthPasswordField } from '@/features/auth/components/AuthPasswordField';
 import { OAuthButtons } from '@/features/auth/components/OauthButtons';
 import { useLogin } from '@/features/auth/hooks/use-login';
-import { useAuthStore } from '@/features/auth/hooks/use-auth-store';
 import { clearOAuthError, readOAuthError } from '@/features/auth/utils/oauth';
+import { paths } from '@/routes/paths';
 import { validateLogin } from '@/features/auth/utils/validation';
 import { getApiErrorMessage } from '@/utils/axios';
 
 export function LoginForm() {
   const login = useLogin();
-  const setScreen = useAuthStore((state) => state.setScreen);
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState<ReturnType<typeof validateLogin>>({});
@@ -74,7 +75,12 @@ export function LoginForm() {
         onChange={(event) => setPassword(event.target.value)}
       />
       <div className="flex justify-end">
-        <Button type="button" variant="link" size="sm" onClick={() => setScreen('forgot')}>
+        <Button
+          type="button"
+          variant="link"
+          size="sm"
+          onClick={() => navigate(paths.forgotPassword)}
+        >
           Forgot password?
         </Button>
       </div>
@@ -84,7 +90,7 @@ export function LoginForm() {
       </Button>
       <p className="text-center text-sm text-muted-foreground">
         New here?{' '}
-        <Button type="button" variant="link" size="sm" onClick={() => setScreen('signup')}>
+        <Button type="button" variant="link" size="sm" onClick={() => navigate(paths.signup)}>
           Create an account
         </Button>
       </p>

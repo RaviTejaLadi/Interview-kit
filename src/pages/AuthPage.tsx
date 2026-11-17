@@ -1,19 +1,14 @@
 import { useEffect, useState } from 'react';
 import { ArrowRightIcon } from 'lucide-react';
+import { Outlet, useLocation, useNavigate } from 'react-router';
 
 import { Button } from '@/components/ui/button';
 import learningIllustration from '@/assets/Learning-bro.svg';
 import resumeIllustration from '@/assets/Resume-bro.svg';
 import workTimeIllustration from '@/assets/Work time-cuate.svg';
-import { ForgotPasswordForm } from '@/features/auth/components/ForgotPasswordForm';
-import { LoginForm } from '@/features/auth/components/LoginForm';
-import { ResetPasswordForm } from '@/features/auth/components/ResetPasswordForm';
-import { SignUpForm } from '@/features/auth/components/SignupForm';
-import { VerifyOtpForm } from '@/features/auth/components/VerifyOtpForm';
-import { useAuthStore } from '@/features/auth/hooks/use-auth-store';
 import { AppHeaderActions } from '@/features/interview-app/components/AppHeaderActions';
-import { THEME_STORAGE_KEY } from '@/features/interview-app/lib/navigation';
 import { useInterviewAppStore } from '@/features/interview-app/store/use-interview-app-store';
+import { paths } from '@/routes/paths';
 import { cn } from '@/lib/utils';
 
 const authIllustrations = [
@@ -42,19 +37,12 @@ const authIllustrations = [
 const ILLUSTRATION_ROTATION_MS = 4500;
 
 export function AuthPage() {
-  const screen = useAuthStore((state) => state.screen);
-  const setScreen = useAuthStore((state) => state.setScreen);
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
   const theme = useInterviewAppStore((state) => state.theme);
   const setTheme = useInterviewAppStore((state) => state.setTheme);
   const [illustrationIndex, setIllustrationIndex] = useState(0);
   const illustration = authIllustrations[illustrationIndex];
-
-  useEffect(() => {
-    const root = document.documentElement;
-    root.classList.toggle('dark', theme === 'dark');
-    root.style.colorScheme = theme;
-    window.localStorage.setItem(THEME_STORAGE_KEY, theme);
-  }, [theme]);
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -65,19 +53,19 @@ export function AuthPage() {
   }, []);
 
   const authSwitchAction =
-    screen === 'login'
+    pathname === paths.login
       ? {
           text: "Don't have an account?",
           button: 'Sign up',
-          onClick: () => setScreen('signup'),
+          onClick: () => navigate(paths.signup),
         }
       : {
           text: 'Already have an account?',
           button: 'Sign in',
-          onClick: () => setScreen('login'),
+          onClick: () => navigate(paths.login),
         };
 
-  const showSwitchAction = screen === 'login' || screen === 'signup';
+  const showSwitchAction = pathname === paths.login || pathname === paths.signup;
 
   return (
     <div className="theme relative flex h-svh flex-col overflow-hidden bg-background">
@@ -132,11 +120,7 @@ export function AuthPage() {
       <main className="relative flex flex-1 overflow-y-auto px-4 pb-8 sm:px-6 sm:pb-10 lg:px-8">
         <div className="mx-auto grid w-full max-w-6xl items-center gap-8 py-6 lg:grid-cols-[minmax(0,34rem)_minmax(0,1fr)] lg:gap-12 lg:py-8 xl:gap-16">
           <section className="mx-auto w-full max-w-xl lg:mx-0">
-            {screen === 'signup' ? <SignUpForm /> : null}
-            {screen === 'forgot' ? <ForgotPasswordForm /> : null}
-            {screen === 'verify-otp' ? <VerifyOtpForm /> : null}
-            {screen === 'reset-password' ? <ResetPasswordForm /> : null}
-            {screen === 'login' ? <LoginForm /> : null}
+            <Outlet />
           </section>
 
           <aside className="mx-auto hidden w-full max-w-lg lg:block">

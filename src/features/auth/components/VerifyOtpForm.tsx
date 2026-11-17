@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { ArrowLeftIcon, RefreshCcwIcon, ShieldCheckIcon } from 'lucide-react';
+import { useNavigate } from 'react-router';
 
 import { Button } from '@/components/ui/button';
 import { AuthField, AuthFormError } from '@/features/auth/components/AuthField';
@@ -7,15 +8,16 @@ import { AuthFormHeading } from '@/features/auth/components/AuthFormHeading';
 import { useForgotPassword } from '@/features/auth/hooks/use-forgot-password';
 import { useAuthStore } from '@/features/auth/hooks/use-auth-store';
 import { useVerifyOtp } from '@/features/auth/hooks/use-verify-otp';
+import { paths } from '@/routes/paths';
 import { validateOtp } from '@/features/auth/utils/validation';
 import { getApiErrorMessage } from '@/utils/axios';
 
 export function VerifyOtpForm() {
+  const navigate = useNavigate();
   const email = useAuthStore((state) => state.resetEmail);
   const presetOtp = useAuthStore((state) => state.resetOtp);
   const backToForgot = useAuthStore((state) => state.backToForgot);
   const continueReset = useAuthStore((state) => state.continueReset);
-  const setScreen = useAuthStore((state) => state.setScreen);
   const verifyOtp = useVerifyOtp();
   const resend = useForgotPassword();
   const [otp, setOtp] = useState(presetOtp);
@@ -23,9 +25,9 @@ export function VerifyOtpForm() {
 
   useEffect(() => {
     if (!email) {
-      setScreen('forgot');
+      navigate(paths.forgotPassword, { replace: true });
     }
-  }, [email, setScreen]);
+  }, [email, navigate]);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -41,6 +43,7 @@ export function VerifyOtpForm() {
       {
         onSuccess: (result) => {
           continueReset(result.resetToken);
+          navigate(paths.resetPassword);
         },
       },
     );
@@ -77,7 +80,15 @@ export function VerifyOtpForm() {
         {verifyOtp.isPending ? 'Checking code…' : 'Verify code'}
       </Button>
       <div className="flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
-        <Button type="button" variant="link" size="sm" onClick={backToForgot}>
+        <Button
+          type="button"
+          variant="link"
+          size="sm"
+          onClick={() => {
+            backToForgot();
+            navigate(paths.forgotPassword);
+          }}
+        >
           <ArrowLeftIcon className="size-4" />
           Use a different email
         </Button>
