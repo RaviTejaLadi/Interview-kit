@@ -20,7 +20,7 @@ import { FullscreenButton, ThemeToggle } from '@/components/topic-navigator';
 import { useCurrentUser } from '@/features/auth/hooks/use-current-user';
 import { useLogout } from '@/features/auth/hooks/use-logout';
 import type { AuthUser } from '@/features/auth/types/auth';
-import type { Theme } from '@/features/interview-app/lib/navigation';
+import { openSettingsRoute, type Theme } from '@/features/interview-app/lib/navigation';
 import { useInterviewAppStore } from '@/features/interview-app/store/use-interview-app-store';
 import { cn } from '@/lib/utils';
 
@@ -55,7 +55,7 @@ export function AppHeaderActions({
 }: AppHeaderActionsProps) {
   const user = useCurrentUser().data;
   const logout = useLogout();
-  const setIsProfileOpen = useInterviewAppStore((state) => state.setIsProfileOpen);
+  const setSettingsSection = useInterviewAppStore((state) => state.setSettingsSection);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
@@ -111,7 +111,10 @@ export function AppHeaderActions({
             <div className="p-1.5">
               <DropdownMenuItem
                 className={accountMenuItemClassName}
-                onClick={() => setIsProfileOpen(true)}
+                onClick={() => {
+                  openSettingsRoute('profile');
+                  setSettingsSection('profile');
+                }}
               >
                 <SettingsIcon strokeWidth={1.75} />
                 Settings

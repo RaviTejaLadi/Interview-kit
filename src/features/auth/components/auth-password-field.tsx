@@ -1,8 +1,9 @@
 import { EyeIcon, EyeOffIcon, LockKeyholeIcon } from 'lucide-react';
 import { useId, useState, type ComponentProps } from 'react';
 
-import { AuthField } from '@/features/auth/components/auth-field';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { AuthField } from '@/features/auth/components/auth-field';
 import { cn } from '@/lib/utils';
 
 type AuthPasswordFieldProps = {
@@ -29,14 +30,16 @@ export function AuthPasswordField({ label, error, hint, id, ...props }: AuthPass
           className={cn('pr-8 pl-8', error && 'border-destructive')}
           {...props}
         />
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon-xs"
           aria-label={isVisible ? 'Hide password' : 'Show password'}
           onClick={() => setIsVisible((value) => !value)}
-          className="absolute inset-y-0 right-0 inline-flex w-8 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
+          className="absolute inset-y-0 right-0 h-full w-8 rounded-none text-muted-foreground hover:bg-transparent hover:text-foreground"
         >
           {isVisible ? <EyeOffIcon className="size-3.5" /> : <EyeIcon className="size-3.5" />}
-        </button>
+        </Button>
       </div>
     </AuthField>
   );

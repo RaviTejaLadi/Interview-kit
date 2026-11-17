@@ -36,6 +36,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { Button } from '@/components/ui/button';
+import { SEARCH_QUERY_MAX, sanitizeSearchQuery } from '@/lib/search-validation';
 import { cn } from '@/lib/utils';
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
@@ -419,7 +420,8 @@ export function AppSidebar({
             <SearchIcon className="pointer-events-none absolute top-1/2 left-2 size-4 -translate-y-1/2 text-sidebar-foreground/75" />
             <SidebarInput
               value={searchValue}
-              onChange={(event) => onSearchChange(event.target.value)}
+              onChange={(event) => onSearchChange(sanitizeSearchQuery(event.target.value))}
+              maxLength={SEARCH_QUERY_MAX}
               aria-label="Search topics"
               placeholder="Search this kit"
               className="h-8 rounded-[var(--radius-control)] border-sidebar-border bg-card pl-7 text-xs shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring"

@@ -11,4 +11,10 @@ export const apiUrls = {
   refresh: `${BASE_URL}/auth/refresh`,
   me: `${BASE_URL}/auth/me`,
   logout: `${BASE_URL}/auth/logout`,
+  feedback: `${BASE_URL}/feedback`,
+  adminRegister: `${BASE_URL}/admin/register`,
+  adminUsers: `${BASE_URL}/admin/users`,
+  adminFeedback: `${BASE_URL}/admin/feedback`,
+  chat: `${BASE_URL}/chat`,
+  chatUsage: `${BASE_URL}/chat/usage`,
 } as const;

@@ -1,4 +1,4 @@
-import { CheckCircle2Icon, CircleIcon, StarIcon } from 'lucide-react';
+import { CheckCircle2Icon, CircleIcon, MessageCircleIcon, StarIcon } from 'lucide-react';
 
 import { MarkdownPreview } from '@/components/markdown-preview';
 import { TopicStepButtons } from '@/components/topic-navigator';
@@ -18,6 +18,8 @@ type TopicDetailPanelProps = {
   selectedTopicProgress: TopicProgressEntry | null;
   previousTopic: NavTarget | null;
   nextTopic: NavTarget | null;
+  isRightPanelOpen: boolean;
+  onToggleRightPanel: () => void;
   onSelectTopic: (topicId: string) => void;
   onToggleTopicCompleted: (topicId: string) => void;
   onToggleTopicImportant: (topicId: string) => void;
@@ -34,6 +36,8 @@ export function TopicDetailPanel({
   selectedTopicProgress,
   previousTopic,
   nextTopic,
+  isRightPanelOpen,
+  onToggleRightPanel,
   onSelectTopic,
   onToggleTopicCompleted,
   onToggleTopicImportant,
@@ -95,6 +99,18 @@ export function TopicDetailPanel({
           nextTopic={nextTopic}
           onSelect={onSelectTopic}
         />
+        <Button
+          type="button"
+          variant="outline"
+          size="icon-xs"
+          className="border-border bg-card"
+          onClick={onToggleRightPanel}
+          aria-pressed={isRightPanelOpen}
+          aria-label={isRightPanelOpen ? 'Hide chat panel' : 'Open chat panel'}
+          title={isRightPanelOpen ? 'Hide chat' : 'Open chat'}
+        >
+          <MessageCircleIcon className="size-3.5" />
+        </Button>
       </div>
       {isLoading && !hasSelectedTopicContent ? (
         <p className="text-sm text-muted-foreground">Loading...</p>

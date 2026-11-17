@@ -2,10 +2,13 @@ import { create } from 'zustand';
 
 import { interviewCatalog } from '@/features/interview-app/catalog';
 import {
+  canonicalizeSettingsRoute,
   getHomeViewFromLocation,
   getInitialTheme,
   getKitIdFromHash,
+  getSettingsSectionFromLocation,
   type HomeView,
+  type SettingsSection,
   type Theme,
 } from '@/features/interview-app/lib/navigation';
 
@@ -23,7 +26,7 @@ type InterviewAppState = {
   topicLoadError: string;
   guideLoadError: string;
   theme: Theme;
-  isProfileOpen: boolean;
+  settingsSection: SettingsSection | null;
 };
 
 type InterviewAppActions = {
@@ -44,7 +47,7 @@ type InterviewAppActions = {
   setTopicLoadError: (value: string) => void;
   setGuideLoadError: (value: string) => void;
   setTheme: (value: Theme | ((current: Theme) => Theme)) => void;
-  setIsProfileOpen: (value: boolean) => void;
+  setSettingsSection: (value: SettingsSection | null) => void;
 };
 
 type InterviewAppStore = InterviewAppState & InterviewAppActions;
@@ -64,7 +67,7 @@ export const useInterviewAppStore = create<InterviewAppStore>((set) => ({
   topicLoadError: '',
   guideLoadError: '',
   theme: getInitialTheme(),
-  isProfileOpen: false,
+  settingsSection: getSettingsSectionFromLocation(),
   setSearchValue: (searchValue) => set({ searchValue }),
   setHomeView: (homeView) => set({ homeView }),
   setSelectedKitId: (selectedKitId) => set({ selectedKitId }),
@@ -91,5 +94,24 @@ export const useInterviewAppStore = create<InterviewAppStore>((set) => ({
   setGuideLoadError: (guideLoadError) => set({ guideLoadError }),
   setTheme: (theme) =>
     set((state) => ({ theme: typeof theme === 'function' ? theme(state.theme) : theme })),
-  setIsProfileOpen: (isProfileOpen) => set({ isProfileOpen }),
+  setSettingsSection: (settingsSection) => set({ settingsSection }),
 }));
+
+export function syncAppLocation() {
+  const section = canonicalizeSettingsRoute();
+  if (section) {
+    useInterviewAppStore.setState({ settingsSection: section });
+    return;
+  }
+
+  const homeView = getHomeViewFromLocation();
+  useInterviewAppStore.setState({
+    settingsSection: null,
+    homeView,
+    selectedKitId: homeView === 'guides' ? null : getKitIdFromHash(interviewCatalog.groups),
+    selectedGuideId: null,
+    selectedNavId: null,
+    focusedTopicId: null,
+    searchValue: '',
+  });
+}

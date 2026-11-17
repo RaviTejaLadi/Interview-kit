@@ -21,6 +21,7 @@ import {
   kitIconToneClass,
   sortKitsByDisplayOrder,
 } from '@/lib/kit-meta';
+import { SEARCH_QUERY_MAX, sanitizeSearchQuery } from '@/lib/search-validation';
 import { cn } from '@/lib/utils';
 
 type KitGalleryProps = {
@@ -195,7 +196,8 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
             <Input
               id="kit-search"
               value={searchValue}
-              onChange={(event) => setSearchValue(event.target.value)}
+              onChange={(event) => setSearchValue(sanitizeSearchQuery(event.target.value))}
+              maxLength={SEARCH_QUERY_MAX}
               aria-label="Search kits"
               placeholder="Search kits, topics, or questions"
               className="h-8 border-input bg-card pl-8 text-xs"

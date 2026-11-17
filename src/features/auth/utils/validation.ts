@@ -9,9 +9,10 @@ import type {
   RegisterInput,
   UpdateProfileInput,
 } from '@/features/auth/types/auth';
+import { toFieldErrors, type FieldErrors } from '@/lib/zod-field-errors';
 import { z } from 'zod';
 
-export type FieldErrors<T extends string> = Partial<Record<T, string>>;
+export type { FieldErrors };
 
 function isValidDate(value: string) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
@@ -310,20 +311,6 @@ const profileSchema = z
       });
     }
   });
-
-function toFieldErrors<T extends string>(error: z.ZodError, fields: readonly T[]): FieldErrors<T> {
-  const flattened = error.flatten().fieldErrors as Record<string, string[] | undefined>;
-  const mapped: FieldErrors<T> = {};
-
-  for (const field of fields) {
-    const message = flattened[field]?.[0];
-    if (message) {
-      mapped[field] = message;
-    }
-  }
-
-  return mapped;
-}
 
 export function profileChanges(input: ProfileFormInput, current: AuthUser): UpdateProfileInput {
   const changes: UpdateProfileInput = {};

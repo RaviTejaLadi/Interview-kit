@@ -2,22 +2,25 @@ import { useEffect } from 'react';
 import { Toaster } from 'sonner';
 
 import { AuthScreen } from '@/features/auth/components/auth-screen';
-import { ProfileScreen } from '@/features/auth/components/profile-screen';
+import { SettingsScreen } from '@/features/auth/components/settings-screen';
 import { useCurrentUser } from '@/features/auth/hooks/use-current-user';
 import { hasStoredSession } from '@/features/auth/utils/session';
 import { THEME_STORAGE_KEY } from '@/features/interview-app/lib/navigation';
-import { useInterviewAppStore } from '@/features/interview-app/store/use-interview-app-store';
+import {
+  syncAppLocation,
+  useInterviewAppStore,
+} from '@/features/interview-app/store/use-interview-app-store';
 import { GuideScreen } from '@/features/interview-app/views/guide-screen';
 import { HomeScreen } from '@/features/interview-app/views/home-screen';
 import { KitReaderScreen } from '@/features/interview-app/views/kit-reader-screen';
 
 function InterviewApp() {
-  const isProfileOpen = useInterviewAppStore((state) => state.isProfileOpen);
+  const settingsSection = useInterviewAppStore((state) => state.settingsSection);
   const selectedGuideId = useInterviewAppStore((state) => state.selectedGuideId);
   const selectedKitId = useInterviewAppStore((state) => state.selectedKitId);
 
-  if (isProfileOpen) {
-    return <ProfileScreen />;
+  if (settingsSection) {
+    return <SettingsScreen />;
   }
 
   if (selectedGuideId) {
@@ -35,6 +38,16 @@ function App() {
   const currentUser = useCurrentUser();
   const theme = useInterviewAppStore((state) => state.theme);
   const hasSession = hasStoredSession();
+
+  useEffect(() => {
+    syncAppLocation();
+    window.addEventListener('popstate', syncAppLocation);
+    window.addEventListener('hashchange', syncAppLocation);
+    return () => {
+      window.removeEventListener('popstate', syncAppLocation);
+      window.removeEventListener('hashchange', syncAppLocation);
+    };
+  }, []);
 
   useEffect(() => {
     const root = document.documentElement;

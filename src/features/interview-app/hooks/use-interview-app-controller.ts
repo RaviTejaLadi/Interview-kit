@@ -6,12 +6,7 @@ import {
   countProgressByTopicIds,
   hasOwn,
 } from '@/features/interview-app/lib/helpers';
-import {
-  THEME_STORAGE_KEY,
-  getHomePathForView,
-  getHomeViewFromLocation,
-  getKitIdFromHash,
-} from '@/features/interview-app/lib/navigation';
+import { THEME_STORAGE_KEY, getHomePathForView } from '@/features/interview-app/lib/navigation';
 import { useInterviewAppStore } from '@/features/interview-app/store/use-interview-app-store';
 import { useGuideProgress } from '@/hooks/use-guide-progress';
 import {
@@ -334,43 +329,6 @@ export function useInterviewAppController() {
   }, [selectedNav, selectedNavId, setSelectedNavId]);
 
   useEffect(() => {
-    function syncKitFromLocation() {
-      const nextHomeView = getHomeViewFromLocation();
-      setHomeView(nextHomeView);
-
-      if (nextHomeView === 'guides') {
-        setSelectedKitId(null);
-        setSelectedGuideId(null);
-        setSelectedNavId(null);
-        setFocusedTopicId(null);
-        setSearchValue('');
-        return;
-      }
-
-      const kitId = getKitIdFromHash(groups);
-      setSelectedKitId(kitId);
-      setSelectedGuideId(null);
-      setSelectedNavId(null);
-      setFocusedTopicId(null);
-      setSearchValue('');
-    }
-
-    window.addEventListener('popstate', syncKitFromLocation);
-    window.addEventListener('hashchange', syncKitFromLocation);
-    return () => {
-      window.removeEventListener('popstate', syncKitFromLocation);
-      window.removeEventListener('hashchange', syncKitFromLocation);
-    };
-  }, [
-    setFocusedTopicId,
-    setHomeView,
-    setSearchValue,
-    setSelectedGuideId,
-    setSelectedKitId,
-    setSelectedNavId,
-  ]);
-
-  useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
       if (event.key !== 'Escape') {
         return;
@@ -530,6 +488,7 @@ export function useInterviewAppController() {
     selectedGuideContent,
     selectedSingleTopic,
     selectedSingleTopicProgress,
+    navigationItems,
     selectedTopicContent,
     hasSelectedTopicContent,
     selectedTopicIcon,

@@ -39,6 +39,7 @@ import { Input } from '@/components/ui/input';
 import type { GuideProgressMap } from '@/hooks/use-guide-progress';
 import type { Guide, GuideTopic } from '@/lib/guides-index';
 import { IMPORTANT_GUIDE_TOPICS } from '@/lib/important-guide-topics';
+import { SEARCH_QUERY_MAX, sanitizeSearchQuery } from '@/lib/search-validation';
 import { cn } from '@/lib/utils';
 
 type GuidesGalleryProps = {
@@ -373,7 +374,8 @@ export function GuidesGallery({
               <SearchIcon className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 value={query}
-                onChange={(event) => setQuery(event.target.value)}
+                onChange={(event) => setQuery(sanitizeSearchQuery(event.target.value))}
+                maxLength={SEARCH_QUERY_MAX}
                 aria-label="Search guides"
                 placeholder="Search guides, topics, or tags"
                 className="h-8 border-input bg-card pl-8 text-xs"

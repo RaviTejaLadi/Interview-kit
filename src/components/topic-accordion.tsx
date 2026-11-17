@@ -4,6 +4,7 @@ import {
   ChevronsDownUpIcon,
   ChevronsUpDownIcon,
   CircleIcon,
+  MessageCircleIcon,
   StarIcon,
 } from 'lucide-react';
 
@@ -33,6 +34,8 @@ type TopicAccordionProps = {
   focusedTopicId?: string | null;
   previousTopic: { id: string; title: string } | null;
   nextTopic: { id: string; title: string } | null;
+  isRightPanelOpen: boolean;
+  onToggleRightPanel: () => void;
   onToggleTopicCompleted: (topicId: string) => void;
   onToggleTopicImportant: (topicId: string) => void;
   onSetAllTopicsCompleted: (topicIds: string[], completed: boolean) => void;
@@ -56,6 +59,8 @@ export function TopicAccordion({
   focusedTopicId = null,
   previousTopic,
   nextTopic,
+  isRightPanelOpen,
+  onToggleRightPanel,
   onToggleTopicCompleted,
   onToggleTopicImportant,
   onSetAllTopicsCompleted,
@@ -161,6 +166,18 @@ export function TopicAccordion({
             nextTopic={nextTopic}
             onSelect={onSelectTopic}
           />
+          <Button
+            type="button"
+            variant="outline"
+            size="icon-xs"
+            onClick={onToggleRightPanel}
+            className="border-border bg-card"
+            aria-pressed={isRightPanelOpen}
+            aria-label={isRightPanelOpen ? 'Hide chat panel' : 'Open chat panel'}
+            title={isRightPanelOpen ? 'Hide chat' : 'Open chat'}
+          >
+            <MessageCircleIcon className="size-3.5" />
+          </Button>
           <Button
             type="button"
             variant="outline"

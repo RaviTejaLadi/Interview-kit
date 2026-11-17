@@ -7,6 +7,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
 
+import { Checkbox } from '@/components/ui/checkbox';
 import { remarkRenderMath, renderLatex } from '@/lib/markdown-math';
 import { cn } from '@/lib/utils';
 
@@ -280,21 +281,15 @@ function createMarkdownComponents(
         {children}
       </li>
     ),
-    input: ({ className, type, checked, ...props }) =>
+    input: ({ className, type, checked }) =>
       type === 'checkbox' ? (
-        <input
-          type="checkbox"
-          checked={checked}
-          className={cn(
-            'mr-1.5 h-3.5 w-3.5 translate-y-0.5 cursor-default rounded border-border align-middle',
-            'accent-emerald-500',
-            className,
-          )}
-          {...props}
+        <Checkbox
+          checked={Boolean(checked)}
+          disabled
+          className={cn('mr-1.5 translate-y-0.5 align-middle', className)}
+          aria-hidden
         />
-      ) : (
-        <input type={type} className={className} {...props} />
-      ),
+      ) : null,
     blockquote: ({ className, ...props }) => (
       <blockquote
         className={cn(
