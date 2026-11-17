@@ -42,7 +42,7 @@ export function FeedbackRowActions({
       >
         <EllipsisVerticalIcon />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="!w-44 !min-w-44">
+      <DropdownMenuContent align="end" className="w-44! min-w-44!">
         <DropdownMenuItem onClick={() => onView(feedback.id)}>
           <EyeIcon />
           View

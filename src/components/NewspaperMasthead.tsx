@@ -52,7 +52,7 @@ export function SiteHeader({
   }, []);
 
   return (
-    <header className="flex min-h-12 shrink-0 items-center gap-2 border-b border-border bg-[var(--color-header)] px-3 py-2 text-[var(--color-header-foreground)] sm:gap-3 sm:px-4 lg:px-6">
+    <header className="flex min-h-12 shrink-0 items-center gap-2 border-b border-border bg-(--color-header) px-3 py-2 text-(--color-header-foreground) sm:gap-3 sm:px-4 lg:px-6">
       <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
         {leading}
         {showBrand ? (
@@ -60,12 +60,12 @@ export function SiteHeader({
             <button
               type="button"
               onClick={onBrandClick}
-              className="shrink-0 text-sm font-semibold text-[var(--color-header-foreground)] transition-colors hover:text-primary"
+              className="shrink-0 text-sm font-semibold text-(--color-header-foreground) transition-colors hover:text-primary"
             >
               Interview Kits
             </button>
           ) : (
-            <p className="shrink-0 text-sm font-semibold text-[var(--color-header-foreground)]">
+            <p className="shrink-0 text-sm font-semibold text-(--color-header-foreground)">
               Interview Kits
             </p>
           )
@@ -81,19 +81,19 @@ export function SiteHeader({
                 className={cn('size-5 shrink-0 object-contain', kitIconToneClass(kitKey))}
               />
             ) : null}
-            <p className="truncate text-sm font-semibold leading-none text-[var(--color-header-foreground)]">
+            <p className="truncate text-sm font-semibold leading-none text-(--color-header-foreground)">
               {kitLabel}
             </p>
           </div>
         ) : null}
         {detail ? (
-          <p className="hidden min-w-0 truncate text-xs text-[var(--color-header-muted)] xl:block">
+          <p className="hidden min-w-0 truncate text-xs text-(--color-header-muted) xl:block">
             {detail}
           </p>
         ) : null}
       </div>
       <div className="flex shrink-0 items-center gap-2">
-        <p className="hidden whitespace-nowrap rounded-[var(--radius-control)] px-2 py-1 font-mono text-[11px] font-medium tracking-wide text-[var(--color-header-foreground)] tabular-nums lg:block">
+        <p className="hidden whitespace-nowrap rounded-(--radius-control) px-2 py-1 font-mono text-[11px] font-medium tracking-wide text-(--color-header-foreground) tabular-nums lg:block">
           {localTime}
         </p>
         {actions}

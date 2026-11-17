@@ -42,7 +42,7 @@ export function UserRowActions({
       >
         <EllipsisVerticalIcon />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="!w-40 !min-w-40">
+      <DropdownMenuContent align="end" className="w-40! min-w-40!">
         <DropdownMenuItem onClick={() => onEdit(user.id)}>
           <PencilIcon />
           Edit

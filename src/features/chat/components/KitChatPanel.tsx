@@ -54,13 +54,13 @@ function UsageStrip({ usage }: { usage: ChatUsage | undefined }) {
 
   return (
     <div className="flex flex-wrap gap-1.5 text-[10px] text-muted-foreground">
-      <span className="rounded-[var(--radius-control)] border border-border bg-background px-1.5 py-0.5">
+      <span className="rounded-(--radius-control) border border-border bg-background px-1.5 py-0.5">
         Chats {usage.chatsUsed}/{usage.chatsLimit}
       </span>
-      <span className="rounded-[var(--radius-control)] border border-border bg-background px-1.5 py-0.5">
+      <span className="rounded-(--radius-control) border border-border bg-background px-1.5 py-0.5">
         Today {usage.messagesToday}/{usage.dailyMessageLimit}
       </span>
-      <span className="rounded-[var(--radius-control)] border border-border bg-background px-1.5 py-0.5">
+      <span className="rounded-(--radius-control) border border-border bg-background px-1.5 py-0.5">
         Reset {usage.resetsAt}
       </span>
     </div>
@@ -74,7 +74,7 @@ function MessageBubble({ message }: { message: ChatMessage }) {
     <div className={cn('flex', isUser ? 'justify-end' : 'justify-start')}>
       <div
         className={cn(
-          'max-w-[92%] rounded-[var(--radius-control)] px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap',
+          'max-w-[92%] rounded-(--radius-control) px-3 py-2 text-sm leading-relaxed whitespace-pre-wrap',
           isUser
             ? 'bg-primary text-primary-foreground'
             : 'border border-border bg-background text-foreground',
@@ -222,7 +222,7 @@ export function KitChatPanel({ kitLabel, section, topicTitle, onClose }: KitChat
     <div className="flex h-full min-h-0 flex-col bg-card">
       <div className="shrink-0 border-b border-border px-3 py-2.5">
         <div className="flex items-start gap-2">
-          <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-[var(--radius-control)] border border-border bg-background">
+          <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-(--radius-control) border border-border bg-background">
             <MessageCircleIcon className="size-4 text-foreground" />
           </div>
           <div className="min-w-0 flex-1">
@@ -287,7 +287,7 @@ export function KitChatPanel({ kitLabel, section, topicTitle, onClose }: KitChat
                   <div
                     key={chat.id}
                     className={cn(
-                      'flex items-start gap-2 rounded-[var(--radius-control)] border px-2.5 py-2',
+                      'flex items-start gap-2 rounded-(--radius-control) border px-2.5 py-2',
                       isActive ? 'border-primary/30 bg-primary/10' : 'border-border bg-background',
                     )}
                   >
@@ -326,7 +326,7 @@ export function KitChatPanel({ kitLabel, section, topicTitle, onClose }: KitChat
           <ScrollArea className="min-h-0 flex-1">
             <div className="space-y-3 p-3">
               {!activeChatId && messages.length === 0 ? (
-                <div className="rounded-[var(--radius-control)] border border-dashed border-border bg-background px-3 py-4 text-sm text-muted-foreground">
+                <div className="rounded-(--radius-control) border border-dashed border-border bg-background px-3 py-4 text-sm text-muted-foreground">
                   Ask about this topic and get a study-focused reply. Limits apply per chat and per
                   day.
                 </div>
@@ -346,7 +346,7 @@ export function KitChatPanel({ kitLabel, section, topicTitle, onClose }: KitChat
 
               {isSending ? (
                 <div className="flex justify-start">
-                  <div className="inline-flex items-center gap-2 rounded-[var(--radius-control)] border border-border bg-background px-3 py-2 text-sm text-muted-foreground">
+                  <div className="inline-flex items-center gap-2 rounded-(--radius-control) border border-border bg-background px-3 py-2 text-sm text-muted-foreground">
                     <LoaderCircleIcon className="size-3.5 animate-spin" />
                     Thinking…
                   </div>

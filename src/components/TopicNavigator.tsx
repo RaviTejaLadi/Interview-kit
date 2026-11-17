@@ -122,7 +122,7 @@ export function TopicDock({
     >
       <div
         className={cn(
-          'pointer-events-auto mx-auto flex w-full max-w-7xl items-center gap-2 rounded-[var(--radius-card)] border border-border bg-card p-2 shadow-[var(--shadow-card)]',
+          'pointer-events-auto mx-auto flex w-full max-w-7xl items-center gap-2 rounded-(--radius-card) border border-border bg-card p-2 shadow-(--shadow-card)',
           'dark:border-border dark:bg-card',
           !visible && 'pointer-events-none',
         )}

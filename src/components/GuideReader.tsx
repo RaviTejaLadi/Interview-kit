@@ -74,7 +74,7 @@ export function GuideReader({
                 nextTopic={nextGuide}
                 onSelect={onOpenGuide}
               />
-              <div className="flex items-center gap-1 rounded-[var(--radius-control)] border border-border bg-background p-1">
+              <div className="flex items-center gap-1 rounded-(--radius-control) border border-border bg-background p-1">
                 <Button
                   type="button"
                   variant="ghost"
@@ -114,7 +114,7 @@ export function GuideReader({
             {guide.topic} · {guide.readTimeMinutes} min read ·{' '}
             {formatPublishedDate(guide.publishedAt)}
           </p>
-          <h1 className="mt-2 text-2xl break-words text-foreground sm:text-3xl lg:text-4xl">
+          <h1 className="mt-2 text-2xl wrap-break-word text-foreground sm:text-3xl lg:text-4xl">
             {guide.title}
           </h1>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base">

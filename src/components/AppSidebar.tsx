@@ -189,7 +189,7 @@ function TopicNavButton({
       size="sm"
       isActive={isActive}
       onClick={() => onSelect(getTopicNavId(topic.id))}
-      className="h-auto w-full rounded-[var(--radius-control)] border border-transparent py-2 text-[13px] text-sidebar-foreground/95 data-active:border-primary data-active:bg-primary data-active:text-primary-foreground"
+      className="h-auto w-full rounded-(--radius-control) border border-transparent py-2 text-[13px] text-sidebar-foreground/95 data-active:border-primary data-active:bg-primary data-active:text-primary-foreground"
     >
       {topic.starRating && !topic.topicTitle ? (
         <StarRatingDot rating={topic.starRating} />
@@ -326,7 +326,7 @@ function KitTopicTree({
                       tooltip={folder.label}
                       isActive={isActive}
                       onClick={() => onSelectNav(folderNavId)}
-                      className="h-auto rounded-[var(--radius-control)] border border-transparent py-2 text-[13px] text-sidebar-foreground/95 data-active:border-primary data-active:bg-primary data-active:text-primary-foreground"
+                      className="h-auto rounded-(--radius-control) border border-transparent py-2 text-[13px] text-sidebar-foreground/95 data-active:border-primary data-active:bg-primary data-active:text-primary-foreground"
                     >
                       {folder.starRating ? (
                         <StarRatingDot rating={folder.starRating} />
@@ -424,7 +424,7 @@ export function AppSidebar({
               maxLength={SEARCH_QUERY_MAX}
               aria-label="Search topics"
               placeholder="Search this kit"
-              className="h-8 rounded-[var(--radius-control)] border-sidebar-border bg-card pl-7 text-xs shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring"
+              className="h-8 rounded-(--radius-control) border-sidebar-border bg-card pl-7 text-xs shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring"
             />
           </div>
         </div>

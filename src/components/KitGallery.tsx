@@ -127,7 +127,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
     <div className="bg-background">
       <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
         <section id="kits" className="scroll-mt-6">
-          <div className="rounded-[var(--radius-panel)] border border-border bg-card p-4 shadow-[var(--shadow-card)] sm:p-5 lg:p-6">
+          <div className="rounded-[var(--radius-panel)] border border-border bg-card p-4 shadow-(--shadow-card) sm:p-5 lg:p-6">
             <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(16rem,22rem)] md:items-start lg:grid-cols-[minmax(0,1fr)_minmax(18rem,32rem)]">
               <div className="lg:pr-4">
                 <h1 className="max-w-3xl text-2xl text-foreground sm:text-3xl lg:text-4xl">
@@ -207,7 +207,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                 className="h-8 border-input bg-card pl-8 text-xs"
               />
             </div>
-            <div className="inline-flex shrink-0 items-center gap-1 rounded-[var(--radius-control)] border border-border bg-card p-1">
+            <div className="inline-flex shrink-0 items-center gap-1 rounded-(--radius-control) border border-border bg-card p-1">
               <Button
                 type="button"
                 variant={viewMode === 'grid' ? 'default' : 'ghost'}
@@ -239,7 +239,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
               </p>
             </Card>
           ) : viewMode === 'list' ? (
-            <div className="overflow-hidden rounded-[var(--radius-card)] border border-border bg-card shadow-[var(--shadow-card)]">
+            <div className="overflow-hidden rounded-(--radius-card) border border-border bg-card shadow-(--shadow-card)">
               {visibleKits.map((item) => {
                 const { group, matchCount } = item;
                 const icon = KIT_ICON_BY_KEY[group.id];
@@ -319,7 +319,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                     key={group.id}
                     type="button"
                     onClick={() => onSelectKit(group.id)}
-                    className="group flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-card p-4 text-left shadow-[var(--shadow-card)] transition-all hover:border-primary/35 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                    className="group flex h-full flex-col rounded-(--radius-card) border border-border bg-card p-4 text-left shadow-(--shadow-card) transition-all hover:border-primary/35 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
                   >
                     <span className="flex items-start justify-between gap-3">
                       <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted">

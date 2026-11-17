@@ -61,7 +61,7 @@ export function AuthFormError({ message }: { message: string }) {
   return (
     <div
       role="alert"
-      className="flex items-start gap-2 rounded-[var(--radius-control)] border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive"
+      className="flex items-start gap-2 rounded-(--radius-control) border border-destructive/30 bg-destructive/10 px-3 py-2 text-sm text-destructive"
     >
       <AlertTriangleIcon className="mt-0.5 size-4 shrink-0" />
       <p>{message}</p>

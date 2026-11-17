@@ -122,7 +122,7 @@ function CodeBlock({
   return (
     <div
       className={cn(
-        'group relative my-4 max-w-full overflow-x-auto rounded-[var(--radius-control)] border border-slate-800 bg-[#0b1220]',
+        'group relative my-4 max-w-full overflow-x-auto rounded-(--radius-control) border border-slate-800 bg-[#0b1220]',
       )}
     >
       <button
@@ -338,7 +338,7 @@ function createMarkdownComponents(
     table: ({ className, ...props }) => (
       <div
         className={cn(
-          'my-4 max-w-full overflow-x-auto rounded-[var(--radius-control)] border border-border bg-card',
+          'my-4 max-w-full overflow-x-auto rounded-(--radius-control) border border-border bg-card',
         )}
       >
         <table
@@ -380,7 +380,7 @@ function createMarkdownComponents(
       <span className={cn('my-3 block', markdownHierarchy.body)}>
         <img
           className={cn(
-            'h-auto max-w-full rounded-[var(--radius-control)] border border-border',
+            'h-auto max-w-full rounded-(--radius-control) border border-border',
             className,
           )}
           alt={alt ?? 'Markdown image'}

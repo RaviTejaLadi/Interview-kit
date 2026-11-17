@@ -36,7 +36,7 @@ export function FeedbackRowActions({ feedback }: { feedback: FeedbackItem }) {
       >
         <EllipsisVerticalIcon />
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="!w-44 !min-w-44">
+      <DropdownMenuContent align="end" className="w-44! min-w-44!">
         <DropdownMenuItem variant="destructive" onClick={handleDelete}>
           <Trash2Icon />
           Delete feedback

@@ -117,11 +117,11 @@ export function AlertDialogWrapper({ children }: AlertDialogWrapperProps) {
         {isAlertDialogOpen ? (
           <DialogContent
             hideCloseButton
-            className="w-[calc(100%-2rem)] max-w-md gap-0 rounded-[var(--radius-panel)] border border-border bg-card p-5 text-card-foreground shadow-[var(--shadow-pop)] sm:max-w-md"
+            className="w-[calc(100%-2rem)] max-w-md gap-0 rounded-(--radius-panel) border border-border bg-card p-5 text-card-foreground shadow-(--shadow-pop) sm:max-w-md"
           >
             <div
               className={cn(
-                'mb-4 flex size-10 items-center justify-center rounded-[var(--radius-card)]',
+                'mb-4 flex size-10 items-center justify-center rounded-(--radius-card)',
                 iconTileClass[resolvedVariant],
               )}
             >

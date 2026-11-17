@@ -234,11 +234,11 @@ export function TopicAccordion({
               key={topic.id}
               id={`topic-accordion-${topic.id}`}
               value={topic.id}
-              className="scroll-mt-24 overflow-hidden rounded-[var(--radius-control)] border border-border"
+              className="scroll-mt-24 overflow-hidden rounded-(--radius-control) border border-border"
             >
               <div className="flex items-stretch border-b border-border bg-muted/10">
                 <AccordionTrigger className="min-w-0 border-0 px-3 py-2 hover:bg-transparent hover:no-underline data-panel-open:bg-transparent">
-                  <span className="min-w-0 flex-1 text-left text-sm font-medium leading-5 break-words text-foreground">
+                  <span className="min-w-0 flex-1 text-left text-sm font-medium leading-5 wrap-break-word text-foreground">
                     {topic.title}
                   </span>
                 </AccordionTrigger>

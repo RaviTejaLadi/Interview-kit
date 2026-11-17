@@ -27,7 +27,7 @@ export function DataTableSkeleton({
   return (
     <div
       className={cn(
-        'w-full overflow-x-auto rounded-[var(--radius-card)] border border-border bg-card shadow-[var(--shadow-card)]',
+        'w-full overflow-x-auto rounded-(--radius-card) border border-border bg-card shadow-(--shadow-card)',
         className,
       )}
     >

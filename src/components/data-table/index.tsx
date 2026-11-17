@@ -57,7 +57,7 @@ function AnimatedExpandedRow({ isOpen, colSpan, children }: AnimatedExpandedRowP
           )}
         >
           <div className="min-h-0 overflow-hidden">
-            <div className="mt-1 mb-3 w-full overflow-hidden rounded-[var(--radius-card)]">
+            <div className="mt-1 mb-3 w-full overflow-hidden rounded-(--radius-card)">
               <div className="relative max-h-[60rem] overflow-y-auto p-2">{children}</div>
             </div>
           </div>
@@ -124,7 +124,7 @@ function DataTable<TData>({
   return (
     <div
       className={cn(
-        'w-full overflow-x-auto rounded-[var(--radius-card)] border border-border bg-card shadow-[var(--shadow-card)]',
+        'w-full overflow-x-auto rounded-(--radius-card) border border-border bg-card shadow-(--shadow-card)',
         className,
       )}
     >

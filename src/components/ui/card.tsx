@@ -7,7 +7,7 @@ function Card({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
     <div
       data-slot="card"
       className={cn(
-        'rounded-[var(--radius-card)] border border-border bg-card text-card-foreground shadow-[var(--shadow-card)]',
+        'rounded-(--radius-card) border border-border bg-card text-card-foreground shadow-(--shadow-card)',
         className,
       )}
       {...props}

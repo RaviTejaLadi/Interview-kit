@@ -351,7 +351,7 @@ export function GuidesGallery({
     <div className="bg-background">
       <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
         <section id="guides" className="scroll-mt-6">
-          <div className="rounded-[var(--radius-panel)] border border-border bg-card p-5 shadow-[var(--shadow-card)] sm:p-6 lg:p-8">
+          <div className="rounded-(--radius-panel) border border-border bg-card p-5 shadow-(--shadow-card) sm:p-6 lg:p-8">
             <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
               <p className="text-sm font-medium text-muted-foreground shrink-0">Guides</p>
               <p className="ml-auto shrink-0 whitespace-nowrap text-sm text-muted-foreground">
@@ -511,7 +511,7 @@ export function GuidesGallery({
                 className="h-8 border-input bg-card pl-8 text-xs"
               />
             </div>
-            <div className="inline-flex shrink-0 items-center gap-1 rounded-[var(--radius-control)] border border-border bg-card p-1">
+            <div className="inline-flex shrink-0 items-center gap-1 rounded-(--radius-control) border border-border bg-card p-1">
               <Button
                 type="button"
                 variant={viewMode === 'list' ? 'default' : 'ghost'}
@@ -567,7 +567,7 @@ export function GuidesGallery({
                         : undefined
                     }
                     className={cn(
-                      'group flex h-full flex-col rounded-[var(--radius-card)] border border-border bg-card p-4 shadow-[var(--shadow-card)] transition-all hover:border-primary/35 hover:shadow-[var(--shadow-card-hover)]',
+                      'group flex h-full flex-col rounded-(--radius-card) border border-border bg-card p-4 shadow-(--shadow-card) transition-all hover:border-primary/35 hover:shadow-(--shadow-card-hover)',
                       canOpen && 'cursor-pointer',
                     )}
                   >
@@ -646,7 +646,7 @@ export function GuidesGallery({
               })}
             </div>
           ) : (
-            <div className="overflow-hidden rounded-[var(--radius-card)] border border-border bg-card shadow-[var(--shadow-card)]">
+            <div className="overflow-hidden rounded-(--radius-card) border border-border bg-card shadow-(--shadow-card)">
               {visibleGuides.map((guide) => {
                 const guideProgress = guideProgressById[guide.id];
                 const isRead = guide.isPlaceholder ? false : guideProgress?.read === true;

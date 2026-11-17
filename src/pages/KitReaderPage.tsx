@@ -126,7 +126,7 @@ export function KitReaderPage() {
           >
             {!controller.selectedNav ? (
               <div className="flex h-full items-center justify-center p-4 sm:p-6">
-                <p className="rounded-[var(--radius-card)] border border-border bg-card p-4 text-sm text-muted-foreground shadow-[var(--shadow-card)] sm:p-5">
+                <p className="rounded-(--radius-card) border border-border bg-card p-4 text-sm text-muted-foreground shadow-(--shadow-card) sm:p-5">
                   {controller.searchValue.trim()
                     ? 'No topics match this search in the current kit.'
                     : 'Select a topic to read.'}

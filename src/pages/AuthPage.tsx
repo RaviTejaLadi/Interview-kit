@@ -141,7 +141,7 @@ export function AuthPage() {
 
           <aside className="mx-auto hidden w-full max-w-lg lg:block">
             <div className="space-y-4">
-              <div className="relative h-64 overflow-hidden xl:h-[356px]">
+              <div className="relative h-64 overflow-hidden xl:h-89">
                 {authIllustrations.map((item, index) => (
                   <div
                     key={item.title}
@@ -155,7 +155,7 @@ export function AuthPage() {
                 ))}
               </div>
 
-              <div className="relative h-[118px]">
+              <div className="relative h-29.5">
                 {authIllustrations.map((item, index) => (
                   <div
                     key={`${item.title}-caption`}
