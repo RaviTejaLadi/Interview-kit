@@ -8,6 +8,7 @@ import {
   UserPlusIcon,
   UsersIcon,
   type LucideIcon,
+  KeyRoundIcon,
 } from 'lucide-react';
 
 import { SiteHeader } from '@/components/NewspaperMasthead';
@@ -27,36 +28,6 @@ type SettingsNavItem = {
   icon: LucideIcon;
 };
 
-const profileNavItem: SettingsNavItem = {
-  id: 'profile',
-  label: 'Profile',
-  icon: UserCircle2Icon,
-};
-
-const feedbackNavItem: SettingsNavItem = {
-  id: 'feedback',
-  label: 'Feedback',
-  icon: MessageSquareTextIcon,
-};
-
-const adminNavItems: SettingsNavItem[] = [
-  {
-    id: 'admin-users',
-    label: 'Users',
-    icon: UsersIcon,
-  },
-  {
-    id: 'admin-feedback',
-    label: 'Feedback',
-    icon: MessageSquareTextIcon,
-  },
-  {
-    id: 'admin-create',
-    label: 'Create admin',
-    icon: UserPlusIcon,
-  },
-];
-
 function isAdminSection(section: SettingsSection): section is AdminPanelSection {
   return section === 'admin-users' || section === 'admin-feedback' || section === 'admin-create';
 }
@@ -71,9 +42,25 @@ export function SettingsPage() {
   const section = parseSettingsPathname(location.pathname)?.section ?? 'profile';
   const [isAdminExpanded, setIsAdminExpanded] = useState(() => isAdminSection(section));
 
-  // Single unified list of nav items, built dynamically based on role.
-  const navItems = useMemo<SettingsNavItem[]>(() => {
-    return [profileNavItem, feedbackNavItem, ...(isAdmin ? adminNavItems : [])];
+  // Single unified list of all sidebar items, each tagged with its group.
+  const navItems = useMemo<(SettingsNavItem & { group: 'main' | 'admin' })[]>(() => {
+    return [
+      { id: 'profile', label: 'Profile', icon: UserCircle2Icon, group: 'main' },
+      { id: 'sign-in-methods', label: 'Sign in methods', icon: KeyRoundIcon, group: 'main' },
+      { id: 'feedback', label: 'Feedback', icon: MessageSquareTextIcon, group: 'main' },
+      ...(isAdmin
+        ? ([
+            { id: 'admin-users', label: 'Users', icon: UsersIcon, group: 'admin' },
+            {
+              id: 'admin-feedback',
+              label: 'Feedback',
+              icon: MessageSquareTextIcon,
+              group: 'admin',
+            },
+            { id: 'admin-create', label: 'Create admin', icon: UserPlusIcon, group: 'admin' },
+          ] as const)
+        : []),
+    ];
   }, [isAdmin]);
 
   useEffect(() => {
@@ -86,8 +73,8 @@ export function SettingsPage() {
     navigate(readSettingsReturnPath(location.state));
   }
 
-  const nonAdminItems = navItems.filter((item) => !isAdminSection(item.id));
-  const adminItems = navItems.filter((item) => isAdminSection(item.id));
+  const nonAdminItems = navItems.filter((item) => item.group === 'main');
+  const adminItems = navItems.filter((item) => item.group === 'admin');
 
   return (
     <div className="theme flex h-svh flex-col bg-background">

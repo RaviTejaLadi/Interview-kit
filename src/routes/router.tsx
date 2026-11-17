@@ -22,6 +22,7 @@ import { guideLoader, kitLoader, settingsFallbackLoader } from '@/routes/loaders
 import { kitPath, paths } from '@/routes/paths';
 import { NotFoundPage, RouteErrorPage } from '@/routes/route-error-page';
 import { RootLayout } from '@/routes/root-layout';
+import { SignInMethod } from '@/features/auth/components/SignInMethod';
 
 function KitsPage() {
   const location = useLocation();
@@ -82,6 +83,7 @@ export const router = createBrowserRouter([
             children: [
               { index: true, element: <Navigate to="profile" replace /> },
               { path: 'profile', element: <ProfileSettingsPanel /> },
+              { path: 'sign-in-methods', element: <SignInMethod /> },
               { path: 'feedback', element: <FeedbackPanel /> },
               {
                 path: 'admin',

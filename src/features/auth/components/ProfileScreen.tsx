@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { PencilLineIcon, ShieldCheckIcon, UserCircle2Icon } from 'lucide-react';
+import { PencilLineIcon, UserCircle2Icon } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ChangePasswordForm } from '@/features/auth/components/ChangePasswordForm';
 import { EditProfileForm } from '@/features/auth/components/EditProfileForm';
 import { useCurrentUser } from '@/features/auth/hooks/use-current-user';
 import type { AuthUser } from '@/features/auth/types/auth';
@@ -125,15 +124,6 @@ export function ProfileSettingsPanel() {
               <ProfileRow label="Member since" value={formatProfileDate(user.createdAt)} />
             </dl>
           )}
-        </CardContent>
-      </Card>
-      <Card>
-        <CardContent className="px-5 py-6 sm:px-6">
-          <h2 className="mb-4 flex items-center gap-2 text-sm font-medium text-foreground">
-            <ShieldCheckIcon className="size-4 text-primary" />
-            Security
-          </h2>
-          <ChangePasswordForm />
         </CardContent>
       </Card>
     </div>

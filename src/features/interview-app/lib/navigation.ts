@@ -1,7 +1,7 @@
 export type Theme = 'light' | 'dark';
 export type HomeView = 'kits' | 'guides';
 export type SettingsSection =
-  'profile' | 'feedback' | 'admin-users' | 'admin-feedback' | 'admin-create';
+  'profile'|'sign-in-methods' | 'feedback' | 'admin-users' | 'admin-feedback' | 'admin-create';
 
 export const THEME_STORAGE_KEY = 'interview-kit-theme';
 

@@ -13,6 +13,7 @@ export const paths = {
   settings: {
     profile: '/settings/profile',
     feedback: '/settings/feedback',
+    signInMethods:'/settings/sign-in-methods',
     adminUsers: '/settings/admin/users',
     adminFeedback: '/settings/admin/feedback',
     adminCreate: '/settings/admin/create',
@@ -44,6 +45,8 @@ export function settingsPath(section: SettingsSection) {
   switch (section) {
     case 'profile':
       return paths.settings.profile;
+    case 'sign-in-methods':
+      return paths.settings.signInMethods;
     case 'feedback':
       return paths.settings.feedback;
     case 'admin-users':

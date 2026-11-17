@@ -18,7 +18,7 @@ type DataTableSkeletonProps = {
 };
 
 export function DataTableSkeleton({
-  columnCount = 5,
+  columnCount = 4,
   rowCount = 6,
   className,
 }: DataTableSkeletonProps) {
