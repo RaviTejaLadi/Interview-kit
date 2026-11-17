@@ -29,6 +29,7 @@ export type UseDataTableOptions<TData> = {
   storageKey?: string;
   sorting?: SortingState;
   onSortingChange?: OnChangeFn<SortingState>;
+  getRowId?: (originalRow: TData, index: number, parent?: Row<TData>) => string;
 };
 
 export function useDataTable<TData>({
@@ -45,6 +46,7 @@ export function useDataTable<TData>({
   storageKey = 'dt_column_visibility',
   sorting: controlledSorting,
   onSortingChange,
+  getRowId,
 }: UseDataTableOptions<TData>) {
   const [uncontrolledSorting, setUncontrolledSorting] = useState<SortingState>([]);
   const isSortingControlled = controlledSorting !== undefined;
@@ -100,6 +102,7 @@ export function useDataTable<TData>({
   const table = useReactTable({
     data,
     columns,
+    getRowId,
     enableSorting,
     enableHiding: enableColumnVisibility,
     getCoreRowModel: getCoreRowModel(),

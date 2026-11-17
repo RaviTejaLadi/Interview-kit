@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
-import type { ColumnDef } from '@tanstack/react-table';
-import { UsersIcon } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import type { Table } from '@tanstack/react-table';
 
 import DataTable from '@/components/data-table';
-import { DTColumnHeader } from '@/components/data-table/DTColumnHeader';
+import { pageSize, pageSizeOptions } from '@/components/data-table/constants/pageOptions';
 import { DataTableSkeleton } from '@/components/data-table/DataTableSkeleton';
 import DTPagination from '@/components/data-table/DTPagination';
+import { DTHeading } from '@/components/data-table/toolbar/DTHeading';
 import { DTSearchBox } from '@/components/data-table/toolbar/DTSearchBox';
-import { Card, CardContent } from '@/components/ui/card';
+import { DTViewOptions } from '@/components/data-table/toolbar/DTViewOptions';
 import {
   Dialog,
   DialogContent,
@@ -16,18 +16,25 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { AdminUserEditForm } from '@/features/admin/users/components/AdminUserEditForm';
-import { UserProviderBadge } from '@/features/admin/users/components/UserProviderBadge';
-import { UserRoleBadge } from '@/features/admin/users/components/UserRoleBadge';
-import { UserRowActions } from '@/features/admin/users/components/UserRowActions';
+import { getUsersColumns } from '@/features/admin/users/components/users-columns';
+import { UsersBulkAction } from '@/features/admin/users/components/UsersBulkAction';
+import {
+  getColumnKeys,
+  usersColumnDisplayNames,
+} from '@/features/admin/users/constants/usersColumnDisplayNames';
+import { usersColumnVisibilityState } from '@/features/admin/users/constants/usersColumnVisibilityState';
 import { useAdminUsers } from '@/features/admin/users/hooks/use-admin-users';
 import type { AdminUser } from '@/features/admin/users/types/users';
 import { AuthFormError } from '@/features/auth/components/AuthField';
 import { useDataTable } from '@/hooks/useDataTable';
 import { getApiErrorMessage } from '@/utils/axios';
 
+const storageKey = 'admin_users_dt_column_visibility';
+
 export function AdminUsersTable() {
   const users = useAdminUsers(true);
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
+  const tableRef = useRef<Table<AdminUser> | null>(null);
 
   useEffect(() => {
     if (!editingUserId || !users.data) {
@@ -40,121 +47,83 @@ export function AdminUsersTable() {
     }
   }, [editingUserId, users.data]);
 
-  const columns = useMemo<ColumnDef<AdminUser>[]>(
-    () => [
-      {
-        id: 'name',
-        accessorFn: (row) => `${row.firstName} ${row.lastName}`,
-        header: ({ column }) => <DTColumnHeader column={column} title="Name" />,
-        cell: ({ row }) => (
-          <div>
-            <p className="font-medium text-foreground">
-              {row.original.firstName} {row.original.lastName}
-            </p>
-            <p className="text-xs text-muted-foreground">@{row.original.userName}</p>
-          </div>
-        ),
-      },
-      {
-        accessorKey: 'email',
-        header: ({ column }) => <DTColumnHeader column={column} title="Email" />,
-        cell: ({ row }) => (
-          <span className="break-all text-muted-foreground">{row.original.email}</span>
-        ),
-      },
-      {
-        accessorKey: 'provider',
-        header: ({ column }) => <DTColumnHeader column={column} title="Provider" />,
-        cell: ({ row }) => (
-          <UserProviderBadge
-            provider={row.original.provider}
-            google={row.original.google}
-            github={row.original.github}
-          />
-        ),
-      },
-      {
-        accessorKey: 'role',
-        header: ({ column }) => <DTColumnHeader column={column} title="Role" />,
-        cell: ({ row }) => <UserRoleBadge role={row.original.role} />,
-      },
-      {
-        id: 'actions',
-        enableSorting: false,
-        enableHiding: false,
-        meta: {
-          skipSearchHighlight: true,
-          headerClassName: 'w-[1%] text-right',
-          cellClassName: 'w-[1%] text-right',
-        },
-        header: () => <span className="text-xs font-medium text-muted-foreground">Action</span>,
-        cell: ({ row }) => <UserRowActions user={row.original} onEdit={setEditingUserId} />,
-      },
-    ],
-    [],
-  );
+  const searchableColumns = getColumnKeys(usersColumnDisplayNames);
+  const columns = getUsersColumns({
+    getTable: () => tableRef.current as Table<AdminUser>,
+    onEdit: setEditingUserId,
+  });
 
   const { table, globalFilter, setGlobalFilter } = useDataTable({
     data: users.data ?? [],
     columns,
-    searchableColumns: ['name', 'email', 'role', 'provider'],
-    storageKey: 'admin_users_dt_column_visibility',
-    pageSize: 10,
+    pageSize,
+    searchableColumns,
+    columnVisibilityState: usersColumnVisibilityState,
+    storageKey,
+    getRowId: (row) => row.id,
   });
+
+  tableRef.current = table;
 
   const usersLoadError = users.error
     ? getApiErrorMessage(users.error, 'Could not load users right now.')
     : '';
 
   return (
-    <Card>
-      <CardContent className="px-5 py-6 sm:px-6">
-        <h2 className="mb-4 flex items-center gap-2 text-sm font-medium text-foreground">
-          <UsersIcon className="size-4 text-primary" />
-          User management
-        </h2>
+    <>
+      <div className="m-0 space-y-4 rounded-lg bg-card p-4 shadow-lg">
+        <div className="mb-3 flex items-center justify-between">
+          <DTHeading heading="Users" description="Manage users and their roles easily." />
+        </div>
         <AuthFormError message={usersLoadError} />
-
-        {users.isLoading ? <DataTableSkeleton /> : null}
-
-        {!users.isLoading ? (
-          <div className="space-y-4">
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <DTSearchBox
-                value={globalFilter ?? ''}
-                onChange={(event) => setGlobalFilter(event.target.value)}
-                placeholder="Search users…"
-              />
-              <p className="text-xs text-muted-foreground">
-                {users.data?.length ?? 0} user{(users.data?.length ?? 0) === 1 ? '' : 's'}
-              </p>
+        {users.data ? (
+          <>
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex flex-1 items-center gap-2">
+                {searchableColumns.length > 0 ? (
+                  <DTSearchBox
+                    placeholder="Search..."
+                    value={globalFilter}
+                    onChange={(event) => setGlobalFilter(event.target.value)}
+                  />
+                ) : null}
+              </div>
+              <div className="flex items-center gap-2">
+                <DTViewOptions
+                  table={table}
+                  columnDisplayNames={usersColumnDisplayNames}
+                  storageKey={storageKey}
+                />
+              </div>
             </div>
-
             <DataTable table={table} />
-            <DTPagination table={table} pageSizeOptions={[5, 10, 20, 50]} />
-            <Dialog
-              open={Boolean(editingUserId)}
-              onOpenChange={(open) => {
-                if (!open) {
-                  setEditingUserId(null);
-                }
-              }}
-            >
-              {editingUserId ? (
-                <DialogContent className="max-h-[calc(100%-2rem)] overflow-y-auto sm:max-w-lg">
-                  <DialogHeader>
-                    <DialogTitle>Edit user</DialogTitle>
-                    <DialogDescription>
-                      Update this account and save your changes.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <AdminUserEditForm userId={editingUserId} />
-                </DialogContent>
-              ) : null}
-            </Dialog>
-          </div>
+            {table.getFilteredRowModel().rows.length > pageSize ? (
+              <DTPagination table={table} pageSizeOptions={pageSizeOptions} />
+            ) : null}
+            <UsersBulkAction table={table} />
+          </>
+        ) : users.isError ? null : (
+          <DataTableSkeleton />
+        )}
+      </div>
+      <Dialog
+        open={Boolean(editingUserId)}
+        onOpenChange={(open) => {
+          if (!open) {
+            setEditingUserId(null);
+          }
+        }}
+      >
+        {editingUserId ? (
+          <DialogContent className="max-h-[calc(100%-2rem)] overflow-y-auto sm:max-w-lg">
+            <DialogHeader>
+              <DialogTitle>Edit user</DialogTitle>
+              <DialogDescription>Update this account and save your changes.</DialogDescription>
+            </DialogHeader>
+            <AdminUserEditForm userId={editingUserId} />
+          </DialogContent>
         ) : null}
-      </CardContent>
-    </Card>
+      </Dialog>
+    </>
   );
 }

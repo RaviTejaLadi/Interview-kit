@@ -93,7 +93,7 @@ export function SiteHeader({
         ) : null}
       </div>
       <div className="flex shrink-0 items-center gap-2">
-        <p className="hidden whitespace-nowrap rounded-[var(--radius-control)] border border-border bg-muted px-2 py-1 font-mono text-[11px] font-medium tracking-wide text-[var(--color-header-foreground)] tabular-nums lg:block">
+        <p className="hidden whitespace-nowrap rounded-[var(--radius-control)] px-2 py-1 font-mono text-[11px] font-medium tracking-wide text-[var(--color-header-foreground)] tabular-nums lg:block">
           {localTime}
         </p>
         {actions}
