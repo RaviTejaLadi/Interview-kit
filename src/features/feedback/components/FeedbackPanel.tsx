@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import type { Table } from '@tanstack/react-table';
 
 import DataTable from '@/components/data-table';
@@ -31,9 +31,13 @@ export function FeedbackPanel() {
   const tableRef = useRef<Table<FeedbackItem> | null>(null);
 
   const searchableColumns = getColumnKeys(feedbackColumnDisplayNames);
-  const columns = getFeedbackColumns({
-    getTable: () => tableRef.current as Table<FeedbackItem>,
-  });
+  const columns = useMemo(
+    () =>
+      getFeedbackColumns({
+        getTable: () => tableRef.current as Table<FeedbackItem>,
+      }),
+    [],
+  );
 
   const { table, globalFilter, setGlobalFilter } = useDataTable({
     data: feedbackList.data ?? [],

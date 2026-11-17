@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Table } from '@tanstack/react-table';
 
 import DataTable from '@/components/data-table';
@@ -48,10 +48,14 @@ export function AdminFeedbackTable() {
   }, [feedbacks.data, viewingFeedbackId]);
 
   const searchableColumns = getColumnKeys(feedbackColumnDisplayNames);
-  const columns = getAdminFeedbackColumns({
-    getTable: () => tableRef.current as Table<FeedbackItem>,
-    onView: setViewingFeedbackId,
-  });
+  const columns = useMemo(
+    () =>
+      getAdminFeedbackColumns({
+        getTable: () => tableRef.current as Table<FeedbackItem>,
+        onView: setViewingFeedbackId,
+      }),
+    [],
+  );
 
   const { table, globalFilter, setGlobalFilter } = useDataTable({
     data: feedbacks.data ?? [],

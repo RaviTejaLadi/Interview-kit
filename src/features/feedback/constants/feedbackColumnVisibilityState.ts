@@ -1,5 +1,5 @@
 export const feedbackColumnVisibilityState = {
-  select: true,
+  select: false,
   title: true,
   status: true,
   createdAt: true,

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Table } from '@tanstack/react-table';
 
 import DataTable from '@/components/data-table';
@@ -48,10 +48,14 @@ export function AdminUsersTable() {
   }, [editingUserId, users.data]);
 
   const searchableColumns = getColumnKeys(usersColumnDisplayNames);
-  const columns = getUsersColumns({
-    getTable: () => tableRef.current as Table<AdminUser>,
-    onEdit: setEditingUserId,
-  });
+  const columns = useMemo(
+    () =>
+      getUsersColumns({
+        getTable: () => tableRef.current as Table<AdminUser>,
+        onEdit: setEditingUserId,
+      }),
+    [],
+  );
 
   const { table, globalFilter, setGlobalFilter } = useDataTable({
     data: users.data ?? [],

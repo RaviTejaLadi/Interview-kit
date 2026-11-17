@@ -1,42 +1,66 @@
 import { Skeleton } from '@/components/ui/skeleton';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { cn } from '@/lib/utils';
 
-export function DataTableSkeleton() {
+const COLUMN_WIDTHS = ['w-28', 'w-40', 'w-24', 'w-32', 'w-14'];
+
+type DataTableSkeletonProps = {
+  columnCount?: number;
+  rowCount?: number;
+  className?: string;
+};
+
+export function DataTableSkeleton({
+  columnCount = 5,
+  rowCount = 6,
+  className,
+}: DataTableSkeletonProps) {
+  const columns = Array.from({ length: columnCount }, (_, index) => index);
+
   return (
-    <section className="min-h-[12rem] space-y-4 px-8 py-5">
-      <div className="flex h-[1.75rem] items-center justify-between">
-        <Skeleton className="h-6 w-[5rem] rounded-[var(--radius-control)] bg-muted mmd:w-[8rem]" />
-        <div className="flex gap-4">
-          <Skeleton className="h-6 w-[5rem] rounded-[var(--radius-control)] bg-muted mmd:w-[15rem]" />
-          <Skeleton className="h-6 w-[5rem] rounded-[var(--radius-control)] bg-muted mmd:w-[5rem]" />
-          <Skeleton className="h-6 w-[5rem] rounded-[var(--radius-control)] bg-muted mmd:w-[5rem]" />
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-6">
-        {new Array(10).fill(null).map((_, index) => (
-          <div key={index} className="flex w-full gap-6">
-            <Skeleton className="h-7 flex-grow rounded-[var(--radius-control)] bg-muted" />
-            <Skeleton className="h-7 flex-grow rounded-[var(--radius-control)] bg-muted" />
-            <Skeleton className="h-7 flex-grow rounded-[var(--radius-control)] bg-muted" />
-            <Skeleton className="h-7 flex-grow rounded-[var(--radius-control)] bg-muted" />
-            <Skeleton className="h-7 flex-grow rounded-[var(--radius-control)] bg-muted" />
-            <Skeleton className="h-7 flex-grow rounded-[var(--radius-control)] bg-muted" />
-            <Skeleton className="h-7 flex-grow rounded-[var(--radius-control)] bg-muted" />
-          </div>
-        ))}
-      </div>
-
-      <div className="flex h-[2rem] items-center justify-between">
-        <Skeleton className="h-7 w-[5rem] rounded-[var(--radius-control)] bg-muted mmd:w-[8rem]" />
-        <div className="flex gap-4">
-          <Skeleton className="h-7 w-[5rem] rounded-[var(--radius-control)] bg-muted mmd:w-[8rem]" />
-          <Skeleton className="h-7 w-[5rem] rounded-[var(--radius-control)] bg-muted mmd:w-[8rem]" />
-          <Skeleton className="h-7 w-7 rounded-[var(--radius-control)] bg-muted" />
-          <Skeleton className="h-7 w-7 rounded-[var(--radius-control)] bg-muted" />
-          <Skeleton className="h-7 w-7 rounded-[var(--radius-control)] bg-muted" />
-          <Skeleton className="h-7 w-7 rounded-[var(--radius-control)] bg-muted" />
-        </div>
-      </div>
-    </section>
+    <div
+      className={cn(
+        'w-full overflow-x-auto rounded-[var(--radius-card)] border border-border bg-card shadow-[var(--shadow-card)]',
+        className,
+      )}
+    >
+      <Table className="w-full">
+        <TableHeader className="bg-muted/60 [&_tr]:border-border">
+          <TableRow className="hover:bg-transparent">
+            {columns.map((column) => (
+              <TableHead key={column} className="text-xs font-medium text-muted-foreground">
+                <Skeleton className={cn('h-3', COLUMN_WIDTHS[column % COLUMN_WIDTHS.length])} />
+              </TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {Array.from({ length: rowCount }, (_, rowIndex) => (
+            <TableRow
+              key={rowIndex}
+              className={cn(
+                'transition-colors',
+                rowIndex % 2 === 1 ? 'bg-muted/30 hover:bg-muted/30' : 'bg-card hover:bg-card',
+              )}
+            >
+              {columns.map((column) => (
+                <TableCell key={column} className="px-4 py-3 text-sm">
+                  <Skeleton
+                    className={cn('h-4', COLUMN_WIDTHS[(column + rowIndex) % COLUMN_WIDTHS.length])}
+                  />
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

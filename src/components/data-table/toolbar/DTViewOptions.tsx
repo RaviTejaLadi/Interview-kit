@@ -1,11 +1,13 @@
 import type { Table } from '@tanstack/react-table';
 import { ChevronDown, ChevronUp, Eye } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -86,62 +88,63 @@ export function DTViewOptions<TData>({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="outline" />}>
+      <DropdownMenuTrigger className={cn(buttonVariants({ variant: 'outline' }))}>
         <Eye className="mr-2 h-4 w-4" />
         View
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="w-[220px] border border-border bg-background">
-        <DropdownMenuLabel>{enableColumnOrder ? 'Columns' : 'Toggle columns'}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+      <DropdownMenuContent align="end" className="w-55 border border-border bg-background">
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>{enableColumnOrder ? 'Columns' : 'Toggle columns'}</DropdownMenuLabel>
+          <DropdownMenuSeparator />
 
-        {orderedColumns.map((column, index) => {
-          const display = columnDisplayNames.find((item) => item.key === column.id)?.value;
+          {orderedColumns.map((column, index) => {
+            const display = columnDisplayNames.find((item) => item.key === column.id)?.value;
 
-          return (
-            <div key={column.id} className="flex items-center gap-1 pr-1">
-              {enableColumnOrder ? (
-                <div className="flex flex-col">
-                  <button
-                    type="button"
-                    className="flex h-4 w-4 items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-30"
-                    disabled={index === 0}
-                    aria-label={`Move ${display} left`}
-                    onPointerDown={(event) => event.preventDefault()}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      event.stopPropagation();
-                      moveColumn(column.id, -1);
-                    }}
-                  >
-                    <ChevronUp className="h-3 w-3" />
-                  </button>
-                  <button
-                    type="button"
-                    className="flex h-4 w-4 items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-30"
-                    disabled={index === orderedColumns.length - 1}
-                    aria-label={`Move ${display} right`}
-                    onPointerDown={(event) => event.preventDefault()}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      event.stopPropagation();
-                      moveColumn(column.id, 1);
-                    }}
-                  >
-                    <ChevronDown className="h-3 w-3" />
-                  </button>
-                </div>
-              ) : null}
+            return (
               <DropdownMenuCheckboxItem
-                className="flex-1 capitalize"
+                key={column.id}
+                className="capitalize"
                 checked={column.getIsVisible()}
                 onCheckedChange={(value) => handleToggle(column.id, value)}
               >
+                {enableColumnOrder ? (
+                  <span className="mr-2 flex flex-col">
+                    <button
+                      type="button"
+                      className="flex h-4 w-4 items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-30"
+                      disabled={index === 0}
+                      aria-label={`Move ${display} left`}
+                      onPointerDown={(event) => event.preventDefault()}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        moveColumn(column.id, -1);
+                      }}
+                    >
+                      <ChevronUp className="h-3 w-3" />
+                    </button>
+                    <button
+                      type="button"
+                      className="flex h-4 w-4 items-center justify-center text-muted-foreground hover:text-foreground disabled:opacity-30"
+                      disabled={index === orderedColumns.length - 1}
+                      aria-label={`Move ${display} right`}
+                      onPointerDown={(event) => event.preventDefault()}
+                      onClick={(event) => {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        moveColumn(column.id, 1);
+                      }}
+                    >
+                      <ChevronDown className="h-3 w-3" />
+                    </button>
+                  </span>
+                ) : null}
                 {display}
               </DropdownMenuCheckboxItem>
-            </div>
-          );
-        })}
+            );
+          })}
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -1,5 +1,5 @@
 export const usersColumnVisibilityState = {
-  select: true,
+  select: false,
   name: true,
   email: true,
   provider: true,
