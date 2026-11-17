@@ -1,11 +1,11 @@
 import { useCurrentUser } from '@/features/auth/hooks/use-current-user';
 import { hasStoredSession } from '@/features/auth/utils/session';
 import { useInterviewAppStore } from '@/features/interview-app/store/use-interview-app-store';
-import { AuthPage } from '@/pages/auth-page';
-import { GuidePage } from '@/pages/guide-page';
-import { HomePage } from '@/pages/home-page';
-import { KitReaderPage } from '@/pages/kit-reader-page';
-import { SettingsPage } from '@/pages/settings-page';
+import { AuthPage } from '@/pages/AuthPage';
+import { GuidePage } from '@/pages/GuidePage';
+import { HomePage } from '@/pages/HomePage';
+import { KitReaderPage } from '@/pages/KitReaderPage';
+import { SettingsPage } from '@/pages/SettingsPage';
 
 function InterviewPages() {
   const settingsSection = useInterviewAppStore((state) => state.settingsSection);
