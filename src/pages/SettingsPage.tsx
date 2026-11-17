@@ -11,7 +11,7 @@ import {
 
 import { SiteHeader } from '@/components/NewspaperMasthead';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { AdminPanel } from '@/features/admin/components/AdminPanel';
+import { AdminPanel, type AdminPanelSection } from '@/features/admin/components/AdminPanel';
 import { ProfileSettingsPanel } from '@/features/auth/components/ProfileScreen';
 import { useCurrentUser } from '@/features/auth/hooks/use-current-user';
 import { FeedbackPanel } from '@/features/feedback/components/FeedbackPanel';
@@ -28,21 +28,19 @@ import { cn } from '@/lib/utils';
 type SettingsNavItem = {
   id: SettingsSection;
   label: string;
-  description: string;
+  description?: string;
   icon: LucideIcon;
 };
 
 const profileNavItem: SettingsNavItem = {
   id: 'profile',
   label: 'Profile',
-  description: 'Name, contact, and security',
   icon: UserCircle2Icon,
 };
 
 const feedbackNavItem: SettingsNavItem = {
   id: 'feedback',
   label: 'Feedback',
-  description: 'Share feedback and manage your submissions',
   icon: MessageSquareTextIcon,
 };
 
@@ -50,24 +48,21 @@ const adminNavItems: SettingsNavItem[] = [
   {
     id: 'admin-users',
     label: 'Users',
-    description: 'List, view, edit, and delete users',
     icon: UsersIcon,
   },
   {
     id: 'admin-feedback',
     label: 'Feedback',
-    description: 'List, view, and delete any feedback',
     icon: MessageSquareTextIcon,
   },
   {
     id: 'admin-create',
     label: 'Create admin',
-    description: 'Create a new admin account',
     icon: UserPlusIcon,
   },
 ];
 
-function isAdminSection(section: SettingsSection) {
+function isAdminSection(section: SettingsSection): section is AdminPanelSection {
   return section === 'admin-users' || section === 'admin-feedback' || section === 'admin-create';
 }
 
@@ -230,10 +225,6 @@ export function SettingsPage() {
         </aside>
         <ScrollArea className="min-h-0 flex-1">
           <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:max-w-4xl lg:px-8">
-            <div>
-              <h1 className="text-2xl text-foreground">{activeItem.label}</h1>
-              <p className="mt-1 text-sm text-muted-foreground">{activeItem.description}</p>
-            </div>
             {activeItem.id === 'profile' ? <ProfileSettingsPanel /> : null}
             {activeItem.id === 'feedback' ? <FeedbackPanel /> : null}
             {isAdminSection(activeItem.id) && isAdmin ? (

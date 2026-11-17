@@ -2,7 +2,7 @@ import { CreateAdminForm } from '@/features/admin/create-admin/components/Create
 import { AdminFeedbackTable } from '@/features/admin/feedback/components/AdminFeedbackTable';
 import { AdminUsersTable } from '@/features/admin/users/components/AdminUsersTable';
 
-type AdminPanelSection = 'admin-users' | 'admin-feedback' | 'admin-create';
+export type AdminPanelSection = 'admin-users' | 'admin-feedback' | 'admin-create';
 
 export function AdminPanel({ section }: { section: AdminPanelSection }) {
   return (

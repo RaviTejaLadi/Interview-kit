@@ -75,7 +75,7 @@ export function AdminUsersTable() {
 
   return (
     <>
-      <div className="m-0 space-y-4 rounded-lg bg-card p-4 shadow-lg">
+      <div className="m-0 space-y-4 rounded-lg">
         <div className="mb-3 flex items-center justify-between">
           <DTHeading heading="Users" description="Manage users and their roles easily." />
         </div>
