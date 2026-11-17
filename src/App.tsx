@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Toaster } from 'sonner';
 
+
 import { AuthScreen } from '@/features/auth/components/auth-screen';
 import { SettingsScreen } from '@/features/auth/components/settings-screen';
 import { useCurrentUser } from '@/features/auth/hooks/use-current-user';
@@ -13,6 +14,7 @@ import {
 import { GuideScreen } from '@/features/interview-app/views/guide-screen';
 import { HomeScreen } from '@/features/interview-app/views/home-screen';
 import { KitReaderScreen } from '@/features/interview-app/views/kit-reader-screen';
+import AlertDialogWrapper from '@/components/AlertDialog/AlertDialogWrapper';
 
 function InterviewApp() {
   const settingsSection = useInterviewAppStore((state) => state.settingsSection);
@@ -68,10 +70,10 @@ function App() {
   }
 
   return (
-    <>
+    <AlertDialogWrapper>
       <Toaster theme={theme} position="top-right" />
       {screen}
-    </>
+    </AlertDialogWrapper>
   );
 }
 

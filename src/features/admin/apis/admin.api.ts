@@ -1,6 +1,7 @@
 import type {
   AdminCreateInput,
   AdminFeedback,
+  AdminUpdateFeedbackInput,
   AdminUpdateUserInput,
   AdminUser,
 } from '@/features/admin/types/admin';
@@ -65,6 +66,21 @@ export async function adminFeedbackRequest(feedbackId: string) {
       api.get<IHttpResponse<{ feedback: AdminFeedback }>>(`${apiUrls.adminFeedback}/${feedbackId}`),
     'Could not load this feedback right now.',
     { silentSuccess: true },
+  );
+  return body.data.feedback;
+}
+
+export async function updateAdminFeedbackRequest(
+  feedbackId: string,
+  input: AdminUpdateFeedbackInput,
+) {
+  const body = await withApiBoundary(
+    () =>
+      api.patch<IHttpResponse<{ feedback: AdminFeedback }>>(
+        `${apiUrls.adminFeedback}/${feedbackId}`,
+        input,
+      ),
+    'Could not update this feedback status. Try again.',
   );
   return body.data.feedback;
 }

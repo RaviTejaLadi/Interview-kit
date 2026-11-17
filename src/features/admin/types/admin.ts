@@ -1,4 +1,5 @@
 import type { AuthUser, RegisterInput } from '@/features/auth/types/auth';
+import type { FeedbackItem, FeedbackStatus } from '@/features/feedback/types/feedback';
 
 export type AdminUser = AuthUser;
 
@@ -16,11 +17,10 @@ export type AdminUpdateUserInput = {
   role?: AdminRole;
 };
 
-export type AdminFeedback = {
-  id: string;
-  user: string;
-  title: string;
-  description: string | null;
-  createdAt: string;
-  updatedAt: string;
+export type { FeedbackStatus };
+
+export type AdminFeedback = FeedbackItem;
+
+export type AdminUpdateFeedbackInput = {
+  status: FeedbackStatus;
 };

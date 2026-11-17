@@ -5,13 +5,28 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { AuthField, AuthFormError } from '@/features/auth/components/auth-field';
-import { FEEDBACK_FIELD_LIMITS } from '@/features/feedback/constants/feedback.constants';
+import {
+  FEEDBACK_FIELD_LIMITS,
+  FEEDBACK_STATUS_LABELS,
+} from '@/features/feedback/constants/feedback.constants';
 import { useDeleteFeedback } from '@/features/feedback/hooks/use-delete-feedback';
 import { useFeedbackList } from '@/features/feedback/hooks/use-feedback-list';
 import { useSubmitFeedback } from '@/features/feedback/hooks/use-submit-feedback';
+import type { FeedbackStatus } from '@/features/feedback/types/feedback';
 import { validateFeedbackForm, type FeedbackFormInput } from '@/features/feedback/utils/validation';
+import { cn } from '@/lib/utils';
 import type { FieldErrors } from '@/lib/zod-field-errors';
 import { getApiErrorMessage } from '@/utils/axios';
+
+function feedbackStatusClassName(status: FeedbackStatus) {
+  if (status === 'resolved') {
+    return 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300';
+  }
+  if (status === 'in_progress') {
+    return 'bg-amber-500/15 text-amber-700 dark:text-amber-300';
+  }
+  return 'bg-muted text-muted-foreground';
+}
 
 function formatDateTime(value: string) {
   const date = new Date(value);
@@ -149,33 +164,46 @@ export function FeedbackPanel() {
           ) : null}
           {!feedbackList.isLoading && !loadError && (feedbackList.data?.length ?? 0) > 0 ? (
             <ul className="space-y-3">
-              {feedbackList.data?.map((item) => (
-                <li key={item.id} className="rounded-lg border border-border bg-background/80 p-4">
-                  <div className="flex flex-wrap items-start justify-between gap-2">
-                    <p className="text-sm font-medium text-foreground">{item.title}</p>
-                    <p className="text-xs text-muted-foreground">
-                      {formatDateTime(item.createdAt)}
+              {feedbackList.data?.map((item) => {
+                const status = item.status ?? 'open';
+                return (
+                  <li key={item.id} className="rounded-lg border border-border bg-background/80 p-4">
+                    <div className="flex flex-wrap items-start justify-between gap-2">
+                      <p className="text-sm font-medium text-foreground">{item.title}</p>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span
+                          className={cn(
+                            'inline-flex rounded-full px-2 py-0.5 text-[11px]',
+                            feedbackStatusClassName(status),
+                          )}
+                        >
+                          {FEEDBACK_STATUS_LABELS[status]}
+                        </span>
+                        <p className="text-xs text-muted-foreground">
+                          {formatDateTime(item.createdAt)}
+                        </p>
+                      </div>
+                    </div>
+                    <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                      {item.description || 'No description'}
                     </p>
-                  </div>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    {item.description || 'No description'}
-                  </p>
-                  <div className="mt-3 flex justify-end">
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="sm"
-                      disabled={deleteFeedback.isPending && deletingId === item.id}
-                      onClick={() => handleDelete(item.id)}
-                    >
-                      <Trash2Icon className="size-3.5" />
-                      {deleteFeedback.isPending && deletingId === item.id
-                        ? 'Deleting…'
-                        : 'Delete feedback'}
-                    </Button>
-                  </div>
-                </li>
-              ))}
+                    <div className="mt-3 flex justify-end">
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="sm"
+                        disabled={deleteFeedback.isPending && deletingId === item.id}
+                        onClick={() => handleDelete(item.id)}
+                      >
+                        <Trash2Icon className="size-3.5" />
+                        {deleteFeedback.isPending && deletingId === item.id
+                          ? 'Deleting…'
+                          : 'Delete feedback'}
+                      </Button>
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
           ) : null}
         </CardContent>
