@@ -1,35 +1,51 @@
-import { useEffect, useMemo, useState } from 'react';
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router';
-import {
-  ChevronDownIcon,
-  MessageSquareTextIcon,
-  ShieldIcon,
-  UserCircle2Icon,
-  UserPlusIcon,
-  UsersIcon,
-  type LucideIcon,
-  KeyRoundIcon,
-} from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { NavLink, Outlet, useLocation, useMatch, useNavigate } from 'react-router';
+import { ChevronDownIcon, ShieldIcon } from 'lucide-react';
 
 import { SiteHeader } from '@/components/NewspaperMasthead';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import type { AdminPanelSection } from '@/features/admin/components/AdminPanel';
 import { useCurrentUser } from '@/features/auth/hooks/use-current-user';
 import { AppHeaderActions } from '@/features/interview-app/components/AppHeaderActions';
-import type { SettingsSection } from '@/features/interview-app/lib/navigation';
 import { useInterviewAppStore } from '@/features/interview-app/store/use-interview-app-store';
-import { parseSettingsPathname, readSettingsReturnPath, settingsPath } from '@/routes/paths';
+import { readSettingsReturnPath } from '@/routes/paths';
+import {
+  settingsAdminRoutes,
+  settingsMainRoutes,
+  type SettingsRoute,
+} from '@/routes/settings-routes';
 import { cn } from '@/lib/utils';
 
-type SettingsNavItem = {
-  id: SettingsSection;
-  label: string;
-  description?: string;
-  icon: LucideIcon;
-};
+function SettingsNavLink({
+  item,
+  to,
+  compact = false,
+}: {
+  item: SettingsRoute;
+  to: string;
+  compact?: boolean;
+}) {
+  const location = useLocation();
+  const Icon = item.icon;
 
-function isAdminSection(section: SettingsSection): section is AdminPanelSection {
-  return section === 'admin-users' || section === 'admin-feedback' || section === 'admin-create';
+  return (
+    <NavLink
+      to={to}
+      end
+      state={location.state}
+      className={({ isActive }) =>
+        cn(
+          'flex min-w-44 items-center gap-3 rounded-lg px-3 text-left transition-colors md:min-w-0',
+          compact ? 'py-2' : 'py-2.5',
+          isActive ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-muted',
+        )
+      }
+    >
+      <Icon className="size-4 shrink-0" />
+      <span className="min-w-0">
+        <span className="block text-sm font-medium">{item.label}</span>
+      </span>
+    </NavLink>
+  );
 }
 
 export function SettingsPage() {
@@ -39,42 +55,18 @@ export function SettingsPage() {
   const setTheme = useInterviewAppStore((state) => state.setTheme);
   const location = useLocation();
   const navigate = useNavigate();
-  const section = parseSettingsPathname(location.pathname)?.section ?? 'profile';
-  const [isAdminExpanded, setIsAdminExpanded] = useState(() => isAdminSection(section));
-
-  // Single unified list of all sidebar items, each tagged with its group.
-  const navItems = useMemo<(SettingsNavItem & { group: 'main' | 'admin' })[]>(() => {
-    return [
-      { id: 'profile', label: 'Profile', icon: UserCircle2Icon, group: 'main' },
-      { id: 'sign-in-methods', label: 'Sign in methods', icon: KeyRoundIcon, group: 'main' },
-      { id: 'feedback', label: 'Feedback', icon: MessageSquareTextIcon, group: 'main' },
-      ...(isAdmin
-        ? ([
-            { id: 'admin-users', label: 'Users', icon: UsersIcon, group: 'admin' },
-            {
-              id: 'admin-feedback',
-              label: 'Feedback',
-              icon: MessageSquareTextIcon,
-              group: 'admin',
-            },
-            { id: 'admin-create', label: 'Create admin', icon: UserPlusIcon, group: 'admin' },
-          ] as const)
-        : []),
-    ];
-  }, [isAdmin]);
+  const onAdminRoute = useMatch({ path: '/settings/admin', end: false });
+  const [isAdminExpanded, setIsAdminExpanded] = useState(Boolean(onAdminRoute));
 
   useEffect(() => {
-    if (isAdminSection(section)) {
+    if (onAdminRoute) {
       setIsAdminExpanded(true);
     }
-  }, [section]);
+  }, [onAdminRoute]);
 
   function leaveSettings() {
     navigate(readSettingsReturnPath(location.state));
   }
-
-  const nonAdminItems = navItems.filter((item) => item.group === 'main');
-  const adminItems = navItems.filter((item) => item.group === 'admin');
 
   return (
     <div className="theme flex h-svh flex-col bg-background">
@@ -95,37 +87,17 @@ export function SettingsPage() {
             </p>
           </div>
           <nav aria-label="Settings" className="flex flex-col gap-1 px-2 pb-2">
-            {nonAdminItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = item.id === section;
+            {settingsMainRoutes.map((item) => (
+              <SettingsNavLink key={item.path} item={item} to={item.path} />
+            ))}
 
-              return (
-                <NavLink
-                  key={item.id}
-                  to={settingsPath(item.id)}
-                  state={location.state}
-                  className={cn(
-                    'flex min-w-44 items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors md:min-w-0',
-                    isActive ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-muted',
-                  )}
-                >
-                  <Icon className="size-4 shrink-0" />
-                  <span className="min-w-0">
-                    <span className="block text-sm font-medium">{item.label}</span>
-                  </span>
-                </NavLink>
-              );
-            })}
-
-            {adminItems.length > 0 ? (
+            {isAdmin ? (
               <div>
                 <button
                   type="button"
                   className={cn(
                     'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors',
-                    isAdminSection(section)
-                      ? 'bg-primary/10 text-primary'
-                      : 'text-foreground hover:bg-muted',
+                    onAdminRoute ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-muted',
                   )}
                   onClick={() => setIsAdminExpanded((current) => !current)}
                 >
@@ -140,29 +112,14 @@ export function SettingsPage() {
                 </button>
                 {isAdminExpanded ? (
                   <div className="mt-1 space-y-1 pl-4">
-                    {adminItems.map((item) => {
-                      const Icon = item.icon;
-                      const isActive = item.id === section;
-
-                      return (
-                        <NavLink
-                          key={item.id}
-                          to={settingsPath(item.id)}
-                          state={location.state}
-                          className={cn(
-                            'flex min-w-44 items-center gap-3 rounded-lg px-3 py-2 text-left transition-colors md:min-w-0',
-                            isActive
-                              ? 'bg-primary/10 text-primary'
-                              : 'text-foreground hover:bg-muted',
-                          )}
-                        >
-                          <Icon className="size-4 shrink-0" />
-                          <span className="min-w-0">
-                            <span className="block text-sm font-medium">{item.label}</span>
-                          </span>
-                        </NavLink>
-                      );
-                    })}
+                    {settingsAdminRoutes.map((item) => (
+                      <SettingsNavLink
+                        key={item.path}
+                        item={item}
+                        to={`admin/${item.path}`}
+                        compact
+                      />
+                    ))}
                   </div>
                 ) : null}
               </div>

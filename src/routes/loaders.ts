@@ -1,7 +1,7 @@
 import { redirect, type LoaderFunctionArgs } from 'react-router';
 
 import { interviewCatalog } from '@/features/interview-app/catalog';
-import { parseSettingsPathname, paths } from '@/routes/paths';
+import { paths } from '@/routes/paths';
 
 export function kitLoader({ params }: LoaderFunctionArgs) {
   const kitId = params.kitId ?? '';
@@ -21,9 +21,4 @@ export function guideLoader({ params }: LoaderFunctionArgs) {
   }
 
   return null;
-}
-
-export function settingsFallbackLoader({ request }: LoaderFunctionArgs) {
-  const pathname = new URL(request.url).pathname;
-  return redirect(parseSettingsPathname(pathname)?.canonical ?? paths.settings.profile);
 }

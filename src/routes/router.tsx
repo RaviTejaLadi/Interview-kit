@@ -8,9 +8,6 @@ import { ResetPasswordForm } from '@/features/auth/components/ResetPasswordForm'
 import { SignUpForm } from '@/features/auth/components/SignupForm';
 import { VerifyOtpForm } from '@/features/auth/components/VerifyOtpForm';
 import { consumeOAuthCallback } from '@/features/auth/utils/oauth';
-import { AdminPanel } from '@/features/admin/components/AdminPanel';
-import { ProfileSettingsPanel } from '@/features/auth/components/ProfileScreen';
-import { FeedbackPanel } from '@/features/feedback/components/FeedbackPanel';
 import { interviewCatalog } from '@/features/interview-app/catalog';
 import { AuthPage } from '@/pages/AuthPage';
 import { GuidePage } from '@/pages/GuidePage';
@@ -18,11 +15,11 @@ import { HomePage } from '@/pages/HomePage';
 import { KitReaderPage } from '@/pages/KitReaderPage';
 import { SettingsPage } from '@/pages/SettingsPage';
 import { GuestOnly, HomeRedirect, RequireAdmin, RequireAuth, SessionGate } from '@/routes/guards';
-import { guideLoader, kitLoader, settingsFallbackLoader } from '@/routes/loaders';
+import { guideLoader, kitLoader } from '@/routes/loaders';
 import { kitPath, paths } from '@/routes/paths';
 import { NotFoundPage, RouteErrorPage } from '@/routes/route-error-page';
 import { RootLayout } from '@/routes/root-layout';
-import { SignInMethod } from '@/features/auth/components/SignInMethod';
+import { settingsAdminRoutes, settingsMainRoutes } from '@/routes/settings-routes';
 
 function KitsPage() {
   const location = useLocation();
@@ -82,24 +79,17 @@ export const router = createBrowserRouter([
             element: <SettingsPage />,
             children: [
               { index: true, element: <Navigate to="profile" replace /> },
-              { path: 'profile', element: <ProfileSettingsPanel /> },
-              { path: 'sign-in-methods', element: <SignInMethod /> },
-              { path: 'feedback', element: <FeedbackPanel /> },
+              ...settingsMainRoutes.map(({ path, element }) => ({ path, element })),
               {
                 path: 'admin',
                 element: <RequireAdmin />,
                 children: [
                   { index: true, element: <Navigate to="users" replace /> },
-                  { path: 'users', element: <AdminPanel section="admin-users" /> },
-                  { path: 'feedback', element: <AdminPanel section="admin-feedback" /> },
-                  { path: 'create', element: <AdminPanel section="admin-create" /> },
-                  {
-                    path: 'create-admin',
-                    element: <Navigate to="/settings/admin/create" replace />,
-                  },
+                  ...settingsAdminRoutes.map(({ path, element }) => ({ path, element })),
+                  { path: 'create-admin', element: <Navigate to="../create" replace /> },
                 ],
               },
-              { path: '*', loader: settingsFallbackLoader },
+              { path: '*', element: <Navigate to={paths.settings.profile} replace /> },
             ],
           },
         ],

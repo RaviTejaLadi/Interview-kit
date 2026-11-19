@@ -1,4 +1,3 @@
-import type { SettingsSection } from '@/features/interview-app/lib/navigation';
 import { OAUTH_CALLBACK_PATH } from '@/features/auth/constants/auth.constants';
 
 export const paths = {
@@ -12,11 +11,6 @@ export const paths = {
   oauthCallback: OAUTH_CALLBACK_PATH,
   settings: {
     profile: '/settings/profile',
-    feedback: '/settings/feedback',
-    signInMethods:'/settings/sign-in-methods',
-    adminUsers: '/settings/admin/users',
-    adminFeedback: '/settings/admin/feedback',
-    adminCreate: '/settings/admin/create',
   },
 } as const;
 
@@ -39,57 +33,6 @@ export function kitPath(kitId: string, topicId?: string) {
 
 export function guidePath(guideId: string) {
   return `/guides/${encodeURIComponent(guideId)}`;
-}
-
-export function settingsPath(section: SettingsSection) {
-  switch (section) {
-    case 'profile':
-      return paths.settings.profile;
-    case 'sign-in-methods':
-      return paths.settings.signInMethods;
-    case 'feedback':
-      return paths.settings.feedback;
-    case 'admin-users':
-      return paths.settings.adminUsers;
-    case 'admin-feedback':
-      return paths.settings.adminFeedback;
-    case 'admin-create':
-      return paths.settings.adminCreate;
-  }
-}
-
-export function parseSettingsPathname(pathname: string): {
-  section: SettingsSection;
-  canonical: string;
-} | null {
-  const path = pathname.replace(/\/+$/, '') || '/';
-  if (!path.toLowerCase().startsWith('/settings')) {
-    return null;
-  }
-
-  const rest = path.slice('/settings'.length).replace(/^\//, '').toLowerCase();
-
-  if (rest === '' || rest === 'profile') {
-    return { section: 'profile', canonical: paths.settings.profile };
-  }
-
-  if (rest === 'feedback') {
-    return { section: 'feedback', canonical: paths.settings.feedback };
-  }
-
-  if (rest === 'admin' || rest === 'admin/users') {
-    return { section: 'admin-users', canonical: paths.settings.adminUsers };
-  }
-
-  if (rest === 'admin/feedback' || rest === 'admin-feedback') {
-    return { section: 'admin-feedback', canonical: paths.settings.adminFeedback };
-  }
-
-  if (rest === 'admin/create' || rest === 'admin/create-admin') {
-    return { section: 'admin-create', canonical: paths.settings.adminCreate };
-  }
-
-  return null;
 }
 
 export function isAuthPath(pathname: string) {
