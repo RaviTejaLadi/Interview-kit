@@ -65,14 +65,14 @@ export function ProfileSettingsPanel() {
     <div className="flex flex-col gap-6">
       <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex min-w-0 items-center gap-4">
-          <Avatar size="sm" className="size-14">
+          <Avatar size="sm" className="size-10">
             {user.avatar ? <AvatarImage src={user.avatar} alt="" /> : null}
             <AvatarFallback className="bg-primary/15 text-base font-semibold text-primary">
               {initials(user)}
             </AvatarFallback>
           </Avatar>
           <div className="min-w-0">
-            <p className="truncate text-2xl text-foreground">
+            <p className="truncate text-base text-foreground">
               {user.firstName} {user.lastName}
             </p>
             <p className="truncate text-sm text-muted-foreground">@{user.userName}</p>

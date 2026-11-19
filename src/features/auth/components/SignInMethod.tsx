@@ -55,7 +55,7 @@ export function SignInMethod() {
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="flex items-center gap-2 text-lg text-foreground">
+        <h2 className="flex items-center gap-2 text-sm text-foreground">
           <ShieldCheckIcon className="size-4 text-primary" />
           Sign-in method
         </h2>

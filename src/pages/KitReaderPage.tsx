@@ -115,7 +115,7 @@ export function KitReaderPage() {
           kitIcon={controller.selectedTopicIcon}
           detail={editionSubtitle}
           leading={
-            <SidebarTrigger className="-ml-0.5 border border-border bg-card text-foreground hover:bg-muted hover:text-foreground sm:-ml-1" />
+            <SidebarTrigger className="rounded-[6px] text-muted-foreground hover:bg-muted hover:text-foreground" />
           }
         />
         <div className="min-h-0 flex flex-1 overflow-hidden">

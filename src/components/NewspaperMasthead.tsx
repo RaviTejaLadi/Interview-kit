@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import { kitIconToneClass } from '@/lib/kit-meta';
 import { cn } from '@/lib/utils';
@@ -14,19 +14,15 @@ type SiteHeaderProps = {
   showBrand?: boolean;
 };
 
-function formatDigitalTime(date: Date) {
-  const formattedDate = new Intl.DateTimeFormat(undefined, {
-    day: '2-digit',
-    month: 'short',
-    year: 'numeric',
-  }).format(date);
-  const formattedTime = new Intl.DateTimeFormat(undefined, {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-  }).format(date);
-
-  return `${formattedDate} · ${formattedTime}`;
+function BrandMark() {
+  return (
+    <span
+      aria-hidden="true"
+      className="grid size-6 shrink-0 place-items-center rounded-[6px] bg-foreground text-[10px] font-semibold tracking-tight text-background"
+    >
+      IK
+    </span>
+  );
 }
 
 export function SiteHeader({
@@ -39,37 +35,32 @@ export function SiteHeader({
   onBrandClick,
   showBrand = true,
 }: SiteHeaderProps) {
-  const [localTime, setLocalTime] = useState(() => formatDigitalTime(new Date()));
-
-  useEffect(() => {
-    const updateTime = () => {
-      setLocalTime(formatDigitalTime(new Date()));
-    };
-
-    updateTime();
-    const timer = window.setInterval(updateTime, 1_000);
-    return () => window.clearInterval(timer);
-  }, []);
+  const brand = (
+    <span className="inline-flex min-w-0 items-center gap-2">
+      <BrandMark />
+      <span className="truncate text-[13px] font-semibold tracking-tight text-(--color-header-foreground)">
+        Interview Kits
+      </span>
+    </span>
+  );
 
   return (
-    <header className="flex min-h-12 shrink-0 items-center gap-2 border-b border-border bg-(--color-header) px-3 py-2 text-(--color-header-foreground) sm:gap-3 sm:px-4 lg:px-6">
+    <header className="flex h-[52px] shrink-0 items-center gap-2 border-b border-(--line-strong) bg-(--color-header) px-4 text-(--color-header-foreground) sm:gap-3">
       <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3">
-        {leading}
         {showBrand ? (
           onBrandClick ? (
             <button
               type="button"
               onClick={onBrandClick}
-              className="shrink-0 text-sm font-semibold text-(--color-header-foreground) transition-colors hover:text-primary"
+              className="shrink-0 rounded-[6px] transition-opacity hover:opacity-80"
             >
-              Interview Kits
+              {brand}
             </button>
           ) : (
-            <p className="shrink-0 text-sm font-semibold text-(--color-header-foreground)">
-              Interview Kits
-            </p>
+            brand
           )
         ) : null}
+        {leading}
         {kitLabel ? (
           <div className="flex min-w-0 items-center gap-2">
             <span className="hidden h-4 w-px shrink-0 bg-border md:block" aria-hidden="true" />
@@ -81,7 +72,7 @@ export function SiteHeader({
                 className={cn('size-5 shrink-0 object-contain', kitIconToneClass(kitKey))}
               />
             ) : null}
-            <p className="truncate text-sm font-semibold leading-none text-(--color-header-foreground)">
+            <p className="truncate text-[13px] font-semibold leading-none tracking-tight text-(--color-header-foreground)">
               {kitLabel}
             </p>
           </div>
@@ -92,12 +83,7 @@ export function SiteHeader({
           </p>
         ) : null}
       </div>
-      <div className="flex shrink-0 items-center gap-2">
-        <p className="hidden whitespace-nowrap rounded-(--radius-control) px-2 py-1 font-mono text-[11px] font-medium tracking-wide text-(--color-header-foreground) tabular-nums lg:block">
-          {localTime}
-        </p>
-        {actions}
-      </div>
+      <div className="flex shrink-0 items-center gap-2">{actions}</div>
     </header>
   );
 }

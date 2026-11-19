@@ -1,14 +1,10 @@
 import * as React from 'react';
 import {
   ArrowLeftIcon,
-  BookIcon,
-  BookOpenTextIcon,
-  CheckCircle2Icon,
+  CheckIcon,
   ChevronRightIcon,
-  Code2Icon,
+  FileIcon,
   FolderIcon,
-  ListTreeIcon,
-  SparklesIcon,
   SearchIcon,
   StarIcon,
 } from 'lucide-react';
@@ -28,7 +24,6 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarInput,
   SidebarMenuButton,
@@ -52,119 +47,93 @@ type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
   onBackToKits: () => void;
 };
 
-type SidebarGlyph = {
-  Icon: React.ComponentType<{ className?: string }>;
-  className: string;
-};
+const FOLDER_COLORS = [
+  'text-[#b7a898]',
+  'text-[#7fc278]',
+  'text-[#c4b0e0]',
+  'text-[#e3ae3c]',
+  'text-[#7eb6e0]',
+  'text-[#7ec8c3]',
+  'text-[#e7a0c4]',
+  'text-[#c5c97a]',
+  'text-[#d7c56a]',
+];
 
-function getRootTopicIcon(title: string): SidebarGlyph | null {
-  const normalizedTitle = title.trim().toLowerCase();
-
-  if (normalizedTitle === 'overview') {
-    return {
-      Icon: BookIcon,
-      className: 'text-sky-600',
-    };
-  }
-
-  if (normalizedTitle === 'topics') {
-    return {
-      Icon: ListTreeIcon,
-      className: 'text-indigo-600',
-    };
-  }
-
-  return null;
+function folderColor(index: number) {
+  return FOLDER_COLORS[index % FOLDER_COLORS.length];
 }
 
-function getSectionIcon(section: KitSection): SidebarGlyph {
-  const normalizedKey = `${section.id} ${section.label}`.toLowerCase();
+function sectionQuestionCount(section: KitSection) {
+  return (
+    section.topics.length +
+    section.folders.reduce((count, folder) => count + folder.questions.length, 0)
+  );
+}
 
-  if (normalizedKey.includes('theory')) {
-    return {
-      Icon: BookOpenTextIcon,
-      className: 'text-emerald-500 dark:text-emerald-400',
-    };
-  }
-
-  if (
-    normalizedKey.includes('coding') ||
-    normalizedKey.includes('code') ||
-    normalizedKey.includes('practical')
-  ) {
-    return {
-      Icon: Code2Icon,
-      className: 'text-amber-500 dark:text-amber-400',
-    };
-  }
-
-  if (normalizedKey.includes('advanced')) {
-    return {
-      Icon: SparklesIcon,
-      className: 'text-fuchsia-500 dark:text-fuchsia-400',
-    };
-  }
-
-  if (normalizedKey.includes('behavioral')) {
-    return {
-      Icon: FolderIcon,
-      className: 'text-orange-500 dark:text-orange-400',
-    };
-  }
-
-  if (normalizedKey.includes('logistics')) {
-    return {
-      Icon: FolderIcon,
-      className: 'text-cyan-500 dark:text-cyan-400',
-    };
-  }
-
-  if (normalizedKey.includes('frameworks')) {
-    return {
-      Icon: FolderIcon,
-      className: 'text-indigo-500 dark:text-indigo-400',
-    };
-  }
-
-  return {
-    Icon: FolderIcon,
-    className: 'text-slate-500 dark:text-slate-400',
-  };
+function sectionCompletedCount(section: KitSection, topicProgressById: TopicProgressMap) {
+  const topics = [...section.topics, ...section.folders.flatMap((folder) => folder.questions)];
+  return topics.reduce(
+    (count, topic) => count + (topicProgressById[topic.id]?.completed ? 1 : 0),
+    0,
+  );
 }
 
 function getStarRatingAppearance(rating: number) {
   if (rating >= 5) {
     return {
       label: 'Must know',
-      className: 'bg-emerald-500',
+      className: 'text-emerald-500',
     };
   }
 
   if (rating === 4) {
     return {
       label: 'Important',
-      className: 'bg-amber-400',
+      className: 'text-amber-400',
     };
   }
 
   return {
     label: 'Good to know',
-    className: 'bg-rose-500',
+    className: 'text-rose-500',
   };
 }
 
-function StarRatingDot({ rating }: { rating: number }) {
-  const appearance = getStarRatingAppearance(rating);
+const treeRowClass =
+  'h-7 w-full gap-1.5 rounded-[6px] border border-transparent px-1.5 text-[12px] font-normal text-sidebar-foreground/80 hover:bg-foreground/5 hover:text-sidebar-foreground data-active:border-sidebar-border data-active:bg-transparent data-active:font-medium data-active:text-sidebar-foreground [&_svg]:size-3.5';
+
+function LessonFileButton({
+  label,
+  isActive,
+  starRating,
+  markedImportant,
+  onClick,
+}: {
+  label: string;
+  isActive: boolean;
+  starRating?: number | null;
+  markedImportant?: boolean;
+  onClick: () => void;
+}) {
+  const rating = starRating ? getStarRatingAppearance(starRating) : null;
 
   return (
-    <span
-      className={cn(
-        'mt-0.5 size-2 shrink-0 rounded-full shadow-[0_0_0_1px_rgb(15_23_42/12%)] dark:shadow-[0_0_0_1px_rgb(255_255_255/18%)]',
-        appearance.className,
-      )}
-      title={`${appearance.label} (${rating} star${rating === 1 ? '' : 's'})`}
-      aria-label={`${appearance.label}, ${rating} star rating`}
-    />
+    <SidebarMenuButton
+      size="sm"
+      isActive={isActive}
+      onClick={onClick}
+      tooltip={rating ? `${label} · ${rating.label}` : label}
+      className={treeRowClass}
+    >
+      <FileIcon className={cn('shrink-0', rating?.className ?? 'text-muted-foreground')} />
+      <span className="min-w-0 flex-1 truncate">{label}</span>
+      {markedImportant ? (
+        <StarIcon
+          className="ml-auto size-3 shrink-0 fill-amber-400 text-amber-500"
+          aria-label="Important"
+        />
+      ) : null}
+    </SidebarMenuButton>
   );
 }
 
@@ -179,33 +148,38 @@ function TopicNavButton({
   topicProgressById: TopicProgressMap;
   onSelect: (navId: string) => void;
 }) {
-  const RootTopicIcon = getRootTopicIcon(topic.title);
   const topicProgress = topicProgressById[topic.id];
-  const isCompleted = topicProgress?.completed === true;
-  const isImportant = topicProgress?.important === true;
 
   return (
-    <SidebarMenuButton
-      size="sm"
+    <LessonFileButton
+      label={topic.title}
       isActive={isActive}
+      starRating={topic.starRating && !topic.topicTitle ? topic.starRating : null}
+      markedImportant={topicProgress?.important === true}
       onClick={() => onSelect(getTopicNavId(topic.id))}
-      className="h-auto w-full rounded-(--radius-control) border border-transparent py-2 text-[13px] text-sidebar-foreground/95 data-active:border-primary data-active:bg-primary data-active:text-primary-foreground"
-    >
-      {topic.starRating && !topic.topicTitle ? (
-        <StarRatingDot rating={topic.starRating} />
-      ) : RootTopicIcon ? (
-        <RootTopicIcon.Icon className={cn('mt-0.5 shrink-0', RootTopicIcon.className)} />
-      ) : null}
-      <span className="line-clamp-2 min-w-0 flex-1 leading-tight">{topic.title}</span>
-      <span className="ml-auto inline-flex shrink-0 items-center gap-1">
-        {isImportant ? (
-          <StarIcon className="size-3 text-amber-500 fill-amber-400" aria-label="Important topic" />
-        ) : null}
-        {isCompleted ? (
-          <CheckCircle2Icon className="size-3 text-emerald-500" aria-label="Completed topic" />
-        ) : null}
-      </span>
-    </SidebarMenuButton>
+    />
+  );
+}
+
+function TreeBranch({ children }: { children: React.ReactNode }) {
+  const items = React.Children.toArray(children).filter(Boolean);
+
+  return (
+    <div className="relative ml-[13px]">
+      {items.map((child, index) => (
+        <div key={index} className="relative pl-3">
+          <span
+            aria-hidden
+            className={cn(
+              'absolute left-0 w-px bg-(--line-strong)',
+              index === items.length - 1 ? 'top-0 h-1/2' : 'inset-y-0',
+            )}
+          />
+          <span aria-hidden className="absolute top-1/2 left-0 h-px w-2.5 bg-(--line-strong)" />
+          {child}
+        </div>
+      ))}
+    </div>
   );
 }
 
@@ -222,9 +196,30 @@ function KitTopicTree({
   topicProgressById: TopicProgressMap;
   onSelectNav: (navId: string) => void;
 }) {
+  const { state: sidebarState } = useSidebar();
+  const sidebarCollapsed = sidebarState === 'collapsed';
   const [openSections, setOpenSections] = React.useState<Record<string, boolean>>({});
+  const wasSidebarCollapsed = React.useRef(sidebarCollapsed);
 
   React.useEffect(() => {
+    if (!sidebarCollapsed) {
+      return;
+    }
+
+    setOpenSections((current) => {
+      const next = Object.fromEntries(kit.sections.map((section) => [section.id, false]));
+      const alreadyClosed = kit.sections.every((section) => current[section.id] === false);
+      return alreadyClosed ? current : next;
+    });
+  }, [sidebarCollapsed, kit.sections]);
+
+  React.useEffect(() => {
+    const justExpanded = wasSidebarCollapsed.current && !sidebarCollapsed;
+    wasSidebarCollapsed.current = sidebarCollapsed;
+    if (sidebarCollapsed || justExpanded) {
+      return;
+    }
+
     for (const section of kit.sections) {
       const sectionHasSelectedTopic =
         selectedNavId !== null &&
@@ -239,36 +234,47 @@ function KitTopicTree({
         );
       }
     }
-  }, [kit.id, kit.sections, selectedNavId]);
+  }, [kit.id, kit.sections, selectedNavId, sidebarCollapsed]);
+
+  const lessonCount =
+    kit.rootTopics.length +
+    kit.sections.reduce((count, section) => count + sectionQuestionCount(section), 0);
 
   return (
-    <div className="space-y-2">
-      {kit.rootTopics.length > 0 && (
-        <div className="space-y-1">
-          {kit.rootTopics.map((topic) => (
-            <TopicNavButton
-              key={topic.id}
-              topic={topic}
-              isActive={selectedNavId === getTopicNavId(topic.id)}
-              topicProgressById={topicProgressById}
-              onSelect={onSelectNav}
-            />
-          ))}
-        </div>
-      )}
+    <div className="space-y-0.5">
+      <div className="flex h-8 items-center gap-1.5 px-1.5 text-[12px]">
+        <FolderIcon className="size-3.5 shrink-0 text-muted-foreground" />
+        <span className="truncate font-medium text-sidebar-foreground">{kit.label}</span>
+        <span className="ml-auto shrink-0 text-[11px] text-muted-foreground tabular-nums">
+          {lessonCount} lessons
+        </span>
+      </div>
 
-      {kit.sections.map((section) => {
+      {kit.rootTopics.map((topic) => (
+        <TopicNavButton
+          key={topic.id}
+          topic={topic}
+          isActive={selectedNavId === getTopicNavId(topic.id)}
+          topicProgressById={topicProgressById}
+          onSelect={onSelectNav}
+        />
+      ))}
+
+      {kit.sections.map((section, sectionIndex) => {
         const sectionHasSelectedTopic =
           selectedNavId !== null &&
           (section.topics.some((topic) => getTopicNavId(topic.id) === selectedNavId) ||
             section.folders.some(
               (folder) => getFolderNavId(kit.id, section.id, folder.id) === selectedNavId,
             ));
-        const SectionIcon = getSectionIcon(section);
         const isSectionOpen =
-          hasSearchQuery ||
-          openSections[section.id] ||
-          (openSections[section.id] === undefined && sectionHasSelectedTopic);
+          !sidebarCollapsed &&
+          (hasSearchQuery ||
+            openSections[section.id] ||
+            (openSections[section.id] === undefined && sectionHasSelectedTopic));
+        const total = sectionQuestionCount(section);
+        const completed = sectionCompletedCount(section, topicProgressById);
+        const sectionNumber = String(sectionIndex + 1).padStart(2, '0');
 
         return (
           <Collapsible
@@ -280,24 +286,40 @@ function KitTopicTree({
                 [section.id]: open,
               }));
             }}
-            className="group/section-collapsible space-y-1"
+            className="group/section-collapsible"
           >
             <CollapsibleTrigger
               render={
                 <SidebarMenuButton
                   size="sm"
                   tooltip={section.label}
-                  isActive={sectionHasSelectedTopic}
-                  className="h-8 border border-transparent text-xs font-semibold text-muted-foreground data-active:border-primary data-active:bg-primary data-active:text-primary-foreground"
+                  className={cn(
+                    treeRowClass,
+                    'font-medium text-sidebar-foreground',
+                    isSectionOpen && 'border-sidebar-border',
+                  )}
                 />
               }
             >
-              <SectionIcon.Icon className={cn('size-3.5 shrink-0', SectionIcon.className)} />
-              <span>{section.label}</span>
-              <ChevronRightIcon className="ml-auto size-3.5 transition-transform duration-200 group-data-open/section-collapsible:rotate-90" />
+              <ChevronRightIcon
+                className={cn(
+                  'size-3 shrink-0 text-muted-foreground transition-transform duration-200',
+                  isSectionOpen && 'rotate-90',
+                )}
+              />
+              <FolderIcon
+                className={cn('size-3.5 shrink-0', folderColor(sectionIndex))}
+                fill="currentColor"
+              />
+              <span className="min-w-0 flex-1 truncate">
+                {sectionNumber}. {section.label}
+              </span>
+              <span className="ml-auto shrink-0 text-[11px] text-muted-foreground tabular-nums">
+                {completed}/{total}
+              </span>
             </CollapsibleTrigger>
             <CollapsibleContent>
-              <div className="space-y-1 pl-3">
+              <TreeBranch>
                 {section.topics.map((topic) => (
                   <TopicNavButton
                     key={topic.id}
@@ -309,55 +331,130 @@ function KitTopicTree({
                 ))}
                 {section.folders.map((folder) => {
                   const folderNavId = getFolderNavId(kit.id, section.id, folder.id);
-                  const isActive = selectedNavId === folderNavId;
-                  const completedCount = folder.questions.reduce(
-                    (count, topic) => count + (topicProgressById[topic.id]?.completed ? 1 : 0),
-                    0,
-                  );
-                  const importantCount = folder.questions.reduce(
-                    (count, topic) => count + (topicProgressById[topic.id]?.important ? 1 : 0),
-                    0,
+                  const markedImportant = folder.questions.some(
+                    (topic) => topicProgressById[topic.id]?.important,
                   );
 
                   return (
-                    <SidebarMenuButton
+                    <LessonFileButton
                       key={folderNavId}
-                      size="sm"
-                      tooltip={folder.label}
-                      isActive={isActive}
+                      label={folder.label}
+                      isActive={selectedNavId === folderNavId}
+                      starRating={folder.starRating}
+                      markedImportant={markedImportant}
                       onClick={() => onSelectNav(folderNavId)}
-                      className="h-auto rounded-(--radius-control) border border-transparent py-2 text-[13px] text-sidebar-foreground/95 data-active:border-primary data-active:bg-primary data-active:text-primary-foreground"
-                    >
-                      {folder.starRating ? (
-                        <StarRatingDot rating={folder.starRating} />
-                      ) : (
-                        <FolderIcon className="mt-0.5 size-3.5 shrink-0" />
-                      )}
-                      <span className="line-clamp-2 min-w-0 flex-1 leading-tight">
-                        {folder.label}
-                      </span>
-                      <span
-                        className="ml-auto shrink-0 text-[11px] text-sidebar-foreground/65"
-                        title={`${completedCount} of ${folder.questions.length} completed`}
-                      >
-                        {completedCount}/{folder.questions.length}
-                      </span>
-                      {importantCount > 0 ? (
-                        <span
-                          className="shrink-0 text-[11px] text-amber-500"
-                          title={`${importantCount} marked important`}
-                        >
-                          <StarIcon className="size-3 fill-amber-400" />
-                        </span>
-                      ) : null}
-                    </SidebarMenuButton>
+                    />
                   );
                 })}
-              </div>
+              </TreeBranch>
             </CollapsibleContent>
           </Collapsible>
         );
       })}
+    </div>
+  );
+}
+
+function ProgressPanel({
+  kit,
+  completedTopicCount,
+  totalTopicCount,
+  importantTopicCount,
+  topicProgressById,
+  onSelectNav,
+}: {
+  kit: KitMenu | null;
+  completedTopicCount: number;
+  totalTopicCount: number;
+  importantTopicCount: number;
+  topicProgressById: TopicProgressMap;
+  onSelectNav: (navId: string) => void;
+}) {
+  const { state: sidebarState } = useSidebar();
+  const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    if (sidebarState === 'collapsed') {
+      setOpen(false);
+    }
+  }, [sidebarState]);
+  const percent =
+    totalTopicCount > 0 ? Math.round((completedTopicCount / totalTopicCount) * 100) : 0;
+  const sections = kit?.sections ?? [];
+
+  return (
+    <div className="overflow-hidden rounded-(--radius-control) border border-sidebar-border">
+      <button
+        type="button"
+        onClick={() => setOpen((current) => !current)}
+        aria-expanded={open}
+        className="flex h-9 w-full items-center justify-between px-3 text-left"
+        title={importantTopicCount > 0 ? `${importantTopicCount} marked important` : undefined}
+      >
+        <span className="text-[11px] font-medium tracking-[0.14em] text-muted-foreground">
+          PROGRESS
+        </span>
+        <span className="inline-flex items-center gap-1.5 text-[12px] text-sidebar-foreground tabular-nums">
+          {completedTopicCount} / {totalTopicCount}
+          <ChevronRightIcon
+            className={cn(
+              'size-3.5 text-muted-foreground transition-transform duration-200',
+              open && '-rotate-90',
+            )}
+          />
+        </span>
+      </button>
+      {open ? (
+        <div className="border-t border-sidebar-border px-3 pt-2 pb-2">
+          <div className="mb-2 h-1 overflow-hidden rounded-full bg-muted">
+            <div className="h-full bg-primary" style={{ width: `${percent}%` }} />
+          </div>
+          <ul className="max-h-52 space-y-0.5 overflow-auto">
+            {sections.map((section) => {
+              const total = sectionQuestionCount(section);
+              const completed = sectionCompletedCount(section, topicProgressById);
+              const done = total > 0 && completed === total;
+              const firstFolder = section.folders[0];
+              const firstTopic = section.topics[0];
+
+              return (
+                <li key={section.id}>
+                  <button
+                    type="button"
+                    className="flex h-7 w-full items-center gap-2 rounded-[6px] px-0.5 text-left text-[12px] text-sidebar-foreground/85 hover:bg-foreground/5"
+                    onClick={() => {
+                      if (!kit) {
+                        return;
+                      }
+                      if (firstFolder) {
+                        onSelectNav(getFolderNavId(kit.id, section.id, firstFolder.id));
+                        return;
+                      }
+                      if (firstTopic) {
+                        onSelectNav(getTopicNavId(firstTopic.id));
+                      }
+                    }}
+                  >
+                    <span
+                      aria-hidden
+                      className={cn(
+                        'flex size-3.5 shrink-0 items-center justify-center rounded-[3px] border border-sidebar-border',
+                        done && 'border-primary bg-primary text-primary-foreground',
+                      )}
+                    >
+                      {done ? <CheckIcon className="size-2.5" /> : null}
+                    </span>
+                    <span className="min-w-0 flex-1 truncate">{section.label}</span>
+                    <span className="shrink-0 text-[11px] text-muted-foreground tabular-nums">
+                      {completed}/{total}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -424,7 +521,7 @@ export function AppSidebar({
               maxLength={SEARCH_QUERY_MAX}
               aria-label="Search topics"
               placeholder="Search this kit"
-              className="h-8 rounded-(--radius-control) border-sidebar-border bg-card pl-7 text-xs shadow-none placeholder:text-sidebar-foreground/66 focus-visible:border-sidebar-ring"
+              className="h-8 rounded-[8px] border-sidebar-border bg-background pl-7 text-xs shadow-none placeholder:text-muted-foreground focus-visible:border-sidebar-ring"
             />
           </div>
         </div>
@@ -435,11 +532,8 @@ export function AppSidebar({
             No topics found.
           </div>
         ) : (
-          <SidebarGroup className="py-1.5">
-            <SidebarGroupLabel className="px-2 text-xs text-muted-foreground">
-              Contents
-            </SidebarGroupLabel>
-            <div className="px-1">
+          <SidebarGroup className="px-2 py-2">
+            <div className="px-0.5">
               <KitTopicTree
                 kit={activeKit}
                 selectedNavId={selectedNavId}
@@ -451,28 +545,15 @@ export function AppSidebar({
           </SidebarGroup>
         )}
       </SidebarContent>
-      <SidebarFooter className="border-t border-sidebar-border bg-sidebar px-4 py-3 group-data-[collapsible=icon]:hidden">
-        <p className="text-xs text-muted-foreground">
-          {completedTopicCount}/{totalTopicCount} completed
-        </p>
-        <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px] text-sidebar-foreground/72">
-          <span className="inline-flex items-center gap-1.5">
-            <StarIcon className="size-3 fill-amber-400 text-amber-500" aria-hidden="true" />
-            {importantTopicCount} important
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="size-1.5 rounded-full bg-emerald-500" aria-hidden="true" />
-            Must know
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="size-1.5 rounded-full bg-amber-400" aria-hidden="true" />
-            Important
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="size-1.5 rounded-full bg-rose-500" aria-hidden="true" />
-            Good to know
-          </span>
-        </div>
+      <SidebarFooter className="bg-sidebar px-3 py-3 group-data-[collapsible=icon]:hidden">
+        <ProgressPanel
+          kit={activeKit}
+          completedTopicCount={completedTopicCount}
+          totalTopicCount={totalTopicCount}
+          importantTopicCount={importantTopicCount}
+          topicProgressById={topicProgressById}
+          onSelectNav={handleSelectNav}
+        />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

@@ -6,26 +6,14 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
-  ============================================================
-  EDUCATION DESIGN SYSTEM
-  ------------------------------------------------------------
-  Inspired by the patterns that the best learning products share:
-  - Khan Academy (Wonder Blocks): confident royal blue as the single action
-    color, off-white canvas, navy-tinted ink instead of pure black, pale
-    tinted surfaces, gold for achievement, mint/teal as the friendly accent.
-  - Duolingo: tactile "pressable" buttons with solid-color bottom shadows,
-    rounded shapes, bright reward colors (streak, XP), playful motion.
-  - Coursera / edX: calm institutional trust, generous whitespace,
-    strong text contrast, clear content hierarchy.
-  - 60-30-10 rule: 60% neutral canvas, 30% blue + navy, 10% mint / gold accents.
-  All text and fill pairs below are chosen for WCAG AA contrast.
-  ============================================================
+  Designed-to-scale theme.
+  Warm paper, ink, and sage. JetBrains Mono. Sampled from the live app.
 */
 
 @theme inline {
-  --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
-  --font-heading: Inter, ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-heading: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-faint: var(--faint);
@@ -91,24 +79,25 @@
 
 @layer base {
   :root {
-    /* ---- Core brand: royal blue (action) + navy (depth) ---- */
-    --color-primary: #1d5cf0;
-    --color-primary-hover: #1648c4;
-    --color-primary-active: #0f3596;
+    /* ---- Core brand: sage chip, dark ink ---- */
+    --color-primary: #cfe3b2;
+    --color-primary-hover: #b2d491;
+    --color-primary-active: #a6d38b;
 
     /* ---- Canvas and surfaces ---- */
-    --color-background: #f6f8fc;
-    --color-surface: #ffffff;
-    --color-surface-subtle: #edf1f9;
+    --color-background: #f4ebe0;
+    --color-surface: #f8f0e6;
+    --color-surface-subtle: #f7efe4;
+    --color-surface-hover: #f1e8db;
 
-    /* ---- Ink (navy tinted, never pure black) ---- */
-    --color-text-primary: #16213e;
-    --color-text-secondary: #46526f;
-    --color-text-muted: #626c85;
+    /* ---- Ink ---- */
+    --color-text-primary: #1d1b18;
+    --color-text-secondary: #34302b;
+    --color-text-muted: #6f6961;
 
     /* ---- Lines ---- */
-    --color-border: #dfe5f1;
-    --color-input-border: #c6cfe2;
+    --color-border: #ddd3c5;
+    --color-input-border: #c6bbac;
 
     /* ---- Feedback ---- */
     --color-success: #0a7d46;
@@ -120,10 +109,11 @@
     --color-info: #0b6fb8;
     --color-info-background: #e2f0fc;
 
-    /* ---- Shape ---- */
-    --radius-control: 5px;
-    --radius-card: 10px;
-    --radius-panel: 15px;
+    /* ---- Shape: controls 8px, cards 12px ---- */
+    --radius-xs: 4px;
+    --radius-control: 8px;
+    --radius-card: 12px;
+    --radius-panel: 12px;
 
     /* ---- Spacing ---- */
     --spacing-1: 4px;
@@ -136,16 +126,16 @@
     --spacing-16: 64px;
 
     /* ---- Elevation ---- */
-    --shadow-card: 0 1px 2px rgb(16 33 76 / 5%), 0 4px 16px rgb(16 33 76 / 4%);
-    --shadow-card-hover: 0 10px 30px rgb(29 92 240 / 14%), 0 2px 6px rgb(16 33 76 / 6%);
-    --shadow-pop: 0 16px 40px rgb(16 33 76 / 16%);
+    --shadow-card: inset 0 1px 0 #ffffffa6, 0 1px 0 #503c230f, 0 10px 22px -16px #503c2359;
+    --shadow-card-hover: inset 0 1px 0 #ffffffa6, 0 1px 0 #503c230f, 0 14px 28px -14px #503c2359;
+    --shadow-pop: 1.5px 2.5px 0 #1d1b18;
 
     /* ---- Header + notes ---- */
-    --color-header: #ffffff;
-    --color-header-foreground: #16213e;
-    --color-header-muted: #46526f;
-    --color-note: #e6eeff;
-    --color-note-foreground: #123a9c;
+    --color-header: #f4ebe0;
+    --color-header-foreground: #1d1b18;
+    --color-header-muted: #6f6961;
+    --color-note: #e7ddf5;
+    --color-note-foreground: #1d1b18;
 
     /* ---- Compatibility layer for existing utilities ---- */
     --bg: var(--color-background);
@@ -170,33 +160,33 @@
     --primary: var(--color-primary);
     --primary-hover: var(--color-primary-hover);
     --primary-active: var(--color-primary-active);
-    --primary-foreground: #ffffff;
+    --primary-foreground: #1d1b18;
     --secondary: var(--color-surface-subtle);
     --secondary-foreground: var(--color-text-primary);
     --muted: var(--color-surface-subtle);
     --muted-foreground: var(--color-text-secondary);
-    --accent: #e6eeff;
-    --accent-foreground: #123a9c;
+    --accent: #cfe3b2;
+    --accent-foreground: #1d1b18;
     --border: var(--color-border);
     --input: var(--color-input-border);
-    --ring: #4d84ff;
+    --ring: #7fc278;
     --radius: var(--radius-control);
     --popover: var(--color-surface);
     --popover-foreground: var(--color-text-primary);
     --destructive: var(--color-error);
-    --chart-1: #1d5cf0;
-    --chart-2: #14bf96;
-    --chart-3: #ffb100;
-    --chart-4: #7c4dff;
-    --chart-5: #f0508a;
-    --sidebar: #ffffff;
+    --chart-1: #7fc278;
+    --chart-2: #d0683a;
+    --chart-3: #7c63d0;
+    --chart-4: #2f86ce;
+    --chart-5: #e3ae3c;
+    --sidebar: #f4ebe0;
     --sidebar-foreground: var(--color-text-primary);
-    --sidebar-primary: var(--color-primary);
-    --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #e6eeff;
-    --sidebar-accent-foreground: #123a9c;
-    --sidebar-border: var(--color-border);
-    --sidebar-ring: #4d84ff;
+    --sidebar-primary: #cfe3b2;
+    --sidebar-primary-foreground: #1d1b18;
+    --sidebar-accent: #cfe3b2;
+    --sidebar-accent-foreground: #1d1b18;
+    --sidebar-border: #ddd3c5;
+    --sidebar-ring: #7fc278;
 
     /* ---- Semantic aliases ---- */
     --highlight: #ffb100;
@@ -209,24 +199,24 @@
     --info-soft: var(--color-info-background);
 
     /* ---- Learning / reward palette ---- */
-    --navy: #0b2149; /* hero sections, footers, chart anchor */
-    --mint: #14bf96; /* friendly secondary accent */
-    --mint-strong: #0a8160; /* mint fill that carries white text (AA) */
-    --mint-foreground: #ffffff;
-    --mint-deep: #066247; /* tactile shadow for mint buttons */
-    --mint-soft: #dcf7ef;
-    --gold: #ffb100; /* achievements, badges */
-    --gold-deep: #d98f00;
-    --gold-soft: #fff4d6;
-    --streak: #ff7a00; /* streaks, fire */
-    --xp: #7c4dff; /* XP, levels, premium / AI */
-    --xp-soft: #eee8ff;
+    --navy: #1d1b18;
+    --mint: #7fc278;
+    --mint-strong: #2a7a3d;
+    --mint-foreground: #1d1b18;
+    --mint-deep: #24521c;
+    --mint-soft: #e8efd9;
+    --gold: #e3ae3c;
+    --gold-deep: #a5650c;
+    --gold-soft: #f6e6c9;
+    --streak: #d0683a;
+    --xp: #7c63d0;
+    --xp-soft: #e7ddf5;
 
     /* ---- Gradients ---- */
-    --gradient-hero: linear-gradient(135deg, #1d5cf0 0%, #3b55f0 45%, #5b3df5 100%);
-    --gradient-hero-soft: linear-gradient(135deg, #e6eeff 0%, #f1ecff 55%, #dcf7ef 100%);
-    --gradient-progress: linear-gradient(90deg, #14bf96 0%, #1d5cf0 100%);
-    --gradient-gold: linear-gradient(135deg, #ffc93c 0%, #ff9f1a 100%);
+    --gradient-hero: linear-gradient(180deg, #f8f0e6 0%, #f4ebe0 100%);
+    --gradient-hero-soft: linear-gradient(180deg, #fbf7f1 0%, #f4ebe0 100%);
+    --gradient-progress: linear-gradient(90deg, #b2d491 0%, #7fc278 100%);
+    --gradient-gold: linear-gradient(135deg, #fde3a7 0%, #e3ae3c 100%);
   }
 
   * {
@@ -237,21 +227,29 @@
     @apply font-sans antialiased bg-background text-foreground;
     margin: 0;
     min-height: 100svh;
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 12px;
+    line-height: 1.45;
+    letter-spacing: normal;
   }
 
   .theme {
-    --font-heading: Inter, ui-sans-serif, system-ui, sans-serif;
-    --font-sans: Inter, ui-sans-serif, system-ui, sans-serif;
-    --font-mono: Consolas, 'Courier New', ui-monospace, monospace;
+    --font-heading: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-sans: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   }
 
-  :where(h1, h2, h3, h4, h5, h6) {
+  :where(h1) {
     font-family: var(--font-heading);
     font-weight: 700;
     letter-spacing: -0.01em;
-    line-height: 1.25;
+    line-height: 1.2;
+  }
+
+  :where(h2, h3, h4, h5, h6) {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.35;
   }
 
   :where(code, kbd, samp, pre) {
@@ -259,60 +257,59 @@
   }
 
   .dark {
-    /* Graphite dark: near-neutral, slightly cool, layered surfaces */
-    --bg: #0e1116;
-    --bg-raised: #161a22;
-    --bg-sunken: #1c212b;
-    --ink: #e8ecf4;
-    --ink-strong: #ffffff;
-    --muted-ink: #b4bccd;
-    --faint: #8a94a8;
-    --line: #262c38;
-    --line-strong: #353d4d;
-    --accent-ink: #8cb0ff;
-    --invert-bg: #e8ecf4;
-    --invert-fg: #0e1116;
-    --danger: #ff8080;
+    --bg: #211e1a;
+    --bg-raised: #26231e;
+    --bg-sunken: #2e2923;
+    --ink: #efe6d6;
+    --ink-strong: #f7f1e6;
+    --muted-ink: #a3998b;
+    --faint: #8d7f6c;
+    --line: #342f28;
+    --line-strong: #4f473d;
+    --accent-ink: #7fc278;
+    --invert-bg: #efe6d6;
+    --invert-fg: #211e1a;
+    --danger: #e5534b;
     --scanline: transparent;
-    --paper: #161a22;
+    --paper: #26231e;
     --background: var(--bg);
     --foreground: var(--ink);
     --card: var(--bg-raised);
     --card-foreground: var(--ink);
-    --primary: #6a9bff;
-    --primary-hover: #86adff;
-    --primary-active: #3a68d8;
-    --primary-foreground: #07101f;
+    --primary: #3f4c2b;
+    --primary-hover: #4d5c36;
+    --primary-active: #2e3b22;
+    --primary-foreground: #efe6d6;
     --secondary: var(--bg-sunken);
     --secondary-foreground: var(--ink);
     --muted: var(--bg-sunken);
     --muted-foreground: var(--muted-ink);
-    --accent: #1a2438;
-    --accent-foreground: var(--ink);
+    --accent: #3f4c2b;
+    --accent-foreground: #efe6d6;
     --border: var(--line);
     --input: var(--line-strong);
-    --ring: #86adff;
-    --popover: #1a1f29;
+    --ring: #7fc278;
+    --popover: #28241f;
     --popover-foreground: var(--ink);
     --destructive: var(--danger);
-    --chart-1: #8cb0ff;
-    --chart-2: #3ddbb0;
-    --chart-3: #ffc83d;
-    --chart-4: #b9a3ff;
-    --chart-5: #ff8fb5;
-    --sidebar: #0b0e13;
+    --chart-1: #7fc278;
+    --chart-2: #d97a4f;
+    --chart-3: #c4b0e0;
+    --chart-4: #7eb6e0;
+    --chart-5: #e3ae3c;
+    --sidebar: #211e1a;
     --sidebar-foreground: var(--ink);
-    --sidebar-primary: #6a9bff;
-    --sidebar-primary-foreground: #07101f;
-    --sidebar-accent: #1a2438;
-    --sidebar-accent-foreground: var(--ink);
-    --sidebar-border: var(--line);
-    --sidebar-ring: #86adff;
-    --color-header: #0b0e13;
-    --color-header-foreground: #e8ecf4;
-    --color-header-muted: #b4bccd;
-    --color-note: #1a2540;
-    --color-note-foreground: #cfe0ff;
+    --sidebar-primary: #3f4c2b;
+    --sidebar-primary-foreground: #efe6d6;
+    --sidebar-accent: #3f4c2b;
+    --sidebar-accent-foreground: #efe6d6;
+    --sidebar-border: #342f28;
+    --sidebar-ring: #7fc278;
+    --color-header: #211e1a;
+    --color-header-foreground: #efe6d6;
+    --color-header-muted: #a3998b;
+    --color-note: #493563;
+    --color-note-foreground: #efe6d6;
 
     --highlight: #ffc83d;
     --highlight-foreground: #2b1f00;
@@ -323,32 +320,41 @@
     --info: #7cc7f5;
     --info-soft: #10243a;
 
-    --navy: #080b11;
-    --mint: #3ddbb0;
-    --mint-strong: #3ddbb0;
-    --mint-foreground: #04231b;
-    --mint-deep: #178a6f;
-    --mint-soft: #10302a;
-    --gold: #ffc83d;
-    --gold-deep: #b88400;
-    --gold-soft: #2e2509;
-    --streak: #ff9a3c;
-    --xp: #b9a3ff;
-    --xp-soft: #221d40;
+    --navy: #050403;
+    --mint: #7fc278;
+    --mint-strong: #bde1b7;
+    --mint-foreground: #12240f;
+    --mint-deep: #2e3b22;
+    --mint-soft: #3c5c3a;
+    --gold: #e3ae3c;
+    --gold-deep: #a5650c;
+    --gold-soft: #5a4531;
+    --streak: #d0683a;
+    --xp: #c4b0e0;
+    --xp-soft: #493563;
 
-    --shadow-card: 0 1px 0 rgb(255 255 255 / 4%) inset, 0 2px 8px rgb(0 0 0 / 35%);
-    --shadow-card-hover: 0 8px 24px rgb(0 0 0 / 45%), 0 0 0 1px rgb(106 155 255 / 25%);
-    --shadow-pop: 0 16px 40px rgb(0 0 0 / 55%);
+    --shadow-card: inset 0 1px 0 #fff0dc08, 0 1px 0 #00000025, 0 10px 22px -16px #0000006e;
+    --shadow-card-hover: inset 0 1px 0 #fff0dc08, 0 10px 22px -12px #00000080;
+    --shadow-pop: 1.5px 2.5px 0 #050403;
 
-    --gradient-hero: linear-gradient(135deg, #1f3a8a 0%, #27348f 50%, #3b2f8f 100%);
-    --gradient-hero-soft: linear-gradient(135deg, #141b2b 0%, #17162b 55%, #0f2623 100%);
-    --gradient-progress: linear-gradient(90deg, #3ddbb0 0%, #6a9bff 100%);
+    --gradient-hero: linear-gradient(180deg, #26231e 0%, #211e1a 100%);
+    --gradient-hero-soft: linear-gradient(180deg, #28241f 0%, #211e1a 100%);
+    --gradient-progress: linear-gradient(90deg, #3f4c2b 0%, #7fc278 100%);
   }
 
   html {
     @apply font-sans;
     scroll-behavior: smooth;
   }
+}
+
+/* Sage fills stay on --primary. Text accents use the darker green from the same palette. */
+.text-primary {
+  color: #24521c;
+}
+
+.dark .text-primary {
+  color: #cde6ba;
 }
 
 .hud-label {
@@ -362,8 +368,8 @@
 
 .font-display {
   font-family: var(--font-heading);
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  letter-spacing: -0.025em;
 }
 
 .craft-scan {
@@ -505,9 +511,8 @@
 }
 
 .card-surface:hover {
-  transform: translateY(-2px);
   box-shadow: var(--shadow-card-hover);
-  border-color: color-mix(in oklab, var(--primary) 35%, var(--border));
+  border-color: var(--border);
 }
 
 /* ---- Hero / feature surfaces ---- */
@@ -542,37 +547,57 @@
   color: transparent;
 }
 
-/* ---- Callouts ---- */
+/* ---- Callouts: 8px cards with a 3px semantic edge ---- */
 .callout {
-  background: var(--color-note);
-  color: var(--color-note-foreground);
-  border-left: 4px solid var(--primary);
-  border-radius: var(--radius-control);
-  padding: var(--spacing-3) var(--spacing-4);
+  background: #e7ddf5;
+  color: var(--foreground);
+  border: 1px solid #d5c8e2;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.dark .callout {
+  background: #493563;
+  border-color: #41354e;
 }
 
 .callout-success {
-  background: var(--success-soft);
-  color: var(--success);
-  border-left: 4px solid var(--success);
-  border-radius: var(--radius-control);
-  padding: var(--spacing-3) var(--spacing-4);
+  background: #e8efd9;
+  color: var(--foreground);
+  border: 1px solid #c9d6b3;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.dark .callout-success {
+  background: #3c5c3a;
+  border-color: #3b422e;
 }
 
 .callout-warning {
-  background: var(--warning-soft);
-  color: var(--warning);
-  border-left: 4px solid var(--highlight);
-  border-radius: var(--radius-control);
-  padding: var(--spacing-3) var(--spacing-4);
+  background: #fcdcbd;
+  color: var(--foreground);
+  border: 1px solid #e8c49a;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.dark .callout-warning {
+  background: #5a4531;
+  border-color: #6d5840;
 }
 
 .callout-info {
-  background: var(--info-soft);
-  color: var(--info);
-  border-left: 4px solid var(--info);
-  border-radius: var(--radius-control);
-  padding: var(--spacing-3) var(--spacing-4);
+  background: #d6e5f6;
+  color: var(--foreground);
+  border: 1px solid #c5d6ea;
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.dark .callout-info {
+  background: #344961;
+  border-color: #3d5570;
 }
 
 /* ---- Badges ---- */

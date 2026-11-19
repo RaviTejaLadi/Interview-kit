@@ -18,8 +18,127 @@ const CODE_FONT =
 
 type HighlighterStyle = { [key: string]: CSSProperties };
 
+type CodePalette = {
+  background: string;
+  foreground: string;
+  border: string;
+  comment: string;
+  punctuation: string;
+  keyword: string;
+  string: string;
+  number: string;
+  tag: string;
+  function: string;
+  selection: string;
+};
+
+const LIGHT_CODE: CodePalette = {
+  background: '#f1e8db',
+  foreground: '#1d1b18',
+  border: '#ddd3c5',
+  comment: '#6f6961',
+  punctuation: '#6f6961',
+  keyword: '#24521c',
+  string: '#8a5a00',
+  number: '#b4532a',
+  tag: '#2a7a3d',
+  function: '#3d3428',
+  selection: '#e7ddf5',
+};
+
+const DARK_CODE: CodePalette = {
+  background: '#1c1915',
+  foreground: '#efe6d6',
+  border: '#342f28',
+  comment: '#8d7f6c',
+  punctuation: '#a3998b',
+  keyword: '#cfe3b2',
+  string: '#e3ae3c',
+  number: '#d97a4f',
+  tag: '#7fc278',
+  function: '#f0dcc0',
+  selection: '#3f4c2b',
+};
+
+function codePalette(isDarkTheme: boolean) {
+  return isDarkTheme ? DARK_CODE : LIGHT_CODE;
+}
+
 function themeStyle(isDarkTheme: boolean): HighlighterStyle {
-  return (isDarkTheme ? oneDark : oneLight) as HighlighterStyle;
+  const palette = codePalette(isDarkTheme);
+  const base = (isDarkTheme ? oneDark : oneLight) as HighlighterStyle;
+  const painted: HighlighterStyle = {};
+
+  for (const [key, value] of Object.entries(base)) {
+    painted[key] = { ...value };
+  }
+
+  const surface: CSSProperties = {
+    background: palette.background,
+    color: palette.foreground,
+    textShadow: 'none',
+    fontFamily: CODE_FONT,
+  };
+
+  for (const key of ['code[class*="language-"]', 'pre[class*="language-"]'] as const) {
+    painted[key] = { ...painted[key], ...surface, margin: 0 };
+  }
+
+  const inlineKey = ':not(pre) > code[class*="language-"]';
+  painted[inlineKey] = {
+    ...painted[inlineKey],
+    background: palette.background,
+    color: palette.foreground,
+    textShadow: 'none',
+    fontFamily: CODE_FONT,
+  };
+
+  const paint = (token: string, color: string) => {
+    if (!painted[token]) {
+      return;
+    }
+    painted[token] = { ...painted[token], color, textShadow: 'none' };
+  };
+
+  paint('comment', palette.comment);
+  paint('prolog', palette.comment);
+  paint('cdata', palette.comment);
+  paint('doctype', palette.comment);
+  paint('punctuation', palette.punctuation);
+  paint('operator', palette.punctuation);
+  paint('keyword', palette.keyword);
+  paint('atrule', palette.keyword);
+  paint('builtin', palette.keyword);
+  paint('important', palette.keyword);
+  paint('string', palette.string);
+  paint('char', palette.string);
+  paint('attr-value', palette.string);
+  paint('attr-name', palette.string);
+  paint('boolean', palette.number);
+  paint('number', palette.number);
+  paint('constant', palette.number);
+  paint('symbol', palette.number);
+  paint('tag', palette.tag);
+  paint('selector', palette.tag);
+  paint('function', palette.function);
+  paint('class-name', palette.function);
+  paint('property', palette.foreground);
+  paint('entity', palette.foreground);
+  paint('variable', palette.foreground);
+  paint('url', palette.string);
+
+  for (const key of Object.keys(painted)) {
+    if (key.includes('selection')) {
+      painted[key] = {
+        ...painted[key],
+        background: palette.selection,
+        color: palette.foreground,
+        textShadow: 'none',
+      };
+    }
+  }
+
+  return painted;
 }
 
 function inferLanguage(language: string | undefined, code: string) {
@@ -101,13 +220,15 @@ function MarkdownMath({ expression, display }: { expression: string; display: bo
 function CodeBlock({
   codeText,
   language,
-  isDarkTheme,
+  theme,
 }: {
   codeText: string;
   language?: string;
-  isDarkTheme: boolean;
+  theme: Theme;
 }) {
   const [copied, setCopied] = useState(false);
+  const isDarkTheme = theme === 'dark';
+  const palette = codePalette(isDarkTheme);
 
   const handleCopy = async () => {
     try {
@@ -121,17 +242,21 @@ function CodeBlock({
 
   return (
     <div
-      className={cn(
-        'group relative my-4 max-w-full overflow-x-auto rounded-(--radius-control) border border-slate-800 bg-[#0b1220]',
-      )}
+      className="group relative my-3 max-w-full overflow-x-auto rounded-(--radius-control) border"
+      style={{ background: palette.background, borderColor: palette.border }}
     >
       <button
         type="button"
         onClick={handleCopy}
         className={cn(
-          'absolute top-2 right-2 rounded-md bg-slate-900/80 px-2 py-1 text-[11px] font-medium text-slate-300 transition-colors hover:bg-slate-800',
-          copied && 'text-emerald-300',
+          'absolute top-1.5 right-1.5 rounded-(--radius-xs) border px-1.5 py-1 text-[11px] transition-colors',
+          copied ? 'text-[#7fc278]' : 'hover:bg-foreground/5',
         )}
+        style={{
+          background: palette.background,
+          borderColor: palette.border,
+          color: copied ? undefined : palette.punctuation,
+        }}
         aria-label="Copy code"
       >
         {copied ? <Check className="h-3 w-3" /> : <Copy className="h-3 w-3" />}
@@ -147,14 +272,20 @@ function CodeBlock({
           maxWidth: '100%',
           overflowX: 'auto',
           borderRadius: 0,
-          padding: '1rem',
-          fontSize: '13.5px',
-          lineHeight: '1.6',
-          background: '#0b1220',
+          padding: '0.75rem 0.875rem',
+          fontSize: '12px',
+          lineHeight: '1.55',
+          background: palette.background,
+          color: palette.foreground,
+          fontFamily: CODE_FONT,
+          textShadow: 'none',
         }}
         codeTagProps={{
           style: {
             fontFamily: CODE_FONT,
+            color: palette.foreground,
+            textShadow: 'none',
+            background: 'transparent',
           },
         }}
       >
@@ -165,14 +296,14 @@ function CodeBlock({
 }
 
 function createMarkdownComponents(
-  _theme: Theme,
+  theme: Theme,
   onInternalLink?: (href: string) => boolean,
 ): Components {
   return {
     h1: ({ className, ...props }) => (
       <h1
         className={cn(
-          'font-display mt-1 mb-4 scroll-m-20 border-b border-border pb-2 text-2xl text-foreground first:mt-0 sm:text-3xl',
+          'font-display mt-1 mb-3 scroll-m-20 border-b border-border pb-1.5 text-lg text-foreground first:mt-0',
           className,
         )}
         {...props}
@@ -181,7 +312,7 @@ function createMarkdownComponents(
     h2: ({ className, ...props }) => (
       <h2
         className={cn(
-          'font-display mt-8 mb-3 scroll-m-20 border-b border-border pb-2 text-xl text-foreground first:mt-0 sm:text-2xl',
+          'font-display mt-6 mb-2 scroll-m-20 border-b border-border pb-1.5 text-base text-foreground first:mt-0',
           markdownHierarchy.section,
           className,
         )}
@@ -191,7 +322,7 @@ function createMarkdownComponents(
     h3: ({ className, ...props }) => (
       <h3
         className={cn(
-          'font-heading mt-6 mb-2 scroll-m-20 text-lg font-semibold tracking-tight text-foreground',
+          'font-heading mt-4 mb-1.5 scroll-m-20 text-sm font-semibold tracking-tight text-foreground',
           markdownHierarchy.subsection,
           className,
         )}
@@ -201,7 +332,7 @@ function createMarkdownComponents(
     h4: ({ className, ...props }) => (
       <h4
         className={cn(
-          'font-heading mt-4 mb-1.5 scroll-m-20 text-base font-semibold text-foreground',
+          'font-heading mt-3 mb-1 scroll-m-20 text-[13px] font-semibold text-foreground',
           markdownHierarchy.body,
           className,
         )}
@@ -231,7 +362,7 @@ function createMarkdownComponents(
     p: ({ className, ...props }) => (
       <p
         className={cn(
-          'not-first:mt-3 text-[15px] leading-7 text-foreground/95',
+          'not-first:mt-2 text-[13px] leading-5 text-foreground/95',
           markdownHierarchy.body,
           className,
         )}
@@ -250,7 +381,7 @@ function createMarkdownComponents(
     ul: ({ className, ...props }) => (
       <ul
         className={cn(
-          'my-3 list-disc space-y-1.5 text-[15px] leading-7 text-foreground/95 marker:text-primary',
+          'my-2 list-disc space-y-1 text-[13px] leading-5 text-foreground/95 marker:text-primary',
           markdownHierarchy.nestedList,
           '[&_ul]:mt-1 [&_ul]:list-[circle] [&_ul]:pl-5 [&_ul]:marker:text-foreground/70 [&_ol]:mt-1 [&_ol]:pl-5',
           className,
@@ -261,7 +392,7 @@ function createMarkdownComponents(
     ol: ({ className, ...props }) => (
       <ol
         className={cn(
-          'my-3 list-decimal space-y-1.5 text-[15px] leading-7 text-foreground/95 marker:font-semibold marker:text-primary',
+          'my-2 list-decimal space-y-1 text-[13px] leading-5 text-foreground/95 marker:font-semibold marker:text-primary',
           markdownHierarchy.nestedList,
           '[&_ol]:mt-1 [&_ol]:pl-5 [&_ul]:mt-1 [&_ul]:list-[circle] [&_ul]:pl-5 [&_ul]:marker:text-foreground/70',
           className,
@@ -410,31 +541,39 @@ function createMarkdownComponents(
       const languageMatch = /language-([\w-]+)/.exec(className ?? '');
       const language = languageMatch?.[1];
       const isBlock = Boolean(language || codeText.includes('\n'));
+      const isDarkTheme = theme === 'dark';
+      const palette = codePalette(isDarkTheme);
 
       if (isBlock) {
-        return <CodeBlock codeText={codeText} language={language} isDarkTheme />;
+        return <CodeBlock codeText={codeText} language={language} theme={theme} />;
       }
 
       return (
         <SyntaxHighlighter
           language={inferLanguage(language, codeText)}
-          style={themeStyle(false)}
+          style={themeStyle(isDarkTheme)}
           PreTag="span"
           customStyle={{
             display: 'inline',
             margin: 0,
-            padding: '0.1rem 0.4rem',
-            borderRadius: 6,
+            padding: '0.05rem 0.35rem',
+            borderRadius: 4,
             fontSize: '12px',
             lineHeight: '1.45',
             verticalAlign: 'baseline',
-            background: '#f3f4f6',
-            border: '1px solid #e5e7eb',
+            background: palette.background,
+            color: palette.foreground,
+            border: `1px solid ${palette.border}`,
+            fontFamily: CODE_FONT,
+            textShadow: 'none',
           }}
           codeTagProps={{
             style: {
               display: 'inline',
               fontFamily: CODE_FONT,
+              color: palette.foreground,
+              textShadow: 'none',
+              background: 'transparent',
             },
           }}
         >

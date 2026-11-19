@@ -125,15 +125,15 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
 
   return (
     <div className="bg-background">
-      <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+      <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-5 sm:py-5 lg:px-6">
         <section id="kits" className="scroll-mt-6">
-          <div className="rounded-[var(--radius-panel)] border border-border bg-card p-4 shadow-(--shadow-card) sm:p-5 lg:p-6">
+          <div className="rounded-[var(--radius-panel)] border border-border bg-card p-3 shadow-(--shadow-card) sm:p-4">
             <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_minmax(16rem,22rem)] md:items-start lg:grid-cols-[minmax(0,1fr)_minmax(18rem,32rem)]">
               <div className="lg:pr-4">
-                <h1 className="max-w-3xl text-2xl text-foreground sm:text-3xl lg:text-4xl">
+                <h1 className="max-w-3xl text-lg text-foreground sm:text-xl">
                   Structured interview kits for focused preparation.
                 </h1>
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
+                <p className="mt-1.5 max-w-2xl text-xs leading-5 text-muted-foreground">
                   Practice by topic, track solved questions, and revise weak areas faster.
                 </p>
               </div>
@@ -146,7 +146,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="px-3 pb-3">
-                    <p className="text-lg font-semibold leading-none text-foreground">
+                    <p className="text-sm font-semibold leading-none text-foreground">
                       {groups.length}
                     </p>
                   </CardContent>
@@ -158,7 +158,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="px-3 pb-3">
-                    <p className="text-lg font-semibold leading-none text-foreground">
+                    <p className="text-sm font-semibold leading-none text-foreground">
                       {totalTopics}
                     </p>
                   </CardContent>
@@ -170,7 +170,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="px-3 pb-3">
-                    <p className="text-lg font-semibold leading-none text-emerald-600">
+                    <p className="text-sm font-semibold leading-none text-emerald-600">
                       {totalCompleted}
                     </p>
                   </CardContent>
@@ -182,7 +182,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="px-3 pb-3">
-                    <p className="text-lg font-semibold leading-none text-primary">
+                    <p className="text-sm font-semibold leading-none text-primary">
                       {completionRate}%
                     </p>
                   </CardContent>
@@ -194,7 +194,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
 
         <section id="all-kits" className="scroll-mt-6 pt-8 sm:pt-10">
           <div className="mb-5 flex flex-wrap items-center gap-3">
-            <h2 className="shrink-0 text-2xl text-foreground sm:text-3xl">Kits</h2>
+            <h2 className="shrink-0 text-base text-foreground">Kits</h2>
             <div className="relative ml-auto w-full max-w-xs sm:w-64">
               <SearchIcon className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
@@ -204,10 +204,10 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                 maxLength={SEARCH_QUERY_MAX}
                 aria-label="Search kits"
                 placeholder="Search kits…"
-                className="h-8 border-input bg-card pl-8 text-xs"
+                className="h-8 rounded-[8px] border-input bg-card pl-8 text-xs"
               />
             </div>
-            <div className="inline-flex shrink-0 items-center gap-1 rounded-(--radius-control) border border-border bg-card p-1">
+            <div className="inline-flex shrink-0 items-center gap-0.5">
               <Button
                 type="button"
                 variant={viewMode === 'grid' ? 'default' : 'ghost'}
@@ -297,7 +297,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
               })}
             </div>
           ) : (
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {visibleKits.map((item) => {
                 const { group, matchCount } = item;
                 const icon = KIT_ICON_BY_KEY[group.id];
@@ -319,43 +319,38 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                     key={group.id}
                     type="button"
                     onClick={() => onSelectKit(group.id)}
-                    className="group flex h-full flex-col rounded-(--radius-card) border border-border bg-card p-4 text-left shadow-(--shadow-card) transition-all hover:border-primary/35 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
+                    className="group flex h-full flex-col rounded-(--radius-card) border border-border bg-card p-2.5 text-left shadow-(--shadow-card) transition-all hover:border-primary/35 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30"
                   >
-                    <span className="flex items-start justify-between gap-3">
-                      <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted">
+                    <span className="flex items-center justify-between gap-2">
+                      <span className="flex size-6 shrink-0 items-center justify-center rounded bg-muted">
                         {icon ? (
                           <img
                             src={icon}
                             alt=""
                             aria-hidden="true"
-                            className={cn('size-6 object-contain', kitIconToneClass(group.id))}
+                            className={cn('size-3.5 object-contain', kitIconToneClass(group.id))}
                           />
                         ) : (
-                          <BookOpenTextIcon className="size-5 text-foreground" />
+                          <BookOpenTextIcon className="size-3.5 text-foreground" />
                         )}
                       </span>
-                      <span className="rounded-full border border-border bg-muted px-2 py-1 text-xs font-medium text-muted-foreground">
+                      <span className="rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">
                         {countLabel}
                       </span>
                     </span>
-                    <span className="font-display mt-3 block text-lg leading-tight text-foreground">
+                    <span className="mt-1.5 block truncate text-xs font-semibold leading-tight text-foreground">
                       {group.label}
                     </span>
-                    <span
-                      className={cn(
-                        'mt-1.5 block flex-1 text-sm leading-6 text-muted-foreground',
-                        '[display:-webkit-box] [-webkit-box-orient:vertical] [-webkit-line-clamp:2] overflow-hidden',
-                      )}
-                    >
+                    <span className="mt-0.5 line-clamp-1 text-[11px] leading-4 text-muted-foreground">
                       {description}
                     </span>
-                    <span className="mt-3.5 block">
-                      <span className="mb-2 flex items-center justify-between gap-2 text-xs leading-none">
+                    <span className="mt-2 block">
+                      <span className="mb-1 flex items-center justify-between gap-2 text-[10px] leading-none">
                         <span className="truncate text-muted-foreground">{progressLabel}</span>
                         <span className="shrink-0 font-medium text-foreground">{progress}%</span>
                       </span>
                       <span
-                        className="block h-1.5 w-full overflow-hidden rounded-full bg-muted leading-none"
+                        className="block h-1 w-full overflow-hidden rounded-full bg-muted leading-none"
                         aria-hidden="true"
                       >
                         <span
@@ -367,14 +362,10 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
                         />
                       </span>
                       {matchLabel ? (
-                        <span className="mt-2 block text-xs text-muted-foreground">
+                        <span className="mt-1 block text-[10px] text-muted-foreground">
                           {matchLabel}
                         </span>
                       ) : null}
-                    </span>
-                    <span className="mt-3.5 inline-flex items-center gap-1 text-sm font-medium text-primary">
-                      Open kit
-                      <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
                     </span>
                   </button>
                 );
@@ -385,7 +376,7 @@ export function KitGallery({ groups, topicProgressById, onSelectKit }: KitGaller
 
         <section id="how-to-study" className="scroll-mt-6 pt-8 sm:pt-10">
           <div className="mb-5">
-            <h2 className="text-2xl text-foreground sm:text-3xl">How to use this effectively</h2>
+            <h2 className="text-base text-foreground">How to use this effectively</h2>
             <p className="mt-1 text-sm text-muted-foreground">
               Keep progress moving with short, repeatable preparation loops.
             </p>

@@ -80,8 +80,16 @@ export function AuthPage() {
 
       <div className="relative px-4 py-3 sm:px-6 lg:px-8">
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3">
-          <p className="min-w-0 truncate text-base font-semibold tracking-wide text-foreground">
-            Interview Kits
+          <p className="inline-flex min-w-0 items-center gap-2">
+            <span
+              aria-hidden="true"
+              className="grid size-6 shrink-0 place-items-center rounded-[6px] bg-foreground text-[10px] font-semibold text-background"
+            >
+              IK
+            </span>
+            <span className="truncate text-[13px] font-semibold tracking-tight text-foreground">
+              Interview Kits
+            </span>
           </p>
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
@@ -148,7 +156,7 @@ export function AuthPage() {
                       index === illustrationIndex ? 'opacity-100' : 'pointer-events-none opacity-0',
                     )}
                   >
-                    <p className="text-lg font-semibold text-foreground">{item.title}</p>
+                    <p className="text-sm font-semibold text-foreground">{item.title}</p>
                     <p className="text-sm leading-6 text-muted-foreground">{item.description}</p>
                   </div>
                 ))}

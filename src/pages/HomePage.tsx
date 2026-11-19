@@ -10,19 +10,29 @@ export function HomePage() {
   const controller = useInterviewAppController();
 
   const leading = (
-    <div className="flex min-w-0 flex-wrap items-center gap-2">
+    <div className="flex min-w-0 items-center gap-0.5">
       <Button
         type="button"
-        variant={controller.homeView === 'kits' ? 'default' : 'outline'}
+        variant="ghost"
         size="sm"
+        className={
+          controller.homeView === 'kits'
+            ? 'h-8 rounded-[8px] bg-primary px-3 text-[13px] font-semibold text-primary-foreground'
+            : 'h-8 rounded-[8px] px-3 text-[13px] font-medium text-muted-foreground'
+        }
         onClick={() => controller.navigateHomeView('kits')}
       >
-        Interview Kits
+        Kits
       </Button>
       <Button
         type="button"
-        variant={controller.homeView === 'guides' ? 'default' : 'outline'}
+        variant="ghost"
         size="sm"
+        className={
+          controller.homeView === 'guides'
+            ? 'h-8 rounded-[8px] bg-primary px-3 text-[13px] font-semibold text-primary-foreground'
+            : 'h-8 rounded-[8px] px-3 text-[13px] font-medium text-muted-foreground'
+        }
         onClick={() => controller.navigateHomeView('guides')}
       >
         Guides
@@ -33,7 +43,6 @@ export function HomePage() {
   return (
     <div className="theme flex h-svh flex-col bg-background">
       <SiteHeader
-        showBrand={false}
         leading={leading}
         actions={
           <AppHeaderActions theme={controller.theme} onToggleTheme={controller.toggleTheme} />

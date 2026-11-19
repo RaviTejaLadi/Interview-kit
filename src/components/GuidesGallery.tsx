@@ -159,6 +159,23 @@ function getPrimarySubjectFromTags(tags: string[], fallbackTopic: GuideTopic) {
   return toSubjectSlug(picked ?? fallbackTopic);
 }
 
+const CATEGORY_ORDER: GuideTopic[] = ['Frontend', 'Backend', 'Specific'];
+
+function groupGuidesByCategory(guides: DisplayGuideCard[]) {
+  const grouped = new Map<GuideTopic, DisplayGuideCard[]>();
+
+  for (const guide of guides) {
+    const current = grouped.get(guide.topic) ?? [];
+    current.push(guide);
+    grouped.set(guide.topic, current);
+  }
+
+  return CATEGORY_ORDER.flatMap((topic) => {
+    const items = grouped.get(topic);
+    return items && items.length > 0 ? [{ topic, guides: items }] : [];
+  });
+}
+
 function formatSubjectLabel(subject: string) {
   const normalized = subject.trim().toLowerCase();
   const knownLabels: Record<string, string> = {
@@ -349,19 +366,19 @@ export function GuidesGallery({
 
   return (
     <div className="bg-background">
-      <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+      <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-5 sm:py-5 lg:px-6">
         <section id="guides" className="scroll-mt-6">
-          <div className="rounded-(--radius-panel) border border-border bg-card p-5 shadow-(--shadow-card) sm:p-6 lg:p-8">
+          <div className="rounded-(--radius-panel) border border-border bg-card p-3 shadow-(--shadow-card) sm:p-4">
             <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
               <p className="text-sm font-medium text-muted-foreground shrink-0">Guides</p>
               <p className="ml-auto shrink-0 whitespace-nowrap text-sm text-muted-foreground">
                 {guides.length} guides · {readGuideCount} read · {starredGuideCount} starred
               </p>
             </div>
-            <h1 className="mt-4 max-w-4xl text-2xl leading-tight text-foreground sm:text-3xl lg:text-4xl">
+            <h1 className="mt-2 max-w-4xl text-lg leading-tight text-foreground sm:text-xl">
               Topic-specific <span className="text-primary">guides</span> to revise faster.
             </h1>
-            <p className="mt-4 max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base">
+            <p className="mt-2 max-w-3xl text-xs leading-5 text-muted-foreground">
               Read practical guides inspired by roadmap-style structure, then track your progress
               with local read and star actions.
             </p>
@@ -370,7 +387,7 @@ export function GuidesGallery({
 
         <section className="pt-8">
           <div className="mb-5 flex flex-wrap items-center gap-3">
-            <h2 className="shrink-0 text-2xl text-foreground sm:text-3xl">Guides</h2>
+            <h2 className="shrink-0 text-base text-foreground">Guides</h2>
             <div className="flex flex-wrap items-center gap-2">
               <DropdownMenu>
                 <DropdownMenuTrigger
@@ -511,7 +528,7 @@ export function GuidesGallery({
                 className="h-8 border-input bg-card pl-8 text-xs"
               />
             </div>
-            <div className="inline-flex shrink-0 items-center gap-1 rounded-(--radius-control) border border-border bg-card p-1">
+            <div className="inline-flex shrink-0 items-center gap-0.5">
               <Button
                 type="button"
                 variant={viewMode === 'list' ? 'default' : 'ghost'}
@@ -536,219 +553,239 @@ export function GuidesGallery({
           </div>
         </section>
 
-        <section>
+        <section className="space-y-5">
           {visibleGuides.length === 0 ? (
-            <Card className="p-8 text-center">
+            <Card className="p-6 text-center">
               <p className="text-sm font-medium text-muted-foreground">No guides found</p>
               <p className="text-muted-foreground mt-2 text-sm">Try changing search or filters.</p>
             </Card>
           ) : viewMode === 'grid' ? (
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {visibleGuides.map((guide) => {
-                const guideProgress = guideProgressById[guide.id];
-                const isRead = guide.isPlaceholder ? false : guideProgress?.read === true;
-                const isStarred = guide.isPlaceholder ? false : guideProgress?.starred === true;
-                const canOpen = !guide.isPlaceholder;
+            groupGuidesByCategory(visibleGuides).map(({ topic, guides: categoryGuides }) => (
+              <div key={topic}>
+                <div className="mb-2 flex items-baseline justify-between">
+                  <h3 className="text-xs font-semibold text-foreground">{topic}</h3>
+                  <span className="font-mono text-[11px] text-muted-foreground">
+                    {categoryGuides.length}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                  {categoryGuides.map((guide) => {
+                    const guideProgress = guideProgressById[guide.id];
+                    const isRead = guide.isPlaceholder ? false : guideProgress?.read === true;
+                    const isStarred = guide.isPlaceholder ? false : guideProgress?.starred === true;
+                    const canOpen = !guide.isPlaceholder;
 
-                return (
-                  <div
-                    key={guide.id}
-                    role={canOpen ? 'Button' : undefined}
-                    tabIndex={canOpen ? 0 : undefined}
-                    onClick={canOpen ? () => onOpenGuide(guide.id) : undefined}
-                    onKeyDown={
-                      canOpen
-                        ? (event) => {
-                            if (event.key === 'Enter' || event.key === ' ') {
-                              event.preventDefault();
-                              onOpenGuide(guide.id);
-                            }
-                          }
-                        : undefined
-                    }
-                    className={cn(
-                      'group flex h-full flex-col rounded-(--radius-card) border border-border bg-card p-4 shadow-(--shadow-card) transition-all hover:border-primary/35 hover:shadow-(--shadow-card-hover)',
-                      canOpen && 'cursor-pointer',
-                    )}
-                  >
-                    <p className="line-clamp-2 text-sm font-semibold text-foreground">
-                      {guide.title}
-                    </p>
-                    <p className="mt-2 line-clamp-2 text-xs leading-5 text-muted-foreground">
-                      {guide.summary}
-                    </p>
-                    <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
-                      <img
-                        src={getSubjectIconSrc(guide.subject)}
-                        alt=""
-                        aria-hidden="true"
+                    return (
+                      <div
+                        key={guide.id}
+                        role={canOpen ? 'Button' : undefined}
+                        tabIndex={canOpen ? 0 : undefined}
+                        onClick={canOpen ? () => onOpenGuide(guide.id) : undefined}
+                        onKeyDown={
+                          canOpen
+                            ? (event) => {
+                                if (event.key === 'Enter' || event.key === ' ') {
+                                  event.preventDefault();
+                                  onOpenGuide(guide.id);
+                                }
+                              }
+                            : undefined
+                        }
                         className={cn(
-                          'size-3.5 object-contain',
-                          getSubjectIconClass(guide.subject),
+                          'group flex h-full flex-col rounded-(--radius-card) border border-border bg-card p-2.5 shadow-(--shadow-card) transition-all hover:border-primary/35 hover:shadow-(--shadow-card-hover)',
+                          canOpen && 'cursor-pointer',
                         )}
-                      />
-                      <span>{formatSubjectLabel(guide.subject)}</span>
-                      <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
-                      <span>{guide.readTimeMinutes} min</span>
-                    </div>
-                    <div className="mt-auto pt-3">
-                      {guide.isPlaceholder ? (
-                        <span className="text-xs text-muted-foreground">Pending content</span>
-                      ) : (
-                        <div className="flex items-center justify-between gap-2">
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon-xs"
-                            aria-pressed={isStarred}
-                            aria-label={isStarred ? 'Unstar guide' : 'Star guide'}
-                            title={isStarred ? 'Starred' : 'Star guide'}
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              onToggleGuideStarred(guide.id);
-                            }}
-                          >
-                            <StarIcon
-                              className={cn(
-                                'size-4',
-                                isStarred
-                                  ? 'fill-amber-400 text-amber-500'
-                                  : 'text-muted-foreground',
-                              )}
-                            />
-                          </Button>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              onToggleGuideRead(guide.id);
-                            }}
-                          >
-                            {isRead ? (
-                              <>
-                                <CheckCircle2Icon className="size-4 text-emerald-500" />
-                                Unread
-                              </>
-                            ) : (
-                              <>
-                                <CircleIcon className="size-4 text-muted-foreground" />
-                                Read
-                              </>
-                            )}
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="overflow-hidden rounded-(--radius-card) border border-border bg-card shadow-(--shadow-card)">
-              {visibleGuides.map((guide) => {
-                const guideProgress = guideProgressById[guide.id];
-                const isRead = guide.isPlaceholder ? false : guideProgress?.read === true;
-                const isStarred = guide.isPlaceholder ? false : guideProgress?.starred === true;
-                const canOpen = !guide.isPlaceholder;
-
-                return (
-                  <div
-                    key={guide.id}
-                    role={canOpen ? 'Button' : undefined}
-                    tabIndex={canOpen ? 0 : undefined}
-                    onClick={canOpen ? () => onOpenGuide(guide.id) : undefined}
-                    onKeyDown={
-                      canOpen
-                        ? (event) => {
-                            if (event.key === 'Enter' || event.key === ' ') {
-                              event.preventDefault();
-                              onOpenGuide(guide.id);
-                            }
-                          }
-                        : undefined
-                    }
-                    className={cn(
-                      'group flex items-center gap-3 border-b border-border px-4 py-3 last:border-b-0 hover:bg-muted/40',
-                      canOpen && 'cursor-pointer',
-                    )}
-                  >
-                    <div className="min-w-0 flex flex-1 items-center gap-2">
-                      <span className="flex size-6 shrink-0 items-center justify-center rounded bg-muted/70">
-                        <img
-                          src={getSubjectIconSrc(guide.subject)}
-                          alt=""
-                          aria-hidden="true"
-                          className={cn(
-                            'size-3.5 object-contain',
-                            getSubjectIconClass(guide.subject),
-                          )}
-                        />
-                      </span>
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-medium text-foreground">
+                      >
+                        <p className="line-clamp-2 text-xs font-semibold text-foreground">
                           {guide.title}
                         </p>
-                        <p className="truncate text-xs text-muted-foreground">
-                          {formatSubjectLabel(guide.subject)}
+                        <p className="mt-2 line-clamp-2 text-xs leading-5 text-muted-foreground">
+                          {guide.summary}
                         </p>
+                        <div className="mt-3 flex items-center gap-2 text-xs text-muted-foreground">
+                          <img
+                            src={getSubjectIconSrc(guide.subject)}
+                            alt=""
+                            aria-hidden="true"
+                            className={cn(
+                              'size-3.5 object-contain',
+                              getSubjectIconClass(guide.subject),
+                            )}
+                          />
+                          <span>{formatSubjectLabel(guide.subject)}</span>
+                          <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
+                          <span>{guide.readTimeMinutes} min</span>
+                        </div>
+                        <div className="mt-auto pt-3">
+                          {guide.isPlaceholder ? (
+                            <span className="text-xs text-muted-foreground">Pending content</span>
+                          ) : (
+                            <div className="flex items-center justify-between gap-2">
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon-xs"
+                                aria-pressed={isStarred}
+                                aria-label={isStarred ? 'Unstar guide' : 'Star guide'}
+                                title={isStarred ? 'Starred' : 'Star guide'}
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  onToggleGuideStarred(guide.id);
+                                }}
+                              >
+                                <StarIcon
+                                  className={cn(
+                                    'size-4',
+                                    isStarred
+                                      ? 'fill-amber-400 text-amber-500'
+                                      : 'text-muted-foreground',
+                                  )}
+                                />
+                              </Button>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  onToggleGuideRead(guide.id);
+                                }}
+                              >
+                                {isRead ? (
+                                  <>
+                                    <CheckCircle2Icon className="size-4 text-emerald-500" />
+                                    Unread
+                                  </>
+                                ) : (
+                                  <>
+                                    <CircleIcon className="size-4 text-muted-foreground" />
+                                    Read
+                                  </>
+                                )}
+                              </Button>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                    <div className="ml-auto flex shrink-0 items-center gap-1.5">
-                      {guide.isPlaceholder ? (
-                        <span className="text-xs text-muted-foreground">Pending content</span>
-                      ) : (
-                        <>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="icon-xs"
-                            aria-pressed={isStarred}
-                            aria-label={isStarred ? 'Unstar guide' : 'Star guide'}
-                            title={isStarred ? 'Starred' : 'Star guide'}
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              onToggleGuideStarred(guide.id);
-                            }}
-                          >
-                            <StarIcon
+                    );
+                  })}
+                </div>
+              </div>
+            ))
+          ) : (
+            groupGuidesByCategory(visibleGuides).map(({ topic, guides: categoryGuides }) => (
+              <div key={topic}>
+                <div className="mb-2 flex items-baseline justify-between">
+                  <h3 className="text-xs font-semibold text-foreground">{topic}</h3>
+                  <span className="font-mono text-[11px] text-muted-foreground">
+                    {categoryGuides.length}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+                  {categoryGuides.map((guide) => {
+                    const guideProgress = guideProgressById[guide.id];
+                    const isRead = guide.isPlaceholder ? false : guideProgress?.read === true;
+                    const isStarred = guide.isPlaceholder ? false : guideProgress?.starred === true;
+                    const canOpen = !guide.isPlaceholder;
+
+                    return (
+                      <div
+                        key={guide.id}
+                        role={canOpen ? 'Button' : undefined}
+                        tabIndex={canOpen ? 0 : undefined}
+                        onClick={canOpen ? () => onOpenGuide(guide.id) : undefined}
+                        onKeyDown={
+                          canOpen
+                            ? (event) => {
+                                if (event.key === 'Enter' || event.key === ' ') {
+                                  event.preventDefault();
+                                  onOpenGuide(guide.id);
+                                }
+                              }
+                            : undefined
+                        }
+                        className={cn(
+                          'group flex min-w-0 items-center gap-2 rounded-(--radius-card) border border-border bg-card px-2.5 py-2 hover:bg-muted/40',
+                          canOpen && 'cursor-pointer',
+                        )}
+                      >
+                        <div className="min-w-0 flex flex-1 items-center gap-2">
+                          <span className="flex size-6 shrink-0 items-center justify-center rounded bg-muted/70">
+                            <img
+                              src={getSubjectIconSrc(guide.subject)}
+                              alt=""
+                              aria-hidden="true"
                               className={cn(
-                                'size-4',
-                                isStarred
-                                  ? 'fill-amber-400 text-amber-500'
-                                  : 'text-muted-foreground',
+                                'size-3.5 object-contain',
+                                getSubjectIconClass(guide.subject),
                               )}
                             />
-                          </Button>
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={(event) => {
-                              event.stopPropagation();
-                              onToggleGuideRead(guide.id);
-                            }}
-                          >
-                            {isRead ? (
-                              <>
-                                <CheckCircle2Icon className="size-4 text-emerald-500" />
-                                Unread
-                              </>
-                            ) : (
-                              <>
-                                <CircleIcon className="size-4 text-muted-foreground" />
-                                Read
-                              </>
-                            )}
-                          </Button>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+                          </span>
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate text-xs font-medium text-foreground">
+                              {guide.title}
+                            </p>
+                            <p className="truncate text-[11px] text-muted-foreground">
+                              {formatSubjectLabel(guide.subject)} · {guide.readTimeMinutes} min
+                            </p>
+                          </div>
+                        </div>
+                        <div className="ml-auto flex shrink-0 items-center gap-1.5">
+                          {guide.isPlaceholder ? (
+                            <span className="text-xs text-muted-foreground">Pending content</span>
+                          ) : (
+                            <>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="icon-xs"
+                                aria-pressed={isStarred}
+                                aria-label={isStarred ? 'Unstar guide' : 'Star guide'}
+                                title={isStarred ? 'Starred' : 'Star guide'}
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  onToggleGuideStarred(guide.id);
+                                }}
+                              >
+                                <StarIcon
+                                  className={cn(
+                                    'size-4',
+                                    isStarred
+                                      ? 'fill-amber-400 text-amber-500'
+                                      : 'text-muted-foreground',
+                                  )}
+                                />
+                              </Button>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                size="sm"
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  onToggleGuideRead(guide.id);
+                                }}
+                              >
+                                {isRead ? (
+                                  <>
+                                    <CheckCircle2Icon className="size-4 text-emerald-500" />
+                                    Unread
+                                  </>
+                                ) : (
+                                  <>
+                                    <CircleIcon className="size-4 text-muted-foreground" />
+                                    Read
+                                  </>
+                                )}
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))
           )}
         </section>
       </div>

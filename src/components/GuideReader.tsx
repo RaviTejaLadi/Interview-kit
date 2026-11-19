@@ -60,7 +60,7 @@ export function GuideReader({
   const isStarred = progress.starred;
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 xl:max-w-7xl">
+    <div className="mx-auto w-full max-w-6xl px-4 py-4 sm:px-5 sm:py-5 lg:px-6 xl:max-w-7xl">
       <Card className="overflow-hidden">
         <div className="border-b border-border bg-card p-4 sm:p-5 lg:p-6">
           <div className="flex flex-wrap items-center justify-between gap-2">
@@ -114,12 +114,8 @@ export function GuideReader({
             {guide.topic} · {guide.readTimeMinutes} min read ·{' '}
             {formatPublishedDate(guide.publishedAt)}
           </p>
-          <h1 className="mt-2 text-2xl wrap-break-word text-foreground sm:text-3xl lg:text-4xl">
-            {guide.title}
-          </h1>
-          <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground sm:text-base">
-            {guide.summary}
-          </p>
+          <h1 className="mt-1 text-lg wrap-break-word text-foreground sm:text-xl">{guide.title}</h1>
+          <p className="mt-2 max-w-3xl text-xs leading-5 text-muted-foreground">{guide.summary}</p>
         </div>
         <CardContent className="p-4 sm:p-5 lg:p-6">
           {isLoading && !content ? (

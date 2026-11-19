@@ -147,11 +147,11 @@ export function TopicAccordion({
   };
 
   return (
-    <div className="bg-background p-4 sm:p-5 lg:p-6 xl:p-8">
+    <div className="bg-background p-3 sm:p-4">
       <div className="mb-5 flex flex-col gap-3 border-b border-border pb-5 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <p className="text-sm font-medium text-muted-foreground">{section}</p>
-          <h1 className="mt-1 text-lg font-semibold text-foreground sm:text-xl">{title}</h1>
+          <h1 className="mt-1 text-base font-semibold text-foreground">{title}</h1>
           <p className="mt-2 text-sm leading-6 text-muted-foreground">
             {topics.length} question{topics.length === 1 ? '' : 's'}. Open any item, or expand the
             whole page.

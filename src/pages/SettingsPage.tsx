@@ -34,9 +34,11 @@ function SettingsNavLink({
       state={location.state}
       className={({ isActive }) =>
         cn(
-          'flex min-w-44 items-center gap-3 rounded-lg px-3 text-left transition-colors md:min-w-0',
-          compact ? 'py-2' : 'py-2.5',
-          isActive ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-muted',
+          'flex min-w-44 items-center gap-3 rounded-[6px] px-3 text-left text-[13px] transition-colors md:min-w-0',
+          compact ? 'py-2' : 'py-[7px]',
+          isActive
+            ? 'bg-accent font-medium text-accent-foreground'
+            : 'text-muted-foreground hover:bg-muted hover:text-foreground',
         )
       }
     >
@@ -96,8 +98,10 @@ export function SettingsPage() {
                 <button
                   type="button"
                   className={cn(
-                    'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-colors',
-                    onAdminRoute ? 'bg-primary/10 text-primary' : 'text-foreground hover:bg-muted',
+                    'flex w-full items-center gap-3 rounded-[6px] px-3 py-[7px] text-left text-[13px] transition-colors',
+                    onAdminRoute
+                      ? 'bg-accent font-medium text-accent-foreground'
+                      : 'text-muted-foreground hover:bg-muted hover:text-foreground',
                   )}
                   onClick={() => setIsAdminExpanded((current) => !current)}
                 >
@@ -127,7 +131,7 @@ export function SettingsPage() {
           </nav>
         </aside>
         <ScrollArea className="min-h-0 flex-1">
-          <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8 lg:max-w-4xl lg:px-8">
+          <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 px-4 py-4 sm:px-5 sm:py-5 lg:max-w-4xl lg:px-6">
             <Outlet />
           </div>
         </ScrollArea>
